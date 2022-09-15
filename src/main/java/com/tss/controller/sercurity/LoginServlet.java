@@ -8,6 +8,7 @@ import com.tss.model.payload.ResponseMessage;
 import com.tss.service.impl.LoginServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.SessionConstants;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,7 +44,7 @@ public class LoginServlet extends HttpServlet {
                 // get user info
                 User user = userService.findByUsername(username);
                 // set user info to session
-                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
                 // response
                 try {
                     response.setContentType("application/json");
