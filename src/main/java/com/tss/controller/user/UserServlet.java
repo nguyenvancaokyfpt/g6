@@ -5,7 +5,11 @@
 package com.tss.controller.user;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mysql.cj.Session;
+import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.SessionConstants;
 import com.tss.model.User;
+import com.tss.model.payload.ResponseMessage;
 import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,24 +29,96 @@ public class UserServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
+        try {
+            String action = request.getParameter("action");
+            switch (action) {
+                case "list":
+                    list(request, response);
+                    break;
+                case "create":
+                    create(request, response);
+                    break;
+                case "update":
+                    update(request, response);
+                    break;
+                case "delete":
+                    delete(request, response);
+                    break;
+                default:
+                    info(request, response);
+                    break;
+            }
+        } catch (NullPointerException e) {
+            info(request, response);
+        }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    private void info(HttpServletRequest request, HttpServletResponse response) {
+        // get user info from session
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        // response
+        if (user != null) {
+            try {
+                response.setContentType("application/json");
+                response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
+                try (PrintWriter writer = response.getWriter()) {
+                    ResponseMessage responseMessage = new ResponseMessage();
+                    responseMessage.setStatus("success");
+                    responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
+                    responseMessage.setMessage("Get user info success");
+                    responseMessage.setData(user);
+                    writer.write(JSONArray.toJSONString(responseMessage));
+                    writer.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                response.setContentType("application/json");
+                response.setStatus(HttpStatusCodeConstants.UNAUTHORIZED); // Unauthorized
+                try (PrintWriter writer = response.getWriter()) {
+                    ResponseMessage responseMessage = new ResponseMessage();
+                    responseMessage.setStatus("error");
+                    responseMessage.setCode(HttpStatusCodeConstants.UNAUTHORIZED);
+                    responseMessage.setMessage("Unauthorized");
+                    writer.write(JSONArray.toJSONString(responseMessage));
+                    writer.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void create(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void list(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,16 +129,17 @@ public class UserServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -74,5 +151,3 @@ public class UserServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-
-
