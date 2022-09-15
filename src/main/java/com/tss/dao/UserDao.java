@@ -18,4 +18,6 @@ public interface UserDao {
 
     int modify(Connection connection, int id, User user) throws SQLException;
 
+    User findByUsername(Connection connection, String username) throws SQLException;
+
 }

@@ -32,17 +32,7 @@ public class UserServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserServiceImpl userService = new UserServiceImpl();
-        List<User> listUser = userService.List("", "", 0, 4);
-        try {
-            response.setContentType("application/json");
-            try ( PrintWriter writer = response.getWriter()) {
-                writer.write(JSONArray.toJSONString(listUser));
-                writer.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
