@@ -48,7 +48,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection connection = null;
+        User user = null;
+        try {
+            connection = BaseDao.getConnection();
+            user = userDao.findById(connection, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return user;
     }
 
     @Override
