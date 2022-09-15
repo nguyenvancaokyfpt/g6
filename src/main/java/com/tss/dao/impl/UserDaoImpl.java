@@ -77,8 +77,31 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(Connection connection, int userId) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        User user = null;
+        if (connection != null) {
+            String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note FROM user WHERE user_id = ?";
+            Object[] params = { userId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return user;
     }
 
     @Override

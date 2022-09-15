@@ -40,17 +40,18 @@ public class SercurityFilter implements Filter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        // Allow access to index page
+        // Allow public access to index page
         if (uri.equals(RequestURIConstants.INDEX)) {
             filterChain.doFilter(request, response);
             return;
         }
-        // Allow access to login page
+        // Allow public access to login page
         if (uri.equals(RequestURIConstants.LOGIN)) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        // Disallow public access to other pages
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
         if (user == null) {
             if (method.equals("GET")) {

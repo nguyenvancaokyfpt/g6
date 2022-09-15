@@ -1,31 +1,29 @@
+package com.tss.controller.user;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller.user;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.mysql.cj.Session;
-import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.SessionConstants;
-import com.tss.helper.RequestHelper;
-import com.tss.model.User;
-import com.tss.model.payload.ResponseMessage;
-import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import com.alibaba.fastjson.JSONArray;
+import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.SessionConstants;
+import com.tss.model.User;
+import com.tss.model.payload.ResponseMessage;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author nguye
  */
-public class UserServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,75 +39,56 @@ public class UserServlet extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "list":
-                    list(request, response);
-                    break;
-                case "create":
-                    create(request, response);
-                    break;
                 case "update":
                     update(request, response);
                     break;
-                case "delete":
-                    delete(request, response);
+                case "changePassword":
+                    changePassword(request, response);
                     break;
                 case "get":
                     get(request, response);
                     break;
                 default:
-                    list(request, response);
+                    get(request, response);
                     break;
             }
         } catch (NullPointerException e) {
-            list(request, response);
+            get(request, response);
         }
     }
 
-    private void get(HttpServletRequest request, HttpServletResponse response) {
-        UserServiceImpl userService = new UserServiceImpl();
-        JSONObject jsonObject = RequestHelper.getJsonData(request);
-        User user = userService.findById(jsonObject.getInteger("user_id"));
-        // response
+    private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
             response.setContentType("application/json");
-            if(user != null) {
-                try (PrintWriter writer = response.getWriter()) {
-                    response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-                    ResponseMessage responseMessage = new ResponseMessage();
-                    responseMessage.setStatus("success");
-                    responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                    responseMessage.setMessage("Get user info success");
-                    responseMessage.setData(user);
-                    writer.write(JSONArray.toJSONString(responseMessage));
-                    writer.flush();
-                }
-            } else {
-                try (PrintWriter writer = response.getWriter()) {
-                    response.setStatus(HttpStatusCodeConstants.NOT_FOUND); // Not found
-                    ResponseMessage responseMessage = new ResponseMessage();
-                    responseMessage.setStatus("error");
-                    responseMessage.setCode(HttpStatusCodeConstants.NOT_FOUND);
-                    responseMessage.setMessage("User not found");
-                    writer.write(JSONArray.toJSONString(responseMessage));
-                    writer.flush();
-                }
+            response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
+            try (PrintWriter writer = response.getWriter()) {
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setStatus("success");
+                responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
+                responseMessage.setMessage("Get user info success");
+                responseMessage.setData(user);
+                writer.write(JSONArray.toJSONString(responseMessage));
+                writer.flush();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            response.setContentType("application/json");
+            response.setStatus(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR);
+            try (PrintWriter writer = response.getWriter()) {
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setStatus("error");
+                responseMessage.setCode(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR);
+                responseMessage.setMessage("Get user info failed");
+                writer.write(JSONArray.toJSONString(responseMessage));
+                writer.flush();
+            }
         }
     }
 
-    private void delete(HttpServletRequest request, HttpServletResponse response) {
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    private void create(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    private void list(HttpServletRequest request, HttpServletResponse response) {
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
