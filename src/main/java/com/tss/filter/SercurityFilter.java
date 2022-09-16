@@ -50,6 +50,11 @@ public class SercurityFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        // Allow public access to logout page
+        if (uri.equals(RequestURIConstants.LOGOUT)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // Disallow public access to other pages
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
