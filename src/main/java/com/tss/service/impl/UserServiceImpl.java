@@ -9,15 +9,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.List;
-
-/**
- * @Time : 2022/8/5 16:01
- * @Author : 赵浩栋
- * @File : UserServiceImpl.java
- * @Software: IntelliJ IDEA
- */
 public class UserServiceImpl implements UserService {
-    //业务层都会调用dao
+
     private UserDao userDao;
 
     public UserServiceImpl() {
