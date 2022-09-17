@@ -8,6 +8,7 @@ import com.tss.model.payload.ResponseMessage;
 import com.tss.service.impl.LoginServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RequestURIConstants;
 import com.tss.constants.SessionConstants;
 
 import java.io.IOException;
@@ -62,7 +63,10 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // empty session
+        request.getSession().invalidate();
+        // redirect to index page
+        response.sendRedirect(request.getContextPath() + RequestURIConstants.INDEX);
     }
 
     /**

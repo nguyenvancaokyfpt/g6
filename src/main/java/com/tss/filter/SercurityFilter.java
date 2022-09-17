@@ -55,6 +55,11 @@ public class SercurityFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        // Allow access assets
+        if (uri.startsWith(RequestURIConstants.ASSETS)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // Disallow public access to other pages
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
