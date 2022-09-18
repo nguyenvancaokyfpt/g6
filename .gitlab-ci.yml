@@ -46,8 +46,7 @@ package_job:
 
 Deploy_job:
   stage: deploy
-  tags:
-    - docker 
-
   script: 
-    - echo "Maven deploy started"
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@159.65.142.1 "
+      echo test
+    "
