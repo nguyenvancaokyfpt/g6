@@ -74,7 +74,7 @@ public class SercurityFilter implements Filter {
                         ResponseMessage responseMessage = new ResponseMessage();
                         responseMessage.setStatus("error");
                         responseMessage.setCode(HttpStatusCodeConstants.UNAUTHORIZED);
-                        responseMessage.setMessage("Unauthorized");
+                        responseMessage.setMessage("Unauthorized " + uri);
                         writer.write(JSONArray.toJSONString(responseMessage));
                         writer.flush();
                     }
