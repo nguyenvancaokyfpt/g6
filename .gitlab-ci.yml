@@ -48,5 +48,4 @@ Deploy_job:
   stage: deploy
   script: 
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@159.65.142.1 "
-      echo test
-    "
+      echo test"
