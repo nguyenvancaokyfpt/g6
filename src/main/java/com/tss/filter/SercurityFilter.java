@@ -38,7 +38,6 @@ public class SercurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
-        uri = uri.replaceAll("//", "/"); // (Fix bug uri is // when deploy to server)
         String method = request.getMethod();
 
         // Allow public access to index page
