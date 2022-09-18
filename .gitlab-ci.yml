@@ -56,5 +56,4 @@ Deploy_job:
     rm -R /opt/tomcat/webapps/ROOT/ &&
     cp -R /opt/tomcat/webapps/g6/target/training_support_system-1.0.0 /opt/tomcat/webapps &&
     mv /opt/tomcat/webapps/training_support_system-1.0.0 /opt/tomcat/webapps/ROOT &&
-    echo "Done"
-    "
+    echo Done"
