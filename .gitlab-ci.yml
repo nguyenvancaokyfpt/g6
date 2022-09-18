@@ -49,4 +49,4 @@ Deploy_job:
   before_script:
     - chmod 400 $SSH_KEY
   script: 
-    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@157.245.51.174 "cd /opt/tomcat/webapps/g6 && git pull && mvn compile package && rm -R /opt/tomcat/webapps/ROOT/ && cp -R /opt/tomcat/webapps/g6/target/training_support_system-1.0.0 /opt/tomcat/webapps && mv /opt/tomcat/webapps/training_support_system-1.0.0 /opt/tomcat/webapps/ROOT && echo Done"
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@157.245.51.174 "cd /opt/tomcat/webapps/g6 && git pull && mvn compile package && rm -R /opt/tomcat/webapps/ROOT/ && cp -R /opt/tomcat/webapps/g6/target/training_support_system-1.0.0 /opt/tomcat/webapps && mv /opt/tomcat/webapps/training_support_system-1.0.0 /opt/tomcat/webapps/ROOT && rm /opt/tomcat/webapps/ROOT/WEB-INF/classes/db.properties && cp /opt/tomcat/webapps/db.properties /opt/tomcat/webapps/ROOT/WEB-INF/classes && echo Done"
