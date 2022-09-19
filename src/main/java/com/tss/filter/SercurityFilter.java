@@ -46,6 +46,11 @@ public class SercurityFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        // 404 not found
+        if (method.equals("GET") && !RequestHelper.isExist(uri)) {
+            request.getRequestDispatcher("/jsp/authentication/general/error-404.jsp").forward(request, response);
+            return;
+        }
 
         // Disallow public access to other pages
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);

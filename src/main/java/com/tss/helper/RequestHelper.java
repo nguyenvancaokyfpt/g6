@@ -60,4 +60,13 @@ public class RequestHelper {
         }
         return false;
     }
+
+    public static boolean isExist(String uri) {
+        for (String existUri : RequestURIConstants.ALL) {
+            if (uri.equals(existUri)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
