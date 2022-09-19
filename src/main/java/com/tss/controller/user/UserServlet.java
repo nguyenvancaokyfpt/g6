@@ -6,9 +6,7 @@ package com.tss.controller.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mysql.cj.Session;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.SessionConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
@@ -19,7 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+
 
 /**
  *
