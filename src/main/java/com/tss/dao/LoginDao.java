@@ -6,11 +6,11 @@ public interface LoginDao {
 
     /**
      * @param connection
-     * @param username
+     * @param email
      * @param password
      * @return boolean
      * @throws SQLException
      */
-    boolean login(Connection connection, String username, String password) throws SQLException;
+    boolean login(Connection connection, String email, String password) throws SQLException;
 
 }

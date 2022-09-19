@@ -3,10 +3,10 @@ package com.tss.service;
 public interface LoginService {
 
     /**
-     * @param username
+     * @param email
      * @param password
      * @return boolean
      */
-    boolean login(String username, String password);
+    boolean login(String email, String password);
     
 }

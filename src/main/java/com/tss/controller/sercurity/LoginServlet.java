@@ -35,14 +35,14 @@ public class LoginServlet extends HttpServlet {
             UserServiceImpl userService = new UserServiceImpl();
             JSONObject jsonObject = RequestHelper.getJsonData(request);
 
-            String username = jsonObject.getString("username");
+            String email = jsonObject.getString("email");
             String password = jsonObject.getString("password");
             
             // output payload
             System.out.println(request.getParameterMap());
-            if (loginService.login(username, password)) {
+            if (loginService.login(email, password)) {
                 // get user info
-                User user = userService.findByUsername(username);
+                User user = userService.findByEmail(email);
                 // set user info to session
                 request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
                 // response

@@ -10,12 +10,12 @@ import com.tss.service.LoginService;
 public class LoginServiceImpl implements LoginService {
 
     @Override
-    public boolean login(String username, String password) {
+    public boolean login(String email, String password) {
         Connection connection = null;
         boolean flag = false;
         try {
             connection = BaseDao.getConnection();
-            flag = new LoginDaoImpl().login(connection, username, password);
+            flag = new LoginDaoImpl().login(connection, email, password);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

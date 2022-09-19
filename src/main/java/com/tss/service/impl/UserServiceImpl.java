@@ -84,6 +84,21 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User findByEmail(String email) {
+        Connection connection = null;
+        User user = null;
+        try {
+            connection = BaseDao.getConnection();
+            user = userDao.findByEmail(connection, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return user;
+    }
+
 
     
 

@@ -13,6 +13,8 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     boolean add(User user);
 
     boolean del(int id);

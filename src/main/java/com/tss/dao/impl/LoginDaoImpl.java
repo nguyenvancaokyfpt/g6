@@ -11,13 +11,13 @@ import java.sql.SQLException;
 public class LoginDaoImpl implements LoginDao {
 
     @Override
-    public boolean login(Connection connection, String username, String password) throws SQLException {
+    public boolean login(Connection connection, String email, String password) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         boolean flag = false;
         if (connection != null) {
-            String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-            Object[] params = {username, password};
+            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+            Object[] params = {email, password};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {

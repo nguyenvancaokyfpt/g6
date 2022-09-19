@@ -20,4 +20,6 @@ public interface UserDao {
 
     User findByUsername(Connection connection, String username) throws SQLException;
 
+    User findByEmail(Connection connection, String email) throws SQLException;
+
 }
