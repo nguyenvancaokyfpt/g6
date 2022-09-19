@@ -47,7 +47,7 @@ var KTSigninGeneral = function () {
                                 password: e.querySelector('[name="password"]').value
                             }).then(function (response) {
                                 // Redirect to dashboard
-                                window.location.href = '/profile';
+                                window.location.href = '/dashboard';
                             }).catch(function (error) {
                                 // Show error message
                                 Swal.fire({
