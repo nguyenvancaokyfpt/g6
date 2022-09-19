@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RequestURIConstants;
 import com.tss.model.payload.ResponseMessage;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,5 +44,20 @@ public class RequestHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Check is public access
+    public static boolean isPublicAccess(String uri) {
+        for (String publicAccessUri : RequestURIConstants.PUBLIC_ACCESS) {
+            // Check if uri is public access
+            if (uri.equals(publicAccessUri)) {
+                return true;
+            }
+            // Allow access to assets
+            if (uri.startsWith(RequestURIConstants.ASSETS)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

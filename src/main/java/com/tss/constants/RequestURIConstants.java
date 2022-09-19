@@ -14,6 +14,14 @@ public class RequestURIConstants {
     // User servlet
     public static final String USER = "/user";
 
+    // Assets
     public static final String ASSETS = "/assets";
+
+    // List puclic access
+    public static final String[] PUBLIC_ACCESS = {
+        INDEX,
+        LOGIN,
+        ASSETS
+    };
 
 }

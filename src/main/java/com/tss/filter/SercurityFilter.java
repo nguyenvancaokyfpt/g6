@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RequestURIConstants;
 import com.tss.constants.SessionConstants;
+import com.tss.helper.RequestHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
 
@@ -40,23 +41,8 @@ public class SercurityFilter implements Filter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
 
-        // Allow public access to index page
-        if (uri.equals(RequestURIConstants.INDEX)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        // Allow public access to login page
-        if (uri.equals(RequestURIConstants.LOGIN)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        // Allow public access to logout page
-        if (uri.equals(RequestURIConstants.LOGOUT)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        // Allow access assets
-        if (uri.startsWith(RequestURIConstants.ASSETS)) {
+        // Allow public access
+        if (RequestHelper.isPublicAccess(uri)) {
             filterChain.doFilter(request, response);
             return;
         }
