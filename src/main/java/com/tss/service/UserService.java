@@ -15,6 +15,10 @@ public interface UserService {
 
     User findByEmail(String email);
 
+    int count();
+
+    int count(String fullName, String email);
+
     boolean add(User user);
 
     boolean del(int id);

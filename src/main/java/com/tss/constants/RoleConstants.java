@@ -2,7 +2,7 @@ package com.tss.constants;
 
 public class RoleConstants {
         
-        // Admin role
+        // ADMIN role
         public static final String ADMIN = "ADMIN";
         
         // MANAGER role
@@ -16,5 +16,8 @@ public class RoleConstants {
 
         // SUPPORTER role
         public static final String SUPPORTER = "SUPPORTER";
+
+        // STUDENT role
+        public static final String STUDENT = "STUDENT";
         
 }
