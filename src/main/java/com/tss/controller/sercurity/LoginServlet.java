@@ -1,17 +1,25 @@
 package com.tss.controller.sercurity;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.helper.RequestHelper;
+import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.sercurity.UserRole;
+import com.tss.service.LoginService;
+import com.tss.service.RoleService;
+import com.tss.service.UserService;
 import com.tss.service.impl.LoginServiceImpl;
+import com.tss.service.impl.RoleServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
 import com.tss.constants.SessionConstants;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import java.util.TreeSet;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,19 +28,20 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
+    private LoginService loginService;
+    private UserService userService;
+    private RoleService roleService;
+
+    public LoginServlet() {
+        loginService = new LoginServiceImpl();
+        userService = new UserServiceImpl();
+        roleService = new RoleServiceImpl();
+    }
+    
+
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            LoginServiceImpl loginService = new LoginServiceImpl();
-            UserServiceImpl userService = new UserServiceImpl();
             JSONObject jsonObject = RequestHelper.getJsonData(request);
 
             String email = jsonObject.getString("email");
@@ -45,37 +54,16 @@ public class LoginServlet extends HttpServlet {
                 User user = userService.findByEmail(email);
                 // set user info to session
                 request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
+                // get all roles of user
+                List<UserRole> roles = roleService.findByUserId(user.getUserId());
+                // Convert to String list
+                TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
+                // set role list to session
+                request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
                 // response
-                try {
-                    response.setContentType("application/json");
-                    response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-                    try (PrintWriter writer = response.getWriter()) {
-                        ResponseMessage responseMessage = new ResponseMessage();
-                        responseMessage.setStatus("success");
-                        responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                        responseMessage.setMessage("Login success");
-                        responseMessage.setData(user);
-                        writer.write(JSONArray.toJSONString(responseMessage));
-                        writer.flush();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
             } else {
-                try {
-                    response.setContentType("application/json");
-                    response.setStatus(HttpStatusCodeConstants.UNAUTHORIZED); // Unauthorized
-                    try (PrintWriter writer = response.getWriter()) {
-                        ResponseMessage responseMessage = new ResponseMessage();
-                        responseMessage.setStatus("error");
-                        responseMessage.setCode(HttpStatusCodeConstants.UNAUTHORIZED);
-                        responseMessage.setMessage("Username or password is incorrect");
-                        writer.write(JSONArray.toJSONString(responseMessage));
-                        writer.flush();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Login failed"));
             }
     }
 

@@ -2,6 +2,7 @@ package com.tss.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.tss.dao.SettingDao;
 import com.tss.model.system.Setting;
@@ -9,13 +10,13 @@ import com.tss.model.system.Setting;
 public class SettingDaoIml implements SettingDao {
 
     @Override
-    public java.util.List<Setting> List(Connection connection) throws SQLException {
+    public List<Setting> List(Connection connection) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public java.util.List<Setting> ListByTypeId(Connection connection) throws SQLException {
+    public List<Setting> ListByTypeId(Connection connection) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }

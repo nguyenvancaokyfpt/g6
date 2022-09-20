@@ -22,7 +22,7 @@
 	class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
 	style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
 	<!--begin::Main-->
-	<jsp:include page="../jsp/template/admin/main.jsp"></jsp:include>
+	<jsp:include page="../jsp/template/main.jsp"></jsp:include>
 	<!--end::Main-->
 	<!--begin::Javascript-->
 	<!--begin::Global Javascript Bundle(used by all pages)-->

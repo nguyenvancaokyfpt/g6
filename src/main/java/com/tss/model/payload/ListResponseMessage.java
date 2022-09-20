@@ -2,23 +2,25 @@ package com.tss.model.payload;
 
 public class ListResponseMessage {
     private int code;
-    private String status;
     private String message;
     private Object data;
-    private int total;
+    private int count;
+    private int currentPageNo;
     private int totalPages;
 
     public ListResponseMessage() {
     }
 
-    public ListResponseMessage(int code, String status, String message, Object data, int total, int totalPages) {
+    public ListResponseMessage(int code, String message, Object data, int count, int currentPageNo,
+            int totalPages) {
         this.code = code;
-        this.status = status;
         this.message = message;
         this.data = data;
-        this.total = total;
+        this.count = count;
+        this.currentPageNo = currentPageNo;
         this.totalPages = totalPages;
     }
+
 
     /**
      * @return int return the code
@@ -32,20 +34,6 @@ public class ListResponseMessage {
      */
     public void setCode(int code) {
         this.code = code;
-    }
-
-    /**
-     * @return String return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     /**
@@ -77,17 +65,31 @@ public class ListResponseMessage {
     }
 
     /**
-     * @return int return the total
+     * @return int return the count
      */
-    public int getTotal() {
-        return total;
+    public int getCount() {
+        return count;
     }
 
     /**
-     * @param total the total to set
+     * @param count the count to set
      */
-    public void setTotal(int total) {
-        this.total = total;
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    /**
+     * @return int return the currentPageNo
+     */
+    public int getCurrentPageNo() {
+        return currentPageNo;
+    }
+
+    /**
+     * @param currentPageNo the currentPageNo to set
+     */
+    public void setCurrentPageNo(int currentPageNo) {
+        this.currentPageNo = currentPageNo;
     }
 
     /**

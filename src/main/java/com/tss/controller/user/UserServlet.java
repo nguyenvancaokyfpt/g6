@@ -4,23 +4,21 @@
  */
 package com.tss.controller.user;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.helper.RequestHelper;
+import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ListResponseMessage;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 /**
  *
@@ -66,38 +64,16 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void get(HttpServletRequest request, HttpServletResponse response) {
+    private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserServiceImpl userService = new UserServiceImpl();
         JSONObject jsonObject = RequestHelper.getJsonData(request);
         User user = userService.findById(jsonObject.getInteger("user_id"));
         // response
-        try {
-            response.setContentType("application/json");
-            if(user != null) {
-                try (PrintWriter writer = response.getWriter()) {
-                    response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-                    ResponseMessage responseMessage = new ResponseMessage();
-                    responseMessage.setStatus("success");
-                    responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                    responseMessage.setMessage("Get user info success");
-                    responseMessage.setData(user);
-                    writer.write(JSONArray.toJSONString(responseMessage));
-                    writer.flush();
-                }
-            } else {
-                try (PrintWriter writer = response.getWriter()) {
-                    response.setStatus(HttpStatusCodeConstants.NOT_FOUND); // Not found
-                    ResponseMessage responseMessage = new ResponseMessage();
-                    responseMessage.setStatus("error");
-                    responseMessage.setCode(HttpStatusCodeConstants.NOT_FOUND);
-                    responseMessage.setMessage("User not found");
-                    writer.write(JSONArray.toJSONString(responseMessage));
-                    writer.flush();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (user != null) {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
+        } else {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.NOT_FOUND, "User not found"));
+        } 
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
@@ -109,35 +85,19 @@ public class UserServlet extends HttpServlet {
     private void create(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void list(HttpServletRequest request, HttpServletResponse response) {
+    private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserServiceImpl userService = new UserServiceImpl();
         JSONObject jsonObject = RequestHelper.getJsonData(request);
         String fullname = jsonObject.getString("fullname");
         String email = jsonObject.getString("email");
         int currentPageNo = jsonObject.getInteger("currentPageNo");
         int pageSize = jsonObject.getInteger("pageSize");
-        int total = userService.count(fullname, email);
-        int totalPages = (int) Math.ceil((double) total / pageSize);
+        int count = userService.count(fullname, email);
+        int totalPages = (int) Math.ceil((double) count / pageSize);
         int offset = (currentPageNo - 1) * pageSize;
         List<User> listUser = userService.List(fullname, email, offset, pageSize);
         // response
-        try {
-            response.setContentType("application/json");
-            try (PrintWriter writer = response.getWriter()) {
-                response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-                ListResponseMessage responseMessage = new ListResponseMessage();
-                responseMessage.setStatus("success");
-                responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                responseMessage.setMessage("Get list user success");
-                responseMessage.setData(listUser);
-                responseMessage.setTotal(total);
-                responseMessage.setTotalPages(totalPages);
-                writer.write(JSONArray.toJSONString(responseMessage));
-                writer.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ResponseHelper.sendResponse(response, new ListResponseMessage(HttpStatusCodeConstants.OK, "Get list user successfully", listUser, count, currentPageNo, totalPages));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the

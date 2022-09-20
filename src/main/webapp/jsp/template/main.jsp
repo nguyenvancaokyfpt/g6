@@ -46,7 +46,7 @@
 							<!--begin::Topbar-->
 							<div class="d-flex align-items-stretch flex-shrink-0">
 								<!--begin::Toolbar wrapper-->
-								<jsp:include page="../shared/toolbar-wrapper.jsp"></jsp:include>
+								<jsp:include page="shared/toolbar-wrapper.jsp"></jsp:include>
 								<!--end::Toolbar wrapper-->
 							</div>
 							<!--end::Topbar-->
@@ -59,15 +59,15 @@
 				<!--begin::Content-->
 				<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 					<!--begin::Toolbar-->
-					<jsp:include page="../shared/toolbar.jsp"></jsp:include>
+					<jsp:include page="shared/toolbar.jsp"></jsp:include>
 					<!--end::Toolbar-->
 					<!--begin::Post-->
-					<jsp:include page="post/home.jsp"></jsp:include>
+					<jsp:include page="admin/post/home.jsp"></jsp:include>
 					<!--end::Post-->
 				</div>
 				<!--end::Content-->
 				<!--begin::Footer-->
-                <jsp:include page="../shared/footer.jsp"></jsp:include>
+                <jsp:include page="shared/footer.jsp"></jsp:include>
 				<!--end::Footer-->
 			</div>
 			<!--end::Wrapper-->
