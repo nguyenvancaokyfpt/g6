@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2022 at 01:01 PM
+-- Generation Time: Sep 20, 2022 at 07:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -139,15 +139,15 @@ CREATE TABLE `permission` (
   `setting_id` int(11) NOT NULL,
   `can_get` tinyint(1) NOT NULL,
   `can_delete` tinyint(1) NOT NULL,
-  `can_add` tinyint(1) NOT NULL,
-  `can_edit` tinyint(1) NOT NULL
+  `can_create` tinyint(1) NOT NULL,
+  `can_update` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `permission`
 --
 
-INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_add`, `can_edit`) VALUES
+INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_create`, `can_update`) VALUES
 (1, 21, 1, 1, 1, 1),
 (2, 21, 1, 1, 1, 1),
 (2, 22, 1, 1, 1, 1),
@@ -177,7 +177,7 @@ CREATE TABLE `screen` (
 --
 
 INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
-(1, 'User Manager', '/user'),
+(1, 'User Management', '/user'),
 (2, 'User Profile', '/profile'),
 (3, 'Dashboard', '/dashboard');
 
@@ -324,9 +324,7 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
-(2, 21),
-(2, 23),
-(2, 26);
+(2, 21);
 
 -- --------------------------------------------------------
 
