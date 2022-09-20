@@ -3,12 +3,16 @@ package com.tss.helper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RequestURIConstants;
+import com.tss.constants.RoleConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.sercurity.Permission;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,25 +52,34 @@ public class RequestHelper {
 
     // Check is public access
     public static boolean isPublicAccess(String uri) {
-        for (String publicAccessUri : RequestURIConstants.PUBLIC_ACCESS) {
+        for (ScreenConstants screen : ScreenConstants.publicScreen()) {
             // Check if uri is public access
-            if (uri.equals(publicAccessUri)) {
+            if (uri.equals(screen.getPath())) {
                 return true;
             }
-            // Allow access to assets
-            if (uri.startsWith(RequestURIConstants.ASSETS)) {
+        }
+        // Allow access to assets
+        if (uri.startsWith(ScreenConstants.ASSETS.getPath())) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isExist(String uri) {
+        for (ScreenConstants screen : ScreenConstants.allScreen()) {
+            if (uri.equals(screen.getPath())) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isExist(String uri) {
-        for (String existUri : RequestURIConstants.ALL) {
-            if (uri.equals(existUri)) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isAllowedAccess(List<Permission> permissions, String uri) {
+        // for (Permission permission : permissions) {
+        //     if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
+        //         return true;
+        //     }
+        // }
+        return true;
     }
 }

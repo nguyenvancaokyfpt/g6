@@ -2,7 +2,7 @@ package com.tss.controller.sercurity;
 
 import com.tss.model.payload.ResponseMessage;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RequestURIConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
         // empty session
         request.getSession().invalidate();
         // redirect to index page
-        response.sendRedirect(request.getContextPath() + RequestURIConstants.INDEX);
+        response.sendRedirect(request.getContextPath() + ScreenConstants.INDEX.getPath());
     }
 
     /**
