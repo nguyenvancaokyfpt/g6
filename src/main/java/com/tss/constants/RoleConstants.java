@@ -1,20 +1,36 @@
 package com.tss.constants;
 
-public class RoleConstants {
-        
-        // Admin role
-        public static final String ADMIN = "ADMIN";
-        
-        // MANAGER role
-        public static final String MANAGER = "MANAGER";
+public enum RoleConstants {
 
-        // EXPERT role
-        public static final String EXPERT = "EXPERT";
+        ADMIN(21, "ADMIN"),
+        MANAGER(22, "MANAGER"),
+        EXPERT(23, "EXPERT"),
+        TRAINER(24, "TRAINER"),
+        SUPPORTER(25, "SUPPORTER"),
+        STUDENT(26, "STUDENT");
 
-        // TRAINER role
-        public static final String TRAINER = "TRAINER";
+        private int id;
+        private String title;
 
-        // SUPPORTER role
-        public static final String SUPPORTER = "SUPPORTER";
-        
+        RoleConstants(int id, String title) {
+                this.id = id;
+                this.title = title;
+        }
+
+        public int getId() {
+                return id;
+        }
+
+        public String getTitle() {
+                return title;
+        }
+
+        public static RoleConstants getRoleById(int id) {
+                for (RoleConstants role : RoleConstants.values()) {
+                        if (role.getId() == id) {
+                                return role;
+                        }
+                }
+                return null;
+        }
 }

@@ -1,4 +1,4 @@
-package com.tss.controller.user;
+package com.tss.controller;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -6,16 +6,13 @@ package com.tss.controller.user;
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.SessionConstants;
-import com.tss.helper.RequestHelper;
+import com.tss.constants.ActionConstants;
+import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
-import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -42,13 +39,13 @@ public class ProfileServlet extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "update":
+                case ActionConstants.UPDATE:
                     update(request, response);
                     break;
-                case "changePassword":
+                case ActionConstants.CHANGE_PASSWORD:
                     changePassword(request, response);
                     break;
-                case "get":
+                case ActionConstants.GET:
                     get(request, response);
                     break;
                 default:
@@ -61,31 +58,8 @@ public class ProfileServlet extends HttpServlet {
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
-            response.setContentType("application/json");
-            response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-            try (PrintWriter writer = response.getWriter()) {
-                ResponseMessage responseMessage = new ResponseMessage();
-                responseMessage.setStatus("success");
-                responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                responseMessage.setMessage("Get user info success");
-                responseMessage.setData(user);
-                writer.write(JSONArray.toJSONString(responseMessage));
-                writer.flush();
-            }
-        } catch (Exception e) {
-            response.setContentType("application/json");
-            response.setStatus(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR);
-            try (PrintWriter writer = response.getWriter()) {
-                ResponseMessage responseMessage = new ResponseMessage();
-                responseMessage.setStatus("error");
-                responseMessage.setCode(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR);
-                responseMessage.setMessage("Get user info failed");
-                writer.write(JSONArray.toJSONString(responseMessage));
-                writer.flush();
-            }
-        }
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
     }
 
     private void changePassword(HttpServletRequest request, HttpServletResponse response) {

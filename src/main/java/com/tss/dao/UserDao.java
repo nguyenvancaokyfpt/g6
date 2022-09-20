@@ -22,4 +22,8 @@ public interface UserDao {
 
     User findByEmail(Connection connection, String email) throws SQLException;
 
+    int count(Connection connection) throws SQLException;
+
+    int count(Connection connection, String fullName, String email) throws SQLException;
+
 }

@@ -1,18 +1,11 @@
 package com.tss.controller.sercurity;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.tss.helper.RequestHelper;
-import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
-import com.tss.service.impl.LoginServiceImpl;
-import com.tss.service.impl.UserServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RequestURIConstants;
-import com.tss.constants.SessionConstants;
+import com.tss.constants.ScreenConstants;
+import com.tss.helper.ResponseHelper;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,20 +27,7 @@ public class LogoutServlet extends HttpServlet {
         // empty session
         request.getSession().invalidate();
         // response
-        try {
-            response.setContentType("application/json");
-            response.setStatus(HttpStatusCodeConstants.SUCCESS); // Success
-            try (PrintWriter writer = response.getWriter()) {
-                ResponseMessage responseMessage = new ResponseMessage();
-                responseMessage.setStatus("success");
-                responseMessage.setCode(HttpStatusCodeConstants.SUCCESS);
-                responseMessage.setMessage("Logout success");
-                writer.write(JSONArray.toJSONString(responseMessage));
-                writer.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Logout successfully"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -66,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
         // empty session
         request.getSession().invalidate();
         // redirect to index page
-        response.sendRedirect(request.getContextPath() + RequestURIConstants.INDEX);
+        response.sendRedirect(request.getContextPath() + ScreenConstants.INDEX.getPath());
     }
 
     /**

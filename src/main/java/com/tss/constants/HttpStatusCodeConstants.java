@@ -16,7 +16,7 @@ public class HttpStatusCodeConstants {
     // --- 2xx Success ---
 
     // 200 OK
-    public static final int SUCCESS = 200;
+    public static final int OK = 200;
 
     // 201 Created
     public static final int CREATED = 201;

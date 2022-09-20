@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2022 at 05:24 PM
+-- Generation Time: Sep 20, 2022 at 07:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -137,11 +137,28 @@ CREATE TABLE `package` (
 CREATE TABLE `permission` (
   `screen_id` int(11) NOT NULL,
   `setting_id` int(11) NOT NULL,
-  `get_all_data` tinyint(1) NOT NULL,
+  `can_get` tinyint(1) NOT NULL,
   `can_delete` tinyint(1) NOT NULL,
-  `can_add` tinyint(1) NOT NULL,
-  `can_edit` tinyint(1) NOT NULL
+  `can_create` tinyint(1) NOT NULL,
+  `can_update` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_create`, `can_update`) VALUES
+(1, 21, 1, 1, 1, 1),
+(2, 21, 1, 1, 1, 1),
+(2, 22, 1, 1, 1, 1),
+(2, 23, 1, 1, 1, 1),
+(2, 24, 1, 1, 1, 1),
+(2, 25, 1, 1, 1, 1),
+(2, 26, 1, 1, 1, 1),
+(3, 21, 1, 1, 1, 1),
+(3, 22, 1, 1, 1, 1),
+(3, 23, 1, 1, 1, 1),
+(3, 24, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -160,7 +177,9 @@ CREATE TABLE `screen` (
 --
 
 INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
-(1, 'User Manager', '/user');
+(1, 'User Management', '/user'),
+(2, 'User Profile', '/profile'),
+(3, 'Dashboard', '/dashboard');
 
 -- --------------------------------------------------------
 
@@ -183,12 +202,13 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `status_id`, `description`) VALUES
-(1, NULL, 'User Role', NULL, NULL, 1, NULL),
+(1, 0, 'User Role', NULL, NULL, 1, NULL),
 (21, 1, 'ADMIN', NULL, NULL, 1, NULL),
 (22, 1, 'MANAGER', NULL, NULL, 1, NULL),
 (23, 1, 'EXPERT', NULL, NULL, 1, NULL),
 (24, 1, 'TRAINER', NULL, NULL, 1, NULL),
-(25, 1, 'SUPPORTER', NULL, NULL, 1, NULL);
+(25, 1, 'SUPPORTER', NULL, NULL, 1, NULL),
+(26, 1, 'STUDENT', NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -207,6 +227,7 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
+(0, 'Inactive', 'inactive'),
 (1, 'Active', 'active');
 
 -- --------------------------------------------------------
@@ -273,19 +294,19 @@ CREATE TABLE `user` (
   `password` varchar(500) NOT NULL,
   `avatar_url` varchar(500) NOT NULL,
   `status_id` int(11) NOT NULL,
-  `note` varchar(500) NOT NULL
+  `note` varchar(500) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_active` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', '123456', '/upload/avatar.png', 1, '1'),
-(3, 'test 1', '', 'test@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a'),
-(4, 'test 2', '', 'test@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a'),
-(5, 'test 3', '', 'test@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a'),
-(6, 'test 4', '', 'test2@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a');
+INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', '123456', '/upload/avatar.png', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(3, 'test', 'test', 'test@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50');
 
 -- --------------------------------------------------------
 
@@ -297,6 +318,13 @@ CREATE TABLE `user_role` (
   `user_id` int(11) NOT NULL,
   `setting_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_role`
+--
+
+INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
+(2, 21);
 
 -- --------------------------------------------------------
 
@@ -495,13 +523,13 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `subject`
