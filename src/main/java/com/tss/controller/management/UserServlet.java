@@ -1,17 +1,20 @@
-package com.tss.controller.user;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package com.tss.controller.management;
 
-import java.io.IOException;
-
+import com.alibaba.fastjson.JSONObject;
+import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.SessionConstants;
+import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
+import com.tss.model.payload.ListResponseMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.service.impl.UserServiceImpl;
+import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-public class ProfileServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,33 +41,64 @@ public class ProfileServlet extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "update":
+                case ActionConstants.LIST:
+                    list(request, response);
+                    break;
+                case ActionConstants.CREATE:
+                    create(request, response);
+                    break;
+                case ActionConstants.UPDATE:
                     update(request, response);
                     break;
-                case "changePassword":
-                    changePassword(request, response);
+                case ActionConstants.DELETE:
+                    delete(request, response);
                     break;
-                case "get":
+                case ActionConstants.GET:
                     get(request, response);
                     break;
                 default:
-                    get(request, response);
+                    list(request, response);
                     break;
             }
         } catch (NullPointerException e) {
-            get(request, response);
+            list(request, response);
         }
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
-        ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
+        UserServiceImpl userService = new UserServiceImpl();
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        User user = userService.findById(jsonObject.getInteger("user_id"));
+        // response
+        if (user != null) {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
+        } else {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.NOT_FOUND, "User not found"));
+        } 
     }
 
-    private void changePassword(HttpServletRequest request, HttpServletResponse response) {
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void create(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserServiceImpl userService = new UserServiceImpl();
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        String fullname = jsonObject.getString("fullname");
+        String email = jsonObject.getString("email");
+        int currentPageNo = jsonObject.getInteger("currentPageNo");
+        int pageSize = jsonObject.getInteger("pageSize");
+        int count = userService.count(fullname, email);
+        int totalPages = (int) Math.ceil((double) count / pageSize);
+        int offset = (currentPageNo - 1) * pageSize;
+        List<User> listUser = userService.List(fullname, email, offset, pageSize);
+        // response
+        ResponseHelper.sendResponse(response, new ListResponseMessage(HttpStatusCodeConstants.OK, "Get list user successfully", listUser, count, currentPageNo, totalPages));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
