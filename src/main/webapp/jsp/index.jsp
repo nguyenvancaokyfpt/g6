@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <!--begin::Head-->
@@ -20,7 +21,6 @@
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-
 <body id="kt_body" data-bs-spy="scroll" data-bs-target="#kt_landing_menu" data-bs-offset="200"
 	class="bg-white position-relative">
 	<!--begin::Main-->
@@ -137,9 +137,16 @@
 							</div>
 							<!--end::Menu wrapper-->
 							<!--begin::Toolbar-->
-							<div class="flex-equal text-end ms-1">
-								<a href="/login" class="btn btn-success">Sign In</a>
-							</div>
+							<c:if test="${logged==false}">
+								<div class="flex-equal text-end ms-1">
+									<a href="/login" class="btn btn-success">Sign In</a>
+								</div>
+							</c:if>
+							<c:if test="${logged==true}">
+								<div class="flex-equal text-end ms-1">
+									<a href="/dashboard" class="btn btn-success">Dashboard</a>
+								</div>
+							</c:if>
 							<!--end::Toolbar-->
 						</div>
 						<!--end::Wrapper-->

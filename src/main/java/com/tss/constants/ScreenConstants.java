@@ -6,6 +6,7 @@ public enum ScreenConstants {
     INDEX(1001, "index", "/"),
     LOGIN(1002, "login", "/login"),
     LOGOUT(1003, "logout", "/logout"),
+    REGISTER(1004, "register", "/register"),
 
 
     // Private screen

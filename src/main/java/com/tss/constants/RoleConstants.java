@@ -1,6 +1,7 @@
 package com.tss.constants;
 
 public enum RoleConstants {
+        ROLE(1, "ROLE"),
 
         ADMIN(21, "ADMIN"),
         MANAGER(22, "MANAGER"),

@@ -1,11 +1,15 @@
 package com.tss.controller;
 
 import java.io.IOException;
+
+import com.tss.constants.RoleConstants;
+import com.tss.constants.SessionConstants;
+import com.tss.model.User;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 public class IndexServlet extends HttpServlet {
 
@@ -20,6 +24,14 @@ public class IndexServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Because filter allows public access to index.jsp before check sessions
+        // So we need to check the session at here
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        if (user == null) {
+            request.setAttribute("logged", false);
+        } else {
+            request.setAttribute("logged", true);
+        }
         request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
     }
 

@@ -75,7 +75,7 @@ public class SercurityFilter implements Filter {
                 // get role from sessions
                 TreeSet<RoleConstants> roleNames = (TreeSet<RoleConstants>) request.getSession().getAttribute(SessionConstants.USER_ROLES);
                 // set the main role to request attribute
-                request.setAttribute("role", roleNames.first().getTitle().toLowerCase());
+                request.setAttribute(RoleConstants.ROLE.getTitle(), roleNames.first().getTitle().toLowerCase());
                 filterChain.doFilter(request, response);
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);
