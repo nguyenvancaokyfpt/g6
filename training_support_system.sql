@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2022 at 07:23 PM
+-- Generation Time: Sep 22, 2022 at 04:18 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -239,7 +239,7 @@ INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL,
   `subject_code` int(11) NOT NULL,
-  `subject_name` int(11) NOT NULL,
+  `subject_name` varchar(255) NOT NULL,
   `manager_id` int(11) NOT NULL,
   `expert_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
