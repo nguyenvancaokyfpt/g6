@@ -46,6 +46,9 @@ public class SercurityFilter implements Filter {
         String method = request.getMethod();
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
+        // set uri for request
+        request.setAttribute("requestURI", uri);
+
         // Allow public access
         if (RequestHelper.isPublicAccess(uri)) {
             filterChain.doFilter(request, response);

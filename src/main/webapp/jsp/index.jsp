@@ -4,7 +4,7 @@
 <!--begin::Head-->
 
 <head>
-	<base href="">
+	<base href="/">
 	<meta charset="utf-8" />
 	<title>Training Support System</title>
 	<meta name="description" content="Training Support System" />

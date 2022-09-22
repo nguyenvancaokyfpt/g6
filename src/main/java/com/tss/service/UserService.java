@@ -9,6 +9,8 @@ public interface UserService {
 
     List<User> List(String fullName, String email, int currentPageNo, int PageSize);
 
+    List<User> findAll(int start, int length, String search);
+
     User findById(int id);
 
     User findByUsername(String username);
@@ -24,4 +26,8 @@ public interface UserService {
     boolean del(int id);
 
     boolean modify(int id, User user);
+
+    int countAll();
+
+    int countAll(String search);
 }

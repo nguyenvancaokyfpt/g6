@@ -26,4 +26,10 @@ public interface UserDao {
 
     int count(Connection connection, String fullName, String email) throws SQLException;
 
+    java.util.List<User> findAll(Connection connection, int start, int length, String search) throws SQLException;
+
+    int countAll(Connection connection) throws SQLException;
+
+    int countAll(Connection connection, String search) throws SQLException;
+
 }

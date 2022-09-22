@@ -3,7 +3,9 @@ package com.tss.controller;
 import java.io.IOException;
 
 import com.tss.constants.RoleConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.helper.DebugHelper;
+import com.tss.helper.ResponseHelper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -26,6 +28,9 @@ public class DashboardServlet extends HttpServlet {
         // Get the main role
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/dashboard.jsp");
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+            ScreenConstants.USER_DASHBOARD
+        ));
         request.getRequestDispatcher("jsp/template.jsp").forward(request, response);
     }
 

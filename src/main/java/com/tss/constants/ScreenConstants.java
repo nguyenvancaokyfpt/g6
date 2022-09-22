@@ -10,9 +10,9 @@ public enum ScreenConstants {
 
 
     // Private screen
-    USER_MANAGEMENT(1, "User Management", "/user"),
-    USER_PROFILE(2, "User Profile", "/profile"),
-    USER_DASHBOARD(3, "User Dashboard", "/dashboard");
+    USER_MANAGEMENT(1, "User Management", "/management/user"),
+    USER_PROFILE(2, "Profile", "/profile"),
+    USER_DASHBOARD(3, "Dashboard", "/dashboard");
 
 
     private int id;
@@ -36,6 +36,11 @@ public enum ScreenConstants {
     public String getPath() {
         return path;
     }
+
+    public String getParentPath() {
+        return path.substring(0, path.lastIndexOf("/"));
+    }
+
 
     public static ScreenConstants getScreenById(int id) {
         for (ScreenConstants screen : ScreenConstants.values()) {

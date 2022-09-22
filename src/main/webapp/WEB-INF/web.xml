@@ -47,14 +47,14 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    <!-- UserServlet page -->
+    <!-- UserManagementServlet page -->
     <servlet>
-        <servlet-name>UserServlet</servlet-name>
-        <servlet-class>com.tss.controller.management.UserServlet</servlet-class>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <servlet-class>com.tss.controller.management.UserManagementServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/user</url-pattern>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/management/user</url-pattern>
     </servlet-mapping>
     <!-- Resource -->
     <servlet-mapping>

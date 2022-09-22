@@ -129,6 +129,51 @@ public class UserServiceImpl implements UserService {
         return count;
     }
 
+    @Override
+    public List<User> findAll(int start, int length, String search) {
+        Connection connection = null;
+        List<User> userList = null;
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.findAll(connection, start, length, search);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
+
+    @Override
+    public int countAll() {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.countAll(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
+    @Override
+    public int countAll(String search) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.countAll(connection, search);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
 
     
 

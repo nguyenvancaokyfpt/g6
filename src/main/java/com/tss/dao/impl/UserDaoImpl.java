@@ -35,9 +35,9 @@ public class UserDaoImpl implements UserDao {
                     user.setAvatarUrl(resultSet.getString("avatar_url"));
                     user.setStatusId(resultSet.getInt("status_id"));
                     user.setNote(resultSet.getString("note"));
-                    user.setCreatedAt(resultSet.getDate("created_at"));
-                    user.setUpdatedAt(resultSet.getDate("updated_at"));
-                    user.setLastActive(resultSet.getDate("last_active"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
                     userList.add(user);
                 }
             } catch (SQLException e) {
@@ -68,9 +68,9 @@ public class UserDaoImpl implements UserDao {
                     user.setAvatarUrl(resultSet.getString("avatar_url"));
                     user.setStatusId(resultSet.getInt("status_id"));
                     user.setNote(resultSet.getString("note"));
-                    user.setCreatedAt(resultSet.getDate("created_at"));
-                    user.setUpdatedAt(resultSet.getDate("updated_at"));
-                    user.setLastActive(resultSet.getDate("last_active"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -100,9 +100,9 @@ public class UserDaoImpl implements UserDao {
                     user.setAvatarUrl(resultSet.getString("avatar_url"));
                     user.setStatusId(resultSet.getInt("status_id"));
                     user.setNote(resultSet.getString("note"));
-                    user.setCreatedAt(resultSet.getDate("created_at"));
-                    user.setUpdatedAt(resultSet.getDate("updated_at"));
-                    user.setLastActive(resultSet.getDate("last_active"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -132,9 +132,9 @@ public class UserDaoImpl implements UserDao {
                     user.setAvatarUrl(resultSet.getString("avatar_url"));
                     user.setStatusId(resultSet.getInt("status_id"));
                     user.setNote(resultSet.getString("note"));
-                    user.setCreatedAt(resultSet.getDate("created_at"));
-                    user.setUpdatedAt(resultSet.getDate("updated_at"));
-                    user.setLastActive(resultSet.getDate("last_active"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -193,6 +193,84 @@ public class UserDaoImpl implements UserDao {
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM user WHERE full_name LIKE ? AND email LIKE ?";
             Object[] params = { "%" + fullName + "%", "%" + email + "%" };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public List<User> findAll(Connection connection, int start, int length, String search)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> userList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? OR email LIKE ? ORDER BY user_id DESC LIMIT ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    userList.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return userList;
+    }
+
+    @Override
+    public int countAll(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "SELECT COUNT(1) AS count FROM user";
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int countAll(Connection connection, String search) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "SELECT COUNT(1) AS count FROM user WHERE full_name LIKE ? OR email LIKE ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%" };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {

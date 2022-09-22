@@ -1,7 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+	<base href="/">
 	<meta charset="utf-8" />
 	<title>Training Support System</title>
 	<meta name="description" content="" />
@@ -18,7 +19,6 @@
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-
 <body id="kt_body"
 	class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
 	style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
@@ -94,7 +94,7 @@
 					</div>
 					<!--end::Toolbar-->
 					<!--begin::Post-->
-					
+
 					<jsp:include page="post/${jspPath}"></jsp:include>
 					<!--end::Post-->
 				</div>
@@ -135,7 +135,13 @@
 	<script src="assets/plugins/global/plugins.bundle.js"></script>
 	<script src="assets/js/scripts.bundle.js"></script>
 	<!--end::Global Javascript Bundle-->
+	<!--begin::Page Vendors Javascript(used by this page)-->
+	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+	<!--end::Page Vendors Javascript-->
 	<!--begin::Page Custom Javascript(used by this page)-->
+	<jsp:include page="shared/customJavascript.jsp"></jsp:include>
+
+	<!--TEST-->
 	<script src="assets/js/custom/pages/projects/list/list.js"></script>
 	<script src="assets/js/custom/modals/users-search.js"></script>
 	<script src="assets/js/custom/widgets.js"></script>
