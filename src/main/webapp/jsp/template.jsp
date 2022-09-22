@@ -19,9 +19,7 @@
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-<body id="kt_body"
-	class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
-	style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+<body id="kt_body" data-kt-aside-minimize="on" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
 	<!--begin::Main-->
 	<!--begin::Root-->
 	<div class="d-flex flex-column flex-root">
@@ -58,7 +56,7 @@
 						<!--end::Aside mobile toggle-->
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-							<a href="index.html" class="d-lg-none">
+							<a href="/index" class="d-lg-none">
 								<img alt="Logo" src="assets/media/logos/logo-3.svg" class="h-30px" />
 							</a>
 						</div>

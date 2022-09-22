@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.tss.constants.ScreenConstants" %>
+    <%@ page import="com.tss.constants.ScreenConstants" %>
 
         <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside"
             data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
@@ -8,7 +8,7 @@
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
-                <a href="index.html">
+                <a href="/">
                     <img alt="Logo" src="assets/media/logos/logo-1.svg" class="h-15px logo" />
                 </a>
                 <!--end::Logo-->
@@ -48,7 +48,7 @@
                     <!--begin::Menu-->
                     <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                         id="#kt_aside_menu" data-kt-menu="true">
-                        <div class="menu-item ${requestURI == ScreenConstants.USER_DASHBOARD.getPath() ? 'show' : ''}">
+                        <div class="menu-item ${screen == ScreenConstants.USER_DASHBOARD ? 'show' : ''}">
                             <a class="menu-link" href="${ScreenConstants.USER_DASHBOARD.getPath()}">
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon | path: icons/duotone/Design/PenAndRuller.svg-->
