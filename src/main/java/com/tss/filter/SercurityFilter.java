@@ -46,8 +46,11 @@ public class SercurityFilter implements Filter {
         String method = request.getMethod();
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
-        // set uri for request
-        request.setAttribute("requestURI", uri);
+        // Detect screen for request
+        ScreenConstants screen = ScreenConstants.findScreenByPath(uri);
+        if (screen != null) {
+            request.setAttribute("screen", screen);
+        }
 
         // Allow public access
         if (RequestHelper.isPublicAccess(uri)) {

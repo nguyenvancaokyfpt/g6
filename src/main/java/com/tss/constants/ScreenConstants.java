@@ -75,4 +75,14 @@ public enum ScreenConstants {
         return publicScreen;
     }
 
+    // find screen by path
+    public static ScreenConstants findScreenByPath(String path) {
+        for (ScreenConstants screen : ScreenConstants.values()) {
+            if (screen.getPath().equals(path)) {
+                return screen;
+            }
+        }
+        return null;
+    }
+
 }
