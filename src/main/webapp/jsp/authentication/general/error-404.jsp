@@ -3,19 +3,19 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
+		<base href="/">
 		<meta charset="utf-8" />
 		<title>404 Not Found</title>
-		<meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
-		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
-		<link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/media/logos/favicon.ico" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="<%=request.getContextPath()%>/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="<%=request.getContextPath()%>/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -29,7 +29,7 @@
 				<div class="d-flex flex-column flex-column-fluid text-center p-10 py-lg-20">
 					<!--begin::Logo-->
 					<a href="/" class="mb-10 pt-lg-20">
-						<img alt="Logo" src="<%=request.getContextPath()%>/assets/media/logos/logo-2-dark.svg" class="h-50px mb-5" />
+						<img alt="Logo" src="assets/media/logos/logo-2-dark.svg" class="h-50px mb-5" />
 					</a>
 					<!--end::Logo-->
 					<!--begin::Wrapper-->
@@ -67,8 +67,8 @@
 		<!--end::Main-->
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->
-		<script src="<%=request.getContextPath()%>/assets/plugins/global/plugins.bundle.js"></script>
-		<script src="<%=request.getContextPath()%>/assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
 		<!--end::Global Javascript Bundle-->
 		<!--end::Javascript-->
 	</body>
