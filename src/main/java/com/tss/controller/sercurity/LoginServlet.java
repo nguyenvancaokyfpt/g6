@@ -1,17 +1,21 @@
 package com.tss.controller.sercurity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
 import com.tss.service.LoginService;
+import com.tss.service.PermissionService;
 import com.tss.service.RoleService;
 import com.tss.service.UserService;
 import com.tss.service.impl.LoginServiceImpl;
 import com.tss.service.impl.RoleServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
+import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.SessionConstants;
@@ -31,11 +35,13 @@ public class LoginServlet extends HttpServlet {
     private LoginService loginService;
     private UserService userService;
     private RoleService roleService;
+    private PermissionService permissionService;
 
     public LoginServlet() {
         loginService = new LoginServiceImpl();
         userService = new UserServiceImpl();
         roleService = new RoleServiceImpl();
+        permissionService = new PermissionServiceImpl();
     }
     
 
@@ -47,8 +53,6 @@ public class LoginServlet extends HttpServlet {
             String email = jsonObject.getString("email");
             String password = jsonObject.getString("password");
             
-            // output payload
-            System.out.println(request.getParameterMap());
             if (loginService.login(email, password)) {
                 // get user info
                 User user = userService.findByEmail(email);
@@ -60,6 +64,18 @@ public class LoginServlet extends HttpServlet {
                 TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
                 // set role list to session
                 request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
+                // get all permissions of user
+                List<Permission> permissions = null;
+                for (RoleConstants roleConstants : roleNames) {
+                    List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
+                    if (permissions == null) {
+                        permissions = temp;
+                    } else {
+                        permissions.addAll(temp);
+                    }
+                }
+                // set permission list to session
+                request.getSession().setAttribute(SessionConstants.USER_PERMISSIONS, permissions);
                 // response
                 ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
             } else {

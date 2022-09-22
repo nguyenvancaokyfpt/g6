@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2022 at 01:01 PM
+-- Generation Time: Sep 22, 2022 at 04:10 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -139,15 +139,15 @@ CREATE TABLE `permission` (
   `setting_id` int(11) NOT NULL,
   `can_get` tinyint(1) NOT NULL,
   `can_delete` tinyint(1) NOT NULL,
-  `can_add` tinyint(1) NOT NULL,
-  `can_edit` tinyint(1) NOT NULL
+  `can_create` tinyint(1) NOT NULL,
+  `can_update` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `permission`
 --
 
-INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_add`, `can_edit`) VALUES
+INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_create`, `can_update`) VALUES
 (1, 21, 1, 1, 1, 1),
 (2, 21, 1, 1, 1, 1),
 (2, 22, 1, 1, 1, 1),
@@ -177,7 +177,7 @@ CREATE TABLE `screen` (
 --
 
 INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
-(1, 'User Manager', '/user'),
+(1, 'User Management', '/management/user'),
 (2, 'User Profile', '/profile'),
 (3, 'Dashboard', '/dashboard');
 
@@ -239,7 +239,7 @@ INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL,
   `subject_code` int(11) NOT NULL,
-  `subject_name` int(11) NOT NULL,
+  `subject_name` varchar(255) NOT NULL,
   `manager_id` int(11) NOT NULL,
   `expert_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
@@ -305,8 +305,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', '123456', '/upload/avatar.png', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
-(3, 'test', 'test', 'test@mail.com', '123456789', '123456', '/upload/avatar.png', 1, 'a', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50');
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', '123456', 'assets/media/avatars/150-8.jpg', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(3, 'test', 'test', 'test@mail.com', '123456789', '123456', 'assets/media/avatars/150-7.jpg', 1, 'a', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50');
 
 -- --------------------------------------------------------
 
@@ -324,9 +324,7 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
-(2, 21),
-(2, 23),
-(2, 26);
+(2, 21);
 
 -- --------------------------------------------------------
 
@@ -525,7 +523,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `setting`

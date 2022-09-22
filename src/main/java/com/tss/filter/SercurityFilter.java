@@ -4,17 +4,21 @@
  */
 package com.tss.filter;
 
-import com.alibaba.fastjson.JSONArray;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RequestURIConstants;
+import com.tss.constants.RoleConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.constants.SessionConstants;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
+import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
-
+import com.tss.model.sercurity.Permission;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import java.util.TreeSet;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -40,6 +44,13 @@ public class SercurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
         String method = request.getMethod();
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+
+        // Detect screen for request
+        ScreenConstants screen = ScreenConstants.findScreenByPath(uri);
+        if (screen != null) {
+            request.setAttribute("screen", screen);
+        }
 
         // Allow public access
         if (RequestHelper.isPublicAccess(uri)) {
@@ -56,25 +67,30 @@ public class SercurityFilter implements Filter {
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
         if (user == null) {
             if (method.equals("GET")) {
-                response.sendRedirect(RequestURIConstants.LOGIN);
+                response.sendRedirect(ScreenConstants.LOGIN.getPath());
             } else {
-                try {
-                    response.setContentType("application/json");
-                    response.setStatus(HttpStatusCodeConstants.UNAUTHORIZED); // Unauthorized
-                    try (PrintWriter writer = response.getWriter()) {
-                        ResponseMessage responseMessage = new ResponseMessage();
-                        responseMessage.setStatus("error");
-                        responseMessage.setCode(HttpStatusCodeConstants.UNAUTHORIZED);
-                        responseMessage.setMessage("Unauthorized " + uri);
-                        writer.write(JSONArray.toJSONString(responseMessage));
-                        writer.flush();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED, "Unauthorized access to " + uri));
             }
         } else {
-            filterChain.doFilter(request, response);
+            // get user permissions from sessions
+            List<Permission> permissions = (List<Permission>) request.getSession().getAttribute(SessionConstants.USER_PERMISSIONS);
+            
+            // Check permission
+            if (RequestHelper.isAllowedAccess(permissions, uri, action)) {
+                DebugHelper.log("ALLOWED ACCESS TO " + uri);
+                // get role from sessions
+                TreeSet<RoleConstants> roleNames = (TreeSet<RoleConstants>) request.getSession().getAttribute(SessionConstants.USER_ROLES);
+                // set the main role to request attribute
+                request.setAttribute(RoleConstants.ROLE.getTitle(), roleNames.first().getTitle().toLowerCase());
+                filterChain.doFilter(request, response);
+            } else {
+                DebugHelper.log("DENIED ACCESS TO " + uri);
+                if (method.equals("GET")) {
+                    request.getRequestDispatcher("jsp/authentication/general/error-500.jsp").forward(request, response);
+                } else {
+                    ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
+                }
+            }
         }
     }
 
