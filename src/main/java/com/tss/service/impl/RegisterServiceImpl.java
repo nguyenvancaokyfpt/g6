@@ -7,6 +7,7 @@ import com.tss.constants.RoleConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
 import com.tss.dao.impl.UserDaoImpl;
+import com.tss.helper.PasswordHelper;
 import com.tss.model.User;
 import com.tss.service.RegisterService;
 import com.tss.service.RoleService;
@@ -33,6 +34,8 @@ public class RegisterServiceImpl implements RegisterService {
         boolean flag = false;
         // random username for user from email
         user.setUsername(user.getEmail().substring(0, user.getEmail().indexOf("@")) + (int) (Math.random() * 1000000));
+        // encrypt password
+        user.setPassword(PasswordHelper.generateSecurePassword(user.getPassword()));
         try {
             connection = BaseDao.getConnection();
             connection.setAutoCommit(false);

@@ -55,7 +55,6 @@ public class RoleServiceImpl implements RoleService {
             flag = userRoleDao.addRoleForUserByUserEmail(connection, email, student.getId());
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
             try {
                 connection.rollback();
             } catch (SQLException e1) {

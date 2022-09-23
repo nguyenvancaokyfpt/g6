@@ -86,7 +86,7 @@ public class UserRoleDaoImpl implements UserRoleDao {
         PreparedStatement preparedStatement = null;
         boolean flag = false;
         if (connection != null) {
-            String sql = "insert into user_role(user_id,setting_id) values((select id from user where email = ?),?)";
+            String sql = "insert into user_role(user_id,setting_id) values((select user_id from user where email = ?),?)";
             Object[] params = { email, id };
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
@@ -94,6 +94,7 @@ public class UserRoleDaoImpl implements UserRoleDao {
                     flag = true;
                 }
             } catch (SQLException e) {
+                System.out.println(e.getMessage());
                 e.printStackTrace();
             } finally {
                 BaseDao.closeResource(null, preparedStatement, null);

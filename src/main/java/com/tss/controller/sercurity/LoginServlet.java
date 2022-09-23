@@ -1,6 +1,7 @@
 package com.tss.controller.sercurity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tss.helper.CaptchaHelper;
 import com.tss.helper.DebugHelper;
 import com.tss.helper.GoogleLoginHelper;
 import com.tss.helper.RequestHelper;
@@ -22,6 +23,7 @@ import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.SessionConstants;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.TreeSet;
@@ -52,6 +54,17 @@ public class LoginServlet extends HttpServlet {
 
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
+        String captcha = jsonObject.getString("captcha");
+        // get captcha from session
+        String captchaSession = (String) request.getSession().getAttribute(SessionConstants.CAPTCHA_STRING);
+        // check captcha
+        if (!captcha.equals(captchaSession)) {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                    "Captcha is not correct"));
+            return;
+        }
+        // destroy captcha session
+        request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
 
         if (loginService.login(email, password)) {
             // get user info
@@ -102,9 +115,17 @@ public class LoginServlet extends HttpServlet {
         if (request.getSession().getAttribute(SessionConstants.USER_SESSION) != null) {
             response.sendRedirect("dashboard");
         } else {
-
             GoogleClientSecret googleClientSecret = GoogleLoginHelper.loadClientSecrets();
             request.setAttribute("googleClientSecret", googleClientSecret);
+
+            // Captcha generate
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            BufferedImage bufferedImage = captchaHelper.getCaptchaImage();
+            String base64Image = captchaHelper.convertImageToBase64(bufferedImage);
+            // set captcha text to session
+            request.getSession().setAttribute(SessionConstants.CAPTCHA_STRING, captchaHelper.getCaptchaString());
+            // set captcha image to request
+            request.setAttribute("captchaImage", base64Image);
             request.getRequestDispatcher("/jsp/authentication/login.jsp").forward(request, response);
         }
 

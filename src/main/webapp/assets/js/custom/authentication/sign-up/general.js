@@ -50,6 +50,13 @@ var KTSignupGeneral = function () {
                             }
                         }
                     },
+                    "captcha" : {
+                        validators: {
+                            notEmpty: {
+                                message: "The capcha is required"
+                            }
+                        }
+                    },
                     toc: {
                         validators: {
                             notEmpty: {
@@ -79,6 +86,7 @@ var KTSignupGeneral = function () {
                                 email: e.querySelector('[name="email"]').value,
                                 password: e.querySelector('[name="password"]').value,
                                 name: e.querySelector('[name="user-fullname"]').value,
+                                captcha: e.querySelector('[name="captcha"]').value
                             }).then(function (response) {
                                 Swal.fire({
                                     text: "You have successfully signed up!",
