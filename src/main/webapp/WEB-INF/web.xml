@@ -27,7 +27,7 @@
     </servlet>
     <servlet>
         <servlet-name>WebServiceServlet</servlet-name>
-        <servlet-class>com.tss.controller.WebServiceServlet</servlet-class>
+        <servlet-class>com.tss.controller.WebContactServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>

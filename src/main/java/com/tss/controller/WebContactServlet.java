@@ -4,19 +4,14 @@
  */
 package com.tss.controller;
 
-import com.tss.controller.management.*;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
-import com.tss.model.User;
 import com.tss.model.WebContact;
 import com.tss.model.payload.DataTablesMessage;
-import com.tss.model.payload.ListResponseMessage;
-import com.tss.model.payload.ResponseMessage;
 import com.tss.service.WebContactService;
 import com.tss.service.impl.WebContactServiceImpl;
 import java.io.IOException;
@@ -28,13 +23,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-public class WebServiceServlet extends HttpServlet {
+public class WebContactServlet extends HttpServlet {
 
-    private WebContactService webService;
+    private WebContactService webContactService;
 
     @Override
     public void init() throws ServletException {
-        webService = new WebContactServiceImpl();
+        webContactService = new WebContactServiceImpl();
     }
 
 
@@ -106,9 +101,9 @@ public class WebServiceServlet extends HttpServlet {
             search = request.getParameter("search[value]");
             draw = Integer.parseInt(request.getParameter("draw"));
         }
-        List<WebContact> users = webService.findAll(start, length, search);
-        int recordsTotal = webService.countAll();
-        int recordsFiltered = webService.countAll(search);
+        List<WebContact> users = webContactService.findAll(start, length, search);
+        int recordsTotal = webContactService.countAll();
+        int recordsFiltered = webContactService.countAll(search);
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));        
     }
@@ -121,7 +116,7 @@ public class WebServiceServlet extends HttpServlet {
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/webcontact.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-            "apps/Web-Contact/table-edited.js"
+            "apps/web-contact/table-edited.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
             ScreenConstants.USER_DASHBOARD,

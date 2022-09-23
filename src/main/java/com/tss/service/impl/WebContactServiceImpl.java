@@ -7,7 +7,6 @@ package com.tss.service.impl;
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.WebContactDaoImpl;
 import com.tss.model.WebContact;
-import com.tss.model.WebContact;
 import com.tss.service.WebContactService;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class WebContactServiceImpl implements WebContactService {
     }
 
     @Override
-    public java.util.List<WebContact> List(String fullName, String email, int currentPageNo, int PageSize) {
+    public List<WebContact> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
         List<WebContact> webList = null;
 
@@ -44,7 +43,7 @@ public class WebContactServiceImpl implements WebContactService {
     }
 
     @Override
-    public java.util.List<WebContact> findAll(int start, int length, String search) {
+    public List<WebContact> findAll(int start, int length, String search) {
         Connection connection = null;
         List<WebContact> webList = null;
         try {
