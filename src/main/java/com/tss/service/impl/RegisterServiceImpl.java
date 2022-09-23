@@ -22,11 +22,7 @@ public class RegisterServiceImpl implements RegisterService {
         roleService = new RoleServiceImpl();
     }
 
-    @Override
-    public boolean registerUserWithGoogle(User user) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+
 
     @Override
     public boolean register(User user) {
@@ -40,6 +36,43 @@ public class RegisterServiceImpl implements RegisterService {
             connection = BaseDao.getConnection();
             connection.setAutoCommit(false);
             flag = userDao.register(connection, user);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        if (flag) {
+            // set default role for user
+            if (roleService.addRoleForUserByUserEmail(user.getEmail(), RoleConstants.STUDENT)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean registerUserWithGoogle(User user) {
+        Connection connection = null;
+        boolean flag = false;
+        // random username for user from email
+        user.setUsername(user.getEmail().substring(0, user.getEmail().indexOf("@")) + (int) (Math.random() * 1000000));
+        // random string
+        String randomString = PasswordHelper.generateRandomString(10);
+        // encrypt password
+        user.setPassword(PasswordHelper.generateSecurePassword(randomString));
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = userDao.registerWithGoogle(connection, user);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();

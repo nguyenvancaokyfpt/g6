@@ -37,4 +37,15 @@ public class PasswordHelper {
 
         return finalval;
     }
+
+    public static String generateRandomString(int i) {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        while (salt.length() < i) { // length of the random string.
+            int index = (int) (Math.random() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
 }

@@ -4,7 +4,10 @@
  */
 package com.tss.model;
 
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -215,6 +218,22 @@ public class User {
      */
     public void setLastActive(Date lastActive) {
         this.lastActive = lastActive;
+    }
+
+    // get first name
+    public String getFirstName() {
+        List<String> parts = Arrays.asList(fullname.split(" "));
+        String firstName = "";
+        for (int i = 0; i < parts.size()-1; i++) {
+            firstName += parts.get(i) + " ";
+        }
+        return firstName;
+    }
+
+    // get last name
+    public String getLastName() {
+        List<String> parts = Arrays.asList(fullname.split(" "));
+        return parts.get(parts.size()-1);
     }
 
 }

@@ -74,7 +74,10 @@ public class SercurityFilter implements Filter {
         } else {
             // get user permissions from sessions
             List<Permission> permissions = (List<Permission>) request.getSession().getAttribute(SessionConstants.USER_PERMISSIONS);
-            
+
+            // set user information to request attribute
+            request.setAttribute("user", user);
+
             // Check permission
             if (RequestHelper.isAllowedAccess(permissions, uri, action)) {
                 DebugHelper.log("ALLOWED ACCESS TO " + uri);

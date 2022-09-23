@@ -34,4 +34,7 @@ public interface UserDao {
 
     boolean register(Connection connection, User user) throws SQLException;
 
+    boolean registerWithGoogle(Connection connection, User user) throws SQLException;
+    
+
 }

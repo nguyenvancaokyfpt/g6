@@ -72,7 +72,32 @@ public class LoginWithGoogleServlet extends HttpServlet {
         // get user info
         User user = userService.findByEmail(userGoogle.getEmail());
         if (user == null) {
-            registerService.registerUserWithGoogle(userGoogle);
+            if (registerService.registerUserWithGoogle(userGoogle)) {
+                User newUser = userService.findByEmail(userGoogle.getEmail());
+                // set user info to session
+                request.getSession().setAttribute(SessionConstants.USER_SESSION, newUser);
+                // get all roles of user
+                List<UserRole> roles = roleService.findByUserId(newUser.getUserId());
+                // Convert to String list
+                TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
+                // set role list to session
+                request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
+                // get all permissions of user
+                List<Permission> permissions = null;
+                for (RoleConstants roleConstants : roleNames) {
+                    List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
+                    if (permissions == null) {
+                        permissions = temp;
+                    } else {
+                        permissions.addAll(temp);
+                    }
+                }
+                // set permission list to session
+                request.getSession().setAttribute(SessionConstants.USER_PERMISSIONS, permissions);
+                // response
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", newUser));
+            }
         } else {
             // set user info to session
             request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
