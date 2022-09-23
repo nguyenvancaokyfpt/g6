@@ -27,7 +27,7 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: 'userId' },
                 { data: 'avatarUrl' },
-                { data: 'note' },
+                { data: 'userId' },
                 { data: 'lastActive' },
                 { data: 'createdAt' },
                 { data: 'userId' },
