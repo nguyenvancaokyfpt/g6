@@ -77,9 +77,10 @@ public class RequestHelper {
     }
 
     public static boolean isAllowedAccess(List<Permission> permissions, String uri, String action) {
-        try {
-            for (Permission permission : permissions) {
-                if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
+        for (Permission permission : permissions) {
+            ScreenConstants screen = ScreenConstants.getScreenById(permission.getScreenId());
+            if (screen != null) {
+                if (screen.getPath().equals(uri)) {
                     switch (action) {
                         case ActionConstants.DELETE:
                             if (permission.isCanDelete()) {
@@ -108,8 +109,6 @@ public class RequestHelper {
                     }
                 }
             }
-        } catch (Exception e) {
-            return false;
         }
         return false;
     }
