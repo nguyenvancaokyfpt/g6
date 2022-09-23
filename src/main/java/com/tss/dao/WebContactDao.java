@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Dat Lai
  */
-public interface WebContactServiceDao {
+public interface WebContactDao {
      List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException;
 
     WebContact findById(Connection connection, int userId) throws SQLException;

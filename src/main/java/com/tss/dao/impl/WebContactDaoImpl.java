@@ -5,7 +5,6 @@
 package com.tss.dao.impl;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.WebContactServiceDao;
 import com.tss.model.User;
 import com.tss.model.WebContact;
 import java.sql.Connection;
@@ -14,12 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.tss.dao.WebContactDao;
 
 /**
  *
  * @author Dat Lai
  */
-public class WebContactServiceDaoImpl implements WebContactServiceDao {
+public class WebContactDaoImpl implements WebContactDao {
 
     @Override
     public List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException {
