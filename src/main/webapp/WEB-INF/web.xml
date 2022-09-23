@@ -25,6 +25,14 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.tss.controller.sercurity.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>com.tss.controller.sercurity.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginWithGoogleServlet</servlet-name>
+        <servlet-class>com.tss.controller.sercurity.LoginWithGoogleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -72,6 +80,14 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/resetPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginWithGoogleServlet</servlet-name>
+        <url-pattern>/loginWithGoogle</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

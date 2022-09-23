@@ -81,7 +81,25 @@ public class UserRoleDaoImpl implements UserRoleDao {
         return 0;
     }
 
+    @Override
+    public boolean addRoleForUserByUserEmail(Connection connection, String email, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        boolean flag = false;
+        if (connection != null) {
+            String sql = "insert into user_role(user_id,setting_id) values((select id from user where email = ?),?)";
+            Object[] params = { email, id };
+            try {
+                int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
+                if (updateRows > 0) {
+                    flag = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return flag;
+    }
 
-
-    
 }

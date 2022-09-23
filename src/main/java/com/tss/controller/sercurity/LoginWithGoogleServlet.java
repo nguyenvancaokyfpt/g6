@@ -5,20 +5,27 @@
 package com.tss.controller.sercurity;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
 import com.tss.constants.SessionConstants;
 import com.tss.helper.GoogleLoginHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
-import com.tss.model.sercurity.GoogleClientSecret;
+import com.tss.model.sercurity.Permission;
+import com.tss.model.sercurity.UserRole;
+import com.tss.service.PermissionService;
 import com.tss.service.RegisterService;
+import com.tss.service.RoleService;
 import com.tss.service.UserService;
+import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.service.impl.RegisterServiceImpl;
+import com.tss.service.impl.RoleServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
@@ -30,15 +37,19 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-public class RegisterServlet extends HttpServlet {
+public class LoginWithGoogleServlet extends HttpServlet {
 
     private UserService userService;
     private RegisterService registerService;
+    private RoleService roleService;
+    private PermissionService permissionService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
         registerService = new RegisterServiceImpl();
+        roleService = new RoleServiceImpl();
+        permissionService = new PermissionServiceImpl();
     }
 
     /**
@@ -53,26 +64,40 @@ public class RegisterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JSONObject jsonObject = RequestHelper.getJsonData(request);
-        String email = jsonObject.getString("email");
-        String password = jsonObject.getString("password");
-        String name = jsonObject.getString("name");
-
-        // check if email is existed
-        if (userService.findByEmail(email) != null) {
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.CONFLICT,
-                    "Email is existed"));
-            return;
-        }
-
-        // register
-        if (registerService.register(new User(email, password, name))) {
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK,
-                    "Register successfully"));
+        String accessToken = jsonObject.getString("credential");
+        User userGoogle = GoogleLoginHelper.getUserInfo(accessToken);
+        // check if user is existed
+        // if not, create new user
+        // else, login
+        // get user info
+        User user = userService.findByEmail(userGoogle.getEmail());
+        if (user == null) {
+            registerService.registerUserWithGoogle(userGoogle);
         } else {
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR,
-                    "Register failed"));
+            // set user info to session
+            request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
+            // get all roles of user
+            List<UserRole> roles = roleService.findByUserId(user.getUserId());
+            // Convert to String list
+            TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
+            // set role list to session
+            request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
+            // get all permissions of user
+            List<Permission> permissions = null;
+            for (RoleConstants roleConstants : roleNames) {
+                List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
+                if (permissions == null) {
+                    permissions = temp;
+                } else {
+                    permissions.addAll(temp);
+                }
+            }
+            // set permission list to session
+            request.getSession().setAttribute(SessionConstants.USER_PERMISSIONS, permissions);
+            // response
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -88,15 +113,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // if logged in, redirect to dashboard
-        if (request.getSession().getAttribute(SessionConstants.USER_SESSION) != null) {
-            response.sendRedirect("dashboard");
-        } else {
-
-            GoogleClientSecret googleClientSecret = GoogleLoginHelper.loadClientSecrets();
-            request.setAttribute("googleClientSecret", googleClientSecret);
-            request.getRequestDispatcher("/jsp/authentication/sign-up.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

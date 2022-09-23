@@ -7,6 +7,8 @@ public enum ScreenConstants {
     LOGIN(1002, "login", "/login"),
     LOGOUT(1003, "logout", "/logout"),
     REGISTER(1004, "register", "/register"),
+    LOGIN_WITH_GOOGLE(1005, "loginWithGoogle", "/loginWithGoogle"),
+    RESET_PASSWORD(1006, "resetPassword", "/resetPassword"),
 
 
     // Private screen

@@ -32,4 +32,6 @@ public interface UserDao {
 
     int countAll(Connection connection, String search) throws SQLException;
 
+    boolean register(Connection connection, User user) throws SQLException;
+
 }

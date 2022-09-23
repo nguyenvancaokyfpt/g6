@@ -46,4 +46,25 @@ public class RoleServiceImpl implements RoleService {
         return roleSet;
     }
 
+    @Override
+    public boolean addRoleForUserByUserEmail(String email, RoleConstants student) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = userRoleDao.addRoleForUserByUserEmail(connection, email, student.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
 }

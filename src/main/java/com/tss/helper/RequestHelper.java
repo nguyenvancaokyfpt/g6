@@ -77,38 +77,39 @@ public class RequestHelper {
     }
 
     public static boolean isAllowedAccess(List<Permission> permissions, String uri, String action) {
-        // DebugHelper.log(permissions);
-        // System.out.println(uri);
-        // System.out.println(action);
-        for (Permission permission : permissions) {
-            if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
-                switch (action) {
-                    case ActionConstants.DELETE:
-                        if (permission.isCanDelete()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    case ActionConstants.UPDATE:
-                        if (permission.isCanUpdate()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    case ActionConstants.CREATE:
-                        if (permission.isCanCreate()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    default:
-                        if (permission.isCanGet()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+        try {
+            for (Permission permission : permissions) {
+                if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
+                    switch (action) {
+                        case ActionConstants.DELETE:
+                            if (permission.isCanDelete()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        case ActionConstants.UPDATE:
+                            if (permission.isCanUpdate()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        case ActionConstants.CREATE:
+                            if (permission.isCanCreate()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        default:
+                            if (permission.isCanGet()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                    }
                 }
             }
+        } catch (Exception e) {
+            return false;
         }
         return false;
     }

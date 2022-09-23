@@ -11,5 +11,7 @@ public interface RoleService {
     List<UserRole> findByUserId(int userId);
 
     TreeSet<RoleConstants> convertRoleListToRoleConstantsList(List<UserRole> roles);
+
+    boolean addRoleForUserByUserEmail(String email, RoleConstants student);
     
 }
