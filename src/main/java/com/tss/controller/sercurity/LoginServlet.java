@@ -2,7 +2,6 @@ package com.tss.controller.sercurity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.helper.CaptchaHelper;
-import com.tss.helper.DebugHelper;
 import com.tss.helper.GoogleLoginHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
@@ -63,8 +62,6 @@ public class LoginServlet extends HttpServlet {
                     "Captcha is not correct"));
             return;
         }
-        // destroy captcha session
-        request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
 
         if (loginService.login(email, password)) {
             // get user info
@@ -94,7 +91,7 @@ public class LoginServlet extends HttpServlet {
                     new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
         } else {
             ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Login failed"));
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Your information is incorrect. Please try again"));
         }
     }
 

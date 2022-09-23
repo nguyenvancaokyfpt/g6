@@ -67,8 +67,6 @@ public class RegisterServlet extends HttpServlet {
                     "Captcha is not correct"));
             return;
         }
-        // destroy captcha session
-        request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
 
         // check if email is existed
         if (userService.findByEmail(email) != null) {

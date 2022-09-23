@@ -116,7 +116,9 @@ public class WebContactServlet extends HttpServlet {
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/webcontact.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-            "apps/web-contact/table-edited.js"
+            "apps/web-contact/table-edited.js",
+            "apps/web-contact/export-web-contact.js",
+            "apps/web-contact/add.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
             ScreenConstants.USER_DASHBOARD,
