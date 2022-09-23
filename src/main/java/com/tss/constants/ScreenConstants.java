@@ -12,6 +12,7 @@ public enum ScreenConstants {
     USER_PROFILE(2, "Profile", "/profile"),
     USER_DASHBOARD(3, "Dashboard", "/dashboard"),
     
+    USER_DETAIL(6, "User Detail", "/management/userdetails"),
     WEB_CONTACT(7, "Web Contact", "/webcontact/webcontactlist");
 
     private int id;
