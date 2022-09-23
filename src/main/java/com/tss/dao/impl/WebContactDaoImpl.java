@@ -5,7 +5,6 @@
 package com.tss.dao.impl;
 
 import com.tss.dao.BaseDao;
-import com.tss.model.User;
 import com.tss.model.WebContact;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

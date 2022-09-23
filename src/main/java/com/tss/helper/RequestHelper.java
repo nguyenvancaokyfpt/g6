@@ -4,15 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
-import com.tss.constants.ActionConstants;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.sercurity.Permission;
 
