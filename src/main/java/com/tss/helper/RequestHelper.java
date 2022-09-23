@@ -77,9 +77,6 @@ public class RequestHelper {
     }
 
     public static boolean isAllowedAccess(List<Permission> permissions, String uri, String action) {
-        // DebugHelper.log(permissions);
-        // System.out.println(uri);
-        // System.out.println(action);
         for (Permission permission : permissions) {
             if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
                 switch (action) {
