@@ -431,11 +431,13 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                 </div>
                             </th>
+                            <th class="min-w-15px">ID</th>
                             <th class="min-w-125px">User</th>
-                            <th class="min-w-125px">Role</th>
+                            <th class="min-w-125px">Mobile</th>
                             <th class="min-w-125px">Last Active</th>
                             <th class="min-w-125px">Joined Date</th>
-                            <th class="text-end min-w-100px">Actions</th>
+                            <th class="text-end min-w-125px text-center">Status</th>
+                            
                         </tr>
                         <!--end::Table row-->
                     </thead>
