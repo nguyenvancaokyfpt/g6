@@ -1,14 +1,17 @@
 package com.tss.service.impl;
 
+import com.tss.constants.SecretStringConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
 import com.tss.dao.impl.UserDaoImpl;
+import com.tss.helper.EncryptHelper;
 import com.tss.model.User;
 import com.tss.service.UserService;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
@@ -19,9 +22,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updatePwd(String userCode, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public List<User> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
@@ -56,17 +60,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean add(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean del(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean modify(int id, User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -172,6 +179,76 @@ public class UserServiceImpl implements UserService {
             BaseDao.closeResource(connection, null, null);
         }
         return count;
+    }
+
+    @Override
+    public String generateResetPasswordToken(User user) {
+        // Generated random md5 token
+        // get milliseconds
+        long millis = System.currentTimeMillis();
+        String token = EncryptHelper.getMd5(user.getEmail() + millis + SecretStringConstants.SECRET_STRING);
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.updateResetPasswordToken(connection, token, user.getUserId(), millis);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return token;
+    }
+
+    @Override
+    public Boolean checkResetPasswordToken(String token, String email) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            // currentTimeMillis
+            long currentTimeMillis = System.currentTimeMillis();
+            long millis = userDao.getResetPasswordSaltByToken(connection, token);
+            // if currentTimeMillis - millis > 30 minutes
+            if ((millis - currentTimeMillis) > (30 * 60 * 1000)) {
+                return false;
+            }
+            String generatedToken = EncryptHelper.getMd5(email + millis + SecretStringConstants.SECRET_STRING);
+            if (generatedToken.equals(token)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return false;
+    }
+
+    @Override
+    public void updatePwdByEmail(String email, String password) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.updatePwdByEmail(connection, email, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public void detachResetPasswordToken(String email) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.detachResetPasswordToken(connection, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
     }
 
 }

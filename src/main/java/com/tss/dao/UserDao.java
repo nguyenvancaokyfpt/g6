@@ -35,6 +35,13 @@ public interface UserDao {
     boolean register(Connection connection, User user) throws SQLException;
 
     boolean registerWithGoogle(Connection connection, User user) throws SQLException;
+
+    void updateResetPasswordToken(Connection connection, String token, int user_id, long millis) throws SQLException;
     
+    long getResetPasswordSaltByToken(Connection connection, String token) throws SQLException;
+
+    void updatePwdByEmail(Connection connection, String email, String password) throws SQLException;
+
+    void detachResetPasswordToken(Connection connection, String email) throws SQLException;
 
 }

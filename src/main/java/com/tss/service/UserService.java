@@ -30,4 +30,12 @@ public interface UserService {
     int countAll();
 
     int countAll(String search);
+
+    String generateResetPasswordToken(User user);
+
+    Boolean checkResetPasswordToken(String token, String email);
+
+    void updatePwdByEmail(String email, String password);
+
+    void detachResetPasswordToken(String email);
 }

@@ -32,7 +32,7 @@
 					<!--begin::Content-->
 					<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 						<!--begin::Logo-->
-						<a href="index.html" class="mb-12">
+						<a href="/" class="mb-12">
 							<img alt="Logo" src="assets/media/logos/logo-2-dark.svg" class="h-45px" />
 						</a>
 						<!--end::Logo-->
@@ -116,9 +116,14 @@
 									<div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
 									<!--end::Separator-->
 									<!--begin::Google link-->
+									<div id="buttonDiv"
+										class="col-xl-12 text-center justify-content-center align-self-center mb-5">
+									</div>
 									<a href="#" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
 										<img alt="Logo" src="assets/media/svg/brand-logos/facebook-4.svg"
 											class="h-20px me-3" />Continue with Facebook</a>
+
+
 									<!--end::Google link-->
 								</div>
 								<!--end::Actions-->
@@ -158,6 +163,7 @@
 				window.onload = function () {
 					google.accounts.id.initialize({
 						client_id: '${googleClientSecret.getClient_id()}',
+						auto_select: true,
 						callback: function (credentialResponse) {
 							let response = credentialResponse;
 							// show loading
@@ -201,6 +207,14 @@
 
 						}
 					});
+					google.accounts.id.renderButton(
+						document.getElementById("buttonDiv"),
+						{
+							theme: "filled_blue",
+							size: "large",
+							width: "1000px"
+						}  // customization attributes
+					);
 					google.accounts.id.prompt();
 				};
 			</script>

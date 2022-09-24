@@ -109,4 +109,11 @@ public class RequestHelper {
         }
         return false;
     }
+
+    // get host
+    public static String getHost(HttpServletRequest request) {
+        StringBuffer url = request.getRequestURL();
+        String uri = request.getRequestURI();
+        return url.substring(0, url.indexOf(uri));
+    }
 }
