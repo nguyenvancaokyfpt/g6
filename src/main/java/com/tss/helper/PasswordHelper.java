@@ -5,13 +5,15 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;  
 import java.util.Base64;  
 import javax.crypto.SecretKeyFactory;  
-import javax.crypto.spec.PBEKeySpec;  
+import javax.crypto.spec.PBEKeySpec;
+
+import com.tss.constants.SecretStringConstants;  
 
 public class PasswordHelper {
     /* Declaration of variables */
     private static final int iterations = 10000;
     private static final int keylength = 256;
-    private static final String salt = "motchuchimnon2002";
+    private static final String salt = SecretStringConstants.SECRET_STRING;
 
     /* Method to generate the hash value */
     public static byte[] hash(char[] password, byte[] salt) {
