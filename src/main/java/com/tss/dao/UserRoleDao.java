@@ -26,4 +26,6 @@ public interface UserRoleDao {
 
     int countByRoleId(Connection connection, int roleId) throws SQLException;
 
+    boolean addRoleForUserByUserEmail(Connection connection, String email, int id) throws SQLException;
+
 }

@@ -4,15 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
-import com.tss.constants.ActionConstants;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.sercurity.Permission;
 
@@ -77,36 +74,36 @@ public class RequestHelper {
     }
 
     public static boolean isAllowedAccess(List<Permission> permissions, String uri, String action) {
-        // DebugHelper.log(permissions);
-        // System.out.println(uri);
-        // System.out.println(action);
         for (Permission permission : permissions) {
-            if (ScreenConstants.getScreenById(permission.getScreenId()).getPath().equals(uri)) {
-                switch (action) {
-                    case ActionConstants.DELETE:
-                        if (permission.isCanDelete()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    case ActionConstants.UPDATE:
-                        if (permission.isCanUpdate()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    case ActionConstants.CREATE:
-                        if (permission.isCanCreate()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    default:
-                        if (permission.isCanGet()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+            ScreenConstants screen = ScreenConstants.getScreenById(permission.getScreenId());
+            if (screen != null) {
+                if (screen.getPath().equals(uri)) {
+                    switch (action) {
+                        case ActionConstants.DELETE:
+                            if (permission.isCanDelete()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        case ActionConstants.UPDATE:
+                            if (permission.isCanUpdate()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        case ActionConstants.CREATE:
+                            if (permission.isCanCreate()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        default:
+                            if (permission.isCanGet()) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                    }
                 }
             }
         }

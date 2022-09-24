@@ -46,8 +46,11 @@ public class SercurityFilter implements Filter {
         String method = request.getMethod();
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
-        // set uri for request
-        request.setAttribute("requestURI", uri);
+        // Detect screen for request
+        ScreenConstants screen = ScreenConstants.findScreenByPath(uri);
+        if (screen != null) {
+            request.setAttribute("screen", screen);
+        }
 
         // Allow public access
         if (RequestHelper.isPublicAccess(uri)) {
@@ -71,7 +74,10 @@ public class SercurityFilter implements Filter {
         } else {
             // get user permissions from sessions
             List<Permission> permissions = (List<Permission>) request.getSession().getAttribute(SessionConstants.USER_PERMISSIONS);
-            
+
+            // set user information to request attribute
+            request.setAttribute("user", user);
+
             // Check permission
             if (RequestHelper.isAllowedAccess(permissions, uri, action)) {
                 DebugHelper.log("ALLOWED ACCESS TO " + uri);
@@ -83,7 +89,7 @@ public class SercurityFilter implements Filter {
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);
                 if (method.equals("GET")) {
-                    request.getRequestDispatcher("jsp/authentication/general/error-404.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request, response);
                 } else {
                     ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
                 }

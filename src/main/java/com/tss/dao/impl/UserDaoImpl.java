@@ -285,4 +285,47 @@ public class UserDaoImpl implements UserDao {
         return count;
     }
 
+    @Override
+    public boolean register(Connection connection, User user) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        boolean flag = false;
+        if (connection != null) {
+            String sql = "INSERT INTO user (full_name, email, username, password) VALUES (?, ?, ?, ?);";
+            Object[] params = { user.getFullname(), user.getEmail(), user.getUsername(), user.getPassword() };
+            try {
+                int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
+                if (updateRows > 0) {
+                    flag = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean registerWithGoogle(Connection connection, User user) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        boolean flag = false;
+        if (connection != null) {
+            String sql = "INSERT INTO user (full_name, email, username, password, avatar_url) VALUES (?, ?, ?, ?, ?);";
+            Object[] params = { user.getFullname(), user.getEmail(), user.getUsername(), user.getPassword(), user.getAvatarUrl() };
+            try {
+                int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
+                if (updateRows > 0) {
+                    flag = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return flag;
+    }
+    
+
 }

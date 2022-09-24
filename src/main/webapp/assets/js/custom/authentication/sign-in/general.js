@@ -27,6 +27,13 @@ var KTSigninGeneral = function () {
                                 }
                             }
                         }
+                    },
+                    "captcha": {
+                        validators: {
+                            notEmpty: {
+                                message: "The capcha is required"
+                            }
+                        }
                     }
                 },
                 plugins: {
@@ -44,7 +51,8 @@ var KTSigninGeneral = function () {
                             // Post to server
                             axios.post('/login', {
                                 email: e.querySelector('[name="email"]').value,
-                                password: e.querySelector('[name="password"]').value
+                                password: e.querySelector('[name="password"]').value,
+                                captcha: e.querySelector('[name="captcha"]').value
                             }).then(function (response) {
                                 // Redirect to dashboard
                                 window.location.href = '/dashboard';
@@ -58,6 +66,13 @@ var KTSigninGeneral = function () {
                                     customClass: {
                                         confirmButton: "btn btn-primary"
                                     }
+                                });
+                                // Reset captcha
+                                axios.post('/captchaGenerator').then(function (response) {
+                                    document.getElementById('captcha').src = response.data.data;
+                                }).catch(function (error) {
+                                    // reload page
+                                    window.location.reload();
                                 });
                             })
                     }), 1)) : Swal.fire({

@@ -29,6 +29,22 @@
         <servlet-name>SubjectManagementServlet</servlet-name>
         <servlet-class>com.tss.controller.subject.SubjectManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>com.tss.controller.sercurity.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginWithGoogleServlet</servlet-name>
+        <servlet-class>com.tss.controller.sercurity.LoginWithGoogleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WebServiceServlet</servlet-name>
+        <servlet-class>com.tss.controller.WebContactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CaptchaGeneratorServlet</servlet-name>
+        <servlet-class>com.tss.controller.sercurity.CaptchaGeneratorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -80,6 +96,22 @@
     <servlet-mapping>
         <servlet-name>SubjectManagementServlet</servlet-name>
         <url-pattern>/subject/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/resetPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginWithGoogleServlet</servlet-name>
+        <url-pattern>/loginWithGoogle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WebServiceServlet</servlet-name>
+        <url-pattern>/webcontact/webcontactlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaGeneratorServlet</servlet-name>
+        <url-pattern>/captchaGenerator</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

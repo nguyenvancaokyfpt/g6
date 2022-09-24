@@ -7,6 +7,9 @@ public enum ScreenConstants {
     LOGIN(1002, "login", "/login"),
     LOGOUT(1003, "logout", "/logout"),
     REGISTER(1004, "register", "/register"),
+    LOGIN_WITH_GOOGLE(1005, "loginWithGoogle", "/loginWithGoogle"),
+    RESET_PASSWORD(1006, "resetPassword", "/resetPassword"),
+    CAPTCHA_GENERATOR(1007, "Captcha generate", "/captchaGenerator"),
 
 
     // Private screen
@@ -14,8 +17,9 @@ public enum ScreenConstants {
     USER_PROFILE(2, "Profile", "/profile"),
     USER_DASHBOARD(3, "Dashboard", "/dashboard"),
     SUBJECT_LIST(10, "Subject_List", "/subject/list"),
-    SUBJECT_DETAILS(11, "Subject_Details", "/subject/details");
-
+    SUBJECT_DETAILS(11, "Subject_Details", "/subject/details"),
+    USER_DETAIL(6, "User Detail", "/management/userdetails"),
+    WEB_CONTACT(7, "Web Contact", "/webcontact/webcontactlist");
 
     private int id;
     private String title;
@@ -42,7 +46,6 @@ public enum ScreenConstants {
     public String getParentPath() {
         return path.substring(0, path.lastIndexOf("/"));
     }
-
 
     public static ScreenConstants getScreenById(int id) {
         for (ScreenConstants screen : ScreenConstants.values()) {
@@ -75,6 +78,16 @@ public enum ScreenConstants {
             }
         }
         return publicScreen;
+    }
+
+    // find screen by path
+    public static ScreenConstants findScreenByPath(String path) {
+        for (ScreenConstants screen : ScreenConstants.values()) {
+            if (screen.getPath().equals(path)) {
+                return screen;
+            }
+        }
+        return null;
     }
 
 }

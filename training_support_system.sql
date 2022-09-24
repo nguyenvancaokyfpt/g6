@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2022 at 04:10 PM
+-- Generation Time: Sep 23, 2022 at 09:03 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -158,7 +158,9 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (3, 21, 1, 1, 1, 1),
 (3, 22, 1, 1, 1, 1),
 (3, 23, 1, 1, 1, 1),
-(3, 24, 1, 1, 1, 1);
+(3, 24, 1, 1, 1, 1),
+(3, 26, 1, 1, 1, 1),
+(7, 21, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +181,9 @@ CREATE TABLE `screen` (
 INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (1, 'User Management', '/management/user'),
 (2, 'User Profile', '/profile'),
-(3, 'Dashboard', '/dashboard');
+(3, 'Dashboard', '/dashboard'),
+(6, 'User Details', '/management/userdetails'),
+(7, 'Web Contact List', '/webcontact/webcontactlist');
 
 -- --------------------------------------------------------
 
@@ -290,11 +294,11 @@ CREATE TABLE `user` (
   `full_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `mobile` varchar(15) NOT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
   `password` varchar(500) NOT NULL,
-  `avatar_url` varchar(500) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `note` varchar(500) NOT NULL,
+  `avatar_url` varchar(500) NOT NULL DEFAULT 'assets/media/avatars/blank.png',
+  `status_id` int(11) NOT NULL DEFAULT 1,
+  `note` varchar(500) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_active` timestamp NOT NULL DEFAULT current_timestamp()
@@ -305,8 +309,21 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', '123456', 'assets/media/avatars/150-8.jpg', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
-(3, 'test', 'test', 'test@mail.com', '123456789', '123456', 'assets/media/avatars/150-7.jpg', 1, 'a', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50');
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/150-8.jpg', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
+(20, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
+(21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(22, 'Nguyễn Văn E', 'nguyenvane', 'nguyenvane@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(24, 'Nguyễn Văn G', 'nguyenvang', 'nguyenvang@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(25, 'Nguyễn Văn H', 'nguyenvanh', 'nguyenvanh@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(26, 'Nguyễn Văn I', 'nguyenvani', 'nguyenvani@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(27, 'Nguyễn Văn J', 'nguyenvanj', 'nguyenvanj@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(28, 'Nguyễn Văn K', 'nguyenvank', 'nguyenvank@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(29, 'Nguyễn Văn L', 'nguyenvanl', 'nguyenvanl@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(30, 'Nguyễn Văn M', 'nguyenvanm', 'nguyenvanm@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(31, 'Nguyễn Văn N', 'nguyenvann', 'nguyenvann@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48');
 
 -- --------------------------------------------------------
 
@@ -324,7 +341,8 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
-(2, 21);
+(2, 21),
+(19, 26);
 
 -- --------------------------------------------------------
 
@@ -341,6 +359,15 @@ CREATE TABLE `web_contact` (
   `message` varchar(2000) NOT NULL,
   `response` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `web_contact`
+--
+
+INSERT INTO `web_contact` (`category_id`, `supporter_id`, `full_name`, `email`, `mobile`, `message`, `response`) VALUES
+(1, 2, 'Test1', 'test1@gmail.com', '0123456789', 'Plz help me', 'Go to my Home'),
+(2, 23, 'Test2', 'test2@gmai.com', '0123456789', 'Hello im Superman', 'Woowwwww'),
+(3, 24, 'Test3', 'test3@gmail.com', '0123456789', 'Hihihihi', 'not response');
 
 --
 -- Indexes for dumped tables
@@ -523,7 +550,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -553,7 +580,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

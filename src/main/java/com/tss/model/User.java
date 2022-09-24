@@ -4,7 +4,10 @@
  */
 package com.tss.model;
 
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,6 +18,8 @@ public class User {
     private int userId;
     private String fullname;
     private String email;
+    private String username;
+    private String password;
     private String mobile;
     private String avatarUrl;
     private int statusId;
@@ -26,10 +31,12 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String fullname, String email, String mobile, String avatarUrl, int statusId, String note, Date createdAt, Date updatedAt, Date lastActive) {
+    public User(int userId, String fullname, String email, String username, String password, String mobile, String avatarUrl, int statusId, String note, Date createdAt, Date updatedAt, Date lastActive) {
         this.userId = userId;
         this.fullname = fullname;
         this.email = email;
+        this.username = username;
+        this.password = password;
         this.mobile = mobile;
         this.avatarUrl = avatarUrl;
         this.statusId = statusId;
@@ -39,6 +46,11 @@ public class User {
         this.lastActive = lastActive;
     }
 
+    public User(String email , String password, String fullname) {
+        this.email = email;
+        this.password = password;
+        this.fullname = fullname;
+    }
 
     /**
      * @return int return the userId
@@ -80,6 +92,34 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return String return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return String return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -178,6 +218,22 @@ public class User {
      */
     public void setLastActive(Date lastActive) {
         this.lastActive = lastActive;
+    }
+
+    // get first name
+    public String getFirstName() {
+        List<String> parts = Arrays.asList(fullname.split(" "));
+        String firstName = "";
+        for (int i = 0; i < parts.size()-1; i++) {
+            firstName += parts.get(i) + " ";
+        }
+        return firstName;
+    }
+
+    // get last name
+    public String getLastName() {
+        List<String> parts = Arrays.asList(fullname.split(" "));
+        return parts.get(parts.size()-1);
     }
 
 }

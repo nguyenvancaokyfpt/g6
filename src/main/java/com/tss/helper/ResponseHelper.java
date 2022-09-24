@@ -70,5 +70,4 @@ public class ResponseHelper {
         return list;
     }
 
-
 }
