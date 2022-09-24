@@ -12,7 +12,9 @@ public enum ScreenConstants {
     // Private screen
     USER_MANAGEMENT(1, "User Management", "/management/user"),
     USER_PROFILE(2, "Profile", "/profile"),
-    USER_DASHBOARD(3, "Dashboard", "/dashboard");
+    USER_DASHBOARD(3, "Dashboard", "/dashboard"),
+    SUBJECT_LIST(10, "Subject_List", "/subject/list"),
+    SUBJECT_DETAILS(11, "Subject_Details", "/subject/details");
 
 
     private int id;

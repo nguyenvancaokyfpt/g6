@@ -20,9 +20,9 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         List<User> userList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? AND email LIKE ? LIMIT ? OFFSET ?";
+            String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? AND email LIKE ? LIMIT ?, ?";
             // Search and Paging
-            Object[] params = { "%" + fullName + "%", "%" + email + "%", PageSize, currentPageNo };
+            Object[] params = { "%" + fullName + "%", "%" + email + "%", currentPageNo, PageSize };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
 
