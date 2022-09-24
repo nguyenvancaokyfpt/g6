@@ -16,7 +16,7 @@ public interface WebContactService {
 
     List<WebContact> findAll(int start, int length, String search);
 
-    WebContact findById(int id);
+    WebContact findById(int catId);
 
     WebContact findByUsername(String username);
 
