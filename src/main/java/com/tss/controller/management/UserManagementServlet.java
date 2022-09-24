@@ -35,14 +35,12 @@ import org.apache.taglibs.standard.tag.el.core.OutTag;
  */
 public class UserManagementServlet extends HttpServlet {
 
-    private UserService userService;   
-
+    private UserService userService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
     }
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -90,30 +88,19 @@ public class UserManagementServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("userID"));
+        User u = userService.findById(id);
+        if (u.getStatusId() == 1) {
+            u.setStatusId(0);
+        } else {
+            u.setStatusId(1);
+        }
+        userService.modify(u);
+        response.sendRedirect("/management/user");
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //get Paras
-        int userId = Integer.parseInt(request.getParameter("user_id"));
-        String fullname = request.getParameter("user_name");
-        String email = request.getParameter("user_email");
-        String mobile = request.getParameter("user_mobile");
-        String avatarUrl = request.getParameter("user_avatar");
-        int statusId = 1;
-        String note = request.getParameter("user_note");
-        Date date = new Date();
-        //END
-        User u = new User(userId, fullname, email, mobile, avatarUrl, statusId, note, date, date, date);
-        int role = Integer.parseInt(request.getParameter("user_role"));
-        String user = request.getParameter("user_user");
-        String pass = request.getParameter("user_pass");
-        //System.out.println(u + " " + role + " " + user + " " + pass);
-        UserRole userRole = new UserRole(userId, role);
-        //DAO ROLE
-        userService.add(u, user, pass,userRole);
-        response.sendRedirect("/management/user");
-
+    private void create(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -56,7 +56,7 @@ var KTDatatablesServerSide = (function () {
         {
           targets: 1,
           title: "ID",
-          class:"text-center",
+          class: "text-center",
           render: function (data) {
             return data;
           },
@@ -134,21 +134,29 @@ var KTDatatablesServerSide = (function () {
           orderable: false,
           className: "text-end",
           render: function (data, type, row) {
-            var Status 
-            var classStatus
-            if(data == 1){
-                Status="Activate"
-                classStatus="btn-success"
-            }else{
-                Status="Deactivate"
-                classStatus="btn-danger"
-            };
-            
-            return `<td>
-            <div class="d-flex justify-content-center"><button type="button"
-                    class="btn `+classStatus+`">`+Status+`</button></div class>
+            var Status;
+            var classStatus;
+            if (data == 1) {
+              Status = "Activate";
+              classStatus = "btn-success";
+            } else {
+              Status = "Deactivate";
+              classStatus = "btn-danger";
+            }
+
+            return `
+      <td>
+            <div class="d-flex justify-content-center">
+                <form action="/management/user?action=update" method="post">
+                    <input name="userID" type="hidden" value="${row.userId}">
+                    <button type="submit" class="btn ${classStatus}">
+                        ${Status}
+                    </button>
+                </form>
+            </div>
         </td>
-                        `;
+        
+            `;
           },
         },
       ],

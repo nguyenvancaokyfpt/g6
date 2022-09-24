@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public boolean updatePwd(String userCode, String password) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public List<User> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
@@ -60,20 +61,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean add(User user,String username,String pass,UserRole ur) {
-        Connection connection = null;
-        int count1= 0, count2=0;
-        try {
-            connection = BaseDao.getConnection();
-            count1 = userDao.add(connection,user,username,pass);
-            count2 = userRoleDao.add(connection, ur);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return (count1 > 0) && (count2>0);
+    public boolean add(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -82,8 +71,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean modify(int id, User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean modify(User user) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.modify(connection, user.getUserId(), user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return (count > 0);
     }
 
     @Override
@@ -190,8 +189,5 @@ public class UserServiceImpl implements UserService {
         }
         return count;
     }
-
-
-    
 
 }

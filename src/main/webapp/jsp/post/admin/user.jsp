@@ -71,22 +71,24 @@
                                         data-placeholder="Select option" data-allow-clear="true"
                                         data-kt-user-table-filter="role" data-hide-search="true">
                                         <option></option>
-                                        <option value="Administrator">Administrator</option>
-                                        <option value="Analyst">Analyst</option>
-                                        <option value="Developer">Developer</option>
-                                        <option value="Support">Support</option>
-                                        <option value="Trial">Trial</option>
+                                        <option value="21">ADMIN</option>
+                                        <option value="22">MANAGER</option>
+                                        <option value="23">EXPERT</option>
+                                        <option value="24">TRAINER</option>
+                                        <option value="25">SUPPORTER</option>
+                                        <option value="26">STUDENT</option>
                                     </select>
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
                                 <div class="mb-10">
-                                    <label class="form-label fs-6 fw-bold">Two Step Verification:</label>
+                                    <label class="form-label fs-6 fw-bold">Status:</label>
                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
                                         data-placeholder="Select option" data-allow-clear="true"
-                                        data-kt-user-table-filter="two-step" data-hide-search="true">
+                                        data-kt-user-table-filter="status" data-hide-search="true">
                                         <option></option>
-                                        <option value="Enabled">Enabled</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                 </div>
                                 <!--end::Input group-->

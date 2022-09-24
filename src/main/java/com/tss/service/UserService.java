@@ -22,11 +22,11 @@ public interface UserService {
 
     int count(String fullName, String email);
 
-    boolean add(User user,String username,String pass,UserRole ur);
+    boolean add(User user);
 
     boolean del(int id);
 
-    boolean modify(int id, User user);
+    boolean modify(User user);
 
     int countAll();
 
