@@ -89,7 +89,7 @@ public class SercurityFilter implements Filter {
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);
                 if (method.equals("GET")) {
-                    request.getRequestDispatcher("jsp/authentication/general/error-500.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request, response);
                 } else {
                     ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
                 }

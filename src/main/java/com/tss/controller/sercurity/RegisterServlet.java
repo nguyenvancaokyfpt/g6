@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- *
+ * 
  * @author nguye
  */
 public class RegisterServlet extends HttpServlet {
@@ -76,7 +76,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // register
+        // register user
         if (registerService.register(new User(email, password, name))) {
             ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK,
                     "Register successfully"));
