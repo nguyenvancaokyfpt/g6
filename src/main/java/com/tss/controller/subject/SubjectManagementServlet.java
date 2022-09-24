@@ -149,9 +149,9 @@ public class SubjectManagementServlet extends HttpServlet {
         request.setAttribute("jspPath", role + "/subject.jsp");
         // request.setAttribute("customJs", ResponseHelper.customJs(
         // "apps/sjtable-edited.js"));
-        // request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-        // ScreenConstants.SUBJECT_LIST,
-        // ScreenConstants.SUBJECT_DETAILS));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+        ScreenConstants.SUBJECT_LIST,
+        ScreenConstants.SUBJECT_DETAILS));
         int pageNo = 1;
         if (request.getParameter("pageNo") != null) {
             pageNo = Integer.parseInt(request.getParameter("pageNo"));
