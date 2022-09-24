@@ -88,13 +88,14 @@
 								<div class="fv-row row mb-10">
 									<!--begin::Col-->
 									<div class="col-xl-6 text-center justify-content-center align-self-center">
-										<img src="data:image/png;base64,${captchaImage}" alt="captcha" />
+										<img id="captcha" src="data:image/png;base64,${captchaImage}" alt="captcha" />
 									</div>
 									<!--end::Col-->
 									<!--begin::Col-->
 									<div class="col-xl-6">
-											<label class="form-label fw-bolder text-dark fs-6">Captcha</label>
-											<input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="captcha" autocomplete="off" />
+										<label class="form-label fw-bolder text-dark fs-6">Captcha</label>
+										<input class="form-control form-control-lg form-control-solid" type="text"
+											placeholder="" name="captcha" autocomplete="off" />
 									</div>
 									<!--end::Col-->
 
@@ -159,14 +160,33 @@
 						client_id: '${googleClientSecret.getClient_id()}',
 						callback: function (credentialResponse) {
 							let response = credentialResponse;
-							console.log(response);
+							// show loading
+							Swal.fire({
+								title: 'Please wait...',
+								icon: 'info',
+								onBeforeOpen() {
+									Swal.showLoading()
+								},
+								onAfterClose() {
+									Swal.hideLoading()
+								},
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								allowEnterKey: false,
+								showConfirmButton: false,
+
+							})
 							// Post to server
 							axios.post('${googleClientSecret.getRedirect_uris()}', {
 								credential: response.credential
 							}).then(function (response) {
 								// Redirect to dashboard
 								window.location.href = '/dashboard';
+								// hide loading
+								Swal.close();
 							}).catch(function (error) {
+								// hide loading
+								Swal.close();
 								// Show error message
 								Swal.fire({
 									text: error.response.data.message,
@@ -178,6 +198,7 @@
 									}
 								});
 							});
+
 						}
 					});
 					google.accounts.id.prompt();

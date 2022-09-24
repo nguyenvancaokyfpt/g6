@@ -57,11 +57,13 @@ public class LoginServlet extends HttpServlet {
         // get captcha from session
         String captchaSession = (String) request.getSession().getAttribute(SessionConstants.CAPTCHA_STRING);
         // check captcha
-        if (!captcha.equals(captchaSession)) {
+        if (!captcha.equals(captchaSession) || captchaSession == null) {
             ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
                     "Captcha is not correct"));
             return;
         }
+        // destroy captcha
+        request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
 
         if (loginService.login(email, password)) {
             // get user info
@@ -91,7 +93,8 @@ public class LoginServlet extends HttpServlet {
                     new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
         } else {
             ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Your information is incorrect. Please try again"));
+                    new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED,
+                            "Your information is incorrect. Please try again"));
         }
     }
 

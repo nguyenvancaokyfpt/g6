@@ -50,7 +50,7 @@ var KTSignupGeneral = function () {
                             }
                         }
                     },
-                    "captcha" : {
+                    "captcha": {
                         validators: {
                             notEmpty: {
                                 message: "The capcha is required"
@@ -110,6 +110,14 @@ var KTSignupGeneral = function () {
                                         confirmButton: "btn btn-primary"
                                     }
                                 });
+                                // Reset captcha
+                                axios.post('/captchaGenerator').then(function (response) {
+                                    document.getElementById('captcha').src = response.data.data;
+                                }).catch(function (error) {
+                                    // reload page
+                                    window.location.reload();
+                                });
+
                             })
                     }), 1))
                         : Swal.fire({

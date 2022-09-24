@@ -133,7 +133,7 @@
 								<div class="fv-row row mb-10">
 									<!--begin::Col-->
 									<div class="col-xl-6 text-center justify-content-center align-self-center">
-										<img src="data:image/png;base64,${captchaImage}" alt="captcha" />
+										<img id="captcha" src="data:image/png;base64,${captchaImage}" alt="captcha" />
 									</div>
 									<!--end::Col-->
 									<!--begin::Col-->
@@ -204,13 +204,33 @@
 						callback: function (credentialResponse) {
 							let response = credentialResponse;
 							console.log(response);
+							// show loading
+							Swal.fire({
+								title: 'Please wait...',
+								icon: 'info',
+								onBeforeOpen() {
+									Swal.showLoading()
+								},
+								onAfterClose() {
+									Swal.hideLoading()
+								},
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								allowEnterKey: false,
+								showConfirmButton: false,
+
+							})
 							// Post to server
 							axios.post('${googleClientSecret.getRedirect_uris()}', {
 								credential: response.credential
 							}).then(function (response) {
 								// Redirect to dashboard
 								window.location.href = '/dashboard';
+								// hide loading
+								Swal.close();
 							}).catch(function (error) {
+								// hide loading
+								Swal.close();
 								// Show error message
 								Swal.fire({
 									text: error.response.data.message,

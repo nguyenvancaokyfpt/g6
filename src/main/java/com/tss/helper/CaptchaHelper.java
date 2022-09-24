@@ -101,12 +101,4 @@ public class CaptchaHelper {
     public String getCaptchaString() {
         return captchaString;
     }
-
-    // test function
-    public static void main(String[] args) throws IOException {
-        CaptchaHelper captchaHelper = new CaptchaHelper();
-        BufferedImage bufferedImage = captchaHelper.getCaptchaImage();
-        System.out.println(captchaHelper.getCaptchaString());
-        System.out.println(captchaHelper.convertImageToBase64(bufferedImage));
-    }
 }

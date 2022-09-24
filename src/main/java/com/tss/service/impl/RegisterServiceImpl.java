@@ -7,6 +7,7 @@ import com.tss.constants.RoleConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
 import com.tss.dao.impl.UserDaoImpl;
+import com.tss.helper.EmailHelper;
 import com.tss.helper.PasswordHelper;
 import com.tss.model.User;
 import com.tss.service.RegisterService;
@@ -16,6 +17,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     private UserDao userDao;
     private RoleService roleService;
+
 
     public RegisterServiceImpl() {
         userDao = new UserDaoImpl();
@@ -87,6 +89,9 @@ public class RegisterServiceImpl implements RegisterService {
         if (flag) {
             // set default role for user
             if (roleService.addRoleForUserByUserEmail(user.getEmail(), RoleConstants.STUDENT)) {
+                // send email to user
+                EmailHelper emailHelper = new EmailHelper();
+                emailHelper.sendPassword(user.getEmail(), randomString);
                 return true;
             } else {
                 return false;
