@@ -1,5 +1,6 @@
 package com.tss.service.impl;
 
+import com.google.protobuf.StringValue;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
 import com.tss.dao.impl.UserDaoImpl;
@@ -26,7 +27,6 @@ public class UserServiceImpl implements UserService {
     public List<User> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
         List<User> userList = null;
-
         try {
             connection = BaseDao.getConnection();
 

@@ -25,6 +25,14 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.tss.controller.sercurity.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SettingListServlet</servlet-name>
+        <servlet-class>com.tss.controller.SettingListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SettingDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.SettingDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -72,6 +80,14 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingListServlet</servlet-name>
+        <url-pattern>/settingList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingDetailServlet</servlet-name>
+        <url-pattern>/settingDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

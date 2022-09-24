@@ -1,6 +1,7 @@
 package com.tss.model.system;
 
 public class Setting {
+
     private int id;
     private int type_id;
     private String title;
@@ -8,6 +9,7 @@ public class Setting {
     private String display_order;
     private int status_id;
     private String description;
+    private String statusString;
 
     public Setting() {
     }
@@ -20,6 +22,17 @@ public class Setting {
         this.display_order = display_order;
         this.status_id = status_id;
         this.description = description;
+    }
+
+    public Setting(int id, int type_id, String title, String value, String display_order, int status_id, String description, String statusString) {
+        this.id = id;
+        this.type_id = type_id;
+        this.title = title;
+        this.value = value;
+        this.display_order = display_order;
+        this.status_id = status_id;
+        this.description = description;
+        this.statusString = statusString;
     }
 
     /**
@@ -118,6 +131,19 @@ public class Setting {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatusString() {
+        return statusString;
+    }
+
+    public void setStatusString(String statusString) {
+        this.statusString = statusString;
+    }
+
+    @Override
+    public String toString() {
+        return "Setting{" + "id=" + id + ", type_id=" + type_id + ", title=" + title + ", value=" + value + ", display_order=" + display_order + ", status_id=" + status_id + ", description=" + description + ", statusString=" + statusString + '}';
     }
 
 }
