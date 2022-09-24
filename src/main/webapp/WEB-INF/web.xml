@@ -26,6 +26,10 @@
         <servlet-class>com.tss.controller.sercurity.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SubjectManagementServlet</servlet-name>
+        <servlet-class>com.tss.controller.subject.SubjectManagementServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ResetPasswordServlet</servlet-name>
         <servlet-class>com.tss.controller.sercurity.ResetPasswordServlet</servlet-class>
     </servlet>
@@ -88,6 +92,10 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubjectManagementServlet</servlet-name>
+        <url-pattern>/subject/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ResetPasswordServlet</servlet-name>
