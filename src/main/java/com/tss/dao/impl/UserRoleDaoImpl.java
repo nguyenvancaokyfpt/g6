@@ -47,19 +47,8 @@ public class UserRoleDaoImpl implements UserRoleDao {
 
     @Override
     public int add(Connection connection, UserRole userRole) throws SQLException {
-        int count = 0;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        if (connection != null) {
-            String sql = "INSERT INTO `training_support_system`.`user_role`\n"
-                    + "(`user_id`,\n"
-                    + "`setting_id`)\n"
-                    + "VALUES\n"
-                    + "(?,?);";
-            Object[] params = {userRole.getUserId(),userRole.getSettingId()};
-            count = BaseDao.execute(connection, preparedStatement, sql, params);
-        }
-        return count;
+        // TODO Auto-generated method stub
+        return 0;
     }
 
     @Override
