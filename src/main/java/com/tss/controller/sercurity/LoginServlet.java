@@ -39,13 +39,13 @@ public class LoginServlet extends HttpServlet {
     private RoleService roleService;
     private PermissionService permissionService;
 
-    @Override
-    public void init() throws ServletException {
-        loginService = new LoginServiceImpl();
-        userService = new UserServiceImpl();
-        roleService = new RoleServiceImpl();
-        permissionService = new PermissionServiceImpl();
-    }
+        @Override
+        public void init() throws ServletException {
+            loginService = new LoginServiceImpl();
+            userService = new UserServiceImpl();
+            roleService = new RoleServiceImpl();
+            permissionService = new PermissionServiceImpl();
+        }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
