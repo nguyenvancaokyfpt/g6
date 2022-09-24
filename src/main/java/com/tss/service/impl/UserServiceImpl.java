@@ -2,8 +2,11 @@ package com.tss.service.impl;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
+import com.tss.dao.UserRoleDao;
 import com.tss.dao.impl.UserDaoImpl;
+import com.tss.dao.impl.UserRoleDaoImpl;
 import com.tss.model.User;
+import com.tss.model.sercurity.UserRole;
 import com.tss.service.UserService;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,9 +15,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
+    private UserRoleDao userRoleDao;
 
     public UserServiceImpl() {
         userDao = new UserDaoImpl();
+        userRoleDao = new UserRoleDaoImpl();
     }
 
     @Override
@@ -55,8 +60,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean add(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean add(User user,String username,String pass,UserRole ur) {
+        Connection connection = null;
+        int count1= 0, count2=0;
+        try {
+            connection = BaseDao.getConnection();
+            count1 = userDao.add(connection,user,username,pass);
+            count2 = userRoleDao.add(connection, ur);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return (count1 > 0) && (count2>0);
     }
 
     @Override

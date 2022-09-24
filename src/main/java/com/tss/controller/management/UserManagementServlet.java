@@ -9,12 +9,14 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ListResponseMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.sercurity.UserRole;
 import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
@@ -24,6 +26,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Date;
+import org.apache.taglibs.standard.tag.el.core.OutTag;
 
 /**
  *
@@ -31,7 +35,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class UserManagementServlet extends HttpServlet {
 
-    private UserService userService;
+    private UserService userService;   
+
 
     @Override
     public void init() throws ServletException {
@@ -60,6 +65,7 @@ public class UserManagementServlet extends HttpServlet {
                     get(request, response);
                     break;
                 default:
+                    System.out.println(action);
                     list(request, response);
                     break;
             }
@@ -87,7 +93,27 @@ public class UserManagementServlet extends HttpServlet {
     private void update(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) {
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get Paras
+        int userId = Integer.parseInt(request.getParameter("user_id"));
+        String fullname = request.getParameter("user_name");
+        String email = request.getParameter("user_email");
+        String mobile = request.getParameter("user_mobile");
+        String avatarUrl = request.getParameter("user_avatar");
+        int statusId = 1;
+        String note = request.getParameter("user_note");
+        Date date = new Date();
+        //END
+        User u = new User(userId, fullname, email, mobile, avatarUrl, statusId, note, date, date, date);
+        int role = Integer.parseInt(request.getParameter("user_role"));
+        String user = request.getParameter("user_user");
+        String pass = request.getParameter("user_pass");
+        //System.out.println(u + " " + role + " " + user + " " + pass);
+        UserRole userRole = new UserRole(userId, role);
+        //DAO ROLE
+        userService.add(u, user, pass,userRole);
+        response.sendRedirect("/management/user");
+
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -111,59 +137,36 @@ public class UserManagementServlet extends HttpServlet {
         int recordsTotal = userService.countAll();
         int recordsFiltered = userService.countAll(search);
         // response
-        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));        
+        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/user.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-            "apps/user-management/users/list/table-edited.js",
-            "apps/user-management/users/list/export-users.js",
-            "apps/user-management/users/list/add.js"
+                "apps/user-management/users/list/table-edited.js",
+                "apps/user-management/users/list/export-users.js",
+                "apps/user-management/users/list/add.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-            ScreenConstants.USER_DASHBOARD,
-            ScreenConstants.USER_MANAGEMENT
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.USER_MANAGEMENT
         ));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

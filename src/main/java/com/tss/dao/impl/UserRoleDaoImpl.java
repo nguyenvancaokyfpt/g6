@@ -26,7 +26,7 @@ public class UserRoleDaoImpl implements UserRoleDao {
         List<UserRole> userRoleList = new ArrayList<UserRole>();
         if (connection != null) {
             String sql = "select * from user_role where user_id = ?";
-            Object[] params = { userId };
+            Object[] params = {userId};
             resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
             while (resultSet.next()) {
                 UserRole userRole = new UserRole();
@@ -47,8 +47,19 @@ public class UserRoleDaoImpl implements UserRoleDao {
 
     @Override
     public int add(Connection connection, UserRole userRole) throws SQLException {
-        // TODO Auto-generated method stub
-        return 0;
+        int count = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            String sql = "INSERT INTO `training_support_system`.`user_role`\n"
+                    + "(`user_id`,\n"
+                    + "`setting_id`)\n"
+                    + "VALUES\n"
+                    + "(?,?);";
+            Object[] params = {userRole.getUserId(),userRole.getSettingId()};
+            count = BaseDao.execute(connection, preparedStatement, sql, params);
+        }
+        return count;
     }
 
     @Override
@@ -81,7 +92,4 @@ public class UserRoleDaoImpl implements UserRoleDao {
         return 0;
     }
 
-
-
-    
 }

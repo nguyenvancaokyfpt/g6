@@ -180,4 +180,10 @@ public class User {
         this.lastActive = lastActive;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", fullname=" + fullname + ", email=" + email + ", mobile=" + mobile + ", avatarUrl=" + avatarUrl + ", statusId=" + statusId + ", note=" + note + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", lastActive=" + lastActive + '}';
+    }
+    
+    
 }

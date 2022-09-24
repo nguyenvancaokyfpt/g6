@@ -1,6 +1,7 @@
 package com.tss.service;
 
 import com.tss.model.User;
+import com.tss.model.sercurity.UserRole;
 import java.util.List;
 
 public interface UserService {
@@ -21,7 +22,7 @@ public interface UserService {
 
     int count(String fullName, String email);
 
-    boolean add(User user);
+    boolean add(User user,String username,String pass,UserRole ur);
 
     boolean del(int id);
 

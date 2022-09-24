@@ -12,7 +12,7 @@ public interface UserDao {
 
     User findById(Connection connection, int userId) throws SQLException;
 
-    int add(Connection connection, User user) throws SQLException;
+    int add(Connection connection, User user,String username,String pass) throws SQLException;
 
     int del(Connection connection, int id) throws SQLException;
 

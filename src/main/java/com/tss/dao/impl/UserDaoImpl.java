@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
         if (connection != null) {
             String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? AND email LIKE ? LIMIT ? OFFSET ?";
             // Search and Paging
-            Object[] params = { "%" + fullName + "%", "%" + email + "%", PageSize, currentPageNo };
+            Object[] params = {"%" + fullName + "%", "%" + email + "%", PageSize, currentPageNo};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
 
@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
         User user = null;
         if (connection != null) {
             String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE username = ?";
-            Object[] params = { username };
+            Object[] params = {username};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDao {
         User user = null;
         if (connection != null) {
             String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE email = ?";
-            Object[] params = { email };
+            Object[] params = {email};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -120,7 +120,7 @@ public class UserDaoImpl implements UserDao {
         User user = null;
         if (connection != null) {
             String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE user_id = ?";
-            Object[] params = { userId };
+            Object[] params = {userId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -146,21 +146,43 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int add(Connection connection, User user) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int add(Connection connection, User user, String username, String pass) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "INSERT INTO `training_support_system`.`user`\n"
+                    + "(`user_id`,\n"
+                    + "`full_name`,\n"
+                    + "`username`,\n"
+                    + "`email`,\n"
+                    + "`mobile`,\n"
+                    + "`password`,\n"
+                    + "`avatar_url`,\n"
+                    + "`status_id`,\n"
+                    + "`note`,\n"
+                    + "`created_at`,\n"
+                    + "`updated_at`,\n"
+                    + "`last_active`)\n"
+                    + "VALUES\n"
+                    + "(?,?,?,?,?,?,?,?,?,?,?,?);";
+            Object[] params = {user.getUserId(), user.getFullname(), username, user.getEmail(), user.getMobile(),
+                pass, user.getAvatarUrl(), user.getStatusId(), user.getNote(), user.getCreatedAt(), user.getUpdatedAt(), user.getLastActive()};
+            count = BaseDao.execute(connection, preparedStatement, sql, params);
+        }
+        return count;
     }
 
     @Override
     public int del(Connection cnctn, int i) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public int modify(Connection connection, int id, User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -192,7 +214,7 @@ public class UserDaoImpl implements UserDao {
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM user WHERE full_name LIKE ? AND email LIKE ?";
-            Object[] params = { "%" + fullName + "%", "%" + email + "%" };
+            Object[] params = {"%" + fullName + "%", "%" + email + "%"};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -215,7 +237,7 @@ public class UserDaoImpl implements UserDao {
         List<User> userList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? OR email LIKE ? ORDER BY user_id DESC LIMIT ?, ?";
-            Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
+            Object[] params = {"%" + search + "%", "%" + search + "%", start, length};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -270,7 +292,7 @@ public class UserDaoImpl implements UserDao {
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM user WHERE full_name LIKE ? OR email LIKE ?";
-            Object[] params = { "%" + search + "%", "%" + search + "%" };
+            Object[] params = {"%" + search + "%", "%" + search + "%"};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
