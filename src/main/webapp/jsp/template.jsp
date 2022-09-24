@@ -16,6 +16,8 @@
 	<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
+	<!-- --CUSTOM CSS-- -->
+	<link rel="stylesheet" href="assets/css/custom.css">
 </head>
 <!--end::Head-->
 <!--begin::Body-->
