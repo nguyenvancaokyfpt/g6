@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2022 at 06:32 AM
+-- Generation Time: Sep 25, 2022 at 07:43 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -343,7 +343,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/150-8.jpg', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '123456789', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
 (3, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
 (19, 'Nguyễn Văn B', 'student', 'student@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
 (21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
@@ -358,7 +358,8 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (30, 'Nguyễn Văn M', 'nguyenvanm', 'nguyenvanm@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (31, 'Nguyễn Văn N', 'nguyenvann', 'nguyenvann@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(49, 'Nguyễn Văn Cao Kỳ', 'kynvche163260602102', 'kynvche163260@fpt.edu.vn', NULL, 'sxTBT5hdJOyf3GNb92zikebGumFjjVib2syMydx3tq0=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-24 09:34:56', '2022-09-24 09:34:56', '2022-09-24 09:34:56');
+(49, 'Nguyễn Văn Cao Kỳ', 'kynvche163260602102', 'kynvche163260@fpt.edu.vn', NULL, 'sxTBT5hdJOyf3GNb92zikebGumFjjVib2syMydx3tq0=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-24 09:34:56', '2022-09-24 09:34:56', '2022-09-24 09:34:56'),
+(50, 'DESTINY', 'nguyenvancaoky2020270366', 'nguyenvancaoky2020@gmail.com', NULL, 'CLFgamRFvyY4ow5WhdZhe5Bir5HkHNC3Ocp97iaNupY=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, NULL, '2022-09-25 05:40:55', '2022-09-25 05:40:55', '2022-09-25 05:40:55');
 
 -- --------------------------------------------------------
 
@@ -379,7 +380,8 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (2, 21),
 (3, 23),
 (19, 26),
-(49, 26);
+(49, 26),
+(50, 26);
 
 -- --------------------------------------------------------
 
@@ -623,7 +625,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables
