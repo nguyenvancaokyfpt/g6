@@ -9,11 +9,13 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.sercurity.UserRole;
 import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
@@ -23,6 +25,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Date;
+import org.apache.taglibs.standard.tag.el.core.OutTag;
 
 /**
  *
@@ -36,7 +40,6 @@ public class UserManagementServlet extends HttpServlet {
     public void init() throws ServletException {
         userService = new UserServiceImpl();
     }
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,6 +62,7 @@ public class UserManagementServlet extends HttpServlet {
                     get(request, response);
                     break;
                 default:
+                    System.out.println(action);
                     list(request, response);
                     break;
             }
@@ -83,7 +87,16 @@ public class UserManagementServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("userID"));
+        User u = userService.findById(id);
+        if (u.getStatusId() == 1) {
+            u.setStatusId(0);
+        } else {
+            u.setStatusId(1);
+        }
+        userService.modify(u);
+        response.sendRedirect("/management/user");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
@@ -110,59 +123,36 @@ public class UserManagementServlet extends HttpServlet {
         int recordsTotal = userService.countAll();
         int recordsFiltered = userService.countAll(search);
         // response
-        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));        
+        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/user.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-            "apps/user-management/users/list/table-edited.js",
-            "apps/user-management/users/list/export-users.js",
-            "apps/user-management/users/list/add.js"
+                "apps/user-management/users/list/table-edited.js",
+                "apps/user-management/users/list/export-users.js",
+                "apps/user-management/users/list/add.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-            ScreenConstants.USER_DASHBOARD,
-            ScreenConstants.USER_MANAGEMENT
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.USER_MANAGEMENT
         ));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
