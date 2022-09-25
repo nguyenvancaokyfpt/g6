@@ -28,7 +28,7 @@ var KTDatatablesServerSide = (function () {
         { data: "userId" },
         { data: "userId" },
         { data: "avatarUrl" },
-        { data: "mobile" },
+        { data: "updatedAt" }, // fake data for mobile
         { data: "lastActive" },
         { data: "createdAt" },
         { data: "statusId" },

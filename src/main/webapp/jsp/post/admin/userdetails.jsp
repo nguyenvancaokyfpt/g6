@@ -3477,7 +3477,7 @@
                                                     style="background-image: url(assets/media/avatars/blank.png)">
                                                     <!--begin::Preview existing avatar-->
                                                     <div class="image-input-wrapper w-125px h-125px"
-                                                        style="background-image: url(assets/media/avatars/150-1.jpg">
+                                                        style="background-image: url(assets/media/avatars/150-1.jpg)">
                                                     </div>
                                                     <!--end::Preview existing avatar-->
                                                     <!--begin::Edit-->
