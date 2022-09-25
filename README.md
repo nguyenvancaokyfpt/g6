@@ -54,6 +54,7 @@ Right click on the project -> Run
 
 ## Contributing
 For major changes, please open an issue first to discuss what you would like to change.
+Don't forget to update tests as appropriate.
 
 ## Authors and acknowledgment
 - [Nguyễn Văn Cao Kỳ](https://gitlab.com/nguyenvancaokyfpt) - Team leader
