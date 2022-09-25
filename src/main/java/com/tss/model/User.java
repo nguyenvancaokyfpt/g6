@@ -236,4 +236,10 @@ public class User {
         return parts.get(parts.size()-1);
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", fullname=" + fullname + ", email=" + email + ", mobile=" + mobile + ", avatarUrl=" + avatarUrl + ", statusId=" + statusId + ", note=" + note + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", lastActive=" + lastActive + '}';
+    }
+    
+    
 }

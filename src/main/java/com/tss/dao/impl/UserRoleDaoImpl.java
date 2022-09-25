@@ -26,7 +26,7 @@ public class UserRoleDaoImpl implements UserRoleDao {
         List<UserRole> userRoleList = new ArrayList<UserRole>();
         if (connection != null) {
             String sql = "select * from user_role where user_id = ?";
-            Object[] params = { userId };
+            Object[] params = {userId};
             resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
             while (resultSet.next()) {
                 UserRole userRole = new UserRole();
