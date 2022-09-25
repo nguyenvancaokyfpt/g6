@@ -1,8 +1,8 @@
 package com.tss.service;
 
-import com.tss.model.User;
-import com.tss.model.sercurity.UserRole;
 import java.util.List;
+
+import com.tss.model.User;
 
 public interface UserService {
 
@@ -39,4 +39,6 @@ public interface UserService {
     void updatePwdByEmail(String email, String password);
 
     void detachResetPasswordToken(String email);
+
+    boolean changePassword(User user, String currentpassword, String newpassword);
 }

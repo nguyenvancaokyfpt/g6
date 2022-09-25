@@ -19,7 +19,10 @@ public enum ScreenConstants {
     USER_DETAILS(6, "User Detail", "/management/userdetails"),
     WEB_CONTACT(7, "Web Contact", "/webcontact/webcontactlist"),
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
-    SUBJECT_DETAILS(11, "Subject Details", "/subject/details");
+    SUBJECT_DETAILS(11, "Subject Details", "/subject/details"),
+    SETTING_LIST(4, "Setting", "/settingList"),
+    SETTING_DETAIL(5, "Setting Detail", "/settingDetail");
+
 
     private int id;
     private String title;

@@ -1,28 +1,24 @@
 package com.tss.service.impl;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.tss.constants.SecretStringConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
-import com.tss.dao.UserRoleDao;
 import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.EncryptHelper;
-import com.tss.dao.impl.UserRoleDaoImpl;
+import com.tss.helper.PasswordHelper;
 import com.tss.model.User;
-import com.tss.model.sercurity.UserRole;
 import com.tss.service.UserService;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
-    private UserRoleDao userRoleDao;
 
     public UserServiceImpl() {
         userDao = new UserDaoImpl();
-        userRoleDao = new UserRoleDaoImpl();
     }
 
     @Override
@@ -35,7 +31,6 @@ public class UserServiceImpl implements UserService {
     public List<User> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
         List<User> userList = null;
-
         try {
             connection = BaseDao.getConnection();
 
@@ -263,6 +258,27 @@ public class UserServiceImpl implements UserService {
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
+    }
+
+    @Override
+    public boolean changePassword(User user, String currentpassword, String newpassword) {
+        currentpassword = PasswordHelper.generateSecurePassword(currentpassword);
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            String pwd = userDao.getCurrentPassword(connection, user.getUserId());
+            if (pwd.equals(currentpassword)) {
+                userDao.updatePassword(connection, user.getUserId(), PasswordHelper.generateSecurePassword(newpassword));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return false;
     }
 
 }

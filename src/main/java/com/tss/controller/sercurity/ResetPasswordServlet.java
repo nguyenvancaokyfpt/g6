@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.HttpStatusCodeConstants;

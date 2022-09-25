@@ -22,7 +22,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 public class WebContactServlet extends HttpServlet {
 
     private WebContactService webContactService;
@@ -31,7 +30,6 @@ public class WebContactServlet extends HttpServlet {
     public void init() throws ServletException {
         webContactService = new WebContactServiceImpl();
     }
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,17 +60,13 @@ public class WebContactServlet extends HttpServlet {
         }
     }
 
-    private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        JSONObject jsonObject = RequestHelper.getJsonData(request);
-//        User user = userService.findById(jsonObject.getInteger("user_id"));
-//        // response
-//        if (user != null) {
-//            ResponseHelper.sendResponse(response,
-//                    new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
-//        } else {
-//            ResponseHelper.sendResponse(response,
-//                    new ResponseMessage(HttpStatusCodeConstants.NOT_FOUND, "User not found"));
-//        }
+    private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
+        request.setAttribute("jspPath", role + "/webcontactdetails.jsp");
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        WebContact webContact = webContactService.findById(categoryId);
+        request.setAttribute("webContactDetails", webContact);
+        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
@@ -105,24 +99,23 @@ public class WebContactServlet extends HttpServlet {
         int recordsTotal = webContactService.countAll();
         int recordsFiltered = webContactService.countAll(search);
         // response
-        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));        
+        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+
         String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
         request.setAttribute("jspPath", role + "/webcontact.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-            "apps/web-contact/table-edited.js",
-            "apps/web-contact/export-web-contact.js",
-            "apps/web-contact/add.js"
+                "apps/web-contact/table-edited.js",
+                "apps/web-contact/export-web-contact.js",
+                "apps/web-contact/add.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-            ScreenConstants.USER_DASHBOARD,
-            ScreenConstants.WEB_CONTACT
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.WEB_CONTACT
         ));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
@@ -132,6 +125,5 @@ public class WebContactServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
 
 }

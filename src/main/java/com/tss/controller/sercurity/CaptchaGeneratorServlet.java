@@ -6,7 +6,6 @@ package com.tss.controller.sercurity;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.SessionConstants;

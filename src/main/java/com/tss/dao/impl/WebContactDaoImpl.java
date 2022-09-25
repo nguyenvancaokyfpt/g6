@@ -21,14 +21,15 @@ import com.tss.dao.WebContactDao;
 public class WebContactDaoImpl implements WebContactDao {
 
     @Override
-    public List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException {
+    public List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<WebContact> webList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT * FROM web_contact WHERE full_name LIKE ? AND email LIKE ? LIMIT ? OFFSET ?";
             // Search and Paging
-            Object[] params = {"%" + fullName + "%", "%" + email + "%", PageSize, currentPageNo};
+            Object[] params = { "%" + fullName + "%", "%" + email + "%", PageSize, currentPageNo };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
 
@@ -54,33 +55,62 @@ public class WebContactDaoImpl implements WebContactDao {
     }
 
     @Override
-    public WebContact findById(Connection connection, int userId) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public WebContact findById(Connection connection, int catId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        WebContact web = null;
+        if (connection != null) {
+            String sql = "SELECT * FROM web_contact WHERE category_id=?";
+            Object[] params = { catId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    web = new WebContact();
+                    web.setCategory_id(resultSet.getInt("category_id"));
+                    web.setSupporter_id(resultSet.getInt("supporter_id"));
+                    web.setFull_name(resultSet.getString("full_name"));
+                    web.setEmail(resultSet.getString("email"));
+                    web.setMobile(resultSet.getString("mobile"));
+                    web.setMessage(resultSet.getString("message"));
+                    web.setResponse(resultSet.getString("response"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return web;
     }
 
     @Override
     public int add(Connection connection, WebContact web) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public int del(Connection connection, int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public int modify(Connection connection, int id, WebContact web) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public WebContact findByUsername(Connection connection, String username) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public WebContact findByEmail(Connection connection, String email) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -112,7 +142,7 @@ public class WebContactDaoImpl implements WebContactDao {
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM web_contact WHERE full_name LIKE ? AND email LIKE ?";
-            Object[] params = {"%" + fullName + "%", "%" + email + "%"};
+            Object[] params = { "%" + fullName + "%", "%" + email + "%" };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -128,13 +158,14 @@ public class WebContactDaoImpl implements WebContactDao {
     }
 
     @Override
-    public java.util.List<WebContact> findAll(Connection connection, int start, int length, String search) throws SQLException {
+    public java.util.List<WebContact> findAll(Connection connection, int start, int length, String search)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<WebContact> webList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT * FROM web_contact WHERE full_name LIKE ? OR email LIKE ? ORDER BY category_id DESC LIMIT ?, ?";
-            Object[] params = {"%" + search + "%", "%" + search + "%", start, length};
+            Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -159,7 +190,7 @@ public class WebContactDaoImpl implements WebContactDao {
 
     @Override
     public int countAll(Connection connection) throws SQLException {
-         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {

@@ -1,15 +1,15 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.UserDao;
-import com.tss.model.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.UserDao;
+import com.tss.model.User;
 
 public class UserDaoImpl implements UserDao {
 
@@ -159,7 +159,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int modify(Connection connection, int id, User user) throws SQLException {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
             String sql = "UPDATE `training_support_system`.`user`\n"
@@ -407,6 +406,44 @@ public class UserDaoImpl implements UserDao {
         if (connection != null) {
             String sql = "DELETE FROM reset_password_token WHERE user_id = (SELECT user_id FROM user WHERE email = ?)";
             Object[] params = { email };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
+
+    @Override
+    public String getCurrentPassword(Connection connection, int userId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String password = null;
+        if (connection != null) {
+            String sql = "SELECT password FROM user WHERE user_id = ?";
+            Object[] params = { userId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    password = resultSet.getString("password");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return password;
+    }
+
+    @Override
+    public void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "UPDATE user SET password = ? WHERE user_id = ?";
+            Object[] params = { generateSecurePassword, userId };
             try {
                 BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.tss.constants.ScreenConstants;
 import com.tss.model.util.SMTP;
 
 import jakarta.mail.Message;

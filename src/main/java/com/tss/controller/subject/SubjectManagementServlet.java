@@ -5,26 +5,21 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Subject;
 import com.tss.model.payload.DataTablesMessage;
-import com.tss.model.payload.ResponseMessage;
+import com.tss.service.UserService;
 import com.tss.service.Subject.SubjectService;
 import com.tss.service.SubjectImpl.SubjectServiceImpl;
-import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
