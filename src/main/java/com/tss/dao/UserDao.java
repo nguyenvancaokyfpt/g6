@@ -31,5 +31,6 @@ public interface UserDao {
     int countAll(Connection connection) throws SQLException;
 
     int countAll(Connection connection, String search) throws SQLException;
-
+    
+    void update(Connection connection ,int userId,String fullName,String email,String mobile) throws SQLException;
 }

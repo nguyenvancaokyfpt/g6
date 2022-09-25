@@ -5,6 +5,7 @@ import com.tss.dao.UserDao;
 import com.tss.model.User;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -283,6 +284,32 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return count;
+    }
+
+    @Override
+    public void update(Connection connection, int userId, String fullName, String email, String mobile) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        java.util.Date date = new java.util.Date();
+java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+        if (connection != null) {
+            String sql = "UPDATE user set full_name = ? , email = ?, mobile = ? , updated_at = ? WHERE user_id = ?";
+            Object[] params = {userId};
+            try {
+                 preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1,fullName);
+                    preparedStatement.setString(2,email);
+                    preparedStatement.setString(3,mobile);
+                    preparedStatement.setDate(4,sqlDate);
+                    preparedStatement.setInt(5,userId);  
+                   preparedStatement.executeUpdate();
+             
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
     }
 
 }

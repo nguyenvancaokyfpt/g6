@@ -174,6 +174,20 @@ public class UserServiceImpl implements UserService {
         return count;
     }
 
+    @Override
+    public String update(int userId, String fullName, String email, String mobile) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.update(connection,userId,fullName,email,mobile);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return "Success!";
+    }
+
 
     
 

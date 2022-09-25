@@ -19,6 +19,9 @@ import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.SessionConstants;
+import com.tss.model.Client;
+import com.tss.service.ClientService;
+import com.tss.service.impl.ClientServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +31,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 
 public class LoginServlet extends HttpServlet {
@@ -42,6 +46,7 @@ public class LoginServlet extends HttpServlet {
         userService = new UserServiceImpl();
         roleService = new RoleServiceImpl();
         permissionService = new PermissionServiceImpl();
+       
     }
     
 
@@ -56,8 +61,11 @@ public class LoginServlet extends HttpServlet {
             if (loginService.login(email, password)) {
                 // get user info
                 User user = userService.findByEmail(email);
+               
                 // set user info to session
-                request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
+                request.getSession().setAttribute(SessionConstants.USER_SESSION, user);              
+    
+
                 // get all roles of user
                 List<UserRole> roles = roleService.findByUserId(user.getUserId());
                 // Convert to String list

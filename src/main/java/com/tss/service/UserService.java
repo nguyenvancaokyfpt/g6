@@ -30,4 +30,6 @@ public interface UserService {
     int countAll();
 
     int countAll(String search);
+    
+    String update(int id, String fullName, String email, String mobile);
 }

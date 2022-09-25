@@ -12,6 +12,7 @@ public enum ScreenConstants {
     // Private screen
     USER_MANAGEMENT(1, "User Management", "/management/user"),
     USER_PROFILE(2, "Profile", "/profile"),
+    USER_Edit(4, "Edit", "/editUser"),
     USER_DASHBOARD(3, "Dashboard", "/dashboard");
 
 
