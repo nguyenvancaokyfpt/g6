@@ -41,4 +41,6 @@ public interface UserService {
     void detachResetPasswordToken(String email);
 
     boolean changePassword(User user, String currentpassword, String newpassword);
+
+    boolean update(User user, String fullName, String email, String mobile);
 }

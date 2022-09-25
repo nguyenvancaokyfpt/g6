@@ -47,5 +47,7 @@ public interface UserDao {
     String getCurrentPassword(Connection connection, int userId) throws SQLException;
 
     void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException;
+    
+    void update(Connection connection ,int userId,String fullName,String email,String mobile) throws SQLException;
 
 }

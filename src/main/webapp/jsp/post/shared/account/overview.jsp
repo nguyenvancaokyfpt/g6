@@ -215,7 +215,7 @@
 										<!--end::Menu item-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-3 my-1">
-											<a href="#" class="menu-link px-3">Settings</a>
+											<a href="profile?tab=settings" class="menu-link px-3">Settings</a>
 										</div>
 										<!--end::Menu item-->
 									</div>
@@ -401,7 +401,7 @@
 				</div>
 				<!--end::Card title-->
 				<!--begin::Action-->
-				<a href="account/settings.html" class="btn btn-primary align-self-center">Edit Profile</a>
+				<a href="profile?tab=settings" class="btn btn-primary align-self-center">Edit Profile</a>
 				<!--end::Action-->
 			</div>
 			<!--begin::Card header-->

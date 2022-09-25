@@ -281,4 +281,25 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public boolean update(User user, String fullName, String email, String mobile) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            System.out.println("user id: " + user.getUserId());
+            System.out.println("full name: " + fullName);
+            System.out.println("email: " + email);
+            System.out.println("mobile: " + mobile);
+            userDao.update(connection, user.getUserId(), fullName, email, mobile);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return false;
+    }
+
+
+
 }

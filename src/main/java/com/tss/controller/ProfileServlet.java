@@ -89,12 +89,30 @@ public class ProfileServlet extends HttpServlet {
             ResponseHelper.sendResponse(response,
                     new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Current password is incorrect"));
         }
-        
+
         ResponseHelper.sendResponse(response,
                 new ResponseMessage(HttpStatusCodeConstants.OK, "Change password successfully"));
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        String name = jsonObject.getString("fullName");
+        String email = jsonObject.getString("email");
+        String phone = jsonObject.getString("mobile");
+
+        if (userService.update(user, name, email, phone)) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Update user successfully"));
+            // update session
+            user.setFullname(name);
+            user.setEmail(email);
+            user.setMobile(phone);
+            request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
+        } else {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Update user failed"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the

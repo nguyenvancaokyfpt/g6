@@ -1,63 +1,31 @@
 "use strict";
-var KTAccountSettingsProfileDetails = function() {
+var KTAccountSettingsProfileDetails = function () {
     var e, t;
     return {
-        init: function() {
+        init: function () {
             e = document.getElementById("kt_account_profile_details_form"), e.querySelector("#kt_account_profile_details_submit"), t = FormValidation.formValidation(e, {
                 fields: {
-                    fname: {
+                    fullName: {
                         validators: {
                             notEmpty: {
                                 message: "First name is required"
                             }
                         }
                     },
-                    lname: {
+                    mobile: {
                         validators: {
                             notEmpty: {
                                 message: "Last name is required"
                             }
                         }
                     },
-                    company: {
+                    email: {
                         validators: {
                             notEmpty: {
                                 message: "Company name is required"
-                            }
-                        }
-                    },
-                    phone: {
-                        validators: {
-                            notEmpty: {
-                                message: "Contact phone number is required"
-                            }
-                        }
-                    },
-                    country: {
-                        validators: {
-                            notEmpty: {
-                                message: "Please select a country"
-                            }
-                        }
-                    },
-                    timezone: {
-                        validators: {
-                            notEmpty: {
-                                message: "Please select a timezone"
-                            }
-                        }
-                    },
-                    "communication[]": {
-                        validators: {
-                            notEmpty: {
-                                message: "Please select at least one communication method"
-                            }
-                        }
-                    },
-                    language: {
-                        validators: {
-                            notEmpty: {
-                                message: "Please select a language"
+                            },
+                            emailAddress: {
+                                message: "The value is not a valid email address"
                             }
                         }
                     }
@@ -71,36 +39,48 @@ var KTAccountSettingsProfileDetails = function() {
                         eleValidClass: ""
                     })
                 }
-            }), $(e.querySelector('[name="country"]')).on("change", (function() {
-                t.revalidateField("country")
-            })), $(e.querySelector('[name="language"]')).on("change", (function() {
-                t.revalidateField("language")
-            })), $(e.querySelector('[name="timezone"]')).on("change", (function() {
-                t.revalidateField("timezone")
-            })),e.querySelector("#kt_account_profile_details_submit").addEventListener("click", (function (e) {
+            }), e.querySelector("#kt_account_profile_details_submit").addEventListener("click", (function (e) {
                 e.preventDefault(), console.log("click"), t.validate().then((function (t) {
-                    "Valid" == t ? swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }) : swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    })
+                    "Valid" == t ? // Post to server
+                        axios.post('profile?action=update', {
+                            email: document.getElementById("kt_account_profile_details_form").querySelector('[name="email"]').value,
+                            fullName: document.getElementById("kt_account_profile_details_form").querySelector('[name="fullName"]').value,
+                            mobile: document.getElementById("kt_account_profile_details_form").querySelector('[name="mobile"]').value,
+                        }).then(function (response) {
+                            Swal.fire({
+                                text: "Your profile has been updated!",
+                                icon: "success",
+                                buttonsStyling: !1,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            })
+                        }).catch(function (error) {
+                            // Show error message
+                            Swal.fire({
+                                text: error.response.data.message,
+                                icon: "error",
+                                buttonsStyling: !1,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }) : swal.fire({
+                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        })
                 }))
             }))
         }
     }
 }();
-KTUtil.onDOMContentLoaded((function() {
+KTUtil.onDOMContentLoaded((function () {
     KTAccountSettingsProfileDetails.init()
 }));
