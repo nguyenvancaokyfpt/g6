@@ -36,12 +36,21 @@ public class SettingDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String action = request.getParameter("action");
-        int id = Integer.parseInt(request.getParameter("id"));
         Connection connection = BaseDao.getConnection();
         SettingDaoIml dao = new SettingDaoIml();
+
+        String action = "";
+        action = request.getParameter("action");
+        if (action == null) {
+            action += "";
+        }
         Setting setting = new Setting();
+        int id = 1;
+        String idString = request.getParameter("id");
+        if (idString == null) {
+            idString += "1";
+        }
+        id = Integer.parseInt(idString);
         setting = dao.findById(connection, id);
         request.setAttribute("settingdetail", setting);
         switch (action) {

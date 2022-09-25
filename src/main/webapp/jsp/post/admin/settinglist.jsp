@@ -108,7 +108,7 @@
                                                         <div class="d-flex align-items-center position-relative my-1">
                                                             <input name="searchword" type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Setting">
                                                             <div class="d-flex align-items-center" id="kt_header_search_toggle">
-                                                                <button type="submit" class="btn btn-icon btn-primary"> <span class="svg-icon svg-icon-1">
+                                                                <button type="submit" class="btn btn-icon btn-active-light-primary"> <span class="svg-icon svg-icon-1">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                                         <rect x="0" y="0" width="24" height="24"></rect>
