@@ -142,13 +142,14 @@
 	<!--begin::Page Custom Javascript(used by this page)-->
 	<jsp:include page="shared/customJavascript.jsp"></jsp:include>
 
-	<!--TEST-->
+	<!--TEST-->	
 	<script src="assets/js/custom/pages/projects/list/list.js"></script>
 	<script src="assets/js/custom/modals/users-search.js"></script>
 	<script src="assets/js/custom/widgets.js"></script>
 	<script src="assets/js/custom/apps/chat/chat.js"></script>
 	<script src="assets/js/custom/modals/create-app.js"></script>
 	<script src="assets/js/custom/modals/upgrade-plan.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 	<!--end::Page Custom Javascript-->
 	<!--end::Javascript-->
 </body>
