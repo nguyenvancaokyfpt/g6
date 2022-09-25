@@ -1,7 +1,7 @@
-package com.tss.dao.SubjectImpl;
+package com.tss.dao.impl;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.Subject.SubjectDao;
+import com.tss.dao.SubjectDao;
 import com.tss.model.Subject;
 
 import java.sql.Connection;

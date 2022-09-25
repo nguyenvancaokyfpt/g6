@@ -5,8 +5,8 @@
 package com.tss.service.SubjectImpl;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.Subject.SubjectDao;
-import com.tss.dao.SubjectImpl.SubjectDaoImpl;
+import com.tss.dao.SubjectDao;
+import com.tss.dao.impl.SubjectDaoImpl;
 import com.tss.model.Subject;
 import com.tss.service.Subject.SubjectService;
 

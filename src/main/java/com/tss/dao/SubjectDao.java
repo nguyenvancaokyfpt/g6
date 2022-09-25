@@ -1,4 +1,4 @@
-package com.tss.dao.Subject;
+package com.tss.dao;
 
 import com.tss.model.Subject;
 
