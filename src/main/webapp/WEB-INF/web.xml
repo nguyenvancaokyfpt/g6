@@ -45,6 +45,10 @@
         <servlet-name>CaptchaGeneratorServlet</servlet-name>
         <servlet-class>com.tss.controller.sercurity.CaptchaGeneratorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserDetails</servlet-name>
+        <servlet-class>com.tss.controller.UserDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -72,10 +76,6 @@
         <servlet-name>UserManagementServlet</servlet-name>
         <servlet-class>com.tss.controller.management.UserManagementServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>UserManagementServlet</servlet-name>
-        <url-pattern>/management/user</url-pattern>
-    </servlet-mapping>
     <!-- Resource -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -112,6 +112,14 @@
     <servlet-mapping>
         <servlet-name>CaptchaGeneratorServlet</servlet-name>
         <url-pattern>/captchaGenerator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetails</servlet-name>
+        <url-pattern>/management/userdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/management/user</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
