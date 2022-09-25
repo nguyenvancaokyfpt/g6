@@ -149,6 +149,9 @@
 	<script src="assets/js/custom/apps/chat/chat.js"></script>
 	<script src="assets/js/custom/modals/create-app.js"></script>
 	<script src="assets/js/custom/modals/upgrade-plan.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 	<!--end::Page Custom Javascript-->
 	<!--end::Javascript-->
 </body>

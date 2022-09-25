@@ -94,7 +94,19 @@ public class ProfileServlet extends HttpServlet {
                 new ResponseMessage(HttpStatusCodeConstants.OK, "Change password successfully"));
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String mobile = request.getParameter("mobile");
+        UserServiceImpl userService = new UserServiceImpl();
+        userService.update(user.getUserId(), fullName, email, mobile);
+          request.setAttribute("customJs", ResponseHelper.customJs(
+                "account/settings/signin-methods.js",
+                "account/settings/profile-details.js",
+                "account/settings/deactivate-account.js"));
+      request.setAttribute("jspPath", "shared/account/overview.jsp");
+        response.sendRedirect("jsp/template.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
