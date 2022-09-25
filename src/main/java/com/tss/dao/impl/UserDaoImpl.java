@@ -416,4 +416,42 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public String getCurrentPassword(Connection connection, int userId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String password = null;
+        if (connection != null) {
+            String sql = "SELECT password FROM user WHERE user_id = ?";
+            Object[] params = { userId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    password = resultSet.getString("password");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return password;
+    }
+
+    @Override
+    public void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "UPDATE user SET password = ? WHERE user_id = ?";
+            Object[] params = { generateSecurePassword, userId };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
+
 }

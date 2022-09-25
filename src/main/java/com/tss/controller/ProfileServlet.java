@@ -8,11 +8,17 @@ package com.tss.controller;
 import java.io.IOException;
 
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.constants.SessionConstants;
+import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
+import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.service.UserService;
+import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -24,6 +30,13 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author nguye
  */
 public class ProfileServlet extends HttpServlet {
+
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserServiceImpl();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,10 +72,26 @@ public class ProfileServlet extends HttpServlet {
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
-        ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
+        ResponseHelper.sendResponse(response,
+                new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
     }
 
-    private void changePassword(HttpServletRequest request, HttpServletResponse response) {
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        String currentpassword = jsonObject.getString("currentpassword");
+        String newpassword = jsonObject.getString("newpassword");
+
+        if (userService.changePassword(user, currentpassword, newpassword)) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Change password successfully"));
+        } else {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Current password is incorrect"));
+        }
+        
+        ResponseHelper.sendResponse(response,
+                new ResponseMessage(HttpStatusCodeConstants.OK, "Change password successfully"));
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {
@@ -81,7 +110,24 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String tab = request.getParameter("tab") == null ? "profile" : request.getParameter("tab");
+
+        switch (tab) {
+            case "settings":
+                request.setAttribute("jspPath", "shared/account/settings.jsp");
+                break;
+            default:
+                request.setAttribute("jspPath", "shared/account/overview.jsp");
+                break;
+        }
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "account/settings/signin-methods.js",
+                "account/settings/profile-details.js",
+                "account/settings/deactivate-account.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD));
+        request.getRequestDispatcher("jsp/template.jsp").forward(request, response);
     }
 
     /**
