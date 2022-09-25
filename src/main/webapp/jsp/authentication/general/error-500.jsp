@@ -30,7 +30,7 @@
 			<!--begin::Content-->
 			<div class="d-flex flex-column flex-column-fluid text-center p-10 py-lg-20">
 				<!--begin::Logo-->
-				<a href="index.html" class="mb-10 pt-lg-20">
+				<a href="/" class="mb-10 pt-lg-20">
 					<img alt="Logo" src="assets/media/logos/logo-2-dark.svg" class="h-50px mb-5" />
 				</a>
 				<!--end::Logo-->
@@ -46,7 +46,7 @@
 					<!--end::Message-->
 					<!--begin::Action-->
 					<div class="text-center">
-						<a href="index.html" class="btn btn-lg btn-primary fw-bolder">Go to homepage</a>
+						<a href="/" class="btn btn-lg btn-primary fw-bolder">Go to homepage</a>
 					</div>
 					<!--end::Action-->
 				</div>

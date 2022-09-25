@@ -312,7 +312,8 @@ public class UserDaoImpl implements UserDao {
         boolean flag = false;
         if (connection != null) {
             String sql = "INSERT INTO user (full_name, email, username, password, avatar_url) VALUES (?, ?, ?, ?, ?);";
-            Object[] params = { user.getFullname(), user.getEmail(), user.getUsername(), user.getPassword(), user.getAvatarUrl() };
+            Object[] params = { user.getFullname(), user.getEmail(), user.getUsername(), user.getPassword(),
+                    user.getAvatarUrl() };
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
@@ -326,6 +327,76 @@ public class UserDaoImpl implements UserDao {
         }
         return flag;
     }
-    
+
+    @Override
+    public void updateResetPasswordToken(Connection connection, String token, int user_id, long millis) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "INSERT INTO reset_password_token (user_id, token, salt) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, salt = ?, created_at = NOW();";
+            Object[] params = { user_id, token, millis, token, millis };
+            
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }       
+    }
+
+    @Override
+    public long getResetPasswordSaltByToken(Connection connection, String token) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        long salt = 0;
+        if (connection != null) {
+            String sql = "SELECT salt FROM reset_password_token WHERE token = ?";
+            Object[] params = { token };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    salt = resultSet.getLong("salt");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return salt;
+    }
+
+    @Override
+    public void updatePwdByEmail(Connection connection, String email, String password) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "UPDATE user SET password = ? WHERE email = ?";
+            Object[] params = { password, email };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
+
+    @Override
+    public void detachResetPasswordToken(Connection connection, String email) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "DELETE FROM reset_password_token WHERE user_id = (SELECT user_id FROM user WHERE email = ?)";
+            Object[] params = { email };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
 
 }
