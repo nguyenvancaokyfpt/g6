@@ -1,8 +1,8 @@
 package com.tss.service;
 
-import com.tss.model.User;
-import com.tss.model.sercurity.UserRole;
 import java.util.List;
+
+import com.tss.model.User;
 
 public interface UserService {
 

@@ -1,28 +1,23 @@
 package com.tss.service.impl;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.tss.constants.SecretStringConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
-import com.tss.dao.UserRoleDao;
 import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.EncryptHelper;
-import com.tss.dao.impl.UserRoleDaoImpl;
 import com.tss.model.User;
-import com.tss.model.sercurity.UserRole;
 import com.tss.service.UserService;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
-    private UserRoleDao userRoleDao;
 
     public UserServiceImpl() {
         userDao = new UserDaoImpl();
-        userRoleDao = new UserRoleDaoImpl();
     }
 
     @Override

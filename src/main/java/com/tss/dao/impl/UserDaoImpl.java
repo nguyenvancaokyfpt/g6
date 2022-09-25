@@ -1,15 +1,15 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.UserDao;
-import com.tss.model.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.UserDao;
+import com.tss.model.User;
 
 public class UserDaoImpl implements UserDao {
 
@@ -159,7 +159,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int modify(Connection connection, int id, User user) throws SQLException {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
             String sql = "UPDATE `training_support_system`.`user`\n"
