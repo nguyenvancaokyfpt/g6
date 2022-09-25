@@ -107,7 +107,19 @@
                                                         <!--begin::Search-->
                                                         <div class="d-flex align-items-center position-relative my-1">
                                                             <input name="searchword" type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Setting">
-                                                            <button type="submit" class="btn btn-light-primary me-3">Search</button>
+                                                            <div class="d-flex align-items-center" id="kt_header_search_toggle">
+                                                                <button type="submit" class="btn btn-icon btn-primary"> <span class="svg-icon svg-icon-1">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                                        <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                                                        <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                                        </g>
+                                                                        </svg>
+                                                                    </span>
+                                                                </button>
+                                                            </div>
+
                                                         </div>
                                                         <!--end::Search-->
                                                     </div>
@@ -140,36 +152,36 @@
                                                         <div class="my-5">
                                                             <table class="table">
                                                                 <thead>
-                                                                    <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                                                    <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-500">
                                                                         <th>ID
                                                                             <a href="/settingList?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th>Type
-                                                                            <a href="/settingList?order=type_id&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=type_id&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th>Title
-                                                                            <a href="/settingList?order=setting_title&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=setting_title&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th>Value
-                                                                            <a href="/settingList?order=setting_value&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=setting_value&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th>Display Order
-                                                                            <a href="/settingList?order=display_order&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=display_order&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th>Status
-                                                                            <a href="/settingList?order=status_title&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                            <a href="/settingList?order=status_title&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
-                                                                        </th>
-                                                                        <th class="border-gray-200">View</th>
-                                                                        <th class="border-gray-200">Edit</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody id="content">
+                                                                        <a href="/settingList?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>Type
+                                                                        <a href="/settingList?order=type_id&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/settingList?order=type_id&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>Title
+                                                                        <a href="/settingList?order=setting_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/settingList?order=setting_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>Value
+                                                                        <a href="/settingList?order=setting_value&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/settingList?order=setting_value&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>Display Order
+                                                                        <a href="/settingList?order=display_order&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/settingList?order=display_order&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>Status
+                                                                        <a href="/settingList?order=status_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/settingList?order=status_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                    </th>
+                                                                    <th>View</th>
+                                                                    <th>Edit</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="content">
                                                                 <c:forEach items="${settinglist}" var="sl">
                                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">                                                   
                                                                         <td>${sl.id}</td>
@@ -191,7 +203,7 @@
                                                                 </c:forEach>
                                                                 <tr>
                                                                     <td>                                                            
-                                                                        <a type="button" class="btn btn-primary" href="#">
+                                                                        <a type="button" class="btn btn-primary" href="/settingList?action=add">
                                                                             <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                                                             <span class="svg-icon svg-icon-2">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 

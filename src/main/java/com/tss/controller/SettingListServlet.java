@@ -39,45 +39,72 @@ public class SettingListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
         SettingDaoIml dao = new SettingDaoIml();
-        int page = 1;
-        String pageString = request.getParameter("page");
-        String searchword = request.getParameter("searchword");
-        String order = request.getParameter("order");
-        String dir = request.getParameter("dir");
+        String action = request.getParameter("action");
+        if (action == null) {
+            action += "";
+        }
+        switch (action) {
+            case "add":
+                request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
+                break;
+            case "create":
+                int id = Integer.parseInt(request.getParameter("setting_id"));
+                int type_id = Integer.parseInt(request.getParameter("type_id"));
+                String title = request.getParameter("title");
+                String value = request.getParameter("value");
+                String display_order = request.getParameter("display_order");
+                int status_id = Integer.parseInt(request.getParameter("status"));
+                String description = request.getParameter("description");
+                //Validate
+                Setting setting = dao.findById(connection, id);
+                if (setting == null) {
+                    dao.addSetting(connection, id, type_id, title, value, display_order, status_id, description);
+                } else {
+                    request.setAttribute("error", "ID already exist");
+                    request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
+                    break;
+                }
+            default:
+                int page = 1;
+                String pageString = request.getParameter("page");
+                String searchword = request.getParameter("searchword");
+                String order = request.getParameter("order");
+                String dir = request.getParameter("dir");
 
-        if (pageString == null||pageString == "") {
-            page = 1;
-        } else {
-            page = Integer.parseInt(pageString);
+                if (pageString == null || pageString.equals("")) {
+                    page = 1;
+                } else {
+                    page = Integer.parseInt(pageString);
+                }
+                if (searchword == null) {
+                    searchword = "";
+                }
+                if (order == null) {
+                    order = "setting_id";
+                }
+                if (dir == null) {
+                    dir = "asc";
+                }
+                int totalSetting = dao.countComplete(connection, searchword, order);
+                int endPage = totalSetting / 5;
+                if (totalSetting % 5 != 0) {
+                    endPage++;
+                }
+                List<Setting> list = new ArrayList<>();
+                try {
+                    list = dao.CompleteList(connection, (page - 1) * 5, searchword, order, dir);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.setAttribute("page", page);
+                request.setAttribute("endPage", endPage);
+                request.setAttribute("settinglist", list);
+                request.setAttribute("order", order);
+                request.setAttribute("dir", dir);
+                request.setAttribute("searchword", searchword);
+                request.getRequestDispatcher("jsp/post/admin/settinglist.jsp").forward(request, response);
+                break;
         }
-        if (searchword == null) {
-            searchword = "";
-        }
-        if (order == null) {
-            order = "setting_id";
-        }
-        if (dir == null) {
-            dir = "desc";
-        }
-
-        int totalSetting = dao.countComplete(connection, searchword, order);
-        int endPage = totalSetting / 5;
-        if (totalSetting % 5 != 0) {
-            endPage++;
-        }
-        List<Setting> list = new ArrayList<>();
-        try {
-            list = dao.CompleteList(connection, (page - 1) * 5, searchword, order, dir);
-        } catch (SQLException ex) {
-            Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("page", page);
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("settinglist", list);
-        request.setAttribute("order", order);
-        request.setAttribute("dir", dir);
-        request.setAttribute("searchword", searchword);
-        request.getRequestDispatcher("jsp/post/admin/settinglist.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

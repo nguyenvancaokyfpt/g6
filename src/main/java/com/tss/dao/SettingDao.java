@@ -31,4 +31,5 @@ public interface SettingDao {
     int countComplete(Connection connection, String searchword, String order) throws SQLException;
     
     void updateSetting(Connection connection, int id, int type_id,String title,String value,String display_order,int status_id,String description) throws SQLException;
+    void addSetting(Connection connection, int id, int type_id,String title,String value,String display_order,int status_id,String description) throws SQLException;
 }

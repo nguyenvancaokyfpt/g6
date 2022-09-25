@@ -125,19 +125,19 @@
                                     <input type="hidden" name="action" value="update">
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Type</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="type_id" autocomplete="off" value="<%=sd.getType_id()%>">
+                                        <input class="form-control form-control-lg form-control-solid" type="number"  name="type_id" required value="<%=sd.getType_id()%>">
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Title</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="title" autocomplete="off" value="<%=sd.getTitle()%>">
+                                        <input class="form-control form-control-lg form-control-solid" type="text"  name="title" required value="<%=sd.getTitle()%>">
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Value</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="value" autocomplete="off" value="<%=sd.getValue()%>">
+                                        <input class="form-control form-control-lg form-control-solid" type="text"  name="value" autocomplete="off" value="<%=sd.getValue()%>">
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Display order</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="display_order" autocomplete="off" value="<%=sd.getDisplay_order()%>">
+                                        <input class="form-control form-control-lg form-control-solid" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplay_order()%>">
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Status</label><br>
@@ -156,10 +156,10 @@
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="col-xl-10">
                                         <label class="form-label fw-bolder text-dark fs-6">Description</label>
-                                        <textarea class="form-control form-control-lg form-control-solid" placeholder="" name="description" autocomplete="off"><%=sd.getDescription()%></textarea>
+                                        <textarea class="form-control form-control-lg form-control-solid" name="description" autocomplete="off"><%=sd.getDescription()%></textarea>
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                    <button type="submit" class="btn btn-primary">Confirm</button>
                                 </form>
                             </div>
 

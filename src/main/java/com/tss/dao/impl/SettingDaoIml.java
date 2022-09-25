@@ -180,7 +180,7 @@ public class SettingDaoIml implements SettingDao {
         if (connection != null) {
             String sql = "SELECT setting_id, type_id, setting_title, setting_value, display_order, setting.status_id, status_title, description \n"
                     + "FROM setting inner join status on setting.status_id = status.status_id \n"
-                    + "where setting_title like ? ORDER BY " + order +" "+dir+ " limit ?,5";
+                    + "where setting_title like ? ORDER BY " + order + " " + dir + " limit ?,5";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, "%" + searchword + "%");
@@ -230,6 +230,32 @@ public class SettingDaoIml implements SettingDao {
     }
 
     @Override
+    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            String sql = "INSERT INTO setting(setting_id, type_id, setting_title, setting_value, display_order, status_id, description) \n"
+                    + "VALUES (?,?,?,?,?,?,?);";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(2, type_id);
+                preparedStatement.setString(3, title);
+                preparedStatement.setString(4, value);
+                preparedStatement.setString(5, display_order);
+                preparedStatement.setInt(6, status_id);
+                preparedStatement.setString(7, description);
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
     public void updateSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -260,7 +286,7 @@ public class SettingDaoIml implements SettingDao {
         Connection connection = BaseDao.getConnection();
         SettingDaoIml dao = new SettingDaoIml();
         List<Setting> list = new ArrayList<>();
-        list = dao.CompleteList(connection, 0, "admin", "setting_id","desc");
+        list = dao.CompleteList(connection, 0, "admin", "setting_id", "desc");
         for (Setting setting : list) {
             System.out.println(list.toString());
         }
