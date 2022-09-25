@@ -6,6 +6,7 @@
 -- Generation Time: Sep 25, 2022 at 07:43 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
+-- Test auto import database
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
