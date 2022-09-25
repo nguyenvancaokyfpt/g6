@@ -118,7 +118,7 @@
                                         <div class="col-xl-10">
                                             <div class="col-xl-10">
                                                 <label class="form-label fw-bolder text-dark fs-6">ID</label>
-                                                <input class="form-control form-control-lg form-control-solid" placeholder="Enter setting id" type="number"  name="setting_id" required value="">
+                                                <input class="form-control form-control-lg form-control-solid" placeholder="Enter setting id" type="number"  name="setting_id" required value="" min="1">
                                                 <div class="fv-plugins-message-container invalid-feedback"></div></div>
 
                                             <div class="col-xl-10">

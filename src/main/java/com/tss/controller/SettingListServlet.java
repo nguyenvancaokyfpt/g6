@@ -48,16 +48,19 @@ public class SettingListServlet extends HttpServlet {
                 request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
                 break;
             case "create":
-                int id = Integer.parseInt(request.getParameter("setting_id"));
+                int id = 1;
+                String idString = request.getParameter("setting_id");
+                id = Integer.parseInt(idString);
                 int type_id = Integer.parseInt(request.getParameter("type_id"));
                 String title = request.getParameter("title");
                 String value = request.getParameter("value");
                 String display_order = request.getParameter("display_order");
                 int status_id = Integer.parseInt(request.getParameter("status"));
                 String description = request.getParameter("description");
-                //Validate
+                //Validate input
                 Setting setting = dao.findById(connection, id);
-                if (setting == null) {
+                System.out.println(setting.toString());
+                if (setting.getTitle()==null) {
                     dao.addSetting(connection, id, type_id, title, value, display_order, status_id, description);
                 } else {
                     request.setAttribute("error", "ID already exist");
@@ -70,7 +73,7 @@ public class SettingListServlet extends HttpServlet {
                 String searchword = request.getParameter("searchword");
                 String order = request.getParameter("order");
                 String dir = request.getParameter("dir");
-
+                //Set default value
                 if (pageString == null || pageString.equals("")) {
                     page = 1;
                 } else {
@@ -85,6 +88,7 @@ public class SettingListServlet extends HttpServlet {
                 if (dir == null) {
                     dir = "asc";
                 }
+                //Paging
                 int totalSetting = dao.countComplete(connection, searchword, order);
                 int endPage = totalSetting / 5;
                 if (totalSetting % 5 != 0) {
@@ -96,6 +100,7 @@ public class SettingListServlet extends HttpServlet {
                 } catch (SQLException ex) {
                     Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                //Retain paging
                 request.setAttribute("page", page);
                 request.setAttribute("endPage", endPage);
                 request.setAttribute("settinglist", list);

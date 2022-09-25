@@ -1178,7 +1178,7 @@
 						<!--end::Edit-->
 						<!--begin::Action-->
 						<div id="kt_signin_password_button" class="ms-auto">
-							<button class="btn btn-light btn-active-light-primary">Reset Password</button>
+							<button class="btn btn-light btn-active-light-primary">Change Password</button>
 						</div>
 						<!--end::Action-->
 					</div>
