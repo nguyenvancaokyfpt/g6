@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2022 at 07:45 PM
+-- Generation Time: Sep 25, 2022 at 06:32 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -160,6 +160,7 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (3, 23, 1, 1, 1, 1),
 (3, 24, 1, 1, 1, 1),
 (3, 26, 1, 1, 1, 1),
+(6, 21, 1, 1, 1, 1),
 (7, 21, 1, 1, 1, 1),
 (10, 21, 1, 1, 1, 1),
 (11, 21, 1, 1, 1, 1);
