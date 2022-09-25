@@ -32,6 +32,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'mobile' },
                 { data: 'message' },
                 { data: 'response' },
+                { data: 'category_id'},
             ],
             columnDefs: [
                 {
@@ -42,7 +43,7 @@ var KTDatatablesServerSide = function () {
                         <!--begin::Checkbox-->
                         <td>
                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" value="`+ data  +`" />
+                                <input class="form-check-input" type="checkbox" value="`+ data + `" />
                             </div>
                         </td>
                         <!--end::Checkbox-->
@@ -97,8 +98,27 @@ var KTDatatablesServerSide = function () {
                         return data;
                     }
                 },
-                
-                
+                {
+                    targets: 7,
+                    title: '',
+                    className: 'text-center',
+                    render: function (data) {
+                        return `
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <form action="/webcontact/webcontactlist" method="post">
+                                    <input type="hidden" name="action" value="get">
+                                    <input name="categoryId" type="hidden" value="${data}">
+                                    <button type="submit" class="btn btn-secondary">
+                                        View
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                        `;
+                    }
+                },
+
             ],
         });
 

@@ -16,7 +16,7 @@ import java.util.List;
 public interface WebContactDao {
      List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException;
 
-    WebContact findById(Connection connection, int userId) throws SQLException;
+    WebContact findById(Connection connection, int catId) throws SQLException;
 
     int add(Connection connection, WebContact web) throws SQLException;
 

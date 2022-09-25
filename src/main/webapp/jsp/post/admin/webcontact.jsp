@@ -102,15 +102,7 @@
                         <!--end::Svg Icon-->Export</button>
                         <!--end::Export-->
                         <!--begin::Add user-->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
                         <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
-                                <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->Add User</button>
                         <!--end::Add user-->
                     </div>
                     <!--end::Toolbar-->
@@ -214,7 +206,6 @@
                                 <!--begin::Modal header-->
                                 <div class="modal-header" id="kt_modal_add_user_header">
                                     <!--begin::Modal title-->
-                                    <h2 class="fw-bolder">Add User</h2>
                                     <!--end::Modal title-->
                                     <!--begin::Close-->
                                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -436,7 +427,8 @@
                             <th class="min-w-125px">EMAIL</th>
                             <th class="min-w-125px">MOBILE</th>
                             <th class="min-w-125px">MASSAGE</th>
-                            <th class="text-end min-w-100px">RESPONSE</th>
+                            <th class="min-w-100px">RESPONSE</th>
+                            <th class="text-end min-w-100px"></th>
                         </tr>
                         <!--end::Table row-->
                     </thead>

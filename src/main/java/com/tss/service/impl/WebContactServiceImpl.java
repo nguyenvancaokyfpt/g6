@@ -58,8 +58,18 @@ public class WebContactServiceImpl implements WebContactService {
     }
 
     @Override
-    public WebContact findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public WebContact findById(int catId) {
+        Connection connection = null;
+        WebContact web = null;
+        try {
+            connection = BaseDao.getConnection();
+            web = webDao.findById(connection, catId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return web;
     }
 
     @Override
