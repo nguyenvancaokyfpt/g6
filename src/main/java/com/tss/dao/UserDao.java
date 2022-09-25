@@ -44,4 +44,8 @@ public interface UserDao {
 
     void detachResetPasswordToken(Connection connection, String email) throws SQLException;
 
+    String getCurrentPassword(Connection connection, int userId) throws SQLException;
+
+    void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException;
+
 }

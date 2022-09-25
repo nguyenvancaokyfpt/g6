@@ -39,4 +39,6 @@ public interface UserService {
     void updatePwdByEmail(String email, String password);
 
     void detachResetPasswordToken(String email);
+
+    boolean changePassword(User user, String currentpassword, String newpassword);
 }
