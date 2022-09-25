@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     public List<User> List(String fullName, String email, int currentPageNo, int PageSize) {
         Connection connection = null;
         List<User> userList = null;
-
         try {
             connection = BaseDao.getConnection();
 

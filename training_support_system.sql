@@ -3,10 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2022 at 07:43 AM
+-- Generation Time: Sep 25, 2022 at 01:01 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
--- Test auto import database
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -161,6 +160,8 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (3, 23, 1, 1, 1, 1),
 (3, 24, 1, 1, 1, 1),
 (3, 26, 1, 1, 1, 1),
+(4, 21, 1, 1, 1, 1),
+(5, 21, 1, 1, 1, 1),
 (6, 21, 1, 1, 1, 1),
 (7, 21, 1, 1, 1, 1),
 (10, 21, 1, 1, 1, 1),
@@ -199,6 +200,8 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (1, 'User Management', '/management/user'),
 (2, 'User Profile', '/profile'),
 (3, 'Dashboard', '/dashboard'),
+(4, 'Setting', '/settingList'),
+(5, 'Setting Detail', '/settingDetail'),
 (6, 'User Details', '/management/userdetails'),
 (7, 'Web Contact List', '/webcontact/webcontactlist'),
 (10, 'Subject List', '/subject/list'),
