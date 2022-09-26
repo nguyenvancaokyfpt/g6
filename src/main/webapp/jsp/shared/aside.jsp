@@ -73,6 +73,9 @@
                                 <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
                             </div>
                         </div>
+
+                        
+                        <!-- Managerment -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                             <span class="menu-link">
                                 <span class="menu-icon">
@@ -104,6 +107,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Managerment -->
+
+                        <!-- Webcontact -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                             <span class="menu-link">
                                 <span class="menu-icon">
@@ -135,6 +141,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Webcontact -->
+
+                        <!-- Subject manager -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                             <span class="menu-link">
                                 <span class="menu-icon">
@@ -170,6 +179,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Subject manager -->
+
+                        <!-- Setting -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                             <span class="menu-link">
                                 <span class="menu-icon">
@@ -205,6 +217,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Setting -->
                     </div>
 
                     <!--end::Menu-->

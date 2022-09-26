@@ -34,4 +34,13 @@ public enum RoleConstants {
                 }
                 return null;
         }
+
+        public static String getRoleTitle(int id2) {
+                for (RoleConstants role : RoleConstants.values()) {
+                        if (role.getId() == id2) {
+                                return role.getTitle();
+                        }
+                }
+                return null;
+        }
 }

@@ -608,6 +608,7 @@
                             </th>
                             <th class="min-w-15px">ID</th>
                             <th class="min-w-125px">User</th>
+                            <th class="min-w-125px">Role</th>
                             <th class="min-w-125px">Mobile</th>
                             <th class="min-w-125px">Last Active</th>
                             <th class="min-w-125px">Joined Date</th>

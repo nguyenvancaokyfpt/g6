@@ -8,12 +8,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.tss.model.system.Role;
+
 /**
  *
  * @author nguye
  */
 public class User {
-    
+
     private int userId;
     private String fullname;
     private String email;
@@ -26,11 +28,13 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
     private Date lastActive;
+    private Role role;
 
     public User() {
     }
 
-    public User(int userId, String fullname, String email, String username, String password, String mobile, String avatarUrl, int statusId, String note, Date createdAt, Date updatedAt, Date lastActive) {
+    public User(int userId, String fullname, String email, String username, String password, String mobile,
+            String avatarUrl, int statusId, String note, Date createdAt, Date updatedAt, Date lastActive, Role role) {
         this.userId = userId;
         this.fullname = fullname;
         this.email = email;
@@ -43,9 +47,10 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.lastActive = lastActive;
+        this.role = role;
     }
 
-    public User(String email , String password, String fullname) {
+    public User(String email, String password, String fullname) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
@@ -219,11 +224,25 @@ public class User {
         this.lastActive = lastActive;
     }
 
+    /**
+     * @return Role return the role
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     // get first name
     public String getFirstName() {
         List<String> parts = Arrays.asList(fullname.split(" "));
         String firstName = "";
-        for (int i = 0; i < parts.size()-1; i++) {
+        for (int i = 0; i < parts.size() - 1; i++) {
             firstName += parts.get(i) + " ";
         }
         return firstName;
@@ -232,13 +251,14 @@ public class User {
     // get last name
     public String getLastName() {
         List<String> parts = Arrays.asList(fullname.split(" "));
-        return parts.get(parts.size()-1);
+        return parts.get(parts.size() - 1);
     }
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", fullname=" + fullname + ", email=" + email + ", mobile=" + mobile + ", avatarUrl=" + avatarUrl + ", statusId=" + statusId + ", note=" + note + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", lastActive=" + lastActive + '}';
+        return "User{" + "userId=" + userId + ", fullname=" + fullname + ", email=" + email + ", mobile=" + mobile
+                + ", avatarUrl=" + avatarUrl + ", statusId=" + statusId + ", note=" + note + ", createdAt=" + createdAt
+                + ", updatedAt=" + updatedAt + ", lastActive=" + lastActive + '}';
     }
-    
-    
+
 }

@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tss.constants.RoleConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserDao;
 import com.tss.model.User;
+import com.tss.model.system.Role;
 
 public class UserDaoImpl implements UserDao {
 
@@ -233,7 +235,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         List<User> userList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT user_id, full_name, email, mobile, avatar_url, status_id, note, created_at, updated_at, last_active FROM user WHERE full_name LIKE ? OR email LIKE ? ORDER BY user_id DESC LIMIT ?, ?";
+            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status.status_value, user_role.setting_id as role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE full_name LIKE ? OR email LIKE ? ORDER BY user_id DESC LIMIT ?, ?";
             Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -249,6 +251,10 @@ public class UserDaoImpl implements UserDao {
                     user.setCreatedAt(resultSet.getTimestamp("created_at"));
                     user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
                     user.setLastActive(resultSet.getTimestamp("last_active"));
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("role_id"));
+                    role.setTitle(RoleConstants.getRoleTitle(role.getId()));
+                    user.setRole(role);
                     userList.add(user);
                 }
             } catch (SQLException e) {
@@ -266,7 +272,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM user";
+            String sql = "SELECT COUNT(1) AS count FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id";
             Object[] params = {};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -288,7 +294,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM user WHERE full_name LIKE ? OR email LIKE ?";
+            String sql = "SELECT COUNT(1) AS count FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE full_name LIKE ? OR email LIKE ?";
             Object[] params = { "%" + search + "%", "%" + search + "%" };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);

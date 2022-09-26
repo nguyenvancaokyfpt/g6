@@ -282,14 +282,4 @@ public class SettingDaoIml implements SettingDao {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
-        Connection connection = BaseDao.getConnection();
-        SettingDaoIml dao = new SettingDaoIml();
-        List<Setting> list = new ArrayList<>();
-        list = dao.CompleteList(connection, 0, "admin", "setting_id", "desc");
-        for (Setting setting : list) {
-            System.out.println(list.toString());
-        }
-        dao.updateSetting(connection, 27, 1, "New title", "12,13", "5", 0, "This is a test");
-    }
 }

@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tss.service.SubjectImpl;
+package com.tss.service.impl;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.SubjectDao;
 import com.tss.dao.impl.SubjectDaoImpl;
 import com.tss.model.Subject;
-import com.tss.service.Subject.SubjectService;
+import com.tss.service.SubjectService;
 
 import java.sql.Connection;
 import java.util.List;
