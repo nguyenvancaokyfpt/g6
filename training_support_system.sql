@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2022 at 05:55 PM
+-- Generation Time: Sep 27, 2022 at 07:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -364,7 +364,8 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (49, 'Nguyễn Văn Cao Kỳ', 'kynvche163260602102', 'kynvche163260@fpt.edu.vn', NULL, 'sxTBT5hdJOyf3GNb92zikebGumFjjVib2syMydx3tq0=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-24 09:34:56', '2022-09-24 09:34:56', '2022-09-24 09:34:56'),
 (50, 'DESTINY', 'nguyenvancaoky2020270366', 'nguyenvancaoky2020@gmail.com', NULL, 'CLFgamRFvyY4ow5WhdZhe5Bir5HkHNC3Ocp97iaNupY=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, NULL, '2022-09-25 05:40:55', '2022-09-25 05:40:55', '2022-09-25 05:40:55'),
-(51, 'NVCK2002', 'anivns.com642912', 'anivns.com@gmail.com', '1233412312', 'iHMLiufq1SVvg33pAS2krZYrftzjiVqKsnKlmvTSj4s=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-25 14:26:51', '2022-09-25 14:26:51', '2022-09-25 14:26:51');
+(51, 'NVCK2002', 'anivns.com642912', 'anivns.com@gmail.com', '1233412312', 'iHMLiufq1SVvg33pAS2krZYrftzjiVqKsnKlmvTSj4s=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-25 14:26:51', '2022-09-25 14:26:51', '2022-09-25 14:26:51'),
+(52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', NULL, 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30');
 
 -- --------------------------------------------------------
 
@@ -393,7 +394,8 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (32, 26),
 (49, 26),
 (50, 26),
-(51, 26);
+(51, 26),
+(52, 26);
 
 -- --------------------------------------------------------
 
@@ -637,7 +639,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables
