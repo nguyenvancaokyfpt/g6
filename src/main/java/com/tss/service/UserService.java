@@ -3,6 +3,7 @@ package com.tss.service;
 import java.util.List;
 
 import com.tss.model.User;
+import com.tss.model.util.DataTablesColumns;
 
 public interface UserService {
 
@@ -43,4 +44,6 @@ public interface UserService {
     boolean changePassword(User user, String currentpassword, String newpassword);
 
     boolean update(User user, String fullName, String email, String mobile);
+
+    List<User> findAll(int start, int length, String search, List<DataTablesColumns> columns, int orderColumn, String orderDir);
 }

@@ -1,6 +1,9 @@
 package com.tss.helper;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONArray;
+import com.tss.model.util.DataTablesColumns;
 
 
 public class DebugHelper {
@@ -10,5 +13,9 @@ public class DebugHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void print(Object data) {
+        log(data);
     }
 }

@@ -80,8 +80,8 @@ var KTUsersList = function () {
         searchDelay: 50,
         processing: true,
         serverSide: true,
-        order: [[3, "desc"]],
-        stateSave: true,
+        order: [[1, "asc"]],
+        stateSave: false,
         select: {
           style: "multi",
           selector: 'td:first-child input[type="checkbox"]',
@@ -90,13 +90,16 @@ var KTUsersList = function () {
         ajax: {
           url: window.location.origin + "/management/user?action=list",
           type: "POST",
+          data: {
+            numberOfColumns: 7
+          }
         },
         columns: [
           { data: "userId" },
           { data: "userId" },
           { data: "role" },
           { data: "avatarUrl" },
-          { data: "updatedAt" }, // fake data for mobile
+          { data: "mobile" },
           { data: "lastActive" },
           { data: "createdAt" },
           { data: "statusId" },
@@ -133,9 +136,25 @@ var KTUsersList = function () {
           {
             targets: 2,
             title: "ROLE",
+            orderable: false,
             class: "text-center",
             render: function (data) {
-              return data.title;
+              switch (data.id) {
+                case 21:
+                  return `<a href="#" class="badge badge-light-danger fs-7 m-1">` + data.title + `</a>`;
+                case 22:
+                  return `<a href="#" class="badge badge-light-success fs-7 m-1">` + data.title + `</a>`;
+                case 23:
+                  return `<a href="#" class="badge badge-light-primary fs-7 m-1">` + data.title + `</a>`;
+                case 24:
+                  return `<a href="#" class="badge badge-light-warning fs-7 m-1">` + data.title + `</a>`;
+                case 25:
+                  return `<a href="#" class="badge badge-light-info fs-7 m-1">` + data.title + `</a>`;
+                case 26:
+                  return `<a href="#" class="badge badge-light-dark fs-7 m-1">` + data.title + `</a>`;
+                default:
+                  return `<a href="#" class="badge badge-light-primary fs-7 m-1">` + data.title + `</a>`;
+              }
             },
           },
           {

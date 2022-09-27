@@ -116,4 +116,9 @@ public class RequestHelper {
         String uri = request.getRequestURI();
         return url.substring(0, url.indexOf(uri));
     }
+
+    public static JSONObject getJsonDataForm(HttpServletRequest request) {
+        JSONObject jsonObject = JSONObject.parseObject(JSONArray.toJSONString(request.getParameterMap()));
+        return jsonObject;
+    }
 }

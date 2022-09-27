@@ -50,4 +50,7 @@ public interface UserDao {
     
     void update(Connection connection ,int userId,String fullName,String email,String mobile) throws SQLException;
 
+    java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+            String orderDir) throws SQLException;
+
 }

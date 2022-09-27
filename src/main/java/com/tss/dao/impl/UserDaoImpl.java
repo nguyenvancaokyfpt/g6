@@ -244,10 +244,10 @@ public class UserDaoImpl implements UserDao {
                     user.setUserId(resultSet.getInt("user_id"));
                     user.setFullname(resultSet.getString("full_name"));
                     user.setEmail(resultSet.getString("email"));
-                    user.setMobile(resultSet.getString("mobile"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
                     user.setAvatarUrl(resultSet.getString("avatar_url"));
                     user.setStatusId(resultSet.getInt("status_id"));
-                    user.setNote(resultSet.getString("note"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
                     user.setCreatedAt(resultSet.getTimestamp("created_at"));
                     user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
                     user.setLastActive(resultSet.getTimestamp("last_active"));
@@ -478,6 +478,44 @@ public class UserDaoImpl implements UserDao {
                 BaseDao.closeResource(null, preparedStatement, null);
             }
         }
+    }
+
+    @Override
+    public List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+            String orderDir) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> userList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status.status_value, user_role.setting_id as role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE full_name LIKE ? OR email LIKE ? ORDER BY " + columnName + " " + orderDir + " LIMIT ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("role_id"));
+                    role.setTitle(RoleConstants.getRoleTitle(role.getId()));
+                    user.setRole(role);
+                    userList.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return userList;
     }
 
 }

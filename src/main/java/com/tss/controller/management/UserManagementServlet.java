@@ -5,6 +5,7 @@
 package com.tss.controller.management;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,11 +13,14 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.helper.DTOHelper;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.util.DataTablesColumns;
 import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
 
@@ -100,23 +104,38 @@ public class UserManagementServlet extends HttpServlet {
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        JSONObject jsonObject = RequestHelper.getJsonDataForm(request);
         int start = 0;
         int length = 10;
         String search = "";
         int draw = 1;
-        if (jsonObject != null) {
-            start = jsonObject.getInteger("start");
-            length = jsonObject.getInteger("length");
-            search = jsonObject.getString("search[value]");
-            draw = jsonObject.getInteger("draw");
-        } else {
-            start = Integer.parseInt(request.getParameter("start"));
-            length = Integer.parseInt(request.getParameter("length"));
-            search = request.getParameter("search[value]");
-            draw = Integer.parseInt(request.getParameter("draw"));
+        int numberofcolumn = -1;
+        int orderColumn = 1;
+        String orderDir = "asc";
+        List<DataTablesColumns> columns = new ArrayList<DataTablesColumns>();
+        try {
+            if (jsonObject != null) {
+                start = jsonObject.getJSONArray("start").getInteger(0);
+                length = jsonObject.getJSONArray("length").getInteger(0);
+                search = jsonObject.getJSONArray("search[value]").getString(0);
+                draw = jsonObject.getJSONArray("draw").getInteger(0);
+                numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
+                orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
+                orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
+                for (int i = 0; i <= numberofcolumn; i++) {
+                    columns.add(new DataTablesColumns(DTOHelper.convertToSnakeCase(jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
+                            jsonObject.getJSONArray("columns[" + i + "][name]").getString(0),
+                            jsonObject.getJSONArray("columns[" + i + "][searchable]").getBoolean(0),
+                            jsonObject.getJSONArray("columns[" + i + "][orderable]").getBoolean(0),
+                            jsonObject.getJSONArray("columns[" + i + "][search][value]").getString(0),
+                            jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
+                }
+                DebugHelper.print(orderColumn);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
-        List<User> users = userService.findAll(start, length, search);
+        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir);
         int recordsTotal = userService.countAll();
         int recordsFiltered = userService.countAll(search);
         // response
@@ -132,12 +151,10 @@ public class UserManagementServlet extends HttpServlet {
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/user-management/users/list/table-edited.js",
                 "apps/user-management/users/list/export-users.js",
-                "apps/user-management/users/list/add.js"
-        ));
+                "apps/user-management/users/list/add.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.USER_MANAGEMENT
-        ));
+                ScreenConstants.USER_MANAGEMENT));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 

@@ -11,6 +11,7 @@ import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.EncryptHelper;
 import com.tss.helper.PasswordHelper;
 import com.tss.model.User;
+import com.tss.model.util.DataTablesColumns;
 import com.tss.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -268,7 +269,8 @@ public class UserServiceImpl implements UserService {
             connection = BaseDao.getConnection();
             String pwd = userDao.getCurrentPassword(connection, user.getUserId());
             if (pwd.equals(currentpassword)) {
-                userDao.updatePassword(connection, user.getUserId(), PasswordHelper.generateSecurePassword(newpassword));
+                userDao.updatePassword(connection, user.getUserId(),
+                        PasswordHelper.generateSecurePassword(newpassword));
                 return true;
             } else {
                 return false;
@@ -300,6 +302,24 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public List<User> findAll(int start, int length, String search,
+            List<DataTablesColumns> columns, int orderColumn, String orderDir) {
+        Connection connection = null;
+        List<User> userList = null;
 
+        // get orderColumn name
+        String columnName = columns.get(orderColumn).getData();
+
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.findAll(connection, start, length, search, columnName, orderDir);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
 
 }
