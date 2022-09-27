@@ -112,6 +112,8 @@ public class UserManagementServlet extends HttpServlet {
         int numberofcolumn = -1;
         int orderColumn = 1;
         String orderDir = "asc";
+        String roleFilter = "";
+        String statusFilter = "";
         List<DataTablesColumns> columns = new ArrayList<DataTablesColumns>();
         try {
             if (jsonObject != null) {
@@ -130,14 +132,21 @@ public class UserManagementServlet extends HttpServlet {
                             jsonObject.getJSONArray("columns[" + i + "][search][value]").getString(0),
                             jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
                 }
-                DebugHelper.print(orderColumn);
+                for (DataTablesColumns dataTablesColumns : columns) {
+                    if (dataTablesColumns.getData().equals("role")) {
+                        roleFilter = dataTablesColumns.getSearchValue();
+                    }
+                    if (dataTablesColumns.getData().equals("status_id")) {
+                        statusFilter = dataTablesColumns.getSearchValue();
+                    }
+                }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir);
+        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir, roleFilter, statusFilter);
         int recordsTotal = userService.countAll();
-        int recordsFiltered = userService.countAll(search);
+        int recordsFiltered = userService.countAll(search, roleFilter, statusFilter);
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
     }
@@ -150,8 +159,7 @@ public class UserManagementServlet extends HttpServlet {
         request.setAttribute("jspPath", role + "/user.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/user-management/users/list/table-edited.js",
-                "apps/user-management/users/list/export-users.js",
-                "apps/user-management/users/list/add.js"));
+                "apps/user-management/users/list/export-users.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT));

@@ -322,4 +322,40 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+    @Override
+    public List<User> findAll(int start, int length, String search, java.util.List<DataTablesColumns> columns,
+            int orderColumn, String orderDir, String roleFilter, String statusFilter) {
+        Connection connection = null;
+        List<User> userList = null;
+
+        // get orderColumn name
+        String columnName = columns.get(orderColumn).getData();
+
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.findAll(connection, start, length, search, columnName, orderDir, roleFilter,
+                    statusFilter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
+
+    @Override
+    public int countAll(String search, String roleFilter, String statusFilter) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.countAll(connection, search, roleFilter, statusFilter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
 }

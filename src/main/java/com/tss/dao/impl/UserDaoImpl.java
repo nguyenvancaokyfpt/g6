@@ -487,7 +487,8 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         List<User> userList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status.status_value, user_role.setting_id as role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE full_name LIKE ? OR email LIKE ? ORDER BY " + columnName + " " + orderDir + " LIMIT ?, ?";
+            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status.status_value, user_role.setting_id as role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE full_name LIKE ? OR email LIKE ? ORDER BY "
+                    + columnName + " " + orderDir + " LIMIT ?, ?";
             Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -516,6 +517,70 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return userList;
+    }
+
+    @Override
+    public java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+            String orderDir, String roleFilter, String statusFilter) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> userList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT USER.user_id, full_name, email, mobile, avatar_url, USER.status_id, note, created_at, updated_at, last_active, STATUS .status_title, STATUS .status_value, user_role.setting_id AS role_id FROM USER INNER JOIN STATUS ON USER.status_id = STATUS .status_id INNER JOIN user_role ON USER.user_id = user_role.user_id WHERE (full_name LIKE ? OR email LIKE ?) AND( user_role.setting_id LIKE ? AND USER.status_id LIKE ? ) ORDER BY "
+                    + columnName + " " + orderDir + " LIMIT ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + roleFilter + "%",
+                    "%" + statusFilter + "%", start, length };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("role_id"));
+                    role.setTitle(RoleConstants.getRoleTitle(role.getId()));
+                    user.setRole(role);
+                    userList.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return userList;
+    }
+
+    @Override
+    public int countAll(Connection connection, String search, String roleFilter, String statusFilter)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "SELECT COUNT(*) AS count FROM user INNER JOIN user_role ON user.user_id = user_role.user_id WHERE (full_name LIKE ? OR email LIKE ?) AND( user_role.setting_id LIKE ? AND user.status_id LIKE ? )";
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + roleFilter + "%",
+                    "%" + statusFilter + "%" };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
     }
 
 }

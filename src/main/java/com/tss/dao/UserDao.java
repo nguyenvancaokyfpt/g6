@@ -53,4 +53,9 @@ public interface UserDao {
     java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
             String orderDir) throws SQLException;
 
+    java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+            String orderDir, String roleFilter, String statusFilter) throws SQLException;
+
+    int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
+
 }

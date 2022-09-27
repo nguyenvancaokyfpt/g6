@@ -307,11 +307,17 @@ var KTUsersList = function () {
           n = t.querySelector('[data-kt-user-table-filter="filter"]'),
           r = t.querySelectorAll("select");
         n.addEventListener("click", (function () {
-          var t = "";
+          var role = -1;
+          var status = -1;
           r.forEach(((e, n) => {
-            console.log(e);
-            e.value && "" !== e.value && (0 !== n && (t += " "), t += e.value)
-          })), e.search(t).draw(), e.columns(3).search(t).draw()
+            var filter = e.getAttribute("data-kt-user-table-filter");
+            if (filter == "role") {
+              role = e.value;
+            }
+            if (filter == "status") {
+              status = e.value;
+            }
+          })), e.columns(2).search(role).columns(7).search(status).draw()
         }))
       })())
     }

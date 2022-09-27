@@ -46,4 +46,9 @@ public interface UserService {
     boolean update(User user, String fullName, String email, String mobile);
 
     List<User> findAll(int start, int length, String search, List<DataTablesColumns> columns, int orderColumn, String orderDir);
+
+    List<User> findAll(int start, int length, String search, java.util.List<DataTablesColumns> columns,
+            int orderColumn, String orderDir, String roleFilter, String statusFilter);
+
+    int countAll(String search, String roleFilter, String statusFilter);
 }
