@@ -1,14 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-    label{
+    label {
         width: 100px;
         margin: 5px 0;
     }
+
+    .nav_search_and_add {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 7%;
+    }
 </style>
-<div>
-    <button type="button" class="btn btn-primary" 
-            style="float: right; margin-right: 200px" data-bs-toggle="modal" 
-            data-bs-target="#addSubject">
+<div class="nav_search_and_add">
+    <div class="row g-3">
+        <div class="col-auto">
+            <label for="search_form" class="visually-hidden">Search</label>
+            <input type="search" value="${requestScope.searchRg}" class="form-control" onkeyup="getSearchRg()"
+                   id="search_form" placeholder="Search">
+        </div>
+        <div class="col-auto">
+            <button type="button" onclick="paging_search('1')" class="btn btn-primary mb-3">Search</button>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubject">
         Add Subject
     </button>
 </div>
@@ -21,25 +35,28 @@
             <c:forEach items="${requestScope.subjectList}" var="s">
                 <div class="col-md-6 col-lg-4">
                     <div class="card my-3 subject_card">
-                        <img onclick="viewDetails('${s.subjectId}', 'get')" src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg"
-                             class="card-image-top" alt="thumbnail">
+                        <img onclick="viewDetails('${s.subjectId}', 'get')"
+                             src="../../../assets/media/books/img-72.jpg" class="card-image-top" alt="thumbnail">
                         <div class="card-body">
-                            <h3  class="card-title">
-                                <a onclick="viewDetails('${s.subjectId}', 'get')" style="color: #181c32">${s.subjectName}</a>
+                            <h3 class="card-title">
+                                <a onclick="viewDetails('${s.subjectId}', 'get')"
+                                   style="color: #181c32">${s.subjectName}</a>
                             </h3>
                             <p class="card-text subject_des">
                                 ${s.body}
                             </p>
                             <a onclick="viewDetails('${s.subjectId}', 'get')" class="btn btn-primary">Read More</a>
                             <c:if test="${s.statusId==1}">
-                                <button onclick="loaddata('${s.subjectId}', '${s.subjectName}', 'inactive')" 
-                                        type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button onclick="loaddata('${s.subjectId}', '${s.subjectName}', 'inactive')"
+                                        type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
                                     Inactive
                                 </button>
                             </c:if>
                             <c:if test="${s.statusId!=1}">
-                                <button onclick="loaddata('${s.subjectId}', '${s.subjectName}', 'active')" 
-                                        type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button onclick="loaddata('${s.subjectId}', '${s.subjectName}', 'active')"
+                                        type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
                                     Active
                                 </button>
                             </c:if>
@@ -52,7 +69,7 @@
                 <ul class="pagination justify-content-end">
                     <c:forEach items="${requestScope.pages}" var="p">
                         <li class="page-item">
-                            <a class="page-link" href="/subject/list?pageNo=${p}">${p}</a>
+                            <button class="page-link active" onclick="paging_search('${p}')">${p}</button>
                         </li>
                     </c:forEach>
                 </ul>
@@ -62,8 +79,14 @@
 </section>
 
 <form hidden id="callPost" action="/subject/list" method="post">
-    <input type="text" value="" name="subjectId" id="subjectId"/>
-    <input type="text" value="" name="action" id="action"/>
+    <input type="text" value="" name="subjectId" id="subjectId" />
+    <input type="text" value="" name="action" id="action" />
+</form>
+
+<form hidden id="paging_search" action="/subject/list" method="post">
+    <input type="text" value="find_paging" name="action" />
+    <input type="text" value="" name="pageNo" id="pageNo" />
+    <input type="text" value="" name="searchRg" id="searchRg">
 </form>
 
 <!-- Modal -->
@@ -136,22 +159,22 @@
                                         </select>
                                     </li>
                                     <li>
-                                        <label>Status:</label> 
-                                        <input type="radio" name="statusId" value="0">Inactive&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <label>Status:</label>
+                                        <input type="radio" name="statusId"
+                                               value="0">Inactive&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input type="radio" name="statusId" value="1" checked>Active
                                     </li>
                                     <li>
                                         <label>Description:</label>
                                         <textarea name="body" rows="7" cols="50">
-                                            
+
                                         </textarea>
                                     </li>
                                 </ul>
                             </div>
-                            <!--<div class="col-md-7"> <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg" width="90%" height="95%"> </div>-->
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Add</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -162,6 +185,7 @@
 </div>
 
 <script>
+
     var myModal = document.getElementById('myModal');
     var myInput = document.getElementById('myInput');
 
@@ -201,6 +225,17 @@
         } else if (action === 'active') {
             document.getElementById('btn_cf').onclick = active();
         }
+    }
+
+    function getSearchRg() {
+        return document.getElementById('search_form').value;
+    }
+
+    function paging_search(x) {
+        var y = getSearchRg();
+        document.getElementById('searchRg').value = y;
+        document.getElementById('pageNo').value = x;
+        document.getElementById('paging_search').submit();
     }
 
 </script>

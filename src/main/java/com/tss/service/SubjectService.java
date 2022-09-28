@@ -5,14 +5,12 @@ import java.util.List;
 import com.tss.model.Subject;
 
 public interface SubjectService {
-    
-    List<Subject> List( int currentPageNo, int PageSize);
-    
+
+    List<Subject> List(int currentPageNo, int PageSize);
+
     boolean add(Subject subject);
 
-    boolean inactive(int id);
-
-    boolean active(int id);
+    boolean changeStatus(int id);
 
     boolean modify(Subject subject);
 
@@ -26,5 +24,5 @@ public interface SubjectService {
 
     String getUserNameById(int id);
 
-    List<Integer> pages(int PageSize);
+    List<Integer> pages(List<Subject> list,int pageSize);
 }

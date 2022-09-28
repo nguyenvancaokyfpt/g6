@@ -252,33 +252,4 @@ public class SubjectDaoImpl implements SubjectDao {
         return name;
     }
 
-    @Override
-    public List<Integer> pages(Connection connection, int PageSize) throws SQLException {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        List<Integer> list = new ArrayList<Integer>();
-        if (connection != null) {
-            String sql = "select count(*) from subject";
-            Object[] params = {};
-            try {
-                rs = BaseDao.execute(connection, ps, rs, sql, params);
-                if (rs.next()) {
-                    int count = rs.getInt(1);
-                    int pages = count / PageSize;
-                    if (count % PageSize != 0) {
-                        pages+=1;
-                    }
-                    for (int i = 1; i <= pages; i++) {
-                        list.add(i);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                BaseDao.closeResource(null, ps, rs);
-            }
-        }
-        return list;
-    }
-
 }

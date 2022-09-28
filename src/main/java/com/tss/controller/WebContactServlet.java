@@ -51,6 +51,9 @@ public class WebContactServlet extends HttpServlet {
                 case ActionConstants.GET:
                     get(request, response);
                     break;
+                case ActionConstants.REPLY:
+                    reply(request, response);
+                    break;
                 default:
                     list(request, response);
                     break;
@@ -124,6 +127,15 @@ public class WebContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private void reply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
+        request.setAttribute("jspPath", role + "/webcontact.jsp");
+        int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
+        String reply = request.getParameter("reply");
+        webContactService.reply(categoryId, reply);
+        response.sendRedirect("/webcontact/webcontactlist");
     }
 
 }
