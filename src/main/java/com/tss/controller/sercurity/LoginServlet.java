@@ -39,13 +39,13 @@ public class LoginServlet extends HttpServlet {
     private RoleService roleService;
     private PermissionService permissionService;
 
-        @Override
-        public void init() throws ServletException {
-            loginService = new LoginServiceImpl();
-            userService = new UserServiceImpl();
-            roleService = new RoleServiceImpl();
-            permissionService = new PermissionServiceImpl();
-        }
+    @Override
+    public void init() throws ServletException {
+        loginService = new LoginServiceImpl();
+        userService = new UserServiceImpl();
+        roleService = new RoleServiceImpl();
+        permissionService = new PermissionServiceImpl();
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,16 +54,26 @@ public class LoginServlet extends HttpServlet {
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
         String captcha = jsonObject.getString("captcha");
-        // get captcha from session
-        String captchaSession = (String) request.getSession().getAttribute(SessionConstants.CAPTCHA_STRING);
-        // check captcha
-        if (!captcha.equals(captchaSession) || captchaSession == null) {
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
-                    "Captcha is not correct"));
-            return;
+        // get count login fail
+        int countLoginFail = 0;
+        try {
+            countLoginFail = (int) request.getSession().getAttribute(SessionConstants.LOGIN_FAIL_COUNT);
+        } catch (NullPointerException e) {
+            countLoginFail = 0;
         }
-        // destroy captcha
-        request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
+
+        if (countLoginFail >= 3) {
+            // get captcha from session
+            String captchaSession = (String) request.getSession().getAttribute(SessionConstants.CAPTCHA_STRING);
+            // check captcha
+            if (!captcha.equals(captchaSession) || captchaSession == null) {
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                        "Captcha is not correct"));
+                return;
+            }
+            // destroy captcha
+            request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
+        }
 
         if (loginService.login(email, password)) {
             // get user info
@@ -91,10 +101,18 @@ public class LoginServlet extends HttpServlet {
             // response
             ResponseHelper.sendResponse(response,
                     new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
+            // reset countLoginFail
+            request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, 0);
         } else {
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED,
-                            "Your information is incorrect. Please try again"));
+            countLoginFail++;
+            request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, countLoginFail);
+            if (countLoginFail >= 3) {
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                        "Login fail, please enter captcha", "captcha_required"));
+            } else {
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Your information is incorrect!"));
+            }
         }
     }
 
@@ -111,6 +129,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get count login fail
+        int countLoginFail = 0;
+        try {
+            countLoginFail = (int) request.getSession().getAttribute(SessionConstants.LOGIN_FAIL_COUNT);
+        } catch (NullPointerException e) {
+            countLoginFail = 0;
+        }
         // if logged in, redirect to dashboard
         if (request.getSession().getAttribute(SessionConstants.USER_SESSION) != null) {
             response.sendRedirect("dashboard");
@@ -118,15 +143,19 @@ public class LoginServlet extends HttpServlet {
             GoogleClientSecret googleClientSecret = GoogleLoginHelper.loadClientSecrets();
             request.setAttribute("googleClientSecret", googleClientSecret);
 
-            // Captcha generate
-            CaptchaHelper captchaHelper = new CaptchaHelper();
-            BufferedImage bufferedImage = captchaHelper.getCaptchaImage();
-            String base64Image = captchaHelper.convertImageToBase64(bufferedImage);
-            // set captcha text to session
-            request.getSession().setAttribute(SessionConstants.CAPTCHA_STRING, captchaHelper.getCaptchaString());
-            // set captcha image to request
-            request.setAttribute("captchaImage", base64Image);
+            if (countLoginFail >= 3) {
+                // Captcha generate
+                CaptchaHelper captchaHelper = new CaptchaHelper();
+                BufferedImage bufferedImage = captchaHelper.getCaptchaImage();
+                String base64Image = captchaHelper.convertImageToBase64(bufferedImage);
+                // set captcha text to session
+                request.getSession().setAttribute(SessionConstants.CAPTCHA_STRING, captchaHelper.getCaptchaString());
+                // set captcha image to request
+                request.setAttribute("captchaImage", base64Image);
+                request.setAttribute("captcha_required", true);
+            }
             request.getRequestDispatcher("/jsp/authentication/login.jsp").forward(request, response);
+
         }
 
     }

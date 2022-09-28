@@ -85,7 +85,7 @@
 								</div>
 								<!--end::Input group-->
 								<!--begin::Input group-->
-								<div class="fv-row row mb-10">
+								<div id="captcha-form" class="fv-row row mb-10" ${captcha_required ? '' : 'style="display: none;"'}>
 									<!--begin::Col-->
 									<div class="col-xl-6 text-center justify-content-center align-self-center">
 										<img id="captcha" src="data:image/png;base64,${captchaImage}" alt="captcha" />

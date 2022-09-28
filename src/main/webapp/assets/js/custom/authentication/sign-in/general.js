@@ -1,6 +1,7 @@
 "use strict";
 var KTSigninGeneral = function () {
     var e, t, i;
+    var captcha;
     return {
         init: function () {
             e = document.querySelector("#kt_sign_in_form"), t = document.querySelector("#kt_sign_in_submit"), i = FormValidation.formValidation(e, {
@@ -45,6 +46,12 @@ var KTSigninGeneral = function () {
                     })
                 }
             }), t.addEventListener("click", (function (n) {
+                // get style of id captcha-form
+                var captcha_form = document.querySelector("#captcha-form");
+                console.log(captcha_form.style.display);
+                if (captcha_form.style.display == "none") {
+                    e.querySelector('[name="captcha"]').value = "captcha";
+                }
                 n.preventDefault(), i.validate().then((function (i) {
                     "Valid" == i ? (t.setAttribute("data-kt-indicator", "on"), t.disabled = !0, setTimeout((function () {
                         t.removeAttribute("data-kt-indicator"), t.disabled = !1,
@@ -67,13 +74,20 @@ var KTSigninGeneral = function () {
                                         confirmButton: "btn btn-primary"
                                     }
                                 });
+                                // show captcha form
+                                if (error.response.data.data == "captcha_required") {
+                                    captcha_form.style.display = "flex";
+                                    e.querySelector('[name="captcha"]').value = "";
+                                }
                                 // Reset captcha
-                                axios.post('/captchaGenerator').then(function (response) {
-                                    document.getElementById('captcha').src = response.data.data;
-                                }).catch(function (error) {
-                                    // reload page
-                                    window.location.reload();
-                                });
+                                if (captcha_form.style.display != "none") {
+                                    axios.post('/captchaGenerator').then(function (response) {
+                                        document.getElementById('captcha').src = response.data.data;
+                                    }).catch(function (error) {
+                                        // reload page
+                                        window.location.reload();
+                                    });
+                                }
                             })
                     }), 1)) : Swal.fire({
                         text: "Sorry, looks like there are some errors detected, please try again.",
