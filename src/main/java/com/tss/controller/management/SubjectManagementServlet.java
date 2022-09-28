@@ -1,4 +1,4 @@
-package com.tss.controller.subject;
+package com.tss.controller.management;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,19 +41,19 @@ public class SubjectManagementServlet extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case ActionConstants.LISTSUBJECT:
+                case ActionConstants.LIST:
                     list(request, response);
                     break;
-                case ActionConstants.CREATESUBJECT:
+                case ActionConstants.CREATE:
                     create(request, response);
                     break;
-                case ActionConstants.UPDATESUBJECT:
+                case ActionConstants.UPDATE:
                     update(request, response);
                     break;
-                case ActionConstants.STATUSSUBJECT:
+                case ActionConstants.CHANGE_STATUS:
                     changeStatus(request, response);
                     break;
-                case ActionConstants.GETSUBJECT:
+                case ActionConstants.GET:
                     get(request, response);
                     break;
                 case ActionConstants.FIND_PAGING_SUBJECT:

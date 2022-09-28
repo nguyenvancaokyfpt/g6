@@ -27,7 +27,7 @@
     </servlet>
     <servlet>
         <servlet-name>SubjectManagementServlet</servlet-name>
-        <servlet-class>com.tss.controller.subject.SubjectManagementServlet</servlet-class>
+        <servlet-class>com.tss.controller.management.SubjectManagementServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordServlet</servlet-name>
