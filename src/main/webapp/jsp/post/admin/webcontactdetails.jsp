@@ -6,12 +6,8 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-12 col-lg-10 col-xl-8">
                 <form action="/webcontact/webcontactlist" method="post">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
+                    <input type="hidden" name="webcontactid" value="${w.category_id}">
+                    <input type="hidden" name="action" value="reply">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-start align-items-center">
@@ -45,11 +41,13 @@
                                      width="40" height="40" />
                                 <div class="form-outline w-100">
                                     <textarea class="form-control" id="textAreaExample" rows="4"
-                                              style="background: #fff;" placeholder="Reply message"></textarea>
+                                              style="background: #fff;" placeholder="Reply message"
+                                              name="reply">
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="float-end mt-2 pt-1">
-                                <button type="button" class="btn btn-primary btn-sm">Rep</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Rep</button>
                                 <button onclick="history.back()" type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
                             </div>
                         </div>

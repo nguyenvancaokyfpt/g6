@@ -186,7 +186,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-7"> <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg" width="90%" height="95%"> </div>
+                <div class="col-md-7"> <img src="../../../assets/media/books/img-72.jpg" width="90%" height="95%"> </div>
             </div>
         </div>
         <div class="footer d-flex flex-column mt-5">

@@ -232,4 +232,22 @@ public class WebContactDaoImpl implements WebContactDao {
         return count;
     }
 
+    @Override
+    public int reply(Connection connection, int id, String reply) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "UPDATE web_contact SET response = ? WHERE category_id = ?";
+            Object[] params = { reply, id };
+            try {
+                count = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return count;
+    }
+
 }

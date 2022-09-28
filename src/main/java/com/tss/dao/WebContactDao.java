@@ -37,4 +37,6 @@ public interface WebContactDao {
     int countAll(Connection connection) throws SQLException;
 
     int countAll(Connection connection, String search) throws SQLException;
+
+    int reply(Connection connection, int id, String reply) throws SQLException;
 }

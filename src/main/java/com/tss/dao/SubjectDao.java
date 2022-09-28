@@ -28,6 +28,4 @@ public interface SubjectDao {
     int countAll(Connection connection, String search) throws SQLException;
 
     String getUserNameById(Connection connection, int id) throws SQLException;
-
-    List<Integer> pages(Connection connection, int PageSize) throws SQLException;
 }

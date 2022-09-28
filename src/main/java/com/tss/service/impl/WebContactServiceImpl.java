@@ -137,4 +137,19 @@ public class WebContactServiceImpl implements WebContactService {
         return count;
     }
 
+    @Override
+    public int reply(int id, String reply) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = webDao.reply(connection, id, reply);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
 }

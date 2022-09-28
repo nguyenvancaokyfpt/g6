@@ -11,13 +11,14 @@ import com.tss.model.Subject;
 import com.tss.service.SubjectService;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class SubjectServiceImpl implements SubjectService{
+public class SubjectServiceImpl implements SubjectService {
 
     private SubjectDao subjectDao;
 
@@ -29,7 +30,7 @@ public class SubjectServiceImpl implements SubjectService{
     public List<Subject> List(int currentPageNo, int PageSize) {
         Connection connection = null;
         List<Subject> subjectList = null;
-        try{
+        try {
             connection = BaseDao.getConnection();
             subjectList = subjectDao.List(connection, currentPageNo, PageSize);
         } catch (Exception e) {
@@ -44,9 +45,9 @@ public class SubjectServiceImpl implements SubjectService{
     public boolean add(Subject subject) {
         Connection connection = null;
         boolean flag = false;
-        try{
+        try {
             connection = BaseDao.getConnection();
-            if(subjectDao.add(connection, subject) > 0){
+            if (subjectDao.add(connection, subject) > 0) {
                 flag = true;
             }
         } catch (Exception e) {
@@ -58,29 +59,16 @@ public class SubjectServiceImpl implements SubjectService{
     }
 
     @Override
-    public boolean inactive(int id) {
+    public boolean changeStatus(int id) {
         Connection connection = null;
         boolean flag = false;
-        try{
+        try {
             connection = BaseDao.getConnection();
-            if(subjectDao.inactive(connection, id) > 0){
+            if (subjectDao.findById(connection, id).getStatusId() == 1) {
+                subjectDao.inactive(connection, id);
                 flag = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return flag;
-    }
-
-    @Override
-    public boolean active(int id) {
-        Connection connection = null;
-        boolean flag = false;
-        try{
-            connection = BaseDao.getConnection();
-            if(subjectDao.active(connection, id) > 0){
+            } else {
+                subjectDao.active(connection, id);
                 flag = true;
             }
         } catch (Exception e) {
@@ -95,9 +83,9 @@ public class SubjectServiceImpl implements SubjectService{
     public boolean modify(Subject subject) {
         Connection connection = null;
         boolean flag = false;
-        try{
+        try {
             connection = BaseDao.getConnection();
-            if(subjectDao.modify(connection, subject) > 0){
+            if (subjectDao.modify(connection, subject) > 0) {
                 flag = true;
             }
         } catch (Exception e) {
@@ -112,7 +100,7 @@ public class SubjectServiceImpl implements SubjectService{
     public Subject findById(int id) {
         Connection connection = null;
         Subject subject = null;
-        try{
+        try {
             connection = BaseDao.getConnection();
             subject = subjectDao.findById(connection, id);
         } catch (Exception e) {
@@ -127,7 +115,7 @@ public class SubjectServiceImpl implements SubjectService{
     public List<Subject> findAll(int start, int length, String string) {
         Connection connection = null;
         List<Subject> subjectList = null;
-        try{
+        try {
             connection = BaseDao.getConnection();
             subjectList = subjectDao.findAll(connection, start, length, string);
         } catch (Exception e) {
@@ -142,7 +130,7 @@ public class SubjectServiceImpl implements SubjectService{
     public int countAll() {
         Connection connection = null;
         int count = 0;
-        try{
+        try {
             connection = BaseDao.getConnection();
             count = subjectDao.countAll(connection);
         } catch (Exception e) {
@@ -157,7 +145,7 @@ public class SubjectServiceImpl implements SubjectService{
     public int countAll(String search) {
         Connection connection = null;
         int count = 0;
-        try{
+        try {
             connection = BaseDao.getConnection();
             count = subjectDao.countAll(connection, search);
         } catch (Exception e) {
@@ -172,7 +160,7 @@ public class SubjectServiceImpl implements SubjectService{
     public String getUserNameById(int id) {
         Connection connection = null;
         String name = null;
-        try{
+        try {
             connection = BaseDao.getConnection();
             name = subjectDao.getUserNameById(connection, id);
         } catch (Exception e) {
@@ -184,18 +172,17 @@ public class SubjectServiceImpl implements SubjectService{
     }
 
     @Override
-    public List<Integer> pages(int PageSize) {
-        Connection connection = null;
-        List<Integer> pages = null;
-        try{
-            connection = BaseDao.getConnection();
-            pages = subjectDao.pages(connection, PageSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
+    public List<Integer> pages(List<Subject> list,int PageSize) {
+        int count = list.size();
+        int pages = count / PageSize;
+        if (count % PageSize != 0) {
+            pages++;
         }
-        return pages;
+        List<Integer> totalPage = new ArrayList<>();
+        for (int i = 1; i <= pages; i++) {
+            totalPage.add(i);
+        }
+        return totalPage;
     }
-    
+
 }

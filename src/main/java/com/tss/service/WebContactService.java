@@ -35,4 +35,6 @@ public interface WebContactService {
     int countAll();
 
     int countAll(String search);
+
+    int reply(int id, String reply);
 }

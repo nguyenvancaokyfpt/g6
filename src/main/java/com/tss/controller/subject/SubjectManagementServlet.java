@@ -50,14 +50,14 @@ public class SubjectManagementServlet extends HttpServlet {
                 case ActionConstants.UPDATESUBJECT:
                     update(request, response);
                     break;
-                case ActionConstants.INACTIVESUBJECT:
-                    inactive(request, response);
-                    break;
-                case ActionConstants.ACTIVESUBJECT:
-                    active(request, response);
+                case ActionConstants.STATUSSUBJECT:
+                    changeStatus(request, response);
                     break;
                 case ActionConstants.GETSUBJECT:
                     get(request, response);
+                    break;
+                case ActionConstants.FIND_PAGING_SUBJECT:
+                    findPaging(request, response);
                     break;
                 default:
                     list(request, response);
@@ -77,13 +77,8 @@ public class SubjectManagementServlet extends HttpServlet {
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
-    private void inactive(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        subjectService.inactive(Integer.parseInt(request.getParameter("subjectId")));
-        response.sendRedirect("/subject/list");
-    }
-
-    private void active(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        subjectService.active(Integer.parseInt(request.getParameter("subjectId")));
+    private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        subjectService.changeStatus(Integer.parseInt(request.getParameter("subjectId")));
         response.sendRedirect("/subject/list");
     }
 
@@ -145,14 +140,14 @@ public class SubjectManagementServlet extends HttpServlet {
         // request.setAttribute("customJs", ResponseHelper.customJs(
         // "apps/sjtable-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-        ScreenConstants.SUBJECT_LIST,
-        ScreenConstants.SUBJECT_DETAILS));
+                ScreenConstants.SUBJECT_LIST,
+                ScreenConstants.SUBJECT_DETAILS));
         int pageNo = 1;
         if (request.getParameter("pageNo") != null) {
             pageNo = Integer.parseInt(request.getParameter("pageNo"));
         }
         request.setAttribute("pageNo", pageNo);
-        request.setAttribute("pages", subjectService.pages(3));
+        request.setAttribute("pages", subjectService.pages(subjectService.List(0, Integer.MAX_VALUE), 3));
         if (pageNo == 1) {
             request.setAttribute("subjectList", subjectService.List(pageNo - 1, 3));
         } else {
@@ -168,9 +163,21 @@ public class SubjectManagementServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void findPaging(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String role = request.getAttribute((RoleConstants.ROLE).getTitle()).toString();
+        request.setAttribute("jspPath", role + "/subject.jsp");
+        String searchRg = request.getParameter("searchRg");
+        request.setAttribute("searchRg", searchRg);
+        int pageNo = Integer.parseInt(request.getParameter("pageNo"));
+        request.setAttribute("pages",
+                subjectService.pages(subjectService.findAll(0, Integer.MAX_VALUE, searchRg), 3));
+        if (pageNo == 1) {
+            request.setAttribute("subjectList", subjectService.findAll(pageNo - 1, 3, searchRg));
+        } else {
+            request.setAttribute("subjectList", subjectService.findAll((pageNo - 1) * 3, 3, searchRg));
+        }
+        request.setAttribute("userList", userService.List("", "", 0, Integer.MAX_VALUE));
+        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+    }
 
 }
