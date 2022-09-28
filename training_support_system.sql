@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2022 at 07:23 PM
+-- Generation Time: Sep 28, 2022 at 03:41 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -264,7 +264,7 @@ INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
 
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL,
-  `subject_code` int(11) NOT NULL,
+  `subject_code` varchar(255) NOT NULL,
   `subject_name` varchar(255) NOT NULL,
   `manager_id` int(11) NOT NULL,
   `expert_id` int(11) NOT NULL,
@@ -277,16 +277,16 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`, `manager_id`, `expert_id`, `status_id`, `body`) VALUES
-(1, 1, 'subject1 update1', 2, 3, 1, '                                While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n                            '),
-(2, 2, 'subject2', 2, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.'),
-(3, 3, 'subject3', 3, 2, 1, 'Another productive way to use this tool to begin a daily writing routine. One way is to generate a random paragraph with the intention to try to rewrite it while still keeping the original meaning. The purpose here is to just get the writing started so that when the writer goes onto their day\'s writing projects, words are already flowing from their fingers.'),
-(4, 4, 'subject4', 3, 2, 1, 'Another writing challenge can be to take the individual sentences in the random paragraph and incorporate a single sentence from that into a new paragraph to create a short story. Unlike the random sentence generator, the sentences from the random paragraph will have some connection to one another so it will be a bit different. You also won\'t know exactly how many sentences will appear in the random paragraph.'),
-(5, 5, 'subject5', 2, 3, 1, 'It\'s not only writers who can benefit from this free online tool. If you\'re a programmer who\'s working on a project where blocks of text are needed, this tool can be a great way to get that. It\'s a good way to test your programming and that the tool being created is working well.'),
-(6, 6, 'subject6', 3, 2, 1, 'Above are a few examples of how the random paragraph generator can be beneficial. The best way to see if this random paragraph picker will be useful for your intended purposes is to give it a try. Generate a number of paragraphs to see if they are beneficial to your current project.'),
-(7, 7, 'subject7', 2, 3, 0, 'Yes. We\'re always interested in improving this generator and one of the best ways to do that is to add new and interesting paragraphs to the generator. If you\'d like to contribute some random paragraphs, please contact us.'),
-(8, 8, 'subject8', 3, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.'),
-(9, 9, 'subject 9', 3, 3, 1, '                    day la subject thu 9 nhe!!!                        \r\n                                        '),
-(10, 10, 'subject 10', 2, 2, 1, '                     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.                       \r\n                                        ');
+(1, '1', 'subject1 update1', 2, 3, 1, '                                While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n                            '),
+(2, '2', 'subject2', 2, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.'),
+(3, '3', 'subject3', 3, 2, 1, 'Another productive way to use this tool to begin a daily writing routine. One way is to generate a random paragraph with the intention to try to rewrite it while still keeping the original meaning. The purpose here is to just get the writing started so that when the writer goes onto their day\'s writing projects, words are already flowing from their fingers.'),
+(4, '4', 'subject4', 3, 2, 1, 'Another writing challenge can be to take the individual sentences in the random paragraph and incorporate a single sentence from that into a new paragraph to create a short story. Unlike the random sentence generator, the sentences from the random paragraph will have some connection to one another so it will be a bit different. You also won\'t know exactly how many sentences will appear in the random paragraph.'),
+(5, '5', 'subject5', 2, 3, 1, 'It\'s not only writers who can benefit from this free online tool. If you\'re a programmer who\'s working on a project where blocks of text are needed, this tool can be a great way to get that. It\'s a good way to test your programming and that the tool being created is working well.'),
+(6, '6', 'subject6', 3, 2, 1, 'Above are a few examples of how the random paragraph generator can be beneficial. The best way to see if this random paragraph picker will be useful for your intended purposes is to give it a try. Generate a number of paragraphs to see if they are beneficial to your current project.'),
+(7, '7', 'subject7', 2, 3, 0, 'Yes. We\'re always interested in improving this generator and one of the best ways to do that is to add new and interesting paragraphs to the generator. If you\'d like to contribute some random paragraphs, please contact us.'),
+(8, '8', 'subject8', 3, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.'),
+(9, '9', 'subject 9', 3, 3, 1, '                    day la subject thu 9 nhe!!!                        \r\n                                        '),
+(10, '10', 'subject 10', 2, 2, 1, '                     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.                       \r\n                                        ');
 
 -- --------------------------------------------------------
 
@@ -365,7 +365,8 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (49, 'Nguyễn Văn Cao Kỳ', 'kynvche163260602102', 'kynvche163260@fpt.edu.vn', NULL, 'sxTBT5hdJOyf3GNb92zikebGumFjjVib2syMydx3tq0=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-24 09:34:56', '2022-09-24 09:34:56', '2022-09-24 09:34:56'),
 (50, 'DESTINY', 'nguyenvancaoky2020270366', 'nguyenvancaoky2020@gmail.com', NULL, 'CLFgamRFvyY4ow5WhdZhe5Bir5HkHNC3Ocp97iaNupY=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, NULL, '2022-09-25 05:40:55', '2022-09-25 05:40:55', '2022-09-25 05:40:55'),
 (51, 'NVCK2002', 'anivns.com642912', 'anivns.com@gmail.com', '1233412312', 'iHMLiufq1SVvg33pAS2krZYrftzjiVqKsnKlmvTSj4s=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-25 14:26:51', '2022-09-25 14:26:51', '2022-09-25 14:26:51'),
-(52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', NULL, 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30');
+(52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', NULL, 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30'),
+(53, 'Wallpapers HDV', 'wallpapershdv826954', 'wallpapershdv@gmail.com', NULL, 'mhKTOXW78eKzPaJWVs+LTw3hELFJJgF8Q/OmhxWUSXE=', 'https://lh3.googleusercontent.com/a-/ACNPEu9sXUC6hwcYpbP1Js19bKXbN1ZuaqSnQgsJSvxT=s96-c', 1, NULL, '2022-09-28 13:27:44', '2022-09-28 13:27:44', '2022-09-28 13:27:44');
 
 -- --------------------------------------------------------
 
@@ -395,7 +396,8 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (49, 26),
 (50, 26),
 (51, 26),
-(52, 26);
+(52, 26),
+(53, 26);
 
 -- --------------------------------------------------------
 
@@ -639,7 +641,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
