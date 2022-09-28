@@ -81,7 +81,7 @@ var KTUsersList = function () {
         processing: true,
         serverSide: true,
         order: [[1, "asc"]],
-        stateSave: false,
+        stateSave: true,
         select: {
           style: "multi",
           selector: 'td:first-child input[type="checkbox"]',
