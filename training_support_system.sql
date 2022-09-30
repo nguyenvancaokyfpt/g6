@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2022 at 08:22 PM
+-- Generation Time: Sep 30, 2022 at 08:29 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `test`
+-- Database: `training_support_system`
 --
 
 -- --------------------------------------------------------
@@ -180,6 +180,13 @@ CREATE TABLE `reset_password_token` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `reset_password_token`
+--
+
+INSERT INTO `reset_password_token` (`user_id`, `token`, `salt`, `created_at`) VALUES
+(2, '59f2c6865dc5f92152d8b2b7972f31c8', 1664420351317, '2022-09-29 02:59:11');
+
 -- --------------------------------------------------------
 
 --
@@ -270,7 +277,7 @@ CREATE TABLE `subject` (
   `expert_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `body` text NOT NULL,
-  `img_src` varchar(500) NOT NULL
+  `img_src` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -360,7 +367,10 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (29, 'Nguyễn Văn L', 'nguyenvanl', 'nguyenvanl@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', NULL, 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30'),
-(53, 'Wallpapers HDV', 'wallpapershdv826954', 'wallpapershdv@gmail.com', NULL, 'mhKTOXW78eKzPaJWVs+LTw3hELFJJgF8Q/OmhxWUSXE=', 'https://lh3.googleusercontent.com/a-/ACNPEu9sXUC6hwcYpbP1Js19bKXbN1ZuaqSnQgsJSvxT=s96-c', 1, NULL, '2022-09-28 13:27:44', '2022-09-28 13:27:44', '2022-09-28 13:27:44');
+(53, 'Wallpapers HDV', 'wallpapershdv826954', 'wallpapershdv@gmail.com', NULL, 'mhKTOXW78eKzPaJWVs+LTw3hELFJJgF8Q/OmhxWUSXE=', 'https://lh3.googleusercontent.com/a-/ACNPEu9sXUC6hwcYpbP1Js19bKXbN1ZuaqSnQgsJSvxT=s96-c', 1, NULL, '2022-09-28 13:27:44', '2022-09-28 13:27:44', '2022-09-28 13:27:44'),
+(54, 'NGUYEN VAN CAO KY', 'nguyenvancaoky1256840', 'nguyenvancaoky1@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-29 05:09:10', '2022-09-29 05:09:10', '2022-09-29 05:09:10'),
+(55, 'Nguyễn Văn Cao Kỳ', 'kynvche163260710017', 'kynvche163260@fpt.edu.vn', NULL, 'XK6KYbSlBuRelGKqPNhdqPsi4TxJVO8QUzukoqQY3uI=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-29 06:09:17', '2022-09-29 06:09:17', '2022-09-29 06:09:17'),
+(56, 'NVCK2002', 'anivns.com11323', 'anivns.com@gmail.com', NULL, '1aNrIobFpOrAYFZ8e7Eu3K/H46MA1GlRc2cThB28TUU=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-29 07:19:27', '2022-09-29 07:19:27', '2022-09-29 07:19:27');
 
 -- --------------------------------------------------------
 
@@ -388,7 +398,10 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (29, 23),
 (32, 26),
 (52, 26),
-(53, 26);
+(53, 26),
+(54, 26),
+(55, 26),
+(56, 26);
 
 -- --------------------------------------------------------
 
@@ -632,7 +645,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables
