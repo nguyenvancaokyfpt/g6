@@ -8,54 +8,57 @@ import java.util.List;
 
 public interface UserDao {
 
-    List<User> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException;
+        List<User> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize)
+                        throws SQLException;
 
-    User findById(Connection connection, int userId) throws SQLException;
+        User findById(Connection connection, int userId) throws SQLException;
 
-    int add(Connection connection, User user) throws SQLException;
+        int add(Connection connection, User user) throws SQLException;
 
-    int del(Connection connection, int id) throws SQLException;
+        int del(Connection connection, int id) throws SQLException;
 
-    int modify(Connection connection, int id, User user) throws SQLException;
+        int modify(Connection connection, int id, User user) throws SQLException;
 
-    User findByUsername(Connection connection, String username) throws SQLException;
+        User findByUsername(Connection connection, String username) throws SQLException;
 
-    User findByEmail(Connection connection, String email) throws SQLException;
+        User findByEmail(Connection connection, String email) throws SQLException;
 
-    int count(Connection connection) throws SQLException;
+        int count(Connection connection) throws SQLException;
 
-    int count(Connection connection, String fullName, String email) throws SQLException;
+        int count(Connection connection, String fullName, String email) throws SQLException;
 
-    List<User> findAll(Connection connection, int start, int length, String search) throws SQLException;
+        List<User> findAll(Connection connection, int start, int length, String search) throws SQLException;
 
-    int countAll(Connection connection) throws SQLException;
+        int countAll(Connection connection) throws SQLException;
 
-    int countAll(Connection connection, String search) throws SQLException;
+        int countAll(Connection connection, String search) throws SQLException;
 
-    boolean register(Connection connection, User user) throws SQLException;
+        boolean register(Connection connection, User user) throws SQLException;
 
-    boolean registerWithGoogle(Connection connection, User user) throws SQLException;
+        boolean registerWithGoogle(Connection connection, User user) throws SQLException;
 
-    void updateResetPasswordToken(Connection connection, String token, int user_id, long millis) throws SQLException;
-    
-    long getResetPasswordSaltByToken(Connection connection, String token) throws SQLException;
+        void updateResetPasswordToken(Connection connection, String token, int user_id, long millis)
+                        throws SQLException;
 
-    void updatePwdByEmail(Connection connection, String email, String password) throws SQLException;
+        long getResetPasswordSaltByToken(Connection connection, String token) throws SQLException;
 
-    void detachResetPasswordToken(Connection connection, String email) throws SQLException;
+        void updatePwdByEmail(Connection connection, String email, String password) throws SQLException;
 
-    String getCurrentPassword(Connection connection, int userId) throws SQLException;
+        void detachResetPasswordToken(Connection connection, String email) throws SQLException;
 
-    void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException;
-    
-    void update(Connection connection ,int userId,String fullName,String email,String mobile) throws SQLException;
+        String getCurrentPassword(Connection connection, int userId) throws SQLException;
 
-    java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
-            String orderDir) throws SQLException;
+        void updatePassword(Connection connection, int userId, String generateSecurePassword) throws SQLException;
 
-    java.util.List<User> findAll(Connection connection, int start, int length, String search, String columnName,
-            String orderDir, String roleFilter, String statusFilter) throws SQLException;
+        void update(Connection connection, int userId, String fullName, String email, String mobile)
+                        throws SQLException;
 
-    int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
+        List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+                        String orderDir) throws SQLException;
+
+        List<User> findAll(Connection connection, int start, int length, String search, String columnName,
+                        String orderDir, String roleFilter, String statusFilter) throws SQLException;
+
+        int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
 
 }
