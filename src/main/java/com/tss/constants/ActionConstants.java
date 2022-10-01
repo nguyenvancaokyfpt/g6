@@ -11,7 +11,7 @@ public class ActionConstants {
 
     public static final String CHANGE_PASSWORD = "changePassword";
     public static final String CHANGE_STATUS = "changeStatus";
-    public static final String FIND_PAGING_SUBJECT = "find_paging";
+    public static final String FIND_PAGING_FILTER_SUBJECT = "find_paging_filter";
     public static final String REPLY = "reply";
 
 }

@@ -106,25 +106,27 @@
         }
     }
 
-    .btn.btn-primary{
+    .btn.btn-primary {
         margin-bottom: 50px;
     }
 
-    li{
+    li {
         display: flex;
         align-items: center;
     }
 
-    input, select, textarea{
-        border: 1px solid rgba(0,0,0,0.1);
+    input,
+    select,
+    textarea {
+        border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    label{
+    label {
         display: inline-block;
         width: 100px;
     }
 </style>
-<c:set var="s" value="${requestScope.subject}"/>
+<c:set var="s" value="${requestScope.subject}" />
 
 <div class="container py-4 my-4 mx-auto d-flex flex-column">
     <div>
@@ -138,12 +140,13 @@
                 <div class="col-md-9 abc">
                     <h1>
                         <label style="width: max-content">Subject Name:</label>
-                        <input type="type" name="subjectName" value="${s.subjectName}">
+                        <input type="text" class="form-control input-lg" name="subjectName"
+                               value="${s.subjectName}">
                     </h1>
                 </div>
                 <p class="text-right para">
                     <label>Subject code:</label>
-                    <input type="type" name="subjectCode" value="${s.subjectCode}">
+                    <input type="text" name="subjectCode" value="${s.subjectCode}">
                 </p>
             </div>
         </div>
@@ -155,8 +158,7 @@
                             <label>Expert:</label>
                             <select name="expertId">
                                 <c:forEach items="${requestScope.userList}" var="u">
-                                    <option value="${u.userId}" 
-                                            ${u.userId==s.expertId?'selected':''}>
+                                    <option value="${u.userId}" ${u.userId==s.expertId?'selected':''}>
                                         ${u.fullname}
                                     </option>
                                 </c:forEach>
@@ -166,16 +168,16 @@
                             <label>Manager:</label>
                             <select name="managerId">
                                 <c:forEach items="${requestScope.userList}" var="u">
-                                    <option value="${u.userId}" 
-                                            ${u.userId==s.managerId?'selected':''}>
+                                    <option value="${u.userId}" ${u.userId==s.managerId?'selected':''}>
                                         ${u.fullname}
                                     </option>
                                 </c:forEach>
                             </select>
                         </li>
                         <li>
-                            <label>Status:</label> 
-                            <input type="radio" name="statusId" value="0" ${s.statusId==0?'checked':''}>Inactive&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>Status:</label>
+                            <input type="radio" name="statusId" value="0"
+                                   ${s.statusId==0?'checked':''}>Inactive&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="statusId" value="1" ${s.statusId==1?'checked':''}>Active
                         </li>
                         <li>
@@ -184,9 +186,15 @@
                                 ${s.body}
                             </textarea>
                         </li>
+                        <li>
+                            <label>Image:</label>
+                            <input type="file" name="imgSrc" value="${s.imgSrc}"/>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-md-7"> <img src="../../../assets/media/books/img-72.jpg" width="90%" height="95%"> </div>
+                <div class="col-md-7" style="height: min-content;">
+                    <img src="../../../assets/media/books/${s.imgSrc}" width="90%" height="500px">
+                </div>
             </div>
         </div>
         <div class="footer d-flex flex-column mt-5">
@@ -198,4 +206,3 @@
         </div>
     </form>
 </div>
-

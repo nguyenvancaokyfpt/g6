@@ -18,11 +18,13 @@ public interface SubjectService {
 
     List<Subject> findAll(int start, int length, String search);
 
+    List<Subject> findAll(int start, int length, String search, String filterStatus);
+
     int countAll();
 
     int countAll(String search);
 
-    String getUserNameById(int id);
+    int countAll(String search, String filterStatus);
 
-    List<Integer> pages(List<Subject> list,int pageSize);
+    List<Integer> pages(int totalRecords,int pageSize);
 }

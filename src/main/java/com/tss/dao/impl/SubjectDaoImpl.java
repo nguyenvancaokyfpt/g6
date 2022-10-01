@@ -34,6 +34,7 @@ public class SubjectDaoImpl implements SubjectDao {
                     subject.setExpertId(resultSet.getInt("expert_id"));
                     subject.setStatusId(resultSet.getInt("status_id"));
                     subject.setBody(resultSet.getString("body"));
+                    subject.setImgSrc(resultSet.getString("img_src"));
                     subjectList.add(subject);
                 }
             } catch (Exception e) {
@@ -44,15 +45,14 @@ public class SubjectDaoImpl implements SubjectDao {
         }
         return subjectList;
     }
-    
 
     @Override
     public int add(Connection connection, Subject subject) throws SQLException {
         PreparedStatement preparedStatement = null;
         if (connection != null) {
-            String sql = "insert into subject(subject_code,subject_name,manager_id,expert_id,status_id,body) values(?,?,?,?,?,?)";
+            String sql = "insert into subject(subject_code,subject_name,manager_id,expert_id,status_id,body,img_src) values(?,?,?,?,?,?,?)";
             Object[] params = { subject.getSubjectCode(), subject.getSubjectName(), subject.getManagerId(),
-                    subject.getExpertId(), subject.getStatusId(), subject.getBody() };
+                    subject.getExpertId(), subject.getStatusId(), subject.getBody(), subject.getImgSrc() };
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
@@ -86,7 +86,7 @@ public class SubjectDaoImpl implements SubjectDao {
         }
         return 0;
     }
-    
+
     @Override
     public int active(Connection connection, int id) throws SQLException {
         PreparedStatement preparedStatement = null;
@@ -111,9 +111,10 @@ public class SubjectDaoImpl implements SubjectDao {
     public int modify(Connection connection, Subject subject) throws SQLException {
         PreparedStatement preparedStatement = null;
         if (connection != null) {
-            String sql = "update subject set subject_code = ?,subject_name = ?,manager_id = ?,expert_id = ?,status_id = ?,body = ? where subject_id = ?";
+            String sql = "update subject set subject_code = ?,subject_name = ?,manager_id = ?,expert_id = ?,status_id = ?,body = ?,img_src = ? where subject_id = ?";
             Object[] params = { subject.getSubjectCode(), subject.getSubjectName(), subject.getManagerId(),
-                    subject.getExpertId(), subject.getStatusId(), subject.getBody(), subject.getSubjectId() };
+                    subject.getExpertId(), subject.getStatusId(), subject.getBody(), subject.getImgSrc(),
+                    subject.getSubjectId() };
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
@@ -146,6 +147,7 @@ public class SubjectDaoImpl implements SubjectDao {
                     subject.setExpertId(resultSet.getInt("expert_id"));
                     subject.setStatusId(resultSet.getInt("status_id"));
                     subject.setBody(resultSet.getString("body"));
+                    subject.setImgSrc(resultSet.getString("img_src"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -175,6 +177,39 @@ public class SubjectDaoImpl implements SubjectDao {
                     subject.setExpertId(resultSet.getInt("expert_id"));
                     subject.setStatusId(resultSet.getInt("status_id"));
                     subject.setBody(resultSet.getString("body"));
+                    subject.setImgSrc(resultSet.getString("img_src"));
+                    subjectList.add(subject);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return subjectList;
+    }
+
+    @Override
+    public List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Subject> subjectList = new ArrayList<Subject>();
+        if (connection != null) {
+            String sql = "select * from subject where (subject_code like ? or subject_name like ?) and status_id = ? limit ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", filterStatus, start, length };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Subject subject = new Subject();
+                    subject.setSubjectId(resultSet.getInt("subject_id"));
+                    subject.setSubjectCode(resultSet.getString("subject_code"));
+                    subject.setSubjectName(resultSet.getString("subject_name"));
+                    subject.setManagerId(resultSet.getInt("manager_id"));
+                    subject.setExpertId(resultSet.getInt("expert_id"));
+                    subject.setStatusId(resultSet.getInt("status_id"));
+                    subject.setBody(resultSet.getString("body"));
+                    subject.setImgSrc(resultSet.getString("img_src"));
                     subjectList.add(subject);
                 }
             } catch (Exception e) {
@@ -231,25 +266,25 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public String getUserNameById(Connection connection, int id) throws SQLException {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String name = null;
+    public int countAll(Connection connection, String search, String filterStatus) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
         if (connection != null) {
-            String sql = "select user_name from user where user_id = ?";
-            Object[] params = { id };
+            String sql = "select count(*) from subject where (subject_code like ? or subject_name like ?) and status_id = ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", filterStatus };
             try {
-                rs = BaseDao.execute(connection, ps, rs, sql, params);
-                if (rs.next()) {
-                    name = rs.getString("user_name");
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    count = resultSet.getInt(1);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                BaseDao.closeResource(null, ps, rs);
+                BaseDao.closeResource(null, preparedStatement, resultSet);
             }
         }
-        return name;
+        return count;
     }
 
 }

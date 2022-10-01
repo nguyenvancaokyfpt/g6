@@ -127,6 +127,21 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    public List<Subject> findAll(int start, int length, String string, String filterStatus) {
+        Connection connection = null;
+        List<Subject> subjectList = null;
+        try {
+            connection = BaseDao.getConnection();
+            subjectList = subjectDao.findAll(connection, start, length, string, filterStatus);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return subjectList;
+    }
+
+    @Override
     public int countAll() {
         Connection connection = null;
         int count = 0;
@@ -157,32 +172,28 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public String getUserNameById(int id) {
+    public int countAll(String search, String filterStatus) {
         Connection connection = null;
-        String name = null;
+        int count = 0;
         try {
             connection = BaseDao.getConnection();
-            name = subjectDao.getUserNameById(connection, id);
+            count = subjectDao.countAll(connection, search, filterStatus);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return name;
+        return count;
     }
 
     @Override
-    public List<Integer> pages(List<Subject> list,int PageSize) {
-        int count = list.size();
-        int pages = count / PageSize;
-        if (count % PageSize != 0) {
-            pages++;
+    public List<Integer> pages(int totalRecords, int PageSize) {
+        List<Integer> pages = new ArrayList<>();
+        int totalPages = totalRecords % PageSize == 0 ? totalRecords / PageSize : totalRecords / PageSize + 1;
+        for (int i = 1; i <= totalPages; i++) {
+            pages.add(i);
         }
-        List<Integer> totalPage = new ArrayList<>();
-        for (int i = 1; i <= pages; i++) {
-            totalPage.add(i);
-        }
-        return totalPage;
+        return pages;
     }
 
 }

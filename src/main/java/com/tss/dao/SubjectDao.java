@@ -23,9 +23,12 @@ public interface SubjectDao {
 
     List<Subject> findAll(Connection connection, int start, int length, String search) throws SQLException;
 
+    List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus) throws SQLException;
+
     int countAll(Connection connection) throws SQLException;
 
     int countAll(Connection connection, String search) throws SQLException;
 
-    String getUserNameById(Connection connection, int id) throws SQLException;
+    int countAll(Connection connection, String search, String filterStatus) throws SQLException;
+
 }

@@ -56,8 +56,8 @@ public class SubjectManagementServlet extends HttpServlet {
                 case ActionConstants.GET:
                     get(request, response);
                     break;
-                case ActionConstants.FIND_PAGING_SUBJECT:
-                    findPaging(request, response);
+                case ActionConstants.FIND_PAGING_FILTER_SUBJECT:
+                    findPagingFilter(request, response);
                     break;
                 default:
                     list(request, response);
@@ -73,7 +73,7 @@ public class SubjectManagementServlet extends HttpServlet {
         request.setAttribute("jspPath", role + "/subjectDetails.jsp");
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         request.setAttribute("subject", subjectService.findById(subjectId));
-        request.setAttribute("userList", userService.List("", "", 0, Integer.MAX_VALUE));
+        request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
@@ -83,16 +83,37 @@ public class SubjectManagementServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Subject subject = new Subject();
-        subject.setSubjectId(Integer.parseInt(request.getParameter("subjectId")));
-        subject.setSubjectCode(request.getParameter("subjectCode"));
-        subject.setSubjectName(request.getParameter("subjectName"));
+        int subjectId = Integer.parseInt(request.getParameter("subjectId"));
+        Subject subject = subjectService.findById(subjectId);
+        String subjectName = request.getParameter("subjectName");
+        if(subjectName.equals("")){
+            subject.setSubjectName(subject.getSubjectName());
+        }else{
+            subject.setSubjectName(subjectName);
+        }
+        String subjectCode = request.getParameter("subjectCode");
+        if(subjectCode.equals("")){
+            subject.setSubjectCode(subject.getSubjectCode());
+        }else{
+            subject.setSubjectCode(subjectCode);
+        }
         subject.setExpertId(Integer.parseInt(request.getParameter("expertId")));
         subject.setManagerId(Integer.parseInt(request.getParameter("managerId")));
         subject.setStatusId(Integer.parseInt(request.getParameter("statusId")));
-        subject.setBody(request.getParameter("body"));
-        subjectService.modify(subject);
-        response.sendRedirect("/subject/list");
+        String body = request.getParameter("body");
+        if (body.equals("")) {
+            subject.setBody(subject.getBody());
+        }else{
+            subject.setBody(body);
+        }
+        String imgSrc = request.getParameter("imgSrc");
+        if(imgSrc.equals("")){
+            subject.setImgSrc(subject.getImgSrc());
+        }else{
+            subject.setImgSrc(imgSrc);
+        }
+       subjectService.modify(subject);
+       response.sendRedirect("/subject/list");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -103,6 +124,7 @@ public class SubjectManagementServlet extends HttpServlet {
         subject.setManagerId(Integer.parseInt(request.getParameter("managerId")));
         subject.setStatusId(Integer.parseInt(request.getParameter("statusId")));
         subject.setBody(request.getParameter("body"));
+        subject.setImgSrc(request.getParameter("imgSrc"));
         subjectService.add(subject);
         response.sendRedirect("/subject/list");
     }
@@ -147,13 +169,13 @@ public class SubjectManagementServlet extends HttpServlet {
             pageNo = Integer.parseInt(request.getParameter("pageNo"));
         }
         request.setAttribute("pageNo", pageNo);
-        request.setAttribute("pages", subjectService.pages(subjectService.List(0, Integer.MAX_VALUE), 3));
+        request.setAttribute("pages", subjectService.pages(subjectService.countAll(), 3));
         if (pageNo == 1) {
             request.setAttribute("subjectList", subjectService.List(pageNo - 1, 3));
         } else {
             request.setAttribute("subjectList", subjectService.List((pageNo - 1) * 3, 3));
         }
-        request.setAttribute("userList", userService.List("", "", 0, Integer.MAX_VALUE));
+        request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
@@ -163,20 +185,34 @@ public class SubjectManagementServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void findPaging(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void findPagingFilter(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         String role = request.getAttribute((RoleConstants.ROLE).getTitle()).toString();
         request.setAttribute("jspPath", role + "/subject.jsp");
         String searchRg = request.getParameter("searchRg");
         request.setAttribute("searchRg", searchRg);
         int pageNo = Integer.parseInt(request.getParameter("pageNo"));
-        request.setAttribute("pages",
-                subjectService.pages(subjectService.findAll(0, Integer.MAX_VALUE, searchRg), 3));
-        if (pageNo == 1) {
-            request.setAttribute("subjectList", subjectService.findAll(pageNo - 1, 3, searchRg));
+        String filterStatus = request.getParameter("filterStatus");
+        request.setAttribute("filterStatus", filterStatus);
+        if (filterStatus.equals("")) {
+            request.setAttribute("pages",
+                    subjectService.pages(subjectService.countAll(searchRg), 3));
+            if (pageNo == 1) {
+                request.setAttribute("subjectList", subjectService.findAll(pageNo - 1, 3, searchRg));
+            } else {
+                request.setAttribute("subjectList", subjectService.findAll((pageNo - 1) * 3, 3, searchRg));
+            }
         } else {
-            request.setAttribute("subjectList", subjectService.findAll((pageNo - 1) * 3, 3, searchRg));
+            request.setAttribute("pages",
+                    subjectService.pages(subjectService.countAll(searchRg, filterStatus), 3));
+            if (pageNo == 1) {
+                request.setAttribute("subjectList", subjectService.findAll(pageNo - 1, 3, searchRg, filterStatus));
+            } else {
+                request.setAttribute("subjectList",
+                        subjectService.findAll((pageNo - 1) * 3, 3, searchRg, filterStatus));
+            }
         }
-        request.setAttribute("userList", userService.List("", "", 0, Integer.MAX_VALUE));
+        request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
         request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
     }
 
