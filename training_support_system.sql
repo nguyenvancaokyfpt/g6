@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2022 at 08:29 PM
+-- Generation Time: Oct 02, 2022 at 09:27 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -285,16 +285,16 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`, `manager_id`, `expert_id`, `status_id`, `body`, `img_src`) VALUES
-(1, 'PRO192', 'Object-Oriented Programming', 2, 3, 1, 'While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n', '8.png'),
-(2, 'MAD101', 'Discrete mathematics', 2, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.', '1.png'),
-(3, 'MAE101', 'Mathematics for Engineering', 3, 2, 1, 'Another productive way to use this tool to begin a daily writing routine. One way is to generate a random paragraph with the intention to try to rewrite it while still keeping the original meaning. The purpose here is to just get the writing started so that when the writer goes onto their day\'s writing projects, words are already flowing from their fingers.', '2.png'),
-(4, 'PRF192', 'Programming Fundamentals', 3, 2, 1, 'Another writing challenge can be to take the individual sentences in the random paragraph and incorporate a single sentence from that into a new paragraph to create a short story. Unlike the random sentence generator, the sentences from the random paragraph will have some connection to one another so it will be a bit different. You also won\'t know exactly how many sentences will appear in the random paragraph.', '3.png'),
-(5, 'CEA201', 'Computer Organization and Architecture', 2, 3, 1, 'It\'s not only writers who can benefit from this free online tool. If you\'re a programmer who\'s working on a project where blocks of text are needed, this tool can be a great way to get that. It\'s a good way to test your programming and that the tool being created is working well.', '4.png'),
-(6, 'CSI104', 'Introduction to Computer Science', 3, 2, 1, 'Above are a few examples of how the random paragraph generator can be beneficial. The best way to see if this random paragraph picker will be useful for your intended purposes is to give it a try. Generate a number of paragraphs to see if they are beneficial to your current project.', '5.png'),
-(7, 'CSD201', 'Data Structures and Algorithms', 2, 3, 0, 'Yes. We\'re always interested in improving this generator and one of the best ways to do that is to add new and interesting paragraphs to the generator. If you\'d like to contribute some random paragraphs, please contact us.', '6.png'),
-(8, 'MAS291', 'Statistics and Probability', 3, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.', '7.png'),
-(9, 'PRJ301', 'Java Web Application Development', 3, 3, 1, 'day la subject thu 9 nhe!!!\r\n', '9.png'),
-(10, 'SWP391', 'Application development project', 2, 2, 1, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\r\n', '10.png');
+(1, 'PRO192', 'Object-Oriented Programming', 2, 3, 1, '                                While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n\r\n                            ', 'assets/media/books/8.png'),
+(2, 'MAD101', 'Discrete mathematics', 2, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.', 'assets/media/books/1.png'),
+(3, 'MAE101', 'Mathematics for Engineering', 3, 2, 1, 'Another productive way to use this tool to begin a daily writing routine. One way is to generate a random paragraph with the intention to try to rewrite it while still keeping the original meaning. The purpose here is to just get the writing started so that when the writer goes onto their day\'s writing projects, words are already flowing from their fingers.', 'assets/media/books/2.png'),
+(4, 'PRF192', 'Programming Fundamentals', 3, 2, 1, '                                Another writing challenge can be to take the individual sentences in the random paragraph and incorporate a single sentence from that into a new paragraph to create a short story. Unlike the random sentence generator, the sentences from the random paragraph will have some connection to one another so it will be a bit different. You also won\'t know exactly how many sentences will appear in the random paragraph.\r\n                            ', 'assets/media/books/3.png'),
+(5, 'CEA201', 'Computer Organization and Architecture', 2, 3, 1, 'It\'s not only writers who can benefit from this free online tool. If you\'re a programmer who\'s working on a project where blocks of text are needed, this tool can be a great way to get that. It\'s a good way to test your programming and that the tool being created is working well.', 'assets/media/books/4.png'),
+(6, 'CSI104', 'Introduction to Computer Science', 3, 2, 1, 'Above are a few examples of how the random paragraph generator can be beneficial. The best way to see if this random paragraph picker will be useful for your intended purposes is to give it a try. Generate a number of paragraphs to see if they are beneficial to your current project.', 'assets/media/books/5.png'),
+(7, 'CSD201', 'Data Structures and Algorithms', 2, 3, 0, 'Yes. We\'re always interested in improving this generator and one of the best ways to do that is to add new and interesting paragraphs to the generator. If you\'d like to contribute some random paragraphs, please contact us.', 'assets/media/books/6.png'),
+(8, 'MAS291', 'Statistics and Probability', 3, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.', 'assets/media/books/7.png'),
+(9, 'PRJ301', 'Java Web Application Development', 3, 3, 1, 'day la subject thu 9 nhe!!!\r\n', 'assets/media/books/9.png'),
+(10, 'SWP391', 'Application development project', 2, 2, 1, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\r\n', 'assets/media/books/10.png');
 
 -- --------------------------------------------------------
 
@@ -627,7 +627,7 @@ ALTER TABLE `setting`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subject_setting`
