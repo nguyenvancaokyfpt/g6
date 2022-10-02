@@ -57,6 +57,10 @@
         <servlet-name>SettingDetailServlet</servlet-name>
         <servlet-class>com.tss.controller.SettingDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadFileServlet</servlet-name>
+        <servlet-class>com.tss.controller.UploadFileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -136,6 +140,10 @@
     <servlet-mapping>
         <servlet-name>SettingDetailServlet</servlet-name>
         <url-pattern>/settingDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
