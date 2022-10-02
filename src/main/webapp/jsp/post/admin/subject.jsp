@@ -98,7 +98,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card my-3 subject_card">
                         <img style="height: 300px" onclick="viewDetails('${s.subjectId}', 'get')"
-                             src="../../../assets/media/books/${s.imgSrc}" class="card-image-top" alt="thumbnail">
+                             src="${s.imgSrc}" class="card-image-top" alt="thumbnail">
                             <div class="card-body">
                                 <h3 class="card-title">
                                     <a onclick="viewDetails('${s.subjectId}', 'get')"

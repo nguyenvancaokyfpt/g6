@@ -193,7 +193,7 @@
                     </ul>
                 </div>
                 <div class="col-md-7" style="height: min-content;">
-                    <img src="../../../assets/media/books/${s.imgSrc}" width="90%" height="500px">
+                    <img src="${s.imgSrc}" width="90%" height="500px">
                 </div>
             </div>
         </div>
