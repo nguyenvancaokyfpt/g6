@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2022 at 09:27 AM
+-- Generation Time: Oct 02, 2022 at 05:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,6 +20,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `training_support_system`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignment`
+--
+
+CREATE TABLE `assignment` (
+  `ass_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `ass_body` varchar(5000) NOT NULL,
+  `eval_weight` int(11) NOT NULL,
+  `is_team_work` tinyint(1) NOT NULL,
+  `is_ongoing` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `class_id` int(11) NOT NULL,
+  `trainer_id` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `comment` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -102,6 +133,44 @@ CREATE TABLE `client` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `eval_criteria`
+--
+
+CREATE TABLE `eval_criteria` (
+  `criteria_id` int(11) NOT NULL,
+  `ass_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `criteria_name` varchar(255) NOT NULL,
+  `is_team_eval` tinyint(1) NOT NULL,
+  `eval_weight` int(11) NOT NULL,
+  `max_loc` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `description` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `issue`
+--
+
+CREATE TABLE `issue` (
+  `issue_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `extra_labels` varchar(1000) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `linked_id` int(11) NOT NULL,
+  `gitlab_url` varchar(500) NOT NULL,
+  `is_closed` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lesson`
 --
 
@@ -113,6 +182,73 @@ CREATE TABLE `lesson` (
   `file_url` varchar(500) NOT NULL,
   `body` text NOT NULL,
   `module_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loc_eval`
+--
+
+CREATE TABLE `loc_eval` (
+  `loc_eval_id` int(11) NOT NULL,
+  `complexity_id` int(11) NOT NULL,
+  `quality_id` int(11) NOT NULL,
+  `converted_loc` int(11) NOT NULL,
+  `is_late_submit` tinyint(1) NOT NULL,
+  `comment` varchar(500) NOT NULL,
+  `new_milestone_id` int(11) NOT NULL,
+  `new_complexity_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member_eval`
+--
+
+CREATE TABLE `member_eval` (
+  `member_eval_id` int(11) NOT NULL,
+  `evaluation_id` int(11) NOT NULL,
+  `criteria_id` int(11) NOT NULL,
+  `total_loc` int(11) NOT NULL,
+  `grade` float NOT NULL,
+  `comment` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `milestone`
+--
+
+CREATE TABLE `milestone` (
+  `milestone_id` int(11) NOT NULL,
+  `ass_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `ass_body` varchar(1000) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `status_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `milestone_eval`
+--
+
+CREATE TABLE `milestone_eval` (
+  `evaluation_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `bonus` float NOT NULL,
+  `grade` float NOT NULL,
+  `comment` varchar(500) NOT NULL,
+  `submit_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -186,6 +322,22 @@ CREATE TABLE `reset_password_token` (
 
 INSERT INTO `reset_password_token` (`user_id`, `token`, `salt`, `created_at`) VALUES
 (2, '59f2c6865dc5f92152d8b2b7972f31c8', 1664420351317, '2022-09-29 02:59:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `schedule_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `slot_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `training_date` date NOT NULL,
+  `from_time` time NOT NULL,
+  `to_time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -316,6 +468,23 @@ CREATE TABLE `subject_setting` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submit`
+--
+
+CREATE TABLE `submit` (
+  `submit_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `submit_file_url` varchar(500) NOT NULL,
+  `submit_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `team`
 --
 
@@ -326,6 +495,64 @@ CREATE TABLE `team` (
   `topic_code` varchar(255) NOT NULL,
   `topic_name` varchar(255) NOT NULL,
   `status_id` int(11) NOT NULL,
+  `description` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_eval`
+--
+
+CREATE TABLE `team_eval` (
+  `team_eval_id` int(11) NOT NULL,
+  `criteria_id` int(11) NOT NULL,
+  `submit_id` int(11) NOT NULL,
+  `grade` float NOT NULL,
+  `comment` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_member`
+--
+
+CREATE TABLE `team_member` (
+  `team_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `is_leader` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tracking`
+--
+
+CREATE TABLE `tracking` (
+  `tracking_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `issue_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `assignee_id` int(11) NOT NULL,
+  `submit_id` int(11) NOT NULL,
+  `change_log` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `update_history`
+--
+
+CREATE TABLE `update_history` (
+  `update_history_id` int(11) NOT NULL,
+  `tracking_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `update_title` varchar(255) NOT NULL,
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -433,6 +660,24 @@ INSERT INTO `web_contact` (`category_id`, `supporter_id`, `full_name`, `email`, 
 --
 
 --
+-- Indexes for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD PRIMARY KEY (`ass_id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD UNIQUE KEY `class_id` (`class_id`,`trainer_id`,`schedule_id`),
+  ADD KEY `class_id_2` (`class_id`),
+  ADD KEY `trainer_id` (`trainer_id`),
+  ADD KEY `schedule_id` (`schedule_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
@@ -478,6 +723,26 @@ ALTER TABLE `client`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `eval_criteria`
+--
+ALTER TABLE `eval_criteria`
+  ADD PRIMARY KEY (`criteria_id`),
+  ADD KEY `ass_id` (`ass_id`),
+  ADD KEY `milestone_id` (`milestone_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `issue`
+--
+ALTER TABLE `issue`
+  ADD PRIMARY KEY (`issue_id`),
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `type_id` (`type_id`),
+  ADD KEY `linked_id` (`linked_id`);
+
+--
 -- Indexes for table `lesson`
 --
 ALTER TABLE `lesson`
@@ -485,6 +750,39 @@ ALTER TABLE `lesson`
   ADD KEY `subject_id` (`subject_id`),
   ADD KEY `author_id` (`author_id`),
   ADD KEY `module_id` (`module_id`);
+
+--
+-- Indexes for table `loc_eval`
+--
+ALTER TABLE `loc_eval`
+  ADD PRIMARY KEY (`loc_eval_id`);
+
+--
+-- Indexes for table `member_eval`
+--
+ALTER TABLE `member_eval`
+  ADD PRIMARY KEY (`member_eval_id`),
+  ADD KEY `evaluation_id` (`evaluation_id`),
+  ADD KEY `criteria_id` (`criteria_id`);
+
+--
+-- Indexes for table `milestone`
+--
+ALTER TABLE `milestone`
+  ADD PRIMARY KEY (`milestone_id`),
+  ADD KEY `ass_id` (`ass_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `milestone_eval`
+--
+ALTER TABLE `milestone_eval`
+  ADD PRIMARY KEY (`evaluation_id`),
+  ADD KEY `milestone_id` (`milestone_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `submit_id` (`submit_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `package`
@@ -505,6 +803,13 @@ ALTER TABLE `permission`
 --
 ALTER TABLE `reset_password_token`
   ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`schedule_id`),
+  ADD KEY `class_id` (`class_id`);
 
 --
 -- Indexes for table `screen`
@@ -544,12 +849,52 @@ ALTER TABLE `subject_setting`
   ADD KEY `subject_id` (`subject_id`);
 
 --
+-- Indexes for table `submit`
+--
+ALTER TABLE `submit`
+  ADD PRIMARY KEY (`submit_id`);
+
+--
 -- Indexes for table `team`
 --
 ALTER TABLE `team`
   ADD PRIMARY KEY (`team_id`),
   ADD KEY `status_id` (`status_id`),
   ADD KEY `class_id` (`class_id`);
+
+--
+-- Indexes for table `team_eval`
+--
+ALTER TABLE `team_eval`
+  ADD PRIMARY KEY (`team_eval_id`),
+  ADD KEY `criteria_id` (`criteria_id`),
+  ADD KEY `submit_id` (`submit_id`);
+
+--
+-- Indexes for table `team_member`
+--
+ALTER TABLE `team_member`
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `tracking`
+--
+ALTER TABLE `tracking`
+  ADD PRIMARY KEY (`tracking_id`),
+  ADD KEY `milestone_id` (`milestone_id`),
+  ADD KEY `issue_id` (`issue_id`),
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `assignee_id` (`assignee_id`),
+  ADD KEY `submit_id` (`submit_id`);
+
+--
+-- Indexes for table `update_history`
+--
+ALTER TABLE `update_history`
+  ADD PRIMARY KEY (`update_history_id`),
+  ADD KEY `tracking_id` (`tracking_id`),
+  ADD KEY `milestone_id` (`milestone_id`);
 
 --
 -- Indexes for table `user`
@@ -576,6 +921,12 @@ ALTER TABLE `web_contact`
 --
 
 --
+-- AUTO_INCREMENT for table `assignment`
+--
+ALTER TABLE `assignment`
+  MODIFY `ass_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
@@ -600,16 +951,58 @@ ALTER TABLE `client`
   MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `eval_criteria`
+--
+ALTER TABLE `eval_criteria`
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `issue`
+--
+ALTER TABLE `issue`
+  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `lesson`
 --
 ALTER TABLE `lesson`
   MODIFY `lesson_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `loc_eval`
+--
+ALTER TABLE `loc_eval`
+  MODIFY `loc_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `member_eval`
+--
+ALTER TABLE `member_eval`
+  MODIFY `member_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `milestone`
+--
+ALTER TABLE `milestone`
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `milestone_eval`
+--
+ALTER TABLE `milestone_eval`
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `screen`
@@ -636,10 +1029,34 @@ ALTER TABLE `subject_setting`
   MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `submit`
+--
+ALTER TABLE `submit`
+  MODIFY `submit_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
   MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `team_eval`
+--
+ALTER TABLE `team_eval`
+  MODIFY `team_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tracking`
+--
+ALTER TABLE `tracking`
+  MODIFY `tracking_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `update_history`
+--
+ALTER TABLE `update_history`
+  MODIFY `update_history_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -650,6 +1067,22 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD CONSTRAINT `assignment_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`),
+  ADD CONSTRAINT `assignment_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
+  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`trainer_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `attendance_ibfk_3` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`),
+  ADD CONSTRAINT `attendance_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
 
 --
 -- Constraints for table `class`
@@ -689,10 +1122,49 @@ ALTER TABLE `client`
   ADD CONSTRAINT `client_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
+-- Constraints for table `eval_criteria`
+--
+ALTER TABLE `eval_criteria`
+  ADD CONSTRAINT `eval_criteria_ibfk_1` FOREIGN KEY (`ass_id`) REFERENCES `assignment` (`ass_id`),
+  ADD CONSTRAINT `eval_criteria_ibfk_2` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`),
+  ADD CONSTRAINT `eval_criteria_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
+
+--
+-- Constraints for table `issue`
+--
+ALTER TABLE `issue`
+  ADD CONSTRAINT `issue_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`),
+  ADD CONSTRAINT `issue_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `issue_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
+
+--
 -- Constraints for table `lesson`
 --
 ALTER TABLE `lesson`
   ADD CONSTRAINT `lesson_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`);
+
+--
+-- Constraints for table `member_eval`
+--
+ALTER TABLE `member_eval`
+  ADD CONSTRAINT `member_eval_ibfk_1` FOREIGN KEY (`criteria_id`) REFERENCES `eval_criteria` (`criteria_id`),
+  ADD CONSTRAINT `member_eval_ibfk_2` FOREIGN KEY (`evaluation_id`) REFERENCES `milestone_eval` (`evaluation_id`);
+
+--
+-- Constraints for table `milestone`
+--
+ALTER TABLE `milestone`
+  ADD CONSTRAINT `milestone_ibfk_1` FOREIGN KEY (`ass_id`) REFERENCES `assignment` (`ass_id`),
+  ADD CONSTRAINT `milestone_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`);
+
+--
+-- Constraints for table `milestone_eval`
+--
+ALTER TABLE `milestone_eval`
+  ADD CONSTRAINT `milestone_eval_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`),
+  ADD CONSTRAINT `milestone_eval_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
+  ADD CONSTRAINT `milestone_eval_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `milestone_eval_ibfk_4` FOREIGN KEY (`submit_id`) REFERENCES `submit` (`submit_id`);
 
 --
 -- Constraints for table `package`
@@ -706,6 +1178,18 @@ ALTER TABLE `package`
 ALTER TABLE `permission`
   ADD CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`setting_id`) REFERENCES `setting` (`setting_id`),
   ADD CONSTRAINT `permission_ibfk_2` FOREIGN KEY (`screen_id`) REFERENCES `screen` (`screen_id`);
+
+--
+-- Constraints for table `reset_password_token`
+--
+ALTER TABLE `reset_password_token`
+  ADD CONSTRAINT `reset_password_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`);
 
 --
 -- Constraints for table `setting`
@@ -733,6 +1217,37 @@ ALTER TABLE `subject_setting`
 --
 ALTER TABLE `team`
   ADD CONSTRAINT `team_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`);
+
+--
+-- Constraints for table `team_eval`
+--
+ALTER TABLE `team_eval`
+  ADD CONSTRAINT `team_eval_ibfk_1` FOREIGN KEY (`criteria_id`) REFERENCES `eval_criteria` (`criteria_id`),
+  ADD CONSTRAINT `team_eval_ibfk_2` FOREIGN KEY (`submit_id`) REFERENCES `submit` (`submit_id`);
+
+--
+-- Constraints for table `team_member`
+--
+ALTER TABLE `team_member`
+  ADD CONSTRAINT `team_member_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `team_member_ibfk_2` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`);
+
+--
+-- Constraints for table `tracking`
+--
+ALTER TABLE `tracking`
+  ADD CONSTRAINT `tracking_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`),
+  ADD CONSTRAINT `tracking_ibfk_2` FOREIGN KEY (`issue_id`) REFERENCES `issue` (`issue_id`),
+  ADD CONSTRAINT `tracking_ibfk_3` FOREIGN KEY (`author_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `tracking_ibfk_4` FOREIGN KEY (`assignee_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `tracking_ibfk_5` FOREIGN KEY (`submit_id`) REFERENCES `submit` (`submit_id`);
+
+--
+-- Constraints for table `update_history`
+--
+ALTER TABLE `update_history`
+  ADD CONSTRAINT `update_history_ibfk_1` FOREIGN KEY (`tracking_id`) REFERENCES `tracking` (`tracking_id`),
+  ADD CONSTRAINT `update_history_ibfk_2` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`);
 
 --
 -- Constraints for table `user`
