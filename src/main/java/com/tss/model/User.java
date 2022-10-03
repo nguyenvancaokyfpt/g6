@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.tss.constants.StatusConstants;
 import com.tss.model.system.Role;
 
 /**
@@ -259,6 +260,14 @@ public class User {
         return "User{" + "userId=" + userId + ", fullname=" + fullname + ", email=" + email + ", mobile=" + mobile
                 + ", avatarUrl=" + avatarUrl + ", statusId=" + statusId + ", note=" + note + ", createdAt=" + createdAt
                 + ", updatedAt=" + updatedAt + ", lastActive=" + lastActive + '}';
+    }
+
+    public boolean isActive() {
+        if (statusId == StatusConstants.ACTIVE.getId()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

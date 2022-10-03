@@ -99,6 +99,12 @@ public class LoginWithGoogleServlet extends HttpServlet {
                         new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", newUser));
             }
         } else {
+            // check user is active
+            if (!user.isActive()) {
+                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                        "Your account is inactive, please contact admin to active"));
+                return;
+            }
             // set user info to session
             request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
             // get all roles of user

@@ -74,36 +74,11 @@ public class LoginServlet extends HttpServlet {
             // destroy captcha
             request.getSession().removeAttribute(SessionConstants.CAPTCHA_STRING);
         }
+        // get user info
+        User user = userService.findByEmail(email);
 
-        if (loginService.login(email, password)) {
-            // get user info
-            User user = userService.findByEmail(email);
-            // set user info to session
-            request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
-            // get all roles of user
-            List<UserRole> roles = roleService.findByUserId(user.getUserId());
-            // Convert to String list
-            TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
-            // set role list to session
-            request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
-            // get all permissions of user
-            List<Permission> permissions = null;
-            for (RoleConstants roleConstants : roleNames) {
-                List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
-                if (permissions == null) {
-                    permissions = temp;
-                } else {
-                    permissions.addAll(temp);
-                }
-            }
-            // set permission list to session
-            request.getSession().setAttribute(SessionConstants.USER_PERMISSIONS, permissions);
-            // response
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
-            // reset countLoginFail
-            request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, 0);
-        } else {
+        // check user
+        if (user == null) {
             countLoginFail++;
             request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, countLoginFail);
             if (countLoginFail >= 3) {
@@ -111,9 +86,56 @@ public class LoginServlet extends HttpServlet {
                         "Login fail, please enter captcha", "captcha_required"));
             } else {
                 ResponseHelper.sendResponse(response,
-                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Your information is incorrect!"));
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Email is not exist"));
+            }
+        } else {
+            if (loginService.login(email, password)) {
+
+                // check user is active
+                if (!user.isActive()) {
+                    ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                            "Your account is inactive, please contact admin to active"));
+                    return;
+                }
+
+                // set user info to session
+                request.getSession().setAttribute(SessionConstants.USER_SESSION, user);
+                // get all roles of user
+                List<UserRole> roles = roleService.findByUserId(user.getUserId());
+                // Convert to String list
+                TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
+                // set role list to session
+                request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
+                // get all permissions of user
+                List<Permission> permissions = null;
+                for (RoleConstants roleConstants : roleNames) {
+                    List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
+                    if (permissions == null) {
+                        permissions = temp;
+                    } else {
+                        permissions.addAll(temp);
+                    }
+                }
+                // set permission list to session
+                request.getSession().setAttribute(SessionConstants.USER_PERMISSIONS, permissions);
+                // response
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.OK, "Login success", user));
+                // reset countLoginFail
+                request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, 0);
+            } else {
+                countLoginFail++;
+                request.getSession().setAttribute(SessionConstants.LOGIN_FAIL_COUNT, countLoginFail);
+                if (countLoginFail >= 3) {
+                    ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST,
+                            "Login fail, please enter captcha", "captcha_required"));
+                } else {
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Your password is not correct"));
+                }
             }
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
