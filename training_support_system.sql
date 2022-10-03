@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2022 at 05:06 PM
+-- Generation Time: Oct 03, 2022 at 04:21 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -582,22 +582,23 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '12345678910', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
-(3, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
-(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
-(21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(22, 'Nguyễn Văn E', 'nguyenvane', 'nguyenvane@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(24, 'Nguyễn Văn G', 'nguyenvang', 'nguyenvang@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(25, 'Nguyễn Văn H', 'nguyenvanh', 'nguyenvanh@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(27, 'Nguyễn Văn J', 'nguyenvanj', 'nguyenvanj@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(29, 'Nguyễn Văn L', 'nguyenvanl', 'nguyenvanl@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '0964800139', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(3, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', '0862229529', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
+(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', '0334351838', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
+(21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', '0327404366', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(22, 'Nguyễn Văn E', 'nguyenvane', 'nguyenvane@gmail.com', '0973067834', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', '0865174588', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(24, 'Nguyễn Văn G', 'nguyenvang', 'nguyenvang@gmail.com', '0347166479', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(25, 'Nguyễn Văn H', 'nguyenvanh', 'nguyenvanh@gmail.com', '0335085366', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(27, 'Nguyễn Văn J', 'nguyenvanj', 'nguyenvanj@gmail.com', '0334459268', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(29, 'Nguyễn Văn L', 'nguyenvanl', 'nguyenvanl@gmail.com', '0329150477', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', NULL, 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30'),
-(53, 'Wallpapers HDV', 'wallpapershdv826954', 'wallpapershdv@gmail.com', NULL, 'mhKTOXW78eKzPaJWVs+LTw3hELFJJgF8Q/OmhxWUSXE=', 'https://lh3.googleusercontent.com/a-/ACNPEu9sXUC6hwcYpbP1Js19bKXbN1ZuaqSnQgsJSvxT=s96-c', 1, NULL, '2022-09-28 13:27:44', '2022-09-28 13:27:44', '2022-09-28 13:27:44'),
-(54, 'NGUYEN VAN CAO KY', 'nguyenvancaoky1256840', 'nguyenvancaoky1@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-29 05:09:10', '2022-09-29 05:09:10', '2022-09-29 05:09:10'),
-(55, 'Nguyễn Văn Cao Kỳ', 'kynvche163260710017', 'kynvche163260@fpt.edu.vn', NULL, 'XK6KYbSlBuRelGKqPNhdqPsi4TxJVO8QUzukoqQY3uI=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-29 06:09:17', '2022-09-29 06:09:17', '2022-09-29 06:09:17'),
-(56, 'NVCK2002', 'anivns.com11323', 'anivns.com@gmail.com', NULL, '1aNrIobFpOrAYFZ8e7Eu3K/H46MA1GlRc2cThB28TUU=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-29 07:19:27', '2022-09-29 07:19:27', '2022-09-29 07:19:27');
+(52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', '0392522679', 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30'),
+(53, 'Wallpapers HDV', 'wallpapershdv826954', 'wallpapershdv@gmail.com', '0866099914', 'mhKTOXW78eKzPaJWVs+LTw3hELFJJgF8Q/OmhxWUSXE=', 'https://lh3.googleusercontent.com/a-/ACNPEu9sXUC6hwcYpbP1Js19bKXbN1ZuaqSnQgsJSvxT=s96-c', 1, NULL, '2022-09-28 13:27:44', '2022-09-28 13:27:44', '2022-09-28 13:27:44'),
+(54, 'NGUYEN VAN CAO KY', 'nguyenvancaoky1256840', 'nguyenvancaoky1@gmail.com', '0346675188', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-29 05:09:10', '2022-09-29 05:09:10', '2022-09-29 05:09:10'),
+(55, 'Nguyễn Văn Cao Kỳ', 'kynvche163260710017', 'kynvche163260@fpt.edu.vn', '0353431768', 'XK6KYbSlBuRelGKqPNhdqPsi4TxJVO8QUzukoqQY3uI=', 'https://lh3.googleusercontent.com/a-/ACNPEu-yC8LXnUX3LssR9pvgl_Qr1pvxOYkaxvOv0cus5Q=s96-c', 1, NULL, '2022-09-29 06:09:17', '2022-09-29 06:09:17', '2022-09-29 06:09:17'),
+(56, 'NVCK2002', 'anivns.com11323', 'anivns.com@gmail.com', '0355984689', '1aNrIobFpOrAYFZ8e7Eu3K/H46MA1GlRc2cThB28TUU=', 'https://lh3.googleusercontent.com/a-/ACNPEu8f3JVq3J-3MMHL_OBiafCOFVzX4YWfEBx63D572g=s96-c', 1, NULL, '2022-09-29 07:19:27', '2022-09-29 07:19:27', '2022-09-29 07:19:27'),
+(57, 'Lai The Dat (K16_HL)', 'datlthe161533539845', 'datlthe161533@fpt.edu.vn', '0989999898', 'hzdd9lBgKW4RREwqpc0hVYVU5njSaQYT9GrPtjeIDm8=', 'https://cdn140.picsart.com/334733793098211.png', 1, 'ひろし', '2022-10-02 23:13:08', '2022-10-02 23:13:08', '2022-10-02 23:13:08');
 
 -- --------------------------------------------------------
 
@@ -637,6 +638,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 --
 
 CREATE TABLE `web_contact` (
+  `web_contact_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `supporter_id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
@@ -650,10 +652,18 @@ CREATE TABLE `web_contact` (
 -- Dumping data for table `web_contact`
 --
 
-INSERT INTO `web_contact` (`category_id`, `supporter_id`, `full_name`, `email`, `mobile`, `message`, `response`) VALUES
-(1, 2, 'Test1', 'test1@gmail.com', '0123456789', 'Plz help me', 'Go to my Home'),
-(2, 23, 'Test2', 'test2@gmai.com', '0123456789', 'Hello im Superman', 'Woowwwww'),
-(3, 24, 'Test3', 'test3@gmail.com', '0123456789', 'Hihihihi', 'not response');
+INSERT INTO `web_contact` (`web_contact_id`, `category_id`, `supporter_id`, `full_name`, `email`, `mobile`, `message`, `response`) VALUES
+(4, 1, 2, 'Kate Wolfe', 'katewolfe@gmail.com', '0123456789', 'I cant imagine how the class will go, can you give me a brief introduction?', 'You can call or send email to us to hava more information.'),
+(5, 2, 23, 'Janie Hardy', 'janiehardy@gmail.com', '0123456789', 'Hello im Superman fight with me?', 'I dont know what you mean.'),
+(6, 3, 24, 'Garry Warner', 'garrywarner@gmail.com', '0123456789', 'Are there any foreign teachers to teach?', 'Not response'),
+(7, 4, 27, 'Juanita Lowe', 'juanitalowe@gmail.com', '0382861579', 'Can you introduce me some courses?', 'You should Study LAB211 with Tuan Sensei'),
+(8, 5, 21, 'Devin Walker', 'devinwalker@gmail.com', '0364433307', 'Im not very computer savvy, can I learn it?', 'Of course! We will help you'),
+(9, 6, 27, 'Maggie Hart', 'maggiehart@gmail.com', '0342311090', 'What do I need to prepare for this online class?', 'Not response'),
+(10, 7, 21, 'Emma Blair', 'emmablair@gmail.com', '0869135639', 'Are you allowed to speak up while studying?', 'You will contact with your supporter'),
+(11, 8, 27, 'Anita Riley', 'anitariley@gmail.com', '0353594774', 'If Im busy and cant attend an online class, can I retake it?', 'You can !'),
+(12, 10, 21, 'Sidney Vargas', 'sidneyvargas@gmail.com', '0366908179', 'I want to register, how do I do that?', 'Click to the link from home page'),
+(13, 9, 27, 'Bryan Sullivan', 'bryansullivan@gmail.com', '0385717227', 'Can I contact to the teacher of the course', 'Not response'),
+(14, 1, 21, 'Dat Lai', 'datlai@gmail.com', '0344828986', 'I think the course price is a bit expensive, can it be reduced?', 'No, we calculated the price of the course very carefully');
 
 --
 -- Indexes for dumped tables
@@ -914,6 +924,7 @@ ALTER TABLE `user_role`
 -- Indexes for table `web_contact`
 --
 ALTER TABLE `web_contact`
+  ADD PRIMARY KEY (`web_contact_id`),
   ADD KEY `supporter_id` (`supporter_id`);
 
 --
@@ -1062,7 +1073,13 @@ ALTER TABLE `update_history`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `web_contact`
+--
+ALTER TABLE `web_contact`
+  MODIFY `web_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
