@@ -260,8 +260,8 @@ var KTUsersList = function () {
         e.search(t.target.value).draw()
       })), document.querySelector('[data-kt-user-table-filter="reset"]').addEventListener("click", (function () {
         document.querySelector('[data-kt-user-table-filter="form"]').querySelectorAll("select").forEach((e => {
-          $(e).val("").trigger("change")
-        })), e.search("").draw()
+          $(e).val("").trigger("change");
+        })), e.columns(2).search("").columns(7).search("").draw()
       })), o.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((t => {
         t.addEventListener("click", (function (t) {
           t.preventDefault();
