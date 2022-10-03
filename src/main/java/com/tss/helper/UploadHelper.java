@@ -39,7 +39,7 @@ public class UploadHelper {
                     fileUrls.add(relativePath + "/" + uniqueFileName);
                     DebugHelper.print("Write attachment to file: " + filePath);
                     part.write(filePath);
-                    Path path = Paths.get(appPath);}
+                    }
             }
             return fileUrls;
         } catch (Exception e) {
