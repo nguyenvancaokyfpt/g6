@@ -31,3 +31,7 @@ build/
 ### VS Code ###
 .vscode/
 /temp
+
+
+### Database Configuration ###
+src/main/resources/db.properties

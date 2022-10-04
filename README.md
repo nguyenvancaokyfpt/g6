@@ -25,7 +25,7 @@ git checkout main
 
 ### Setup database
 - Import the database from `/training_support_system.sql` to your MySQL server.
-- Open the project in your IDE and edit the database connection in `src/main/resources/db.properties` file.
+- Open the project in your IDE and copy the file `/src/main/resources/db.properties.example` to `/src/main/resources/db.properties` and edit the file to match your database configuration.
 
 ### Build and run
 - Build and run the project with maven
