@@ -55,10 +55,10 @@ public class SettingSystemDetailServlet extends HttpServlet {
         request.setAttribute("settingdetail", setting);
         switch (action) {
             case "view":
-                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/settingdetail.jsp").forward(request, response);
                 break;
             case "edit":
-                request.getRequestDispatcher("/jsp/post/admin/editsetting.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/editsetting.jsp").forward(request, response);
                 break;
             case "update":
                 id = Integer.parseInt(request.getParameter("id"));
@@ -71,10 +71,10 @@ public class SettingSystemDetailServlet extends HttpServlet {
                 dao.updateSetting(connection, id, type_id, title, value, display_order, status_id, description);
                 setting = dao.findById(connection, id);
                 request.setAttribute("settingdetail", setting);
-                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/settingdetail.jsp").forward(request, response);
                 break;
             default:
-                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/settingdetail.jsp").forward(request, response);
                 break;
         }
     }

@@ -45,7 +45,7 @@ public class SettingSystemServlet extends HttpServlet {
         }
         switch (action) {
             case "add":
-                request.getRequestDispatcher("/jsp/post/admin/addsetting.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/addsetting.jsp").forward(request, response);
                 break;
             case "create":
                 int id = 1;
@@ -64,7 +64,7 @@ public class SettingSystemServlet extends HttpServlet {
                     dao.addSetting(connection, id, type_id, title, value, display_order, status_id, description);
                 } else {
                     request.setAttribute("error", "ID already exist");
-                    request.getRequestDispatcher("/jsp/post/admin/addsetting.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/post/shared/addsetting.jsp").forward(request, response);
                     break;
                 }
             default:
@@ -107,7 +107,7 @@ public class SettingSystemServlet extends HttpServlet {
                 request.setAttribute("order", order);
                 request.setAttribute("dir", dir);
                 request.setAttribute("searchword", searchword);
-                request.getRequestDispatcher("/jsp/post/admin/settinglist.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/settinglist.jsp").forward(request, response);
                 break;
         }
     }
