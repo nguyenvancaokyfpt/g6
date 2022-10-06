@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class RequestHelper {
+
     // Get Json data from post request
     public static JSONObject getJsonData(HttpServletRequest request) {
         StringBuffer jb = new StringBuffer();

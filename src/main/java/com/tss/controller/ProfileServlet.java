@@ -8,7 +8,6 @@ package com.tss.controller;
 import java.io.IOException;
 
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.constants.SessionConstants;
 import com.alibaba.fastjson.JSONObject;
@@ -145,7 +144,7 @@ public class ProfileServlet extends HttpServlet {
                 "account/settings/deactivate-account.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD));
-        request.getRequestDispatcher("jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     /**

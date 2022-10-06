@@ -5,7 +5,7 @@
         <button onclick="history.back()" type="button" class="btn btn-primary">Go back</button>
         <div class="row d-flex justify-content-center">
             <div class="col-md-12 col-lg-10 col-xl-8">
-                <form action="/webcontact/webcontactlist" method="post">
+                <form action="/webcontact/list" method="post">
                     <input type="hidden" name="webcontactid" value="${w.category_id}">
                     <input type="hidden" name="action" value="reply">
                     <div class="card">

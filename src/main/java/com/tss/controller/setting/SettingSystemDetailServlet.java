@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller;
+package com.tss.controller.setting;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.SettingDaoIml;
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author msi
  */
-public class SettingDetailServlet extends HttpServlet {
+public class SettingSystemDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,10 +55,10 @@ public class SettingDetailServlet extends HttpServlet {
         request.setAttribute("settingdetail", setting);
         switch (action) {
             case "view":
-                request.getRequestDispatcher("jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
                 break;
             case "edit":
-                request.getRequestDispatcher("jsp/post/admin/editsetting.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/editsetting.jsp").forward(request, response);
                 break;
             case "update":
                 id = Integer.parseInt(request.getParameter("id"));
@@ -71,10 +71,10 @@ public class SettingDetailServlet extends HttpServlet {
                 dao.updateSetting(connection, id, type_id, title, value, display_order, status_id, description);
                 setting = dao.findById(connection, id);
                 request.setAttribute("settingdetail", setting);
-                request.getRequestDispatcher("jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
                 break;
             default:
-                request.getRequestDispatcher("jsp/post/admin/settingdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/settingdetail.jsp").forward(request, response);
                 break;
         }
     }
@@ -94,7 +94,7 @@ public class SettingDetailServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(SettingDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingSystemDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -112,7 +112,7 @@ public class SettingDetailServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(SettingDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingSystemDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

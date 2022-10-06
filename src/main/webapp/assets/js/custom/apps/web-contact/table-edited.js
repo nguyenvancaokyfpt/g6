@@ -21,7 +21,7 @@ var KTDatatablesServerSide = function () {
                 className: 'row-selected'
             },
             ajax: {
-                url: window.location.origin + "/webcontact/webcontactlist?action=list",
+                url: window.location.origin + "/webcontact/list?action=list",
                 type: "POST"
             },
             columns: [
@@ -106,7 +106,7 @@ var KTDatatablesServerSide = function () {
                         return `
                         <td>
                             <div class="d-flex justify-content-center">
-                                <form action="/webcontact/webcontactlist" method="post">
+                                <form action="/webcontact/list" method="post">
                                     <input type="hidden" name="action" value="get">
                                     <input name="categoryId" type="hidden" value="${data}">
                                     <button type="submit" class="btn btn-secondary">

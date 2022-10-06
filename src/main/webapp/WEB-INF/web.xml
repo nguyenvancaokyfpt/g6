@@ -50,12 +50,12 @@
         <servlet-class>com.tss.controller.UserDetails</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingListServlet</servlet-name>
-        <servlet-class>com.tss.controller.SettingListServlet</servlet-class>
+        <servlet-name>SettingSystemServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SettingSystemServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.SettingDetailServlet</servlet-class>
+        <servlet-name>SettingSystemDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SettingSystemDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
@@ -119,7 +119,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WebServiceServlet</servlet-name>
-        <url-pattern>/webcontact/webcontactlist</url-pattern>
+        <url-pattern>/webcontact/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CaptchaGeneratorServlet</servlet-name>
@@ -127,19 +127,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserDetails</servlet-name>
-        <url-pattern>/management/userdetails</url-pattern>
+        <url-pattern>/management/user/detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementServlet</servlet-name>
         <url-pattern>/management/user</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingListServlet</servlet-name>
-        <url-pattern>/settingList</url-pattern>
+        <servlet-name>SettingSystemServlet</servlet-name>
+        <url-pattern>/setting/system</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingDetailServlet</servlet-name>
-        <url-pattern>/settingDetail</url-pattern>
+        <servlet-name>SettingSystemDetailServlet</servlet-name>
+        <url-pattern>/setting/system/detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UploadFileServlet</servlet-name>

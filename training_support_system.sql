@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2022 at 04:21 PM
+-- Generation Time: Oct 06, 2022 at 12:51 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -359,12 +359,12 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (1, 'User Management', '/management/user'),
 (2, 'User Profile', '/profile'),
 (3, 'Dashboard', '/dashboard'),
-(4, 'Setting', '/settingList'),
-(5, 'Setting Detail', '/settingDetail'),
-(6, 'User Details', '/management/userdetails'),
-(7, 'Web Contact List', '/webcontact/webcontactlist'),
+(4, 'Setting System', '/setting/system'),
+(5, 'Setting Detail', '/setting/system/detail'),
+(6, 'User Details', '/management/user/detail'),
+(7, 'Web Contact List', '/webcontact/list'),
 (10, 'Subject List', '/subject/list'),
-(11, 'Subject Details', '/subject/details');
+(11, 'Subject Details', '/subject/detail');
 
 -- --------------------------------------------------------
 
@@ -1025,7 +1025,7 @@ ALTER TABLE `screen`
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `subject`

@@ -113,7 +113,7 @@
                                 <div class="card-body p-9">
                                     <!--begin::Row-->
                                     <!--end::Row-->
-                                    <form action="/settingList">
+                                    <form action="/setting/system">
                                         <input type="hidden" name="action" value="create">
                                         <div class="col-xl-10">
                                             <div class="col-xl-10">
@@ -151,7 +151,7 @@
                                                 <textarea class="form-control form-control-lg form-control-solid" name="description" placeholder="Enter description" autocomplete="off"></textarea>
                                                 <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                                 <p style="color: red">${error}</p>
-                                            <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
+                                            <a class="btn btn-bg-danger" href="/setting/system">Cancel</a>
                                             <button type="submit" class="btn btn-primary">Create setting</button>
                                         </div>
                                     </form>

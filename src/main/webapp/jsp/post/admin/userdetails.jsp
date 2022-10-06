@@ -2458,7 +2458,7 @@
                                            id="kt_table_users_login_session">
                                         <!--begin::Table body-->
                                         <!--my table body-->
-                                        <form action="/management/userdetails?action=update" method="post">
+                                        <form action="/management/user/detail?action=update" method="post">
                                             <tbody class="fs-6 fw-bold text-gray-600 user_contact_view">
                                                 <tr>
                                                     <td>ID</td>

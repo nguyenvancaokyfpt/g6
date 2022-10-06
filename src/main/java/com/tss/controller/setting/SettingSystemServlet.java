@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller;
+package com.tss.controller.setting;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.SettingDaoIml;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author msi
  */
-public class SettingListServlet extends HttpServlet {
+public class SettingSystemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,7 +45,7 @@ public class SettingListServlet extends HttpServlet {
         }
         switch (action) {
             case "add":
-                request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/addsetting.jsp").forward(request, response);
                 break;
             case "create":
                 int id = 1;
@@ -64,7 +64,7 @@ public class SettingListServlet extends HttpServlet {
                     dao.addSetting(connection, id, type_id, title, value, display_order, status_id, description);
                 } else {
                     request.setAttribute("error", "ID already exist");
-                    request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/post/admin/addsetting.jsp").forward(request, response);
                     break;
                 }
             default:
@@ -107,7 +107,7 @@ public class SettingListServlet extends HttpServlet {
                 request.setAttribute("order", order);
                 request.setAttribute("dir", dir);
                 request.setAttribute("searchword", searchword);
-                request.getRequestDispatcher("jsp/post/admin/settinglist.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/settinglist.jsp").forward(request, response);
                 break;
         }
     }
@@ -127,7 +127,7 @@ public class SettingListServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(SettingListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingSystemServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -145,7 +145,7 @@ public class SettingListServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(SettingListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingSystemServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

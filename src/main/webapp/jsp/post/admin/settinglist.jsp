@@ -154,28 +154,28 @@
                                                                 <thead>
                                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-500">
                                                                         <th>ID
-                                                                            <a href="/settingList?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
+                                                                            <a href="/setting/system?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=setting_id&page=${i}&order=${order}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>Type
-                                                                        <a href="/settingList?order=type_id&page=${i}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=type_id&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                        <a href="/setting/system?order=type_id&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=type_id&page=${i}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>Title
-                                                                        <a href="/settingList?order=setting_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=setting_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                        <a href="/setting/system?order=setting_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=setting_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>Value
-                                                                        <a href="/settingList?order=setting_value&page=${i}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=setting_value&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                        <a href="/setting/system?order=setting_value&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=setting_value&page=${i}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>Display Order
-                                                                        <a href="/settingList?order=display_order&page=${i}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=display_order&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                        <a href="/setting/system?order=display_order&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=display_order&page=${i}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>Status
-                                                                        <a href="/settingList?order=status_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
-                                                                        <a href="/settingList?order=status_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
+                                                                        <a href="/setting/system?order=status_title&page=${i}&searchword=${searchword}&dir=asc"> A</a>
+                                                                        <a href="/setting/system?order=status_title&page=${i}&searchword=${searchword}&dir=desc">| D</a>
                                                                     </th>
                                                                     <th>View</th>
                                                                     <th>Edit</th>
@@ -197,13 +197,13 @@
                                                                                 <td><span class="badge badge-danger">${sl.statusString}</span></td>
                                                                                 </c:otherwise>
                                                                             </c:choose>
-                                                                        <td class="border-gray-200"><a href="/settingDetail?id=${sl.id}&action=view">View</a></td>
-                                                                        <td class="border-gray-200"><a href="/settingDetail?id=${sl.id}&action=edit">Edit</a></td>
+                                                                        <td class="border-gray-200"><a href="/setting/system/detail?id=${sl.id}&action=view">View</a></td>
+                                                                        <td class="border-gray-200"><a href="/setting/system/detail?id=${sl.id}&action=edit">Edit</a></td>
                                                                     </tr>
                                                                 </c:forEach>
                                                                 <tr>
                                                                     <td>                                                            
-                                                                        <a type="button" class="btn btn-primary" href="/settingList?action=add">
+                                                                        <a type="button" class="btn btn-primary" href="/setting/system?action=add">
                                                                             <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                                                             <span class="svg-icon svg-icon-2">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -224,11 +224,11 @@
                                                                 <c:choose>
                                                                     <c:when test="${i == page}">
                                                                         <a class="btn btn-icon btn-bg-primary" 
-                                                                           href="/settingList?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}">${i}</a>
+                                                                           href="/setting/system?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}">${i}</a>
                                                                     </c:when>    
                                                                     <c:otherwise>
                                                                         <a class="btn btn-icon btn-active-light-primary" 
-                                                                           href="/settingList?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}">${i}</a>
+                                                                           href="/setting/system?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}">${i}</a>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </c:forEach>

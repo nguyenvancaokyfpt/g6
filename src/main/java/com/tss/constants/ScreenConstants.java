@@ -17,12 +17,12 @@ public enum ScreenConstants {
     USER_MANAGEMENT(1, "User Management", "/management/user"),
     USER_PROFILE(2, "Profile", "/profile"),
     USER_DASHBOARD(3, "Dashboard", "/dashboard"),
-    USER_DETAILS(6, "User Detail", "/management/userdetails"),
-    WEB_CONTACT(7, "Web Contact", "/webcontact/webcontactlist"),
+    SETTING_SYSTEM_LIST(4, "Setting System", "/setting/system"),
+    SETTING_SYSTEM_DETAIL(5, "Setting Detail", "/setting/system/detail"),
+    USER_DETAILS_MANAGEMENT(6, "User Detail", "/management/user/detail"),
+    WEB_CONTACT_LIST(7, "Web Contact", "/webcontact/list"),
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
-    SUBJECT_DETAILS(11, "Subject Details", "/subject/details"),
-    SETTING_LIST(4, "Setting", "/settingList"),
-    SETTING_DETAIL(5, "Setting Detail", "/settingDetail");
+    SUBJECT_DETAILS(11, "Subject Details", "/subject/detail");
 
 
     private int id;

@@ -30,7 +30,7 @@ public class DashboardServlet extends HttpServlet {
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
             ScreenConstants.USER_DASHBOARD
         ));
-        request.getRequestDispatcher("jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the

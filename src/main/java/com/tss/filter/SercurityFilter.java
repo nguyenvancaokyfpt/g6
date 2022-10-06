@@ -13,11 +13,19 @@ import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.constants.SessionConstants;
 import com.tss.helper.DebugHelper;
+import com.tss.helper.PermissionHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.sercurity.Permission;
+import com.tss.model.sercurity.UserRole;
+import com.tss.service.PermissionService;
+import com.tss.service.RoleService;
+import com.tss.service.UserService;
+import com.tss.service.impl.PermissionServiceImpl;
+import com.tss.service.impl.RoleServiceImpl;
+import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -34,12 +42,18 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class SercurityFilter implements Filter {
 
+    private RoleService roleService;
+    private PermissionService permissionService;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        roleService = new RoleServiceImpl();
+        permissionService = new PermissionServiceImpl();
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
@@ -69,11 +83,30 @@ public class SercurityFilter implements Filter {
             if (method.equals("GET")) {
                 response.sendRedirect(ScreenConstants.LOGIN.getPath());
             } else {
-                ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED, "Unauthorized access to " + uri));
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED, "Unauthorized access to " + uri));
             }
         } else {
-            // get user permissions from sessions
-            List<Permission> permissions = (List<Permission>) request.getSession().getAttribute(SessionConstants.USER_PERMISSIONS);
+            // get all roles of user
+            List<UserRole> roles = roleService.findByUserId(user.getUserId());
+            // Convert to String list
+            TreeSet<RoleConstants> roleNames = roleService.convertRoleListToRoleConstantsList(roles);
+            // set role list to session
+            request.getSession().setAttribute(SessionConstants.USER_ROLES, roleNames);
+            // get all permissions of user
+            List<Permission> permissions = null;
+            for (RoleConstants roleConstants : roleNames) {
+                List<Permission> temp = permissionService.ListBySettingId(roleConstants.getId());
+                if (permissions == null) {
+                    permissions = temp;
+                } else {
+                    permissions.addAll(temp);
+                }
+            }
+
+            PermissionHelper permissionHelper = new PermissionHelper(permissions);
+            // set permission helper to request
+            request.setAttribute("permissionHelper", permissionHelper);
 
             // set user information to request attribute
             request.setAttribute("user", user);
@@ -81,17 +114,17 @@ public class SercurityFilter implements Filter {
             // Check permission
             if (RequestHelper.isAllowedAccess(permissions, uri, action)) {
                 DebugHelper.log("ALLOWED ACCESS TO " + uri);
-                // get role from sessions
-                TreeSet<RoleConstants> roleNames = (TreeSet<RoleConstants>) request.getSession().getAttribute(SessionConstants.USER_ROLES);
                 // set the main role to request attribute
                 request.setAttribute(RoleConstants.ROLE.getTitle(), roleNames.first().getTitle().toLowerCase());
                 filterChain.doFilter(request, response);
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);
                 if (method.equals("GET")) {
-                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request,
+                            response);
                 } else {
-                    ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
                 }
             }
         }

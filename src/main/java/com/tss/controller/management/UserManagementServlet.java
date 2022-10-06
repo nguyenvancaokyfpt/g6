@@ -163,7 +163,7 @@ public class UserManagementServlet extends HttpServlet {
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     @Override

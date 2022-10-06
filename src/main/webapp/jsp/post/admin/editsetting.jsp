@@ -120,7 +120,7 @@
                                     <h3 class="form-label fw-bolder text-dark fs-6">ID: <%=sd.getId()%></h3>
                                 </div>
                                 <!--end::Row-->
-                                <form action="/settingDetail">
+                                <form action="/setting/system/detail">
                                     <input type="hidden" name="id" value="<%=sd.getId()%>">
                                     <input type="hidden" name="action" value="update">
                                     <div class="col-xl-10">
@@ -158,7 +158,7 @@
                                         <label class="form-label fw-bolder text-dark fs-6">Description</label>
                                         <textarea class="form-control form-control-lg form-control-solid" name="description" autocomplete="off"><%=sd.getDescription()%></textarea>
                                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                    <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
+                                    <a class="btn btn-bg-danger" href="/setting/system">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Confirm</button>
                                 </form>
                             </div>

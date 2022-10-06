@@ -74,7 +74,7 @@ public class SubjectManagementServlet extends HttpServlet {
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         request.setAttribute("subject", subjectService.findById(subjectId));
         request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -176,7 +176,7 @@ public class SubjectManagementServlet extends HttpServlet {
             request.setAttribute("subjectList", subjectService.List((pageNo - 1) * 3, 3));
         }
         request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class SubjectManagementServlet extends HttpServlet {
             }
         }
         request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
 }

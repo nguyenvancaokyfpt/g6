@@ -66,7 +66,7 @@ public class UserDetails extends HttpServlet {
         u.setStatusId(Integer.parseInt(request.getParameter("userStatus")));
         u.setNote(request.getParameter("userNote"));
         userService.modify(u);
-        response.sendRedirect("/management/userdetails?id="+userID);
+        response.sendRedirect("/management/user/detail?id="+userID);
     }
 
     @Override
@@ -85,9 +85,9 @@ public class UserDetails extends HttpServlet {
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT,
-                ScreenConstants.USER_DETAILS
+                ScreenConstants.USER_DETAILS_MANAGEMENT
         ));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     @Override

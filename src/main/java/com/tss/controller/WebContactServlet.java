@@ -69,7 +69,7 @@ public class WebContactServlet extends HttpServlet {
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         WebContact webContact = webContactService.findById(categoryId);
         request.setAttribute("webContactDetails", webContact);
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
@@ -118,9 +118,9 @@ public class WebContactServlet extends HttpServlet {
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.WEB_CONTACT
+                ScreenConstants.WEB_CONTACT_LIST
         ));
-        request.getRequestDispatcher("../jsp/template.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class WebContactServlet extends HttpServlet {
         int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
         String reply = request.getParameter("reply");
         webContactService.reply(categoryId, reply);
-        response.sendRedirect("/webcontact/webcontactlist");
+        response.sendRedirect("/webcontact/list");
     }
 
 }

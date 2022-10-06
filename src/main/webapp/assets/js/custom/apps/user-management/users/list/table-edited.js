@@ -169,7 +169,7 @@ var KTUsersList = function () {
 
     <div class=" d-flex align-items-center">
         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-            <a href="/management/userdetails?id=` +
+            <a href="/management/user/detail?id=` +
                 row.userId +
                 `">
                 <div class="symbol-label">
@@ -182,7 +182,7 @@ var KTUsersList = function () {
         <!--end::Avatar-->
         <!--begin::User details-->
         <div class="d-flex flex-column">
-            <a href="/management/userdetails?id=` +
+            <a href="/management/user/detail?id=` +
                 row.userId +
                 `" class="text-gray-800 text-hover-primary mb-1">` +
                 row.fullname +

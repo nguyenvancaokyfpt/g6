@@ -110,7 +110,7 @@
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Action-->
-                                <a href="/settingDetail?id=<%=sd.getId()%>&action=edit" class="btn btn-primary align-self-center">Edit Setting</a>
+                                <a href="/setting/system/detail?id=<%=sd.getId()%>&action=edit" class="btn btn-primary align-self-center">Edit Setting</a>
                                 <!--end::Action-->
                             </div>
                             <!--begin::Card header-->

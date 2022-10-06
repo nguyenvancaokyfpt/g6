@@ -1,5 +1,7 @@
 package com.tss.model.sercurity;
 
+import com.tss.constants.ScreenConstants;
+
 public class Permission {
     private int screenId;
     private int settingId;
@@ -102,6 +104,10 @@ public class Permission {
      */
     public void setCanUpdate(boolean canUpdate) {
         this.canUpdate = canUpdate;
+    }
+
+    public ScreenConstants getScreen() {
+        return ScreenConstants.getScreenById(screenId);
     }
 
 }
