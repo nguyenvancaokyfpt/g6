@@ -2136,13 +2136,13 @@
                 <!--end::Menu item-->
                 <!--begin::Menu item-->
                 <div class="menu-item px-5 my-1">
-                    <a href="account/settings.html" class="menu-link px-5">Account
+                    <a href="profile?tab=settings" class="menu-link px-5">Account
                         Settings</a>
                 </div>
                 <!--end::Menu item-->
                 <!--begin::Menu item-->
                 <div class="menu-item px-5">
-                    <a href="/logout" class="menu-link px-5">Sign Out</a>
+                    <a href="logout" class="menu-link px-5">Sign Out</a>
                 </div>
                 <!--end::Menu item-->
             </div>
