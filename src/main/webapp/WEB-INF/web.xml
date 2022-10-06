@@ -62,8 +62,8 @@
         <servlet-class>com.tss.controller.UploadFileServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingRolePermission</servlet-name>
-        <servlet-class>com.tss.controller.setting.SettingRolePermission</servlet-class>
+        <servlet-name>SettingRolePermissionServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SettingRolePermissionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
@@ -150,7 +150,7 @@
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingRolePermission</servlet-name>
+        <servlet-name>SettingRolePermissionServlet</servlet-name>
         <url-pattern>/setting/role/permissions</url-pattern>
     </servlet-mapping>
     <session-config>

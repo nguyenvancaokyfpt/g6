@@ -7,7 +7,6 @@ package com.tss.controller.setting;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
 
@@ -20,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-public class SettingRolePermission extends HttpServlet {
+public class SettingRolePermissionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,14 +61,30 @@ public class SettingRolePermission extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setAttribute("jspPath", "shared/user.jsp");
-        request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/users/list/table-edited.js",
-                "apps/user-management/users/list/export-users.js"));
-        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-                ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.USER_MANAGEMENT));
-        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+
+        if (action == ""){
+            request.setAttribute("jspPath", "shared/settingrole.jsp");
+            request.setAttribute("customJs", ResponseHelper.customJs(
+                    "apps/user-management/roles/list/add.js",
+                    "apps/user-management/roles/list/update-role.js"));
+            request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                    ScreenConstants.USER_DASHBOARD,
+                    ScreenConstants.SETTING_ROLE_PERMISSIONS));
+            request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+        }
+        if (action.equals("view")) {
+            request.setAttribute("jspPath", "shared/viewrole.jsp");
+            request.setAttribute("customJs", ResponseHelper.customJs(
+                    "apps/user-management/roles/view/view.js",
+                    "apps/user-management/roles/view/update-role.js"));
+            request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                    ScreenConstants.USER_DASHBOARD,
+                    ScreenConstants.SETTING_ROLE_PERMISSIONS));
+            request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+        }
+
+
     }
 
     /**

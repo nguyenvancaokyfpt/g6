@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
@@ -85,15 +84,15 @@ public class SubjectManagementServlet extends HttpServlet {
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         Subject subject = subjectService.findById(subjectId);
         String subjectName = request.getParameter("subjectName");
-        if(subjectName.equals("")){
+        if (subjectName.equals("")) {
             subject.setSubjectName(subject.getSubjectName());
-        }else{
+        } else {
             subject.setSubjectName(subjectName);
         }
         String subjectCode = request.getParameter("subjectCode");
-        if(subjectCode.equals("")){
+        if (subjectCode.equals("")) {
             subject.setSubjectCode(subject.getSubjectCode());
-        }else{
+        } else {
             subject.setSubjectCode(subjectCode);
         }
         subject.setExpertId(Integer.parseInt(request.getParameter("expertId")));
@@ -102,17 +101,17 @@ public class SubjectManagementServlet extends HttpServlet {
         String body = request.getParameter("body");
         if (body.equals("")) {
             subject.setBody(subject.getBody());
-        }else{
+        } else {
             subject.setBody(body);
         }
         String imgSrc = request.getParameter("imgSrc");
-        if(imgSrc.equals("")){
+        if (imgSrc.equals("")) {
             subject.setImgSrc(subject.getImgSrc());
-        }else{
+        } else {
             subject.setImgSrc(imgSrc);
         }
-       subjectService.modify(subject);
-       response.sendRedirect("/subject/list");
+        subjectService.modify(subject);
+        response.sendRedirect("/subject/list");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -185,7 +184,7 @@ public class SubjectManagementServlet extends HttpServlet {
 
     private void findPagingFilter(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.setAttribute("jspPath","shared/subject.jsp");
+        request.setAttribute("jspPath", "shared/subject.jsp");
         String searchRg = request.getParameter("searchRg");
         request.setAttribute("searchRg", searchRg);
         int pageNo = Integer.parseInt(request.getParameter("pageNo"));

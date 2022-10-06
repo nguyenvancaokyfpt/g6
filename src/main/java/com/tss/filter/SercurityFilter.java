@@ -22,10 +22,8 @@ import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
 import com.tss.service.PermissionService;
 import com.tss.service.RoleService;
-import com.tss.service.UserService;
 import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.service.impl.RoleServiceImpl;
-import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
