@@ -72,8 +72,7 @@ public class UserDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
-        request.setAttribute("jspPath", role + "/userdetails.jsp");
+        request.setAttribute("jspPath", "shared/userdetails.jsp");
 
         UserServiceImpl usi = new UserServiceImpl();
         User u = usi.findById(Integer.parseInt(request.getParameter("id")));

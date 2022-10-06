@@ -69,8 +69,7 @@ public class SubjectManagementServlet extends HttpServlet {
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String role = request.getAttribute((RoleConstants.ROLE).getTitle()).toString();
-        request.setAttribute("jspPath", role + "/subjectDetails.jsp");
+        request.setAttribute("jspPath", "shared/subjectDetails.jsp");
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
         request.setAttribute("subject", subjectService.findById(subjectId));
         request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
@@ -157,8 +156,7 @@ public class SubjectManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String role = request.getAttribute((RoleConstants.ROLE).getTitle()).toString();
-        request.setAttribute("jspPath", role + "/subject.jsp");
+        request.setAttribute("jspPath", "shared/subject.jsp");
         // request.setAttribute("customJs", ResponseHelper.customJs(
         // "apps/sjtable-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
@@ -187,8 +185,7 @@ public class SubjectManagementServlet extends HttpServlet {
 
     private void findPagingFilter(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String role = request.getAttribute((RoleConstants.ROLE).getTitle()).toString();
-        request.setAttribute("jspPath", role + "/subject.jsp");
+        request.setAttribute("jspPath","shared/subject.jsp");
         String searchRg = request.getParameter("searchRg");
         request.setAttribute("searchRg", searchRg);
         int pageNo = Integer.parseInt(request.getParameter("pageNo"));

@@ -22,7 +22,9 @@ public enum ScreenConstants {
     USER_DETAILS_MANAGEMENT(6, "User Detail", "/management/user/detail"),
     WEB_CONTACT_LIST(7, "Web Contact", "/webcontact/list"),
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
-    SUBJECT_DETAILS(11, "Subject Details", "/subject/detail");
+    SUBJECT_DETAILS(11, "Subject Details", "/subject/detail"),
+    SETTING_ROLE_PERMISSIONS(12, "Setting Role Permissions", "/setting/role/permissions");
+    
 
 
     private int id;

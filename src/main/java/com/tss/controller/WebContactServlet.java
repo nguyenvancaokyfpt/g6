@@ -64,8 +64,7 @@ public class WebContactServlet extends HttpServlet {
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
-        request.setAttribute("jspPath", role + "/webcontactdetails.jsp");
+        request.setAttribute("jspPath", "shared/webcontactdetails.jsp");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         WebContact webContact = webContactService.findById(categoryId);
         request.setAttribute("webContactDetails", webContact);
@@ -109,8 +108,7 @@ public class WebContactServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
-        request.setAttribute("jspPath", role + "/webcontact.jsp");
+        request.setAttribute("jspPath", "shared/webcontact.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/web-contact/table-edited.js",
                 "apps/web-contact/export-web-contact.js",
@@ -130,8 +128,7 @@ public class WebContactServlet extends HttpServlet {
     }
 
     private void reply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
-        request.setAttribute("jspPath", role + "/webcontact.jsp");
+        request.setAttribute("jspPath", "shared/webcontact.jsp");
         int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
         String reply = request.getParameter("reply");
         webContactService.reply(categoryId, reply);

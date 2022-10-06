@@ -240,6 +240,17 @@
                                             </a>
                                         </div>
                                     </c:if>
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.SETTING_ROLE_PERMISSIONS ? 'active' : ''}"
+                                                href="${ScreenConstants.SETTING_ROLE_PERMISSIONS.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Role Permission</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:if>

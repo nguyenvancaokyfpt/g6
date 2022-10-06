@@ -155,8 +155,7 @@ public class UserManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String role = request.getAttribute(RoleConstants.ROLE.getTitle()).toString();
-        request.setAttribute("jspPath", role + "/user.jsp");
+        request.setAttribute("jspPath", "shared/user.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/user-management/users/list/table-edited.js",
                 "apps/user-management/users/list/export-users.js"));
