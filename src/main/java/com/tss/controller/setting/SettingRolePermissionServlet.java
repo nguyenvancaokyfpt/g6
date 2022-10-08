@@ -5,10 +5,23 @@
 package com.tss.controller.setting;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
+import com.tss.constants.ActionConstants;
+import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
+import com.tss.model.payload.ResponseMessage;
+import com.tss.model.payload.RolePermissionData;
+import com.tss.model.payload.RolePermissionMessage;
+import com.tss.model.sercurity.Permission;
+import com.tss.model.system.Screen;
+import com.tss.service.RoleService;
+import com.tss.service.impl.RoleServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -21,6 +34,13 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class SettingRolePermissionServlet extends HttpServlet {
 
+    private RoleService roleService;
+
+    @Override
+    public void init() throws ServletException {
+        roleService = new RoleServiceImpl();
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,19 +52,75 @@ public class SettingRolePermissionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SettingRolePermission</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SettingRolePermission at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+
+        switch (action) {
+            case ActionConstants.UPDATE:
+                doPostUpdate(request, response);
+                break;
+            case ActionConstants.GET:
+                doGetRolePermission(request, response);
+                break;
+
+            default:
+                doPostGet(request, response);
+                break;
         }
+    }
+
+    private void doGetRolePermission(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        boolean showAll = true;
+        try {
+            showAll = jsonObject.getBoolean("showAll");
+        } catch (Exception e) {
+            showAll = true;
+        }
+        try {
+            int roleId = jsonObject.getIntValue("roleId");
+            RolePermissionMessage rolePermissionMessage = roleService.getRolePermission(roleId);
+
+            if (!showAll) {
+                List<Permission> permissions = rolePermissionMessage.getPermissions();
+                List<Permission> nPermissions = new ArrayList<>();
+                for (Permission permission : permissions) {
+                    if (permission.isCanGet() || permission.isCanCreate() || permission.isCanUpdate()
+                            || permission.isCanDelete()) {
+                        nPermissions.add(permission);
+                    }
+                }
+                rolePermissionMessage.setPermissions(nPermissions);
+            }
+
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Succsess", rolePermissionMessage));
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR"));
+        }
+    }
+
+    private void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        RolePermissionMessage data = RequestHelper.getJsonData(request, RolePermissionMessage.class);
+
+        if (data == null) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Invalid data"));
+            return;
+        }
+
+        Boolean status = roleService.updateRolePermission(data.getRoleId(), data.getPermissions());
+
+        if (status) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Update role permission successfully", data));
+        } else {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR,
+                    "Update role permission failed"));
+        }
+    }
+
+    private void doPostGet(HttpServletRequest request, HttpServletResponse response) {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -63,27 +139,14 @@ public class SettingRolePermissionServlet extends HttpServlet {
 
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
-        if (action == ""){
-            request.setAttribute("jspPath", "shared/settingrole.jsp");
-            request.setAttribute("customJs", ResponseHelper.customJs(
-                    "apps/user-management/roles/list/add.js",
-                    "apps/user-management/roles/list/update-role.js"));
-            request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-                    ScreenConstants.USER_DASHBOARD,
-                    ScreenConstants.SETTING_ROLE_PERMISSIONS));
-            request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+        switch (action) {
+            case "view":
+                doGetView(request, response);
+                break;
+            default:
+                doGetDefault(request, response);
+                break;
         }
-        if (action.equals("view")) {
-            request.setAttribute("jspPath", "shared/viewrole.jsp");
-            request.setAttribute("customJs", ResponseHelper.customJs(
-                    "apps/user-management/roles/view/view.js",
-                    "apps/user-management/roles/view/update-role.js"));
-            request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-                    ScreenConstants.USER_DASHBOARD,
-                    ScreenConstants.SETTING_ROLE_PERMISSIONS));
-            request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
-        }
-
 
     }
 
@@ -99,6 +162,50 @@ public class SettingRolePermissionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    protected void doGetDefault(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // List all role
+        List<RoleConstants> listRole = RoleConstants.getAllRole();
+
+        List<RolePermissionData> listRoleData = new ArrayList<>();
+
+        ScreenConstants[] listScreen = ScreenConstants.privateScreen();
+
+        for (RoleConstants role : listRole) {
+            // count user of role
+            int countUser = roleService.countUserByRole(role);
+            // List permission available of role
+            List<Screen> listPermission = roleService.getPermissionByRole(role);
+
+            listRoleData.add(new RolePermissionData(role, countUser, listPermission));
+        }
+
+        request.setAttribute("data", listRoleData);
+        request.setAttribute("listScreen", listScreen);
+
+        request.setAttribute("jspPath", "shared/settingrole.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "apps/user-management/roles/list/add.js",
+                "apps/user-management/roles/list/update-role.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.SETTING_ROLE_PERMISSIONS));
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    }
+
+    protected void doGetView(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("jspPath", "shared/viewrole.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "apps/user-management/roles/view/view.js",
+                "apps/user-management/roles/view/update-role.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.SETTING_ROLE_PERMISSIONS));
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     /**

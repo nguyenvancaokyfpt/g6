@@ -32,6 +32,19 @@ public class RequestHelper {
         return jsonObject;
     }
 
+    public static <T> T getJsonData(HttpServletRequest request, Class<T> clazz) {
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+        } catch (Exception e) {
+            /* report an error */ }
+        T jsonObject = JSONObject.parseObject(jb.toString(), clazz);
+        return jsonObject;
+    }
+
     // Response Bad Request
     public static void responseBadRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
