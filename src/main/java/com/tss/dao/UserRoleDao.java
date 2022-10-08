@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.tss.model.payload.RolePermissionMessage;
+import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
+import com.tss.model.system.Screen;
 
 public interface UserRoleDao {
 
@@ -27,5 +30,13 @@ public interface UserRoleDao {
     int countByRoleId(Connection connection, int roleId) throws SQLException;
 
     boolean addRoleForUserByUserEmail(Connection connection, String email, int id) throws SQLException;
+
+    int countUserByRole(Connection connection, int id) throws SQLException;
+
+    List<Screen> getPermissionByRole(Connection connection, int id) throws SQLException;
+
+    Boolean updateRolePermission(Connection connection, int roleId, Permission permission) throws SQLException;
+
+    RolePermissionMessage getRolePermission(Connection connection, int roleId) throws SQLException;
 
 }

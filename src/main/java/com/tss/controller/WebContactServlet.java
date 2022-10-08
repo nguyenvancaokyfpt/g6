@@ -6,7 +6,6 @@ package com.tss.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
