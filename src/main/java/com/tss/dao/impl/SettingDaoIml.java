@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.SettingDao;
-import com.tss.model.system.ClassSetting;
 import com.tss.model.system.Setting;
 
 public class SettingDaoIml implements SettingDao {
@@ -55,9 +56,12 @@ public class SettingDaoIml implements SettingDao {
         List<Setting> settingList = new ArrayList<>();
         Setting settingDetail = new Setting();
         if (connection != null) {
-            String sql = "SELECT setting_id, type_id, setting_title, setting_value, display_order, status_title, description "
-                    + "FROM setting inner join status on setting.status_id = status.status_id "
-                    + "WHERE setting_id = ?";
+            String sql = "SELECT a.setting_id, a.type_id, a.setting_title, a.setting_value, a.display_order, status_title, a.description, b.setting_title\n"
+                    + "FROM setting a \n"
+                    + "INNER JOIN status ON a.status_id = status.status_id\n"
+                    + "LEFT JOIN setting b ON a.type_id = b.setting_id\n"
+                    + "WHERE a.setting_id = ?";
+
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, id);
@@ -70,6 +74,7 @@ public class SettingDaoIml implements SettingDao {
                     settingDetail.setDisplayOrder(resultSet.getString(5));
                     settingDetail.setStatusString(resultSet.getString(6));
                     settingDetail.setDescription(resultSet.getString(7));
+                    settingDetail.setTypeString(resultSet.getString(8));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -181,8 +186,8 @@ public class SettingDaoIml implements SettingDao {
         List<Setting> settingList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT setting_id, type_id, setting_title, setting_value, display_order, setting.status_id, status_title, description \n"
-                    + "FROM setting inner join status on setting.status_id = status.status_id \n"
-                    + "where setting_title like ? ORDER BY " + order + " " + dir + " limit ?,5";
+                    + "FROM setting INNER JOIN status on setting.status_id = status.status_id \n"
+                    + "WHERE setting_title like ? ORDER BY " + order + " " + dir + " limit ?,5";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, "%" + searchword + "%");
@@ -197,6 +202,47 @@ public class SettingDaoIml implements SettingDao {
                             resultSet.getInt(6),
                             resultSet.getString(8),
                             resultSet.getString(7)));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return settingList;
+    }
+
+    @Override
+    public List<Setting> ListSearchFilter(Connection connection, int offset, String searchword, String type, String status, String order, String dir) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Setting> settingList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT a.setting_id, a.type_id, a.setting_title, a.setting_value, a.display_order,a.status_id, status_title, a.description, b.setting_title\n"
+                    + "FROM setting a \n"
+                    + "INNER JOIN status ON a.status_id = status.status_id\n"
+                    + "LEFT JOIN setting b ON a.type_id = b.setting_id\n"
+                    + "WHERE a.setting_title LIKE ? \n"
+                    + "AND b.setting_title LIKE ?\n"
+                    + "AND status_title LIKE ?\n"
+                    + "ORDER BY " + order + " " + dir + " LIMIT ?,5;";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + searchword + "%");
+                preparedStatement.setString(2, "%" + type + "%");
+                preparedStatement.setString(3, "" + status + "%");
+                preparedStatement.setInt(4, offset);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    settingList.add(new Setting(resultSet.getInt(1),
+                            resultSet.getInt(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getInt(6),
+                            resultSet.getString(8),
+                            resultSet.getString(7),
+                            resultSet.getString(9)));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -232,8 +278,37 @@ public class SettingDaoIml implements SettingDao {
     }
 
     @Override
-    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
-            int status_id, String description) throws SQLException {
+    public int countSearchFilter(Connection connection, String searchword, String order, String type, String status) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int totalSetting = 0;
+        if (connection != null) {
+            String sql = "SELECT COUNT(*) FROM setting a \n"
+                    + "INNER JOIN status ON a.status_id = status.status_id\n"
+                    + "LEFT JOIN setting b ON a.type_id = b.setting_id\n"
+                    + "WHERE a.setting_title LIKE ? \n"
+                    + "AND b.setting_title LIKE ?\n"
+                    + "AND status_title LIKE ?";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + searchword + "%");
+                preparedStatement.setString(2, "%" + type + "%");
+                preparedStatement.setString(3, "" + status + "%");
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    totalSetting = resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return totalSetting;
+    }
+
+    @Override
+    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -286,7 +361,119 @@ public class SettingDaoIml implements SettingDao {
         }
     }
 
+    @Override
+    public void updateStatus(Connection connection, int id, int status_id) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            String sql = "UPDATE setting\n"
+                    + "SET status_id = ?\n"
+                    + "WHERE setting_id = ?;";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(2, id);
+                preparedStatement.setInt(1, status_id);
+                preparedStatement.executeUpdate();
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
 
+    @Override
+    public List<Setting> ListType(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Setting> settingList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT * FROM setting WHERE setting_id <=20";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    settingList.add(new Setting(resultSet.getInt(1),
+                            resultSet.getInt(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getInt(6),
+                            resultSet.getString(7)));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return settingList;
+    }
 
+    @Override
+    public List<Setting> ListTerm(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Setting> settingList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "select * from setting where type_id=2";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    settingList.add(new Setting(resultSet.getInt(1),
+                            resultSet.getInt(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getInt(6),
+                            resultSet.getString(7)));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return settingList;
+    }
+
+    @Override
+    public int getMaxId(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int totalSetting = 0;
+        if (connection != null) {
+            String sql = "SELECT * FROM setting ORDER BY setting_id DESC LIMIT 1";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    totalSetting = resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return totalSetting;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        Connection connection = BaseDao.getConnection();
+        SettingDaoIml dao = new SettingDaoIml();
+        System.out.println(dao.countSearchFilter(connection, "", "a", "user role", "active"));
+        List<Setting> list = new ArrayList<>();
+        try {
+            list = dao.ListSearchFilter(connection, (1 - 1) * 5, "", "", "", "b.setting_title", "desc");
+            list = dao.ListTerm(connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (Setting setting : list) {
+            System.out.println(setting.toString());
+        }
+    }
 }

@@ -10,6 +10,7 @@ public class Setting {
     private int statusId;
     private String description;
     private String statusString;
+    private String typeString;
 
     public Setting() {
     }
@@ -36,6 +37,18 @@ public class Setting {
         this.statusId = statusId;
         this.description = description;
         this.statusString = statusString;
+    }
+
+    public Setting(int id, int type_id, String title, String value, String display_order, int status_id, String description, String statusString, String typeString) {
+        this.id = id;
+        this.typeId = type_id;
+        this.title = title;
+        this.value = value;
+        this.displayOrder = display_order;
+        this.statusId = status_id;
+        this.description = description;
+        this.statusString = statusString;
+        this.typeString = typeString;
     }
 
     /**
@@ -149,5 +162,14 @@ public class Setting {
     public void setStatusString(String statusString) {
         this.statusString = statusString;
     }
+
+    public String getTypeString() {
+        return typeString;
+    }
+
+    public void setTypeString(String typeString) {
+        this.typeString = typeString;
+    }
+
 
 }

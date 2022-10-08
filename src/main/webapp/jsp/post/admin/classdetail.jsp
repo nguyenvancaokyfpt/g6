@@ -4,7 +4,7 @@
     Author     : msi
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.tss.model.system.Setting"%>
+<%@ page import="com.tss.model.Class"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -98,7 +98,7 @@
                             <!--end::Toolbar-->
                             <!--begin::Post-->
                         <%
-                            Setting sd = (Setting)request.getAttribute("settingdetail");
+                            Class sd = (Class)request.getAttribute("classdetail");
                         %>
                         <!--begin::details View-->
                         <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
@@ -106,11 +106,11 @@
                             <div class="card-header cursor-pointer">
                                 <!--begin::Card title-->
                                 <div class="card-title m-0">
-                                    <h3 class="fw-bolder m-0">Setting Details</h3>
+                                    <h3 class="fw-bolder m-0">Class Details</h3>
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Action-->
-                                <a href="/setting/system/detail?id=<%=sd.getId()%>&action=edit" class="btn btn-primary align-self-center">Edit Setting</a>
+                                <a href="/settingDetail?id=<%=sd.getClass_id()%>&action=edit" class="btn btn-primary align-self-center">Edit Setting</a>
                                 <!--end::Action-->
                             </div>
                             <!--begin::Card header-->
@@ -119,11 +119,11 @@
                                 <!--begin::Row-->
                                 <div class="row mb-7">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">ID</label>
+                                    <label class="col-lg-4 fw-bold text-muted">Code</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-dark"><%=sd.getId()%></span>
+                                        <span class="fw-bolder fs-6"><%=sd.getClass_code()%></span>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -131,11 +131,11 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-7">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Type</label>
+                                    <label class="col-lg-4 fw-bold text-muted">Term</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <span class="fw-bold fs-6"><%=sd.getTypeString()%></span>
+                                        <span class="fw-bold fs-6"><%=sd.getTermString()%></span>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -143,11 +143,11 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-7">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Title</label>
+                                    <label class="col-lg-4 fw-bold text-muted">Trainer</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <span class="fw-bold fs-6"><%=sd.getTitle()%></span>
+                                        <span class="fw-bold fs-6"><%=sd.getTrainerString()%></span>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -155,23 +155,11 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-7">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Value</label>
+                                    <label class="col-lg-4 fw-bold text-muted">Supporter</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 d-flex align-items-center">
-                                        <span class="fw-bolder fs-6 me-2"><%=sd.getValue()%></span>
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Display order</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <a href="#" class="fw-bold fs-6 text-dark text-hover-primary"><%=sd.getDisplay_order()%></a>
+                                        <span class="fw-bolder fs-6"><%=sd.getSupporterString()%></span>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -184,9 +172,9 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
                                         <% if (sd.getStatusString().equals("Active")) { %>
-                                        <span class="badge badge-success"><%=sd.getStatusString()%></span>
+                                        <span class="badge badge-success fw-bolder fs-6"><%=sd.getStatusString()%></span>
                                         <% } else { %>
-                                        <span class="badge badge-danger"><%=sd.getStatusString()%></span>
+                                        <span class="badge badge-danger fw-bolder fs-6"><%=sd.getStatusString()%></span>
                                         <% } %>                                       
                                     </div>
                                     <!--end::Col-->
@@ -199,12 +187,12 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-dark"><%=sd.getDescription()%></span>
+                                        <span class="fw-bolder fs-6"><%=sd.getDescription()%></span>
                                     </div>
                                     <!--end::Col-->
                                 </div>
                                 <div>
-                                    <a class="btn btn-bg-danger" href="/settingList">Back</a>
+                                    <a class="btn btn-bg-danger" href="/classlist">Back</a>
                                 </div>
                                 <!--end::Input group-->
                             </div>

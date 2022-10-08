@@ -73,6 +73,14 @@
         <servlet-name>SettingClassServlet</servlet-name>
         <servlet-class>com.tss.controller.setting.SettingClassServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClassServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -168,6 +176,14 @@
     <servlet-mapping>
         <servlet-name>SettingClassServlet</servlet-name>
         <url-pattern>/setting/class</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassServlet</servlet-name>
+        <url-pattern>/classlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassDetailServlet</servlet-name>
+        <url-pattern>/classdetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
