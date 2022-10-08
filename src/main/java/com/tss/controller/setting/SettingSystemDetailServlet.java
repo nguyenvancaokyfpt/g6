@@ -57,7 +57,7 @@ public class SettingSystemDetailServlet extends HttpServlet {
         id = Integer.parseInt(idString);
         setting = dao.findById(connection, id);
         request.setAttribute("settingdetail", setting);
-        request.setAttribute("settingType", setting.getType_id());
+        request.setAttribute("settingType", setting.getTypeId());
         request.setAttribute("typelist", listType);
         switch (action) {
             case "view":
