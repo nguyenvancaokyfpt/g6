@@ -1,15 +1,15 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import com.tss.dao.SettingDao;
-import com.tss.model.system.Setting;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.SettingDao;
+import com.tss.model.system.Setting;
 
 public class SettingDaoIml implements SettingDao {
 

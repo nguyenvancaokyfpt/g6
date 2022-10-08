@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.TreeSet;
 
+import com.tss.constants.RoleConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserRoleDao;
 import com.tss.dao.impl.UserRoleDaoImpl;
@@ -13,7 +14,6 @@ import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
 import com.tss.model.system.Screen;
 import com.tss.service.RoleService;
-import com.tss.constants.RoleConstants;
 
 public class RoleServiceImpl implements RoleService {
 

@@ -1,8 +1,8 @@
 package com.tss.service;
 
-import com.tss.model.Assignment;
-import com.tss.model.util.DataTablesColumns;
 import java.util.List;
+
+import com.tss.model.Assignment;
 
 public interface AssignmentService {
 

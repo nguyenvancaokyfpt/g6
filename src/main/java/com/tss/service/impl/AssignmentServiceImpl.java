@@ -4,15 +4,14 @@
  */
 package com.tss.service.impl;
 
+import java.sql.Connection;
+import java.util.List;
+
 import com.tss.dao.AssignmentDao;
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.AssignmentDaoImpl;
 import com.tss.model.Assignment;
-import com.tss.model.util.DataTablesColumns;
 import com.tss.service.AssignmentService;
-
-import java.sql.Connection;
-import java.util.List;
 
 /**
  *

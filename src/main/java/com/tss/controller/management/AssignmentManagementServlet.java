@@ -1,10 +1,11 @@
 package com.tss.controller.management;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tss.constants.ActionConstants;
 import com.tss.model.Assignment;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import com.tss.service.AssignmentService;
 import com.tss.service.SubjectService;
 import com.tss.service.impl.AssignmentServiceImpl;
@@ -14,8 +15,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AssignmentManagementServlet extends HttpServlet {
 

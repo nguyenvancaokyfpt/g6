@@ -1,15 +1,15 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.SubjectDao;
-import com.tss.model.Subject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.SubjectDao;
+import com.tss.model.Subject;
 
 public class SubjectDaoImpl implements SubjectDao {
 
