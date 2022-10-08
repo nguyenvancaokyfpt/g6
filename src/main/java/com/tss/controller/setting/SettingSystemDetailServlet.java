@@ -5,7 +5,7 @@
 package com.tss.controller.setting;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.impl.SettingDaoIml;
+import com.tss.dao.impl.SettingDaoImpl;
 import com.tss.model.system.Setting;
 
 import jakarta.servlet.ServletException;
@@ -39,7 +39,7 @@ public class SettingSystemDetailServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
-        SettingDaoIml dao = new SettingDaoIml();
+        SettingDaoImpl dao = new SettingDaoImpl();
 
         String action = "";
         action = request.getParameter("action");

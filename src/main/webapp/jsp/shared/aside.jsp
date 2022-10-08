@@ -248,6 +248,18 @@
                                             </a>
                                         </div>
                                     </c:if>
+                                    <c:if
+                                        test="${permissionHelper.hasPermission(ScreenConstants.SETTING_CLASS)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.SETTING_CLASS ? 'active' : ''}"
+                                                href="${ScreenConstants.SETTING_CLASS.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Class Setting</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:if>

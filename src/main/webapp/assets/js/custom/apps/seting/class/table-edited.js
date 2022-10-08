@@ -88,24 +88,7 @@ var KTUsersList = (function () {
     init: function () {
       o &&
         (o.querySelectorAll("tbody tr").forEach((e) => {
-          const t = e.querySelectorAll("td"),
-            n = t[3].innerText.toLowerCase();
-          let r = 0,
-            o = "minutes";
-          n.includes("yesterday")
-            ? ((r = 1), (o = "days"))
-            : n.includes("mins")
-            ? ((r = parseInt(n.replace(/\D/g, ""))), (o = "minutes"))
-            : n.includes("hours")
-            ? ((r = parseInt(n.replace(/\D/g, ""))), (o = "hours"))
-            : n.includes("days")
-            ? ((r = parseInt(n.replace(/\D/g, ""))), (o = "days"))
-            : n.includes("weeks") &&
-              ((r = parseInt(n.replace(/\D/g, ""))), (o = "weeks"));
-          const c = moment().subtract(r, o).format();
-          t[3].setAttribute("data-order", c);
-          const l = moment(t[5].innerHTML, "DD MMM YYYY, LT").format();
-          t[5].setAttribute("data-order", l);
+          const t = e.querySelectorAll("td");
         }),
         (e = $(o).DataTable({
           searchDelay: 50,
@@ -122,17 +105,18 @@ var KTUsersList = (function () {
             url: window.location.origin + "/setting/class?action=list",
             type: "POST",
             data: {
-              numberOfColumns: 6,
+              numberOfColumns: 7,
             },
           },
           columns: [
-            { data: "id" },
-            { data: "typeId" },
-            { data: "value" },
+            { data: "settingId" },
+            { data: "settingId" },
+            { data: "settingTitle" },
             { data: "title" },
-            { data: "description" },
-            { data: "statusId" },
-            { data: "id" },
+            { data: "value" },
+            { data: "displayOrder" },
+            { data: "statusTitle" },
+            { data: "settingId" },
           ],
           columnDefs: [
             {
@@ -164,15 +148,35 @@ var KTUsersList = (function () {
             },
             {
               targets: 2,
-              title: "TypeId",
+              title: "Setting Type",
               class: "text-center",
-              render: function (data) {
-                return data;
+              render: function (data, type, row) {
+                switch (row.typeId) {
+                  case 31:
+                    return (
+                      `<a href="#" class="badge badge-light-danger fs-7 m-1">` +
+                      data +
+                      `</a>`
+                    );
+                  case 32:
+                    title;
+                    return (
+                      `<a href="#" class="badge badge-light-success fs-7 m-1">` +
+                      data +
+                      `</a>`
+                    );
+                  case 33:
+                    return (
+                      `<a href="#" class="badge badge-light-primary fs-7 m-1">` +
+                      data +
+                      `</a>`
+                    );
+                }
               },
             },
             {
               targets: 3,
-              title: "value",
+              title: "Title",
               class: "text-center",
               render: function (data) {
                 return data;
@@ -180,7 +184,7 @@ var KTUsersList = (function () {
             },
             {
               targets: 4,
-              title: "description",
+              title: "Value",
               class: "text-center",
               render: function (data) {
                 return data;
@@ -188,7 +192,7 @@ var KTUsersList = (function () {
             },
             {
               targets: 5,
-              title: "statusId",
+              title: "Display Order",
               class: "text-center",
               render: function (data) {
                 return data;
@@ -196,7 +200,29 @@ var KTUsersList = (function () {
             },
             {
               targets: 6,
-              title: "statusId",
+              title: "Status",
+              class: "text-center",
+              render: function (data, type, row) {
+                switch (row.statusId) {
+                  case 0:
+                    return (
+                      `<a href="#" class="badge badge-light-danger fs-7 m-1">` +
+                      data +
+                      `</a>`
+                    );
+                  case 1:
+                    return (
+                      `<a href="#" class="badge badge-light-success fs-7 m-1">` +
+                      data +
+                      `</a>`
+                    );
+                }
+              },
+            },
+            {
+              targets: 7,
+              title: "Actions",
+              orderable: false,
               class: "text-center",
               render: function (data) {
                 return data;

@@ -114,6 +114,7 @@ public class SercurityFilter implements Filter {
                 DebugHelper.log("ALLOWED ACCESS TO " + uri);
                 // set the main role to request attribute
                 request.setAttribute(RoleConstants.ROLE.getTitle(), roleNames.first().getTitle().toLowerCase());
+                request.setAttribute("ROLE_CONSTANTS", roleNames.first());
                 filterChain.doFilter(request, response);
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);

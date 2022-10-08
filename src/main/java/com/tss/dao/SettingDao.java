@@ -39,4 +39,6 @@ public interface SettingDao {
     void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
             int status_id, String description) throws SQLException;
 
+    Setting getSettingById(Connection connection, int id) throws SQLException;
+
 }

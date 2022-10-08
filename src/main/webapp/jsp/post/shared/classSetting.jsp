@@ -26,7 +26,7 @@
                         </span>
                         <!--end::Svg Icon-->
                         <input type="text" data-kt-user-table-filter="search"
-                            class="form-control form-control-solid w-250px ps-14" placeholder="Search user" />
+                            class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
                     </div>
                     <!--end::Search-->
                 </div>
@@ -34,6 +34,15 @@
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end me-3" data-kt-user-table-toolbar="base">
+                        <!--begin::Filter-->
+                        <select class="form-select form-select-solid" aria-label="Select example">
+                            <option selected value="1">SE1627</option>
+                            <option value="2">SE1628</option>
+                            <option value="3">SE1629</option>
+                        </select>
+                        <!--end::Filter-->
+                    </div>
                     <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                         <!--begin::Filter-->
                         <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
@@ -104,6 +113,7 @@
                         <!--end::Menu 1-->
                         <!--end::Filter-->
                     </div>
+
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
                     <div class="d-flex justify-content-end align-items-center d-none"
@@ -135,6 +145,7 @@
                             </th>
                             <th class="min-w-15px">ID</th>
                             <th class="min-w-135px">Type</th>
+                            <th class="min-w-125px">Setting Title</th>
                             <th class="min-w-135px">Value</th>
                             <th class="min-w-135px">Display Order</th>
                             <th class="min-w-135px">Status</th>

@@ -12,7 +12,7 @@ import com.tss.dao.SettingDao;
 import com.tss.model.system.ClassSetting;
 import com.tss.model.system.Setting;
 
-public class SettingDaoIml implements SettingDao {
+public class SettingDaoImpl implements SettingDao {
 
     @Override
     public List<Setting> List(Connection connection) throws SQLException {
@@ -284,6 +284,36 @@ public class SettingDaoIml implements SettingDao {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
         }
+    }
+
+    @Override
+    public Setting getSettingById(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Setting setting = null;
+        if (connection != null) {
+            String sql = "SELECT setting_id, type_id, setting_title, setting_value, display_order, setting.status_id, status_title, description from setting inner join status on setting.status_id = status.status_id where setting_id = ?";
+            Object[] params = {id};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    setting = new Setting();
+                    setting.setId(resultSet.getInt("setting_id"));
+                    setting.setDescription(resultSet.getString("description"));
+                    setting.setDisplayOrder(resultSet.getString("display_order"));
+                    setting.setStatusId(resultSet.getInt("status_id"));
+                    setting.setStatusString(resultSet.getString("status_title"));
+                    setting.setTitle(resultSet.getString("setting_title"));
+                    setting.setTypeId(resultSet.getInt("type_id"));
+                    setting.setValue(resultSet.getString("setting_value"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return setting;
     }
 
 

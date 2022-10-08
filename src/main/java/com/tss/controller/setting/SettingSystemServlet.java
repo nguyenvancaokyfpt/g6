@@ -5,7 +5,7 @@
 package com.tss.controller.setting;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.impl.SettingDaoIml;
+import com.tss.dao.impl.SettingDaoImpl;
 import com.tss.model.system.Setting;
 
 import jakarta.servlet.ServletException;
@@ -39,7 +39,7 @@ public class SettingSystemServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
-        SettingDaoIml dao = new SettingDaoIml();
+        SettingDaoImpl dao = new SettingDaoImpl();
         String action = request.getParameter("action");
         if (action == null) {
             action += "";
@@ -99,7 +99,7 @@ public class SettingSystemServlet extends HttpServlet {
                 try {
                     list = dao.CompleteList(connection, (page - 1) * 5, searchword, order, dir);
                 } catch (SQLException ex) {
-                    Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SettingDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 //Retain paging
                 request.setAttribute("page", page);
