@@ -1,10 +1,10 @@
 package com.tss.dao;
 
-import com.tss.model.Subject;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.tss.model.Subject;
 
 public interface SubjectDao {
 
@@ -23,7 +23,8 @@ public interface SubjectDao {
 
     List<Subject> findAll(Connection connection, int start, int length, String search) throws SQLException;
 
-    List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus) throws SQLException;
+    List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus)
+            throws SQLException;
 
     int countAll(Connection connection) throws SQLException;
 

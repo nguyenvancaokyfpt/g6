@@ -65,6 +65,10 @@
         <servlet-name>SettingRolePermissionServlet</servlet-name>
         <servlet-class>com.tss.controller.setting.SettingRolePermissionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AssignmentManagementServlet</servlet-name>
+        <servlet-class>com.tss.controller.management.AssignmentManagementServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -152,6 +156,10 @@
     <servlet-mapping>
         <servlet-name>SettingRolePermissionServlet</servlet-name>
         <url-pattern>/setting/role/permissions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignmentManagementServlet</servlet-name>
+        <url-pattern>/assignment/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

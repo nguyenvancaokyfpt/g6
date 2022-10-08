@@ -22,10 +22,8 @@ import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
 import com.tss.service.PermissionService;
 import com.tss.service.RoleService;
-import com.tss.service.UserService;
 import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.service.impl.RoleServiceImpl;
-import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -123,8 +121,11 @@ public class SercurityFilter implements Filter {
                     request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request,
                             response);
                 } else {
-                    ResponseHelper.sendResponse(response,
-                            new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to " + uri));
+                    // ResponseHelper.sendResponse(response,
+                    // new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
+                    // + uri));
+                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request,
+                            response);
                 }
             }
         }
