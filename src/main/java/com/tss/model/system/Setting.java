@@ -10,6 +10,7 @@ public class Setting {
     private int status_id;
     private String description;
     private String statusString;
+    private String typeString;
 
     public Setting() {
     }
@@ -33,6 +34,18 @@ public class Setting {
         this.status_id = status_id;
         this.description = description;
         this.statusString = statusString;
+    }
+
+    public Setting(int id, int type_id, String title, String value, String display_order, int status_id, String description, String statusString, String typeString) {
+        this.id = id;
+        this.type_id = type_id;
+        this.title = title;
+        this.value = value;
+        this.display_order = display_order;
+        this.status_id = status_id;
+        this.description = description;
+        this.statusString = statusString;
+        this.typeString = typeString;
     }
 
     /**
@@ -141,9 +154,17 @@ public class Setting {
         this.statusString = statusString;
     }
 
+    public String getTypeString() {
+        return typeString;
+    }
+
+    public void setTypeString(String typeString) {
+        this.typeString = typeString;
+    }
+
     @Override
     public String toString() {
-        return "Setting{" + "id=" + id + ", type_id=" + type_id + ", title=" + title + ", value=" + value + ", display_order=" + display_order + ", status_id=" + status_id + ", description=" + description + ", statusString=" + statusString + '}';
+        return "Setting{" + "id=" + id + ", type_id=" + type_id + ", title=" + title + ", value=" + value + ", display_order=" + display_order + ", status_id=" + status_id + ", description=" + description + ", statusString=" + statusString + ", typeString=" + typeString + '}';
     }
 
 }

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +39,7 @@ public class SettingDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
         SettingDaoIml dao = new SettingDaoIml();
+        List<Setting> listType = dao.ListType(connection);
 
         String action = "";
         action = request.getParameter("action");
@@ -53,6 +55,8 @@ public class SettingDetailServlet extends HttpServlet {
         id = Integer.parseInt(idString);
         setting = dao.findById(connection, id);
         request.setAttribute("settingdetail", setting);
+        request.setAttribute("settingType", setting.getType_id());
+        request.setAttribute("typelist", listType);
         switch (action) {
             case "view":
                 request.getRequestDispatcher("jsp/post/admin/settingdetail.jsp").forward(request, response);

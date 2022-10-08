@@ -102,7 +102,7 @@
                                 <div class="card-header cursor-pointer">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Setting Details</h3>
+                                        <h3 class="fw-bolder m-0">Add Setting</h3>
                                     </div>
                                     <!--end::Card title-->
                                     <!--begin::Action-->
@@ -111,57 +111,93 @@
                                 <!--begin::Card header-->
                                 <!--begin::Card body-->
                                 <div class="card-body p-9">
-                                    <!--begin::Row-->
-                                    <!--end::Row-->
+
+                                    <!--begin::Form-->
                                     <form action="/settingList">
                                         <input type="hidden" name="action" value="create">
-                                        <div class="col-xl-10">
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">ID</label>
-                                                <input class="form-control form-control-lg form-control-solid" placeholder="Enter setting id" type="number"  name="setting_id" required value="" min="1">
+                                        <div class="modal-body py-10 px-lg-17" >
+                                            <!--begin::Input group-->
+                                            <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                                <!--begin::Label-->
+                                                <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                    <span class="required">Type</span>
+                                                </label>
+                                                <!--end::Label-->
+                                                <!--begin::Select-->
+                                                <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="type_id" required="true">
+                                                    <option data-select2-id="select2-data-12-dqg1"></option>
+                                                <c:forEach items="${typelist}" var="tl">
+                                                    <option value="${tl.id}" selected="true">${tl.title}</option>
+                                                </c:forEach>                                                                    
+                                            </select>
+                                            <!--end::Select-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-bold mb-2">Title</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input class="form-control form-control-solid" placeholder="Enter setting title" name="title" required="true">
+                                            <!--end::Input-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="row mb-5">
+                                            <!--begin::Col-->
+                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                                <!--begin::Label-->
+                                                <label class="fs-5 fw-bold mb-2">Value</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" class="form-control form-control-solid" placeholder="Enter setting value" name="value">
+                                                <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div></div>
-
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Type</label>
-                                                <input class="form-control form-control-lg form-control-solid" type="number" placeholder="Enter type id" name="type_id" required value="">
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Title</label>
-                                                <input class="form-control form-control-lg form-control-solid" type="text" placeholder="Enter setting title" name="title" required value="">
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Value</label>
-                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="value" placeholder="Enter setting value" autocomplete="off" value="">
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Display order</label>
-                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="display_order" placeholder="Enter display order" autocomplete="off" value="">
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Status</label><br>
-                                                <input class="form-check-input" type="radio" id="html" name="status" value="0">
-                                                <label for="0" class="form-label fw-bolder text-dark fs-6">Inactive</label>
-                                                <input class="form-check-input" type="radio" id="css" name="status" value="1"  checked="true">
-                                                <label for="1" class="form-label fw-bolder text-dark fs-6">Active</label>
-
-
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <div class="col-xl-10">
-                                                <label class="form-label fw-bolder text-dark fs-6">Description</label>
-                                                <textarea class="form-control form-control-lg form-control-solid" name="description" placeholder="Enter description" autocomplete="off"></textarea>
-                                                <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                                <p style="color: red">${error}</p>
-                                            <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
-                                            <button type="submit" class="btn btn-primary">Create setting</button>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                                <!--end::Label-->
+                                                <label class="fs-5 fw-bold mb-2">Display Order</label>
+                                                <!--end::Label-->
+                                                <!--end::Input-->
+                                                <input type="text" class="form-control form-control-solid" placeholder="Enter display order" name="display_order">
+                                                <!--end::Input-->
+                                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                            <!--end::Col-->
                                         </div>
-                                    </form>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="">
+                                            <label class="form-label fw-bolder text-dark fs-6">Status</label><br>
+                                            <input class="form-check-input" type="radio" id="css" name="status_id" value="1"  checked="true">
+                                            <label for="1" class="form-label fw-bolder text-dark fs-6">Active</label>
+                                            <input class="form-check-input" type="radio" id="html" name="status_id" value="0">
+                                            <label for="0" class="form-label fw-bolder text-dark fs-6">Inactive</label>
+                                        </div><br>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-bold mb-2">Description</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea class="form-control form-control-solid" placeholder="Enter description" name="description"></textarea>
+                                            <!--end::Input-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">Create setting</button>
+                                    </div>
 
-
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::details View-->
-                                <!--end::Post-->
-                                <!--begin::Footer-->
+                                </form>
+                                <!--end::Form-->
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::details View-->
+                            <!--end::Post-->
+                            <!--begin::Footer-->
                             <jsp:include page="/jsp/shared/footer.jsp"></jsp:include>
                                 <!--end::Footer-->
                             </div>

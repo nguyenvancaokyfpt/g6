@@ -21,7 +21,9 @@ public enum ScreenConstants {
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
     SUBJECT_DETAILS(11, "Subject Details", "/subject/details"),
     SETTING_LIST(4, "Setting", "/settingList"),
-    SETTING_DETAIL(5, "Setting Detail", "/settingDetail");
+    SETTING_DETAIL(5, "Setting Detail", "/settingDetail"),
+    CLASS_LIST(23, "Class List", "/classlist"),
+    CLASS_DETAIL(24, "Class Detail", "/classdetail");
 
 
     private int id;

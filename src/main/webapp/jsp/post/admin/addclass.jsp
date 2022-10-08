@@ -1,10 +1,9 @@
 <%-- 
-    Document   : listdetail
+    Document   : addsetting
     Created on : Sep 23, 2022, 4:48:51 PM
     Author     : msi
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.tss.model.system.Setting"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -97,100 +96,111 @@
                             </div>
                             <!--end::Toolbar-->
                             <!--begin::Post-->
-                        <%
-                            Setting sd = (Setting)request.getAttribute("settingdetail");
-                        %>
-                        <!--begin::details View-->
-                        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
-                            <!--begin::Card header-->
-                            <div class="card-header cursor-pointer">
-                                <!--begin::Card title-->
-                                <div class="card-title m-0">
-                                    <h3 class="fw-bolder m-0">Setting Details</h3>
+                            <!--begin::details View-->
+                            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                                <!--begin::Card header-->
+                                <div class="card-header cursor-pointer">
+                                    <!--begin::Card title-->
+                                    <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">Add Setting</h3>
+                                    </div>
+                                    <!--end::Card title-->
+                                    <!--begin::Action-->
+                                    <!--end::Action-->
                                 </div>
-                                <!--end::Card title-->
-                                <!--begin::Action-->
-                                <!--end::Action-->
-                            </div>
-                            <!--begin::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body p-9">
-                                <!--begin::Row-->
+                                <!--begin::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body p-9">
 
-                                <!--end::Row-->
-                                <form action="/settingDetail">
-                                    <input type="hidden" name="id" value="<%=sd.getId()%>">
-                                    <input type="hidden" name="action" value="update">
-                                        
-                                    <div class="modal-body py-10 px-lg-17">
-                                        <h3 class="form-label fw-bolder text-dark fs-6">ID: <%=sd.getId()%></h3>
-                                        <label class="form-label fw-bolder text-dark fs-6">Type</label>
-                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
-                                            <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="type_id" required="true">
-                                                <option data-select2-id="select2-data-12-dqg1"></option>
-                                                <c:forEach items="${typelist}" var="tl">
-                                                    <c:choose>
-                                                        <c:when test="${settingType==tl.id}">
-                                                            <option value="${tl.id}" selected>${tl.title}</option>
-                                                        </c:when>    
-                                                        <c:otherwise>
-                                                            <option value="${tl.id}">${tl.title}</option>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>                                                                    
-                                            </select>
-                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
-                                            <label class="form-label fw-bolder text-dark fs-6">Title</label>
-                                            <input class="form-control form-control-lg form-control-solid" type="text"  name="title" required="true" value="<%=sd.getTitle()%>">
-                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                        <div class="row mb-5">
-                                            <!--begin::Col-->
-                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Form-->
+                                    <form action="/classlist">
+                                        <input type="hidden" name="action" value="create">
+                                        <div class="modal-body py-10 px-lg-17" >
+                                            <!--begin::Input group-->
+                                            <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
                                                 <!--begin::Label-->
-                                                <label class="fs-5 fw-bold mb-2">Value</label>
+                                                <label class="required fs-5 fw-bold mb-2">Class Code</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="value" autocomplete="off" value="<%=sd.getValue()%>">
+                                                <input class="form-control form-control-solid" placeholder="Enter setting title" name="class_code" required="true">
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                                <!--end::Label-->
-                                                <label class="fs-5 fw-bold mb-2">Display Order</label>
-                                                <!--end::Label-->
-                                                <!--end::Input-->
-                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplay_order()%>">
-                                                <!--end::Input-->
-                                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
+                                            <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Term</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select term" aria-hidden="true" name="term_id" required="true">
+                                                <option data-select2-id="select2-data-12-dqg1"></option>
+                                                <c:forEach items="${termList}" var="tl">
+                                                    <option value="${tl.id}" selected="true">${tl.title}</option>
+                                                </c:forEach>                                                                    
+                                            </select>
+                                            <!--end::Select-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Trainer</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select trainer" aria-hidden="true" name="trainer_id" required="true">
+                                                <option data-select2-id="select2-data-12-dqg1"></option>
+                                                <c:forEach items="${trainerList}" var="trl">
+                                                    <option value="${trl.trainer_id}" selected="true">${trl.trainerString}</option>
+                                                </c:forEach>                                                                    
+                                            </select>
+                                            <!--end::Select-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Supporter</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select supporter" aria-hidden="true" name="supporter_id" required="true">
+                                                <option data-select2-id="select2-data-12-dqg1"></option>
+                                                <c:forEach items="${supporterList}" var="sl">
+                                                    <option value="${sl.trainer_id}" selected="true">${sl.trainerString}</option>
+                                                </c:forEach>                                                                    
+                                            </select>
+                                            <!--end::Select-->
+                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
                                         <div class="">
                                             <label class="form-label fw-bolder text-dark fs-6">Status</label><br>
-                                            <% if (sd.getStatusString().equals("Active")) { %>
-                                            <input class="form-check-input" type="radio" id="html" name="status" value="0">
-                                            <label for="0" class="form-label fw-bolder text-dark fs-6">Inactive</label>
-                                            <input class="form-check-input" type="radio" id="css" name="status" value="1" checked="true">
+                                            <input class="form-check-input" type="radio" id="css" name="status_id" value="1"  checked="true">
                                             <label for="1" class="form-label fw-bolder text-dark fs-6">Active</label>
-                                            <% } else { %>
-                                            <input class="form-check-input" type="radio" id="html" name="status" value="0" checked="true">
+                                            <input class="form-check-input" type="radio" id="html" name="status_id" value="0">
                                             <label for="0" class="form-label fw-bolder text-dark fs-6">Inactive</label>
-                                            <input class="form-check-input" type="radio" id="css" name="status" value="1">
-                                            <label for="1" class="form-label fw-bolder text-dark fs-6">Active</label>
-                                            <% } %> 
-
-                                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                        </div><br>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
-                                            <label class="form-label fw-bolder text-dark fs-6">Description</label>
-                                            <textarea class="form-control form-control-lg form-control-solid" name="description" autocomplete="off"><%=sd.getDescription()%></textarea>
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-bold mb-2">Description</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea class="form-control form-control-solid" placeholder="Enter description" name="description"></textarea>
+                                            <!--end::Input-->
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                        <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
-                                        <button type="submit" class="btn btn-primary">Confirm</button>
-                                    </div>                                
+                                        <!--end::Input group-->
+                                        <a class="btn btn-bg-danger" href="/classlist">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">Create Class</button>
+                                    </div>
                                 </form>
-
+                                <!--end::Form-->
                                 <!--end::Card body-->
                             </div>
                             <!--end::details View-->
@@ -249,5 +259,3 @@
                 </body>
                 <!--end::Body-->
                 </html>
-
-
