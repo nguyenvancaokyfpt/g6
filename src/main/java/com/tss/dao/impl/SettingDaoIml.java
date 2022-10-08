@@ -1,15 +1,16 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import com.tss.dao.SettingDao;
-import com.tss.model.system.Setting;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.SettingDao;
+import com.tss.model.system.ClassSetting;
+import com.tss.model.system.Setting;
 
 public class SettingDaoIml implements SettingDao {
 
@@ -63,10 +64,10 @@ public class SettingDaoIml implements SettingDao {
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     settingDetail.setId(resultSet.getInt(1));
-                    settingDetail.setType_id(resultSet.getInt(2));
+                    settingDetail.setTypeId(resultSet.getInt(2));
                     settingDetail.setTitle(resultSet.getString(3));
                     settingDetail.setValue(resultSet.getString(4));
-                    settingDetail.setDisplay_order(resultSet.getString(5));
+                    settingDetail.setDisplayOrder(resultSet.getString(5));
                     settingDetail.setStatusString(resultSet.getString(6));
                     settingDetail.setDescription(resultSet.getString(7));
                 }
@@ -173,7 +174,8 @@ public class SettingDaoIml implements SettingDao {
     }
 
     @Override
-    public List<Setting> CompleteList(Connection connection, int offset, String searchword, String order, String dir) throws SQLException {
+    public List<Setting> CompleteList(Connection connection, int offset, String searchword, String order, String dir)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Setting> settingList = new ArrayList<>();
@@ -230,7 +232,8 @@ public class SettingDaoIml implements SettingDao {
     }
 
     @Override
-    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
+    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
+            int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -256,7 +259,8 @@ public class SettingDaoIml implements SettingDao {
     }
 
     @Override
-    public void updateSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
+    public void updateSetting(Connection connection, int id, int type_id, String title, String value,
+            String display_order, int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -281,5 +285,8 @@ public class SettingDaoIml implements SettingDao {
             }
         }
     }
+
+
+
 
 }

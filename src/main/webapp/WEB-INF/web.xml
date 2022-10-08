@@ -62,8 +62,16 @@
         <servlet-class>com.tss.controller.UploadFileServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingRolePermission</servlet-name>
-        <servlet-class>com.tss.controller.setting.SettingRolePermission</servlet-class>
+        <servlet-name>SettingRolePermissionServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SettingRolePermissionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AssignmentManagementServlet</servlet-name>
+        <servlet-class>com.tss.controller.management.AssignmentManagementServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SettingClassServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SettingClassServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MilestoneServlet</servlet-name>
@@ -154,10 +162,19 @@
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingRolePermission</servlet-name>
+        <servlet-name>SettingRolePermissionServlet</servlet-name>
         <url-pattern>/setting/role/permissions</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+       
+        <servlet-name>AssignmentManagementServlet</servlet-name>
+        <url-pattern>/assignment/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingClassServlet</servlet-name>
+        <url-pattern>/setting/class</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
         <servlet-name>MilestoneServlet</servlet-name>
         <url-pattern>/milestone/list</url-pattern>
     </servlet-mapping>

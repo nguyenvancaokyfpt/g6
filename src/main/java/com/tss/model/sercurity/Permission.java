@@ -13,7 +13,8 @@ public class Permission {
     public Permission() {
     }
 
-    public Permission(int screenId, int settingId, boolean canGet, boolean canDelete, boolean canCreate, boolean canUpdate) {
+    public Permission(int screenId, int settingId, boolean canGet, boolean canDelete, boolean canCreate,
+            boolean canUpdate) {
         this.screenId = screenId;
         this.settingId = settingId;
         this.canGet = canGet;
@@ -108,6 +109,11 @@ public class Permission {
 
     public ScreenConstants getScreen() {
         return ScreenConstants.getScreenById(screenId);
+    }
+
+    // Get screen title
+    public String getScreenTitle() {
+        return getScreen().getTitle();
     }
 
 }

@@ -531,7 +531,7 @@ public class UserDaoImpl implements UserDao {
         List<User> userList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status .status_value, user_role.setting_id AS role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE (full_name LIKE ? OR email LIKE ?) AND( user_role.setting_id LIKE ? AND user.status_id LIKE ? ) ORDER BY "
-            + columnName + " " + orderDir + " LIMIT ?, ?";
+                    + columnName + " " + orderDir + " LIMIT ?, ?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + roleFilter + "%",
                     "%" + statusFilter + "%", start, length };
             try {

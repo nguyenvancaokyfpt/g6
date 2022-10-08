@@ -1,14 +1,17 @@
 package com.tss.constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum RoleConstants {
         ROLE(1, "ROLE"),
 
         ADMIN(21, "ADMIN"),
         MANAGER(22, "MANAGER"),
-        EXPERT(23, "EXPERT"),
+        // EXPERT(23, "EXPERT"),
         TRAINER(24, "TRAINER"),
         SUPPORTER(25, "SUPPORTER"),
-        STUDENT(26, "STUDENT");
+        STUDENT(26, "TRAINEE");
 
         private int id;
         private String title;
@@ -35,12 +38,22 @@ public enum RoleConstants {
                 return null;
         }
 
-        public static String getRoleTitle(int id2) {
+        public static String getRoleTitle(int id) {
                 for (RoleConstants role : RoleConstants.values()) {
-                        if (role.getId() == id2) {
+                        if (role.getId() == id) {
                                 return role.getTitle();
                         }
                 }
                 return null;
+        }
+
+        public static List<RoleConstants> getAllRole() {
+                List<RoleConstants> roleList = new ArrayList<>();
+                for (RoleConstants role : RoleConstants.values()) {
+                        if (role.getId() != 1) {
+                                roleList.add(role);
+                        }
+                }
+                return roleList;
         }
 }

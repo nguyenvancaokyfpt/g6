@@ -38,7 +38,8 @@ public class BaseDao {
         return connection;
     }
 
-    public static ResultSet execute(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet, String sql, Object[] params) throws SQLException {
+    public static ResultSet execute(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet,
+            String sql, Object[] params) throws SQLException {
         preparedStatement = connection.prepareStatement(sql);
 
         for (int i = 0; i < params.length; i++) {
@@ -49,7 +50,8 @@ public class BaseDao {
 
     }
 
-    public static int execute(Connection connection, PreparedStatement preparedStatement, String sql, Object[] params) throws SQLException {
+    public static int execute(Connection connection, PreparedStatement preparedStatement, String sql, Object[] params)
+            throws SQLException {
         preparedStatement = connection.prepareStatement(sql);
 
         for (int i = 0; i < params.length; i++) {
@@ -60,7 +62,8 @@ public class BaseDao {
 
     }
 
-    public static boolean closeResource(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+    public static boolean closeResource(Connection connection, PreparedStatement preparedStatement,
+            ResultSet resultSet) {
         boolean flag = true;
 
         if (resultSet != null) {

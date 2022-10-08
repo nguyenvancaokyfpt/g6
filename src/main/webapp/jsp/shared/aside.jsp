@@ -256,12 +256,8 @@
                                                 viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                     <rect x="0" y="0" width="24" height="24" />
-                                                    <path
-                                                        d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z"
-                                                        fill="#000000" />
-                                                    <path
-                                                        d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z"
-                                                        fill="#000000" opacity="0.3" />
+                                                    <path opacity="0.3" d="M11.8 5.2L17.7 8.6V15.4L11.8 18.8L5.90001 15.4V8.6L11.8 5.2ZM11.8 2C11.5 2 11.2 2.1 11 2.2L3.8 6.4C3.3 6.7 3 7.3 3 7.9V16.2C3 16.8 3.3 17.4 3.8 17.7L11 21.9C11.3 22 11.5 22.1 11.8 22.1C12.1 22.1 12.4 22 12.6 21.9L19.8 17.7C20.3 17.4 20.6 16.8 20.6 16.2V7.9C20.6 7.3 20.3 6.7 19.8 6.4L12.6 2.2C12.4 2.1 12.1 2 11.8 2Z" fill="currentColor"/>
+                                                    <path d="M11.8 8.69995L8.90001 10.3V13.7L11.8 15.3L14.7 13.7V10.3L11.8 8.69995Z" fill="currentColor"/>
                                                 </g>
                                             </svg>
                                         </span>
@@ -282,7 +278,8 @@
                                             </a>
                                         </div>
                                     </c:if>
-                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
+                                    <c:if
+                                        test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
                                         <div class="menu-item">
                                             <a class="menu-link ${screen == ScreenConstants.SETTING_ROLE_PERMISSIONS ? 'active' : ''}"
                                                 href="${ScreenConstants.SETTING_ROLE_PERMISSIONS.getPath()}">
@@ -297,6 +294,53 @@
                             </div>
                         </c:if>
                         <!-- End Setting -->
+
+                        <c:if test="${permissionHelper.hasGroupPermissions('/assignment')}">
+                            <!-- Assignment -->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion ${screen.getParentPath() == '/assignment' ? 'show' : ''}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <path
+                                                        d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                                    <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1">
+                                                    </rect>
+                                                    <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1">
+                                                    </rect>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Assignment</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_SYSTEM_LIST)}">
+                                        <div class="menu-item ">
+                                            <a class="menu-link ${screen == ScreenConstants.ASSIGNNMENT_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.ASSIGNNMENT_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Assignment List</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <!-- End Assignment -->
+                        </c:if>
+
+
                     </div>
 
                     <!--end::Menu-->

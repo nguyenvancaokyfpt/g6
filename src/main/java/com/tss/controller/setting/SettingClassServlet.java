@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller.management;
+package com.tss.controller.setting;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +18,11 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.system.ClassSetting;
 import com.tss.model.util.DataTablesColumns;
+import com.tss.service.ClassSettingService;
 import com.tss.service.UserService;
+import com.tss.service.impl.ClassSettingServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
@@ -31,13 +34,13 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-public class UserManagementServlet extends HttpServlet {
+public class SettingClassServlet extends HttpServlet {
 
-    private UserService userService;
+    private ClassSettingService classSettingService;
 
     @Override
     public void init() throws ServletException {
-        userService = new UserServiceImpl();
+        classSettingService = new ClassSettingServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -71,31 +74,14 @@ public class UserManagementServlet extends HttpServlet {
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JSONObject jsonObject = RequestHelper.getJsonData(request);
-        User user = userService.findById(jsonObject.getInteger("user_id"));
-        // response
-        if (user != null) {
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.OK, "Get user successfully", user));
-        } else {
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.NOT_FOUND, "User not found"));
-        }
+
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id = Integer.parseInt(request.getParameter("userID"));
-        User u = userService.findById(id);
-        if (u.getStatusId() == 1) {
-            u.setStatusId(0);
-        } else {
-            u.setStatusId(1);
-        }
-        userService.modify(u);
-        response.sendRedirect("/management/user");
+
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
@@ -110,7 +96,7 @@ public class UserManagementServlet extends HttpServlet {
         int numberofcolumn = -1;
         int orderColumn = 1;
         String orderDir = "asc";
-        String roleFilter = "";
+        String typeFilter = "";
         String statusFilter = "";
         List<DataTablesColumns> columns = new ArrayList<DataTablesColumns>();
         try {
@@ -133,8 +119,8 @@ public class UserManagementServlet extends HttpServlet {
                             jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
                 }
                 for (DataTablesColumns dataTablesColumns : columns) {
-                    if (dataTablesColumns.getData().equals("role")) {
-                        roleFilter = dataTablesColumns.getSearchValue();
+                    if (dataTablesColumns.getData().equals("type_id")) {
+                        typeFilter = dataTablesColumns.getSearchValue();
                     }
                     if (dataTablesColumns.getData().equals("status_id")) {
                         statusFilter = dataTablesColumns.getSearchValue();
@@ -144,28 +130,25 @@ public class UserManagementServlet extends HttpServlet {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir, roleFilter,
+        List<ClassSetting> list = classSettingService.findAll(start, length, search, columns, orderColumn, orderDir, typeFilter,
                 statusFilter);
-        int recordsTotal = userService.countAll();
-        int recordsFiltered = userService.countAll(search, roleFilter, statusFilter);
-        // response
-        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
+        int recordsTotal = classSettingService.countAll();
+        int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter);
+        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setAttribute("jspPath", "shared/user.jsp");
+        request.setAttribute("jspPath", "shared/classSetting.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/users/list/table-edited.js",
-                "apps/user-management/users/list/export-users.js"));
+                "apps/seting/class/table-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.USER_MANAGEMENT));
+                ScreenConstants.SETTING_CLASS));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

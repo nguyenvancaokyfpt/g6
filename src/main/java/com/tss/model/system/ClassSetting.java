@@ -1,6 +1,6 @@
 package com.tss.model.system;
 
-public class Setting {
+public class ClassSetting {
 
     private int id;
     private int typeId;
@@ -9,13 +9,13 @@ public class Setting {
     private String displayOrder;
     private int statusId;
     private String description;
-    private String statusString;
+    private int classId;
 
-    public Setting() {
+    public ClassSetting() {
     }
 
-    public Setting(int id, int typeId, String title, String value, String displayOrder, int statusId,
-            String description) {
+    public ClassSetting(int id, int typeId, String title, String value, String displayOrder, int statusId,
+            String description, int classId) {
         this.id = id;
         this.typeId = typeId;
         this.title = title;
@@ -23,19 +23,7 @@ public class Setting {
         this.displayOrder = displayOrder;
         this.statusId = statusId;
         this.description = description;
-    }
-
-    public Setting(int id, int typeId, String title, String value, String displayOrder, int statusId,
-            String description,
-            String statusString) {
-        this.id = id;
-        this.typeId = typeId;
-        this.title = title;
-        this.value = value;
-        this.displayOrder = displayOrder;
-        this.statusId = statusId;
-        this.description = description;
-        this.statusString = statusString;
+        this.classId = classId;
     }
 
     /**
@@ -137,17 +125,17 @@ public class Setting {
     }
 
     /**
-     * @return String return the statusString
+     * @return int return the classId
      */
-    public String getStatusString() {
-        return statusString;
+    public int getClassId() {
+        return classId;
     }
 
     /**
-     * @param statusString the statusString to set
+     * @param classId the classId to set
      */
-    public void setStatusString(String statusString) {
-        this.statusString = statusString;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
 }
