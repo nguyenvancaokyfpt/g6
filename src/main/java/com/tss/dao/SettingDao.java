@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.tss.model.User;
+import com.tss.model.system.ClassSetting;
 import com.tss.model.system.Setting;
 
 public interface SettingDao {
@@ -36,4 +38,5 @@ public interface SettingDao {
 
     void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
             int status_id, String description) throws SQLException;
+
 }
