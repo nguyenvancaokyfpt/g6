@@ -15,17 +15,18 @@ public enum ScreenConstants {
 
     // Private screen
     USER_MANAGEMENT(1, "User Management", "/management/user"),
-    USER_PROFILE(2, "Profile", "/profile"),
+    USER_PROFILE(2, "User Profile", "/profile"),
     USER_DASHBOARD(3, "Dashboard", "/dashboard"),
     SETTING_SYSTEM_LIST(4, "Setting System", "/setting/system"),
     SETTING_SYSTEM_DETAIL(5, "Setting Detail", "/setting/system/detail"),
     USER_DETAILS_MANAGEMENT(6, "User Detail", "/management/user/detail"),
-    WEB_CONTACT_LIST(7, "Web Contact", "/webcontact/list"),
+    WEB_CONTACT_LIST(7, "Web Contact List", "/webcontact/list"),
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
     SUBJECT_DETAILS(11, "Subject Details", "/subject/detail"),
     SETTING_ROLE_PERMISSIONS(12, "Setting Role Permissions", "/setting/role/permissions"),
     SUBJECT_SETTING(20, "Subject Setting", "/subject/setting"),
     ASSIGNNMENT_LIST(22, "Assignment List", "/assignment/list");
+    
     
 
 
@@ -52,7 +53,8 @@ public enum ScreenConstants {
     }
 
     public String getParentPath() {
-        return path.substring(0, path.lastIndexOf("/"));
+        String[] paths = path.split("/");
+        return "/" + paths[1];
     }
 
     public static ScreenConstants getScreenById(int id) {
@@ -86,6 +88,25 @@ public enum ScreenConstants {
             }
         }
         return publicScreen;
+    }
+
+    // all private screen
+    public static ScreenConstants[] privateScreen() {
+        int count = 0;
+        for (ScreenConstants screen : ScreenConstants.values()) {
+            if (screen.getId() < 1000) {
+                count++;
+            }
+        }
+        ScreenConstants[] privateScreen = new ScreenConstants[count];
+        int index = 0;
+        for (ScreenConstants screen : ScreenConstants.values()) {
+            if (screen.getId() < 1000) {
+                privateScreen[index] = screen;
+                index++;
+            }
+        }
+        return privateScreen;
     }
 
     // find screen by path

@@ -11,7 +11,6 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
 import com.tss.helper.DebugHelper;
@@ -125,7 +124,9 @@ public class UserManagementServlet extends HttpServlet {
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i <= numberofcolumn; i++) {
-                    columns.add(new DataTablesColumns(DTOHelper.convertToSnakeCase(jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
+                    columns.add(new DataTablesColumns(
+                            DTOHelper.convertToSnakeCase(
+                                    jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
                             jsonObject.getJSONArray("columns[" + i + "][name]").getString(0),
                             jsonObject.getJSONArray("columns[" + i + "][searchable]").getBoolean(0),
                             jsonObject.getJSONArray("columns[" + i + "][orderable]").getBoolean(0),
@@ -144,7 +145,8 @@ public class UserManagementServlet extends HttpServlet {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir, roleFilter, statusFilter);
+        List<User> users = userService.findAll(start, length, search, columns, orderColumn, orderDir, roleFilter,
+                statusFilter);
         int recordsTotal = userService.countAll();
         int recordsFiltered = userService.countAll(search, roleFilter, statusFilter);
         // response
