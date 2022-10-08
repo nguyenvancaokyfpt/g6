@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2022 at 10:04 AM
+-- Generation Time: Oct 08, 2022 at 02:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -84,6 +84,23 @@ CREATE TABLE `class` (
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
+(1, 'SE1627', 1, 23, 1, 1, 'SWP'),
+(2, 'SE1628', 1, 23, 2, 1, 'SWP'),
+(3, 'SE1629', 1, 23, 2, 1, 'SWP'),
+(4, 'SE1630', 1, 23, 3, 1, 'SWP'),
+(5, 'SE1631', 1, 23, 4, 1, 'SWP'),
+(6, 'SE1632', 1, 23, 5, 1, 'SWP'),
+(7, 'SE1633', 1, 23, 6, 1, 'SWP'),
+(8, 'SE1634', 1, 23, 7, 1, 'SWP'),
+(9, 'SE1635', 1, 23, 8, 1, 'SWP'),
+(10, 'SE1636', 1, 23, 9, 1, 'SWP'),
+(11, 'SE1637', 1, 23, 10, 1, 'SWP');
+
 -- --------------------------------------------------------
 
 --
@@ -114,6 +131,13 @@ CREATE TABLE `class_setting` (
   `status_id` int(11) NOT NULL,
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `class_setting`
+--
+
+INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `class_id`, `status_id`, `description`) VALUES
+(2, 31, 'Setting Test', 'oke', 'ASC', 1, 1, 'a');
 
 -- --------------------------------------------------------
 
@@ -338,7 +362,7 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (7, 24, 0, 0, 0, 0),
 (7, 25, 1, 1, 1, 1),
 (7, 26, 0, 0, 0, 0),
-(10, 21, 1, 0, 0, 0),
+(10, 21, 1, 1, 1, 1),
 (10, 22, 0, 0, 0, 0),
 (10, 23, 0, 0, 0, 0),
 (10, 24, 0, 0, 0, 0),
@@ -353,6 +377,7 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (12, 23, 0, 0, 0, 0),
 (12, 24, 0, 0, 0, 0),
 (12, 26, 0, 0, 0, 0),
+(13, 21, 1, 1, 1, 1),
 (20, 21, 1, 1, 1, 1),
 (22, 21, 1, 1, 1, 1);
 
@@ -419,6 +444,7 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (10, 'Subject List', '/subject/list'),
 (11, 'Subject Details', '/subject/detail'),
 (12, 'Setting Role Permissions', '/setting/role/permissions'),
+(13, 'Setting Class', '/setting/class'),
 (20, 'Subject Setting', '/subject/setting'),
 (22, 'Assignment List', '/assignment/list');
 
@@ -444,12 +470,16 @@ CREATE TABLE `setting` (
 
 INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `status_id`, `description`) VALUES
 (1, 0, 'User Role', NULL, NULL, 1, NULL),
+(2, 0, 'Class Setting Type', '', NULL, 1, NULL),
 (21, 1, 'ADMIN', NULL, NULL, 1, NULL),
 (22, 1, 'MANAGER', NULL, NULL, 1, NULL),
 (23, 1, 'EXPERT', NULL, NULL, 1, NULL),
 (24, 1, 'TRAINER', NULL, NULL, 1, NULL),
 (25, 1, 'SUPPORTER', NULL, NULL, 1, NULL),
-(26, 1, 'TRAINEE', NULL, NULL, 1, NULL);
+(26, 1, 'TRAINEE', NULL, NULL, 1, NULL),
+(31, 2, 'System', NULL, NULL, 1, 'System config for Class Setting'),
+(32, 2, 'Permission', NULL, NULL, 1, 'Permission config for Class Setting'),
+(33, 2, 'Information', NULL, NULL, 1, 'Information config for Class Setting');
 
 -- --------------------------------------------------------
 
@@ -677,6 +707,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (19, 26),
 (21, 26),
 (22, 24),
+(23, 24),
 (25, 26),
 (27, 25),
 (29, 24),
@@ -997,7 +1028,7 @@ ALTER TABLE `assignment`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `class_lesson`
@@ -1009,7 +1040,7 @@ ALTER TABLE `class_lesson`
 -- AUTO_INCREMENT for table `class_setting`
 --
 ALTER TABLE `class_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `client`
