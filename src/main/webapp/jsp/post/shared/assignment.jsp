@@ -234,9 +234,13 @@
                                 </td>
                                 <!--begin::Action=-->
                                 <td>
-                                    <button type="button" class="btn btn-secondary">
+                                    <form action="/assignment/list?action=get" method="post">
+                                        <input name="assignId" type="text" class="d-none" value="${a.assId}">
+                                        <button type="submit" class="btn btn-secondary">
                                         Details
                                     </button>
+                                    </form>
+                                    
                                 </td>
                                 <!--end::Action=-->
                             </tr>
