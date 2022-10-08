@@ -435,6 +435,7 @@
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody class="text-gray-600 fw-bold">
+                        
                     </tbody>
                     <!--end::Table body-->
                 </table>
