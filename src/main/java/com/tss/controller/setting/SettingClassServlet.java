@@ -13,6 +13,7 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Classroom;
@@ -96,6 +97,7 @@ public class SettingClassServlet extends HttpServlet {
         String search = "";
         int draw = 1;
         int numberofcolumn = -1;
+        int classId = -1;
         int orderColumn = 1;
         String orderDir = "asc";
         String typeFilter = "";
@@ -108,6 +110,7 @@ public class SettingClassServlet extends HttpServlet {
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
                 numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
+                classId = jsonObject.getJSONArray("classId").getInteger(0);
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i <= numberofcolumn; i++) {
@@ -134,9 +137,9 @@ public class SettingClassServlet extends HttpServlet {
         }
         List<ClassSetting> list = classSettingService.findAll(start, length, search, columns, orderColumn, orderDir,
                 typeFilter,
-                statusFilter);
-        int recordsTotal = classSettingService.countAll();
-        int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter);
+                statusFilter, classId);
+        int recordsTotal = classSettingService.countAll(classId);
+        int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter, classId);
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
     }
 

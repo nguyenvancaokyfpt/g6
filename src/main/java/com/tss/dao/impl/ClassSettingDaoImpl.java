@@ -16,15 +16,16 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
 
     @Override
     public List<ClassSetting> findAll(Connection connection, int start, int length, String search, String columnName,
-            String orderDir, String typeFilter, String statusFilter) throws SQLException {
+            String orderDir, String typeFilter, String statusFilter, int classId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassSetting> settingList = new ArrayList<ClassSetting>();
         if (connection != null) {
-            String sql = "SELECT setting_id,type_id,setting_title,setting_value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) ORDER BY "
+            String sql = "SELECT setting_id,type_id,setting_title,setting_value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) AND class_id = ? ORDER BY "
                     + columnName + " " + orderDir + " LIMIT ?,?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
-                    "%" + statusFilter + "%", start, length };
+                    "%" + statusFilter + "%",
+                    classId, start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -37,6 +38,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
                     setting.setStatusId(resultSet.getInt("status_id"));
                     setting.setDisplayOrder(resultSet.getString("display_order"));
                     setting.setStatusTitle(resultSet.getString("status_title"));
+                    setting.setClassId(resultSet.getInt("class_id"));
                     settingList.add(setting);
                 }
             } catch (SQLException e) {
@@ -50,13 +52,13 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
     }
 
     @Override
-    public int countAll(Connection connection) throws SQLException {
+    public int countAll(Connection connection, int classId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(*) AS count FROM class_setting";
-            Object[] params = {};
+            String sql = "SELECT COUNT(*) AS count FROM class_setting WHERE class_id = ?";
+            Object[] params = { classId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -72,15 +74,15 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
     }
 
     @Override
-    public int countAll(Connection connection, String search, String typeFilter, String statusFilter)
+    public int countAll(Connection connection, String search, String typeFilter, String statusFilter, int classId)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(*) AS count FROM class_setting WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND status_id LIKE ? )";
+            String sql = "SELECT COUNT(*) AS count FROM class_setting WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND status_id LIKE ? ) AND class_id = ?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
-                    "%" + statusFilter + "%" };
+                    "%" + statusFilter + "%" , classId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {

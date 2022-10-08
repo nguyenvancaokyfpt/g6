@@ -8,7 +8,7 @@ import com.tss.model.sercurity.Permission;
 public class RolePermissionMessage {
 
     private int roleId;
-    private List<Permission> permissions = new ArrayList<Permission>();
+    private List<Permission> permissions = new ArrayList<>();
 
     public RolePermissionMessage() {
     }

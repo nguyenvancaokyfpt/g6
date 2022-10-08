@@ -13,6 +13,7 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.payload.ResponseMessage;
@@ -91,7 +92,6 @@ public class SettingRolePermissionServlet extends HttpServlet {
                 }
                 rolePermissionMessage.setPermissions(nPermissions);
             }
-
             ResponseHelper.sendResponse(response,
                     new ResponseMessage(HttpStatusCodeConstants.OK, "Succsess", rolePermissionMessage));
         } catch (Exception e) {

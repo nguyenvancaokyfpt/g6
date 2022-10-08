@@ -1,6 +1,7 @@
 "use strict";
 var KTUsersList = (function () {
   var e,
+    classId,
     t,
     n,
     r,
@@ -104,13 +105,17 @@ var KTUsersList = (function () {
           ajax: {
             url: window.location.origin + "/setting/class?action=list",
             type: "POST",
-            data: {
-              numberOfColumns: 7,
+            data: function (d) {
+              return $.extend({}, d, {
+                numberOfColumns: 8,
+                classId: $("#classId").val(),
+              });
             },
           },
           columns: [
             { data: "settingId" },
             { data: "settingId" },
+            { data: "classId" },
             { data: "settingTitle" },
             { data: "title" },
             { data: "value" },
@@ -148,6 +153,14 @@ var KTUsersList = (function () {
             },
             {
               targets: 2,
+              title: "Class ID",
+              class: "text-center",
+              render: function (data) {
+                return data;
+              },
+            },
+            {
+              targets: 3,
               title: "Setting Type",
               class: "text-center",
               render: function (data, type, row) {
@@ -159,7 +172,6 @@ var KTUsersList = (function () {
                       `</a>`
                     );
                   case 32:
-                    title;
                     return (
                       `<a href="#" class="badge badge-light-success fs-7 m-1">` +
                       data +
@@ -175,7 +187,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 3,
+              targets: 4,
               title: "Title",
               class: "text-center",
               render: function (data) {
@@ -183,7 +195,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 4,
+              targets: 5,
               title: "Value",
               class: "text-center",
               render: function (data) {
@@ -191,7 +203,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 5,
+              targets: 6,
               title: "Display Order",
               class: "text-center",
               render: function (data) {
@@ -199,7 +211,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 6,
+              targets: 7,
               title: "Status",
               class: "text-center",
               render: function (data, type, row) {
@@ -220,7 +232,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 7,
+              targets: 8,
               title: "Actions",
               orderable: false,
               class: "text-center",
@@ -301,22 +313,30 @@ var KTUsersList = (function () {
           const t = document.querySelector(
               '[data-kt-user-table-filter="form"]'
             ),
+            k = document.querySelector('[data-kt-user-table-filter="class"]'),
             n = t.querySelector('[data-kt-user-table-filter="filter"]'),
             r = t.querySelectorAll("select");
-          n.addEventListener("click", function () {
-            var role = -1;
-            var status = -1;
-            r.forEach((e, n) => {
-              var filter = e.getAttribute("data-kt-user-table-filter");
-              if (filter == "role") {
-                role = e.value;
-              }
-              if (filter == "status") {
-                status = e.value;
-              }
-            }),
-              e.columns(2).search(role).columns(7).search(status).draw();
-          });
+          k.addEventListener("change", function (t) {
+            classId = t.target.value;
+            console.log($("#classId").val());
+            // reload ajax
+            e.ajax.reload();
+            e.draw();
+          }),
+            n.addEventListener("click", function () {
+              var typeId = -1;
+              var status = -1;
+              r.forEach((e, n) => {
+                var filter = e.getAttribute("data-kt-user-table-filter");
+                if (filter == "type") {
+                  typeId = e.value;
+                }
+                if (filter == "status") {
+                  status = e.value;
+                }
+              }),
+                e.columns(2).search(typeId).columns(7).search(status).draw();
+            });
         })());
     },
   };

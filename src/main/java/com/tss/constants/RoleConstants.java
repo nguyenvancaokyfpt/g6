@@ -8,10 +8,10 @@ public enum RoleConstants {
 
         ADMIN(21, "ADMIN"),
         MANAGER(22, "MANAGER"),
-        // EXPERT(23, "EXPERT"),
+        EXPERT(23, "EXPERT"),
         TRAINER(24, "TRAINER"),
         SUPPORTER(25, "SUPPORTER"),
-        STUDENT(26, "TRAINEE");
+        STUDENT(26, "STUDENT");
 
         private int id;
         private String title;
