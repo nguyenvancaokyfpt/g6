@@ -21,7 +21,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
         ResultSet resultSet = null;
         List<ClassSetting> settingList = new ArrayList<ClassSetting>();
         if (connection != null) {
-            String sql = "SELECT * FROM class_setting WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND status_id LIKE ? ) ORDER BY "
+            String sql = "SELECT setting_id,type_id,setting_title,setting_value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) ORDER BY "
                     + columnName + " " + orderDir + " LIMIT ?,?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
                     "%" + statusFilter + "%", start, length };
@@ -29,12 +29,14 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
                     ClassSetting setting = new ClassSetting();
-                    setting.setId(resultSet.getInt("setting_id"));
+                    setting.setSettingId(resultSet.getInt("setting_id"));
                     setting.setTitle(resultSet.getString("setting_title"));
                     setting.setValue(resultSet.getString("setting_value"));
                     setting.setDescription(resultSet.getString("description"));
                     setting.setTypeId(resultSet.getInt("type_id"));
                     setting.setStatusId(resultSet.getInt("status_id"));
+                    setting.setDisplayOrder(resultSet.getString("display_order"));
+                    setting.setStatusTitle(resultSet.getString("status_title"));
                     settingList.add(setting);
                 }
             } catch (SQLException e) {

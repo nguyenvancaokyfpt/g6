@@ -10,20 +10,20 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
+import com.tss.model.Classroom;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
-import com.tss.model.payload.ResponseMessage;
 import com.tss.model.system.ClassSetting;
 import com.tss.model.util.DataTablesColumns;
+import com.tss.service.ClassService;
 import com.tss.service.ClassSettingService;
-import com.tss.service.UserService;
+import com.tss.service.impl.ClassServiceImpl;
 import com.tss.service.impl.ClassSettingServiceImpl;
-import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -37,10 +37,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SettingClassServlet extends HttpServlet {
 
     private ClassSettingService classSettingService;
+    private ClassService classService;
 
     @Override
     public void init() throws ServletException {
         classSettingService = new ClassSettingServiceImpl();
+        classService = new ClassServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -130,7 +132,8 @@ public class SettingClassServlet extends HttpServlet {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        List<ClassSetting> list = classSettingService.findAll(start, length, search, columns, orderColumn, orderDir, typeFilter,
+        List<ClassSetting> list = classSettingService.findAll(start, length, search, columns, orderColumn, orderDir,
+                typeFilter,
                 statusFilter);
         int recordsTotal = classSettingService.countAll();
         int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter);
@@ -141,6 +144,17 @@ public class SettingClassServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        List<Classroom> myClass = new ArrayList<>();
+        RoleConstants role = (RoleConstants) request.getAttribute("ROLE_CONSTANTS");
+        User user = (User) request.getAttribute("user");
+        if (role == RoleConstants.ADMIN) {
+            myClass = classService.findAllClassroom();
+        } else if (role == RoleConstants.STUDENT) {
+            myClass = classService.findClassroomByStudent(user.getUserId());
+        } else {
+            myClass = classService.findClassroomByTeacher(user.getUserId());
+        }
+        request.setAttribute("myClass", myClass);
         request.setAttribute("jspPath", "shared/classSetting.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/seting/class/table-edited.js"));
@@ -149,6 +163,7 @@ public class SettingClassServlet extends HttpServlet {
                 ScreenConstants.SETTING_CLASS));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

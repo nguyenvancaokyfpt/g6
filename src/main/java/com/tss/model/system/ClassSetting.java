@@ -1,22 +1,29 @@
 package com.tss.model.system;
 
+import com.tss.service.SettingService;
+import com.tss.service.impl.SettingServiceImpl;
+
 public class ClassSetting {
 
-    private int id;
+    private int settingId;
     private int typeId;
     private String title;
     private String value;
     private String displayOrder;
     private int statusId;
+    private String statusTitle;
     private String description;
     private int classId;
 
+    private SettingService settingService;
+
     public ClassSetting() {
+        settingService = new SettingServiceImpl();
     }
 
     public ClassSetting(int id, int typeId, String title, String value, String displayOrder, int statusId,
             String description, int classId) {
-        this.id = id;
+        this.settingId = id;
         this.typeId = typeId;
         this.title = title;
         this.value = value;
@@ -26,19 +33,7 @@ public class ClassSetting {
         this.classId = classId;
     }
 
-    /**
-     * @return int return the id
-     */
-    public int getId() {
-        return id;
-    }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
 
     /**
      * @return int return the typeId
@@ -136,6 +131,40 @@ public class ClassSetting {
      */
     public void setClassId(int classId) {
         this.classId = classId;
+    }
+
+    public String getSettingTitle() {
+        return settingService.getSettingById(typeId).getTitle();
+    }
+
+
+    /**
+     * @return int return the settingId
+     */
+    public int getSettingId() {
+        return settingId;
+    }
+
+    /**
+     * @param settingId the settingId to set
+     */
+    public void setSettingId(int settingId) {
+        this.settingId = settingId;
+    }
+
+
+    /**
+     * @return String return the statusTitle
+     */
+    public String getStatusTitle() {
+        return statusTitle;
+    }
+
+    /**
+     * @param statusTitle the statusTitle to set
+     */
+    public void setStatusTitle(String statusTitle) {
+        this.statusTitle = statusTitle;
     }
 
 }
