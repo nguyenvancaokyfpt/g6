@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.SettingDao;
-import com.tss.model.system.ClassSetting;
 import com.tss.model.system.Setting;
 
 public class SettingDaoImpl implements SettingDao {

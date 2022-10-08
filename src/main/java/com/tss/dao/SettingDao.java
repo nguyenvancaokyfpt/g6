@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.tss.model.User;
-import com.tss.model.system.ClassSetting;
 import com.tss.model.system.Setting;
 
 public interface SettingDao {
