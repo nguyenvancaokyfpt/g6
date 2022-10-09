@@ -65,6 +65,10 @@
         <servlet-name>SettingRolePermission</servlet-name>
         <servlet-class>com.tss.controller.setting.SettingRolePermission</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MilestoneServlet</servlet-name>
+        <servlet-class>com.tss.controller.MilestoneServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -152,6 +156,10 @@
     <servlet-mapping>
         <servlet-name>SettingRolePermission</servlet-name>
         <url-pattern>/setting/role/permissions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MilestoneServlet</servlet-name>
+        <url-pattern>/milestone/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
