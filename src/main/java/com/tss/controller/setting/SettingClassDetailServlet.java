@@ -127,6 +127,7 @@ public class SettingClassDetailServlet extends HttpServlet {
         request.setAttribute("customJs", ResponseHelper.customJs());
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.SETTING_CLASS,
                 ScreenConstants.SETTING_CLASS_DETAIL));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
@@ -143,6 +144,7 @@ public class SettingClassDetailServlet extends HttpServlet {
                 "apps/seting/class/classSettingDetailUpdate.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.SETTING_CLASS,
                 ScreenConstants.SETTING_CLASS_DETAIL));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
