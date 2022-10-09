@@ -240,7 +240,8 @@
                                             </a>
                                         </div>
                                     </c:if>
-                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
+                                    <c:if
+                                        test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
                                         <div class="menu-item">
                                             <a class="menu-link ${screen == ScreenConstants.SETTING_ROLE_PERMISSIONS ? 'active' : ''}"
                                                 href="${ScreenConstants.SETTING_ROLE_PERMISSIONS.getPath()}">
@@ -255,6 +256,41 @@
                             </div>
                         </c:if>
                         <!-- End Setting -->
+
+
+                        <!-- Eval -->
+                        <div data-kt-menu-trigger="click"
+                            class="menu-item menu-accordion ${screen.getParentPath() == '/evalCriteria' ? 'show' : ''}">
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg width="80" height="62" viewBox="0 0 80 62" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M43.124 8.04706H72.9412C76.851 8.08588 80.0002 11.2665 80 15.1765V54.1961C80.0002 58.1061 76.851 61.2869 72.9412 61.3255H7.05883C3.14902 61.2869 -0.000191243 58.1061 4.83581e-06 54.1961V7.13726C-0.00450497 3.22412 3.14589 0.0388235 7.05883 0H30.0861C32.0684 0 33.9577 0.840475 35.2851 2.31277L38.6677 6.06468C39.8054 7.32665 41.4249 8.04706 43.124 8.04706Z"
+                                                fill="#E2E5E7" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <span class="menu-title">Eval Criteria</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link ${screen == ScreenConstants.EVALCRITERIA_LIST ? 'active' : ''}"
+                                        href="${ScreenConstants.EVALCRITERIA_LIST.getPath()}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Eval Criteria List</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Setting -->
+
                     </div>
 
                     <!--end::Menu-->

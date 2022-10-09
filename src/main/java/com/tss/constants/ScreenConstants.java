@@ -23,8 +23,10 @@ public enum ScreenConstants {
     WEB_CONTACT_LIST(7, "Web Contact", "/webcontact/list"),
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
     SUBJECT_DETAILS(11, "Subject Details", "/subject/detail"),
-    SETTING_ROLE_PERMISSIONS(12, "Setting Role Permissions", "/setting/role/permissions");
-    
+    SETTING_ROLE_PERMISSIONS(12, "Setting Role Permissions", "/setting/role/permissions"),
+    EVALCRITERIA_LIST(16, "Eval Criteria List", "/evalCriteria/evalCriteriaList"),
+    EVALCRITERIA_DETAIL(17, "Eval Criteria Detail", "/evalCriteria/evalCriteriaDetails");
+
 
 
     private int id;
