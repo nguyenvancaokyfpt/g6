@@ -69,6 +69,14 @@
         <servlet-name>AssignmentManagementServlet</servlet-name>
         <servlet-class>com.tss.controller.management.AssignmentManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubjectSettingServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SubjectSettingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddSubjectSettingServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.AddSubjectSettingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -160,6 +168,14 @@
     <servlet-mapping>
         <servlet-name>AssignmentManagementServlet</servlet-name>
         <url-pattern>/assignment/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubjectSettingServlet</servlet-name>
+        <url-pattern>/subjectSetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddSubjectSettingServlet</servlet-name>
+        <url-pattern>/addSubjectSetting</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

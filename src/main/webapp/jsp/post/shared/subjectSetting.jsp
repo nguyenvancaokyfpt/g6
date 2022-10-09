@@ -1,4 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+    a:hover {
+        cursor: pointer !important;
+    }
+</style>
 <!--begin::Post-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
@@ -28,16 +33,16 @@
                         </span>
                         <!--end::Svg Icon-->
                         <input type="text" data-kt-user-table-filter="search"
-                               class="form-control form-control-solid w-250px ps-14" placeholder="Search assignment"
+                               class="form-control form-control-solid w-250px ps-14" placeholder="Search subject setting"
                                style="margin-right: 5px;" id="search" value="${requestScope.searchRg}"/>
                         <button type="button" class="btn btn-primary mb-3"
                                 style="margin-top: 10px;"
                                 onclick="
                                         list(getSearchRg(),
                                                 getSubjectFilter(),
-                                                getTeamworkFilter(),
-                                                getOngoingFilter(),
-                                                getStatusFilter(), '1')
+                                                getTitleFilter(),
+                                                getDisplayOrderFilter(),
+                                                getStatusFilter(), getSort(), '1')
                                 ">
                             Search
                         </button>
@@ -94,23 +99,26 @@
                                     </select>
                                 </div>
                                 <div class="mb-10">
-                                    <label class="form-label fs-6 fw-bold">Teamwork:</label>
+                                    <label class="form-label fs-6 fw-bold">Setting title:</label>
                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
                                             data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="teamwork">
-                                        <option ${requestScope.isteamworkFilter == '' ? 'selected' : ''}></option>
-                                        <option value="1" ${requestScope.isteamworkFilter == '1' ? 'selected' : ''}>Teamwork</option>
-                                        <option value="0" ${requestScope.isteamworkFilter == '0' ? 'selected' : ''}>Personal</option>
+                                            data-hide-search="true" id="title">
+                                        <option ${requestScope.titleFilter == '' ? 'selected' : ''}></option>
+                                        <option value="1" ${requestScope.titleFilter == '1' ? 'selected' : ''}>Marks</option>
+                                        <option value="2" ${requestScope.titleFilter == '2' ? 'selected' : ''}>Learning Progress</option>
+                                        <option value="3" ${requestScope.titleFilter == '3' ? 'selected' : ''}>Complexity</option>
+                                        <option value="4" ${requestScope.titleFilter == '4' ? 'selected' : ''}>Lecturers</option>
                                     </select>
                                 </div>
                                 <div class="mb-10">
-                                    <label class="form-label fs-6 fw-bold">Ongoing:</label>
+                                    <label class="form-label fs-6 fw-bold">Setting order:</label>
                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
                                             data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="ongoing">
-                                        <option ${requestScope.isongoingFilter == '' ? 'selected' : ''}></option>
-                                        <option value="1" ${requestScope.isongoingFilter == '1' ? 'selected' : ''}>Ongoing</option>
-                                        <option value="0" ${requestScope.isongoingFilter == '0' ? 'selected' : ''}>Final</option>
+                                            data-hide-search="true" id="displayOrder">
+                                        <option ${requestScope.displayOrderFilter == '' ? 'selected' : ''}></option>
+                                        <option value="1" ${requestScope.displayOrderFilter == '1' ? 'selected' : ''}>Simple</option>
+                                        <option value="2" ${requestScope.displayOrderFilter == '2' ? 'selected' : ''}>Normal</option>
+                                        <option value="3" ${requestScope.displayOrderFilter == '3' ? 'selected' : ''}>Complex</option>
                                     </select>
                                 </div>
                                 <div class="mb-10">
@@ -120,7 +128,7 @@
                                             data-hide-search="true" id="status">
                                         <option ${requestScope.statusFilter == '' ? 'selected' : ''}></option>
                                         <option value="1" ${requestScope.statusFilter == '1' ? 'selected' : ''}>Active</option>
-                                        <option value="0" ${requestScope.statusFilter == '1' ? 'selected' : ''}>Inactive</option>
+                                        <option value="0" ${requestScope.statusFilter == '0' ? 'selected' : ''}>Inactive</option>
                                     </select>
                                 </div>
                                 <!--end::Input group-->
@@ -129,7 +137,12 @@
                                     <button type="reset"
                                             class="btn btn-white btn-active-light-primary fw-bold me-2 px-6"
                                             data-kt-menu-dismiss="true"
-                                            onclick="list(getSearchRg(), '', '', '', '', '${requestScope.currentPage}')">
+                                            onclick="list(getSearchRg(),
+                                                            '',
+                                                            '',
+                                                            '',
+                                                            '', getSort(), '${requestScope.currentPage}')
+                                            ">
                                         Reset
                                     </button>
                                     <button type="submit" class="btn btn-primary fw-bold px-6"
@@ -137,9 +150,9 @@
                                             onclick="
                                                     list(getSearchRg(),
                                                             getSubjectFilter(),
-                                                            getTeamworkFilter(),
-                                                            getOngoingFilter(),
-                                                            getStatusFilter(), '1')
+                                                            getTitleFilter(),
+                                                            getDisplayOrderFilter(),
+                                                            getStatusFilter(), getSort(), '1')
                                             ">
                                         Apply
                                     </button>
@@ -152,20 +165,22 @@
                         <!--end::Filter-->
 
                         <!--begin::Add user-->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_add_user">
-                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.5"
-                                          transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
-                                          x="4" y="11" width="16" height="2" rx="1" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->Add Assignment
-                        </button>
+                        <a href="/addSubjectSetting">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_add_user">
+                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                        <rect fill="#000000" opacity="0.5"
+                                              transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
+                                              x="4" y="11" width="16" height="2" rx="1" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->Add Subject Setting
+                            </button>
+                        </a>
                         <!--end::Add user-->
                     </div>
                     <!--end::Toolbar-->
@@ -183,12 +198,13 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th></th>   
                             <th></th>
                             <th></th>
-                            <th class="min-w-125px">Assignment</th>
-                            <th class="min-w-125px">Eval weight</th>
-                            <th class="min-w-125px">Is teamwork</th>
-                            <th class="min-w-125px">Is Ongoing</th>
+                            <th class="min-w-125px">Setting ID</th>
+                            <th class="min-w-125px">Setting Title</th>
+                            <th class="min-w-125px">Subject Name</th>
+                            <th class="min-w-125px">Setting Order</th>
                             <th class="min-w-125px">Status Action</th>
                             <th class="min-w-100px">Details</th>
                         </tr>
@@ -198,34 +214,34 @@
                     <!--begin::Table body-->
                     <tbody class="text-gray-600 fw-bold">
                         <!--begin::Table row-->
-                        <c:forEach items="${requestScope.assList}" var="a">
+                        <c:forEach items="${requestScope.ssList}" var="ss">
                             <tr>
                                 <td></td>
+                                <td></td>   
                                 <td></td>
+                                <td>${ss.settingId}</td>
                                 <!--begin::User=-->
-                                <td class="d-flex align-items-center">
+                                <td class="align-items-center">
                                     <!--begin::User details-->
-                                    <div class="d-flex flex-column">
-                                        <a href=""
-                                           class="text-gray-800 text-hover-primary mb-1">${a.subjectName}</a>
-                                        <span>${a.title}</span>
+                                    <div class="flex-column">
+                                        <a onclick="viewDetails('${ss.settingId}')"
+                                           class="text-gray-800 mb-1">${ss.title}</a>
                                     </div>
                                 </td>
-                                <td>${a.evalWeight}% total Course</td>
+                                <td>${ss.subjectName}</td>
                                 <td>
-                                    ${a.isTeamwork == 1 ? 'Teamwork':'Personal'}
+                                    ${ss.displayOrder == '0' ? '' : ss.displayOrder}
                                 </td>
-                                <td>${a.isOngoing == 1 ? 'Ongoing points': 'Final points'}</td>
                                 <td>
-                                    <c:if test="${a.statusId==1}">
-                                        <button onclick="loaddata('${a.assId}', '${a.title}', '${a.subjectName}', 'inactivate')"
+                                    <c:if test="${ss.statusId==1}">
+                                        <button onclick="loaddata('${ss.settingId}', '${ss.title}', '${ss.subjectName}', 'inactivate')"
                                                 type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
                                             Inactivate
                                         </button>
                                     </c:if>
-                                    <c:if test="${a.statusId!=1}">
-                                        <button onclick="loaddata('${a.assId}', '${a.title}', '${a.subjectName}', 'activate')"
+                                    <c:if test="${ss.statusId!=1}">
+                                        <button onclick="loaddata('${ss.settingId}', '${ss.title}', '${ss.subjectName}', 'activate')"
                                                 type="button" class="btn btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
                                             Activate
@@ -234,7 +250,7 @@
                                 </td>
                                 <!--begin::Action=-->
                                 <td>
-                                    <button type="button" class="btn btn-secondary">
+                                    <button onclick="viewDetails('${ss.settingId}')" type="button" class="btn btn-secondary">
                                         Details
                                     </button>
                                 </td>
@@ -256,9 +272,9 @@
                                             onclick="
                                                     list(getSearchRg(),
                                                             getSubjectFilter(),
-                                                            getTeamworkFilter(),
-                                                            getOngoingFilter(),
-                                                            getStatusFilter(), '${p}')
+                                                            getTitleFilter(),
+                                                            getDisplayOrderFilter(),
+                                                            getStatusFilter(), getSort(), '${p}')
                                             ">
                                         ${p}
                                     </button>
@@ -276,19 +292,25 @@
 </div>
 <!--end::Post-->
 
-<form id="formList" action="/assignment/list" method="post">
-    <input name="action" value="list" hidden/>
-    <input name="searchRg" value="" id="searchInp" hidden/>
-    <input name="subjectFilter" value="" id="subjectInp" hidden/>
-    <input name="isteamworkFilter" value="" id="teamworkInp" hidden/>
-    <input name="isgoingFilter" value="" id="ongoingInp" hidden/>
-    <input name="statusFilter" value="" id="statusInp" hidden/>
-    <input name="pageNo" value="" id="pageNo" hidden/>
+<form hidden id="formList" action="/subjectSetting" method="post">
+    <input name="action" value="list"/>
+    <input name="searchRg" value="" id="searchInp"/>
+    <input name="subjectFilter" value="" id="subjectInp"/>
+    <input name="titleFilter" value="" id="titleInp"/>
+    <input name="displayOrderFilter" value="" id="displayOrderInp"/>
+    <input name="statusFilter" value="" id="statusInp"/>
+    <input name="sort" value="" id="sortInp"/>
+    <input name="pageNo" value="" id="pageNo"/>
 </form>
 
-<form id="formChangeStatus" action="/assignment/list" method="post">
-    <input name="action" value="changeStatus" hidden/>
-    <input name="assId" value="" id="assIdInp" hidden/>
+<form hidden id="formChangeStatus" action="/subjectSetting" method="post">
+    <input name="action" value="changeStatus"/>
+    <input name="settingId" value="" id="settingIdInp"/>
+</form>
+
+<form hidden id="formDetails" action="/subjectSetting" method="post">
+    <input name="action" value="get"/>
+    <input name="settingId" value="" id="settingIdInp1"/>
 </form>
 
 <!-- Modal status -->
@@ -296,7 +318,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Assignment</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Subject Setting</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="content_modal">
@@ -318,33 +340,42 @@
     function getSubjectFilter() {
         return document.getElementById('subject').value;
     }
-    function getTeamworkFilter() {
-        return document.getElementById('teamwork').value;
+    function getTitleFilter() {
+        return document.getElementById('title').value;
     }
-    function getOngoingFilter() {
-        return document.getElementById('ongoing').value;
+    function getDisplayOrderFilter() {
+        return document.getElementById('displayOrder').value;
     }
     function getStatusFilter() {
         return document.getElementById('status').value;
     }
+    function getSort() {
+        return "";
+    }
 
-    function list(search, subjectFilter, isOngoingFilter, isTeamworkFilter, statusFilter, pageNo) {
+    function list(search, subjectFilter, titleFilter, displayOrderFilter, statusFilter, sort, pageNo) {
         document.getElementById('searchInp').value = search;
         document.getElementById('subjectInp').value = subjectFilter;
-        document.getElementById('teamworkInp').value = isTeamworkFilter;
-        document.getElementById('ongoingInp').value = isOngoingFilter;
+        document.getElementById('titleInp').value = titleFilter;
+        document.getElementById('displayOrderInp').value = displayOrderFilter;
         document.getElementById('statusInp').value = statusFilter;
+        document.getElementById('sortInp').value = "";
         document.getElementById('pageNo').value = pageNo;
         document.getElementById('formList').submit();
     }
 
-    function loaddata(assId, title, subjectName, action) {
+    function loaddata(settingId, title, subjectName, action) {
         document.getElementById('content_modal').innerHTML = "Do you want to <b>"
-                + action + "</b> assignment <b>" + title + "</b> of <b>" + subjectName + "</b>";
-        document.getElementById('assIdInp').value = assId;
+                + action + "</b> setting <b>" + title + "</b> of <b>" + subjectName + "</b>";
+        document.getElementById('settingIdInp').value = settingId;
     }
 
     function cf() {
         document.getElementById('formChangeStatus').submit();
+    }
+
+    function viewDetails(settingId) {
+        document.getElementById('settingIdInp1').value = settingId;
+        document.getElementById('formDetails').submit();
     }
 </script>

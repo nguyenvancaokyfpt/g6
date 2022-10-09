@@ -24,7 +24,8 @@ public enum ScreenConstants {
     SUBJECT_LIST(10, "Subject List", "/subject/list"),
     SUBJECT_DETAILS(11, "Subject Details", "/subject/detail"),
     SETTING_ROLE_PERMISSIONS(12, "Setting Role Permissions", "/setting/role/permissions"),
-    SUBJECT_SETTING(20, "Subject Setting", "/subject/setting"),
+    SUBJECT_SETTING(20, "Subject Setting", "/subjectSetting"),
+    ADD_SUBJECT_SETTING(21, "Add Subject Setting", "/addSubjectSetting"),
     ASSIGNNMENT_LIST(22, "Assignment List", "/assignment/list");
     
 
