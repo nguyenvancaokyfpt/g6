@@ -91,7 +91,6 @@ public class SettingRolePermissionServlet extends HttpServlet {
                 }
                 rolePermissionMessage.setPermissions(nPermissions);
             }
-
             ResponseHelper.sendResponse(response,
                     new ResponseMessage(HttpStatusCodeConstants.OK, "Succsess", rolePermissionMessage));
         } catch (Exception e) {

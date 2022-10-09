@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserRoleDao;
+import com.tss.helper.DebugHelper;
 import com.tss.model.payload.RolePermissionMessage;
 import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
@@ -175,23 +176,34 @@ public class UserRoleDaoImpl implements UserRoleDao {
         ResultSet resultSet = null;
         RolePermissionMessage rolePermissionMessageList = new RolePermissionMessage();
         rolePermissionMessageList.setRoleId(roleId);
+
         List<Permission> permissions = new ArrayList<Permission>();
         if (connection != null) {
             String sql = "select * from permission where setting_id = ?";
             Object[] params = { roleId };
-            resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
-            while (resultSet.next()) {
-                Permission permission = new Permission();
-                permission.setSettingId(resultSet.getInt("setting_id"));
-                permission.setScreenId(resultSet.getInt("screen_id"));
-                permission.setCanCreate(resultSet.getBoolean("can_create"));
-                permission.setCanGet(resultSet.getBoolean("can_get"));
-                permission.setCanDelete(resultSet.getBoolean("can_delete"));
-                permission.setCanUpdate(resultSet.getBoolean("can_update"));
-                permissions.add(permission);
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Permission permission = new Permission();
+                    permission.setSettingId(resultSet.getInt("setting_id"));
+                    permission.setScreenId(resultSet.getInt("screen_id"));
+                    permission.setCanCreate(resultSet.getBoolean("can_create"));
+                    permission.setCanGet(resultSet.getBoolean("can_get"));
+                    permission.setCanDelete(resultSet.getBoolean("can_delete"));
+                    permission.setCanUpdate(resultSet.getBoolean("can_update"));
+                    if (permission != null) {
+                        permissions.add(permission);
+                        DebugHelper.print("===============");
+                        DebugHelper.print(permission);
+                    }
+                }
+                rolePermissionMessageList.setPermissions(permissions);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
             }
-            rolePermissionMessageList.setPermissions(permissions);
-            BaseDao.closeResource(null, preparedStatement, resultSet);
         }
         return rolePermissionMessageList;
     }

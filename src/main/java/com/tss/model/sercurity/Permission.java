@@ -108,7 +108,13 @@ public class Permission {
     }
 
     public ScreenConstants getScreen() {
-        return ScreenConstants.getScreenById(screenId);
+        try {
+            ScreenConstants screen = ScreenConstants.getScreenById(screenId);
+            return screen;
+        } catch (Exception e) {
+            return ScreenConstants.INDEX;
+        }
+
     }
 
     // Get screen title

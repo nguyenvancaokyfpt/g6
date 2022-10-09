@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
+import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
@@ -18,6 +19,7 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.Classroom;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
+import com.tss.model.payload.ResponseMessage;
 import com.tss.model.system.ClassSetting;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.ClassService;
@@ -83,7 +85,20 @@ public class SettingClassServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        int settingId = jsonObject.getIntValue("settingId");
+        String action = jsonObject.getString("action");
 
+        try {
+            if (action.equals("active")) {
+                classSettingService.updateStatus(settingId, true);
+            } else if (action.equals("deactive")) {
+                classSettingService.updateStatus(settingId, false);
+            }
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Update success"));
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR, "Update failed"));
+        }
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
@@ -96,6 +111,7 @@ public class SettingClassServlet extends HttpServlet {
         String search = "";
         int draw = 1;
         int numberofcolumn = -1;
+        int classId = -1;
         int orderColumn = 1;
         String orderDir = "asc";
         String typeFilter = "";
@@ -108,6 +124,7 @@ public class SettingClassServlet extends HttpServlet {
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
                 numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
+                classId = jsonObject.getJSONArray("classId").getInteger(0);
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i <= numberofcolumn; i++) {
@@ -121,10 +138,10 @@ public class SettingClassServlet extends HttpServlet {
                             jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
                 }
                 for (DataTablesColumns dataTablesColumns : columns) {
-                    if (dataTablesColumns.getData().equals("type_id")) {
+                    if (dataTablesColumns.getData().equals("setting_title")) {
                         typeFilter = dataTablesColumns.getSearchValue();
                     }
-                    if (dataTablesColumns.getData().equals("status_id")) {
+                    if (dataTablesColumns.getData().equals("status_title")) {
                         statusFilter = dataTablesColumns.getSearchValue();
                     }
                 }
@@ -134,9 +151,9 @@ public class SettingClassServlet extends HttpServlet {
         }
         List<ClassSetting> list = classSettingService.findAll(start, length, search, columns, orderColumn, orderDir,
                 typeFilter,
-                statusFilter);
-        int recordsTotal = classSettingService.countAll();
-        int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter);
+                statusFilter, classId);
+        int recordsTotal = classSettingService.countAll(classId);
+        int recordsFiltered = classSettingService.countAll(search, typeFilter, statusFilter, classId);
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
     }
 

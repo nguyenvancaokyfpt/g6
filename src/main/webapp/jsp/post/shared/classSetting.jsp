@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ page import="com.tss.constants.ScreenConstants" %>
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container">
@@ -36,10 +38,10 @@
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end me-3" data-kt-user-table-toolbar="base">
                         <!--begin::Filter-->
-                        <select class="form-select form-select-solid" aria-label="Select example">
-                            <option selected value="1">SE1627</option>
-                            <option value="2">SE1628</option>
-                            <option value="3">SE1629</option>
+                        <select id="classId" data-kt-user-table-filter="class" class="form-select form-select-solid" aria-label="Select example">
+                        <c:forEach items="${myClass}" var="d">
+                            <option value="${d.getClassId()}">${d.getClassCode()}</option>
+                        </c:forEach>
                         </select>
                         <!--end::Filter-->
                     </div>
@@ -144,11 +146,12 @@
                                 </div>
                             </th>
                             <th class="min-w-15px">ID</th>
-                            <th class="min-w-135px">Type</th>
-                            <th class="min-w-125px">Setting Title</th>
-                            <th class="min-w-135px">Value</th>
-                            <th class="min-w-135px">Display Order</th>
-                            <th class="min-w-135px">Status</th>
+                            <th class="min-w-15px">Class ID</th>
+                            <th class="min-w-100px">Type</th>
+                            <th class="min-w-200px">Setting Title</th>
+                            <th class="min-w-100px">Value</th>
+                            <th class="min-w-50px">Display Order</th>
+                            <th class="min-w-100px">Status</th>
                             <th class="text-end min-w-125px text-center">Action</th>
                         </tr>
                         <!--end::Table row-->

@@ -9,6 +9,7 @@ import com.tss.constants.RoleConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.UserRoleDao;
 import com.tss.dao.impl.UserRoleDaoImpl;
+import com.tss.helper.DebugHelper;
 import com.tss.model.payload.RolePermissionMessage;
 import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
@@ -119,6 +120,7 @@ public class RoleServiceImpl implements RoleService {
     public RolePermissionMessage getRolePermission(int roleId) {
         Connection connection = null;
         RolePermissionMessage rolePermissionMessage = null;
+        
         try {
             connection = BaseDao.getConnection();
             rolePermissionMessage = userRoleDao.getRolePermission(connection, roleId);
