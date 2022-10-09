@@ -13,5 +13,11 @@ public interface ClassSettingService {
     int countAll(int classId);
 
     int countAll(String search, String typeFilter, String statusFilter, int classId);
+
+    void updateStatus(int settingId, boolean b);
+
+    ClassSetting getSettingById(int settingId);
+
+    void updateClassSetting(int settingId, String value, String description, String displayOrder, int active);
     
 }

@@ -75,4 +75,47 @@ public class ClassSettingServiceImpl implements ClassSettingService {
         return count;
     }
 
+    @Override
+    public void updateStatus(int settingId, boolean b) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            classSettingDao.updateStatus(connection, settingId, b);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public ClassSetting getSettingById(int settingId) {
+        Connection connection = null;
+        ClassSetting setting = null;
+        try {
+            connection = BaseDao.getConnection();
+            setting = classSettingDao.getSettingById(connection, settingId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return setting;
+    }
+
+    @Override
+    public void updateClassSetting(int settingId, String value, String description, String displayOrder,
+            int active) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            classSettingDao.updateClassSetting(connection, settingId, value, description, displayOrder, active);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+
+    }
+
 }

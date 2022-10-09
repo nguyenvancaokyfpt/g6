@@ -21,7 +21,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
         ResultSet resultSet = null;
         List<ClassSetting> settingList = new ArrayList<ClassSetting>();
         if (connection != null) {
-            String sql = "SELECT setting_id,type_id,setting_title,setting_value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) AND class_id = ? ORDER BY "
+            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) AND class_id = ? ORDER BY "
                     + columnName + " " + orderDir + " LIMIT ?,?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
                     "%" + statusFilter + "%",
@@ -31,8 +31,8 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
                 while (resultSet.next()) {
                     ClassSetting setting = new ClassSetting();
                     setting.setSettingId(resultSet.getInt("setting_id"));
-                    setting.setTitle(resultSet.getString("setting_title"));
-                    setting.setValue(resultSet.getString("setting_value"));
+                    setting.setTitle(resultSet.getString("title"));
+                    setting.setValue(resultSet.getString("value"));
                     setting.setDescription(resultSet.getString("description"));
                     setting.setTypeId(resultSet.getInt("type_id"));
                     setting.setStatusId(resultSet.getInt("status_id"));
@@ -82,7 +82,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
         if (connection != null) {
             String sql = "SELECT COUNT(*) AS count FROM class_setting WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND status_id LIKE ? ) AND class_id = ?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
-                    "%" + statusFilter + "%" , classId};
+                    "%" + statusFilter + "%", classId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -95,6 +95,71 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
             }
         }
         return count;
+    }
+
+    @Override
+    public void updateStatus(Connection connection, int settingId, boolean b) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "UPDATE class_setting SET status_id = ? WHERE setting_id = ?";
+            Object[] params = { b ? 1 : 0, settingId };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
+
+    @Override
+    public ClassSetting getSettingById(Connection connection, int settingId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ClassSetting setting = null;
+        if (connection != null) {
+            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE setting_id = ?";
+            Object[] params = { settingId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    setting = new ClassSetting();
+                    setting.setSettingId(resultSet.getInt("setting_id"));
+                    setting.setTitle(resultSet.getString("title"));
+                    setting.setValue(resultSet.getString("value"));
+                    setting.setDescription(resultSet.getString("description"));
+                    setting.setTypeId(resultSet.getInt("type_id"));
+                    setting.setStatusId(resultSet.getInt("status_id"));
+                    setting.setDisplayOrder(resultSet.getString("display_order"));
+                    setting.setStatusTitle(resultSet.getString("status_title"));
+                    setting.setClassId(resultSet.getInt("class_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                DebugHelper.print("ClassSettingDaoImpl.getSettingById() error: " + e.getMessage());
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return setting;
+    }
+
+    @Override
+    public void updateClassSetting(Connection connection, int settingId, String value, String description,
+            String displayOrder, int active) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        if (connection != null) {
+            String sql = "UPDATE class_setting SET setting_value = ?,description = ?,display_order = ?,status_id = ? WHERE setting_id = ?";
+            Object[] params = { value, description, displayOrder, active, settingId };
+            try {
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
     }
 
 }

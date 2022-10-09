@@ -147,11 +147,11 @@
                             </th>
                             <th class="min-w-15px">ID</th>
                             <th class="min-w-15px">Class ID</th>
-                            <th class="min-w-135px">Type</th>
-                            <th class="min-w-125px">Setting Title</th>
-                            <th class="min-w-135px">Value</th>
-                            <th class="min-w-135px">Display Order</th>
-                            <th class="min-w-135px">Status</th>
+                            <th class="min-w-100px">Type</th>
+                            <th class="min-w-200px">Setting Title</th>
+                            <th class="min-w-100px">Value</th>
+                            <th class="min-w-50px">Display Order</th>
+                            <th class="min-w-100px">Status</th>
                             <th class="text-end min-w-125px text-center">Action</th>
                         </tr>
                         <!--end::Table row-->
