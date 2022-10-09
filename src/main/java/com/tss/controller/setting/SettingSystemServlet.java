@@ -49,7 +49,7 @@ public class SettingSystemServlet extends HttpServlet {
         switch (action) {
             case "add":
                 request.setAttribute("typelist", listType);
-                request.getRequestDispatcher("jsp/post/admin/addsetting.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/shared/addsetting.jsp").forward(request, response);
                 break;
             case "create":
                 int id = dao.getMaxId(connection);

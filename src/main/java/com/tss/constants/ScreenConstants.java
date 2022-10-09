@@ -26,8 +26,8 @@ public enum ScreenConstants {
     SETTING_CLASS(13, "Setting Class", "/setting/class"),
     SUBJECT_SETTING(20, "Subject Setting", "/subject/setting"),
     ASSIGNNMENT_LIST(22, "Assignment List", "/assignment/list"),
-    CLASS_LIST(23, "Class List", "/classlist"),
-    CLASS_DETAIL(24, "Class Detail", "/classdetail");
+    CLASS_LIST(23, "Class List", "/class/list"),
+    CLASS_DETAIL(24, "Class Detail", "/class/detail");
 
     private int id;
     private String title;

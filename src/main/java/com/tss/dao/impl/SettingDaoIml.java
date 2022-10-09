@@ -417,7 +417,7 @@ public class SettingDaoIml implements SettingDao {
         ResultSet resultSet = null;
         List<Setting> settingList = new ArrayList<>();
         if (connection != null) {
-            String sql = "select * from setting where type_id=2";
+            String sql = "select * from setting where type_id=3 and status_id = 1";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 resultSet = preparedStatement.executeQuery();

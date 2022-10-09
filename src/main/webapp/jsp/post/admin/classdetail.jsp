@@ -110,7 +110,7 @@
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Action-->
-                                <a href="/settingDetail?id=<%=sd.getClass_id()%>&action=edit" class="btn btn-primary align-self-center">Edit Setting</a>
+                                <a href="/settingDetail?id=<%=sd.getClass_id()%>&action=update" class="btn btn-primary align-self-center">Edit Setting</a>
                                 <!--end::Action-->
                             </div>
                             <!--begin::Card header-->
@@ -192,7 +192,7 @@
                                     <!--end::Col-->
                                 </div>
                                 <div>
-                                    <a class="btn btn-bg-danger" href="/classlist">Back</a>
+                                    <a class="btn btn-bg-danger" href="/class/list">Back</a>
                                 </div>
                                 <!--end::Input group-->
                             </div>

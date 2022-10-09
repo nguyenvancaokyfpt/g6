@@ -43,7 +43,7 @@ public class ClassDetailServlet extends HttpServlet {
         } catch (Exception e) {
         }
         request.setAttribute("classdetail", classdetail);
-        request.getRequestDispatcher("jsp/post/admin/classdetail.jsp").forward(request, response);;
+        request.getRequestDispatcher("/jsp/post/admin/classdetail.jsp").forward(request, response);;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

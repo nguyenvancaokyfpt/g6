@@ -65,7 +65,7 @@ public class ClassServlet extends HttpServlet {
             action += "";
         }
         switch (action) {
-            case "edit":
+            case "update":
                 idString = request.getParameter("id");
                 Class classdetail = new Class();
                 try {
@@ -80,9 +80,9 @@ public class ClassServlet extends HttpServlet {
                 request.setAttribute("termList", termList);
                 request.setAttribute("trainerList", trainerList);
                 request.setAttribute("supporterList", supporterList);
-                request.getRequestDispatcher("jsp/post/admin/editclass.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/editclass.jsp").forward(request, response);
                 break;
-            case "update":
+            case "edit":
                 idString = request.getParameter("id");
                 description = request.getParameter("description");
                 try {
@@ -95,25 +95,25 @@ public class ClassServlet extends HttpServlet {
                 } catch (Exception e) {
                 }
                 dao.edit(connection, id, class_code, combo_id, trainer_id, term_id, addstatus_id, description);
-            case "add":
-                if (!action.equals("add")) {
+            case "create":
+                if (!action.equals("create")) {
 
                 } else {
                     request.setAttribute("termList", termList);
                     request.setAttribute("trainerList", trainerList);
                     request.setAttribute("supporterList", supporterList);
-                    request.getRequestDispatcher("jsp/post/admin/addclass.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/post/admin/addclass.jsp").forward(request, response);
                     break;
                 }
-            case "create":
+            case "add":
                 class_code = request.getParameter("class_code");
                 combo_id = Integer.parseInt(request.getParameter("supporter_id"));
                 trainer_id = Integer.parseInt(request.getParameter("trainer_id"));
                 term_id = Integer.parseInt(request.getParameter("term_id"));
                 addstatus_id = Integer.parseInt(request.getParameter("status_id"));
                 dao.add(connection, class_code, combo_id, trainer_id, term_id, addstatus_id, description);
-            case "status":
-                if (!action.equals("status")) {
+            case "delete":
+                if (!action.equals("delete")) {
 
                 } else {
                     id = 1;
@@ -186,7 +186,7 @@ public class ClassServlet extends HttpServlet {
                 request.setAttribute("dir", dir);
                 request.setAttribute("term", term);
                 request.setAttribute("status", status);
-                request.getRequestDispatcher("jsp/post/admin/classlist.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/post/admin/classlist.jsp").forward(request, response);
         }
     }
 

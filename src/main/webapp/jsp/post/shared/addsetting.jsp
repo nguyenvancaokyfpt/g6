@@ -161,63 +161,6 @@
                                                     <!--end::Input-->
                                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                                 </div>
-
-                                                <div class="col-xl-10">
-                                                    <label class="form-label fw-bolder text-dark fs-6">Type</label>
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                        type="number" placeholder="Enter type id" name="type_id"
-                                                        required value="">
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <div class="col-xl-10">
-                                                    <label class="form-label fw-bolder text-dark fs-6">Title</label>
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                        type="text" placeholder="Enter setting title" name="title"
-                                                        required value="">
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <div class="col-xl-10">
-                                                    <label class="form-label fw-bolder text-dark fs-6">Value</label>
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                        type="text" name="value" placeholder="Enter setting value"
-                                                        autocomplete="off" value="">
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <div class="col-xl-10">
-                                                    <label class="form-label fw-bolder text-dark fs-6">Display
-                                                        order</label>
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                        type="text" name="display_order"
-                                                        placeholder="Enter display order" autocomplete="off" value="">
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <div class="col-xl-10">
-                                                    <label
-                                                        class="form-label fw-bolder text-dark fs-6">Status</label><br>
-                                                    <input class="form-check-input" type="radio" id="html" name="status"
-                                                        value="0">
-                                                    <label for="0"
-                                                        class="form-label fw-bolder text-dark fs-6">Inactive</label>
-                                                    <input class="form-check-input" type="radio" id="css" name="status"
-                                                        value="1" checked="true">
-                                                    <label for="1"
-                                                        class="form-label fw-bolder text-dark fs-6">Active</label>
-
-
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <div class="col-xl-10">
-                                                    <label
-                                                        class="form-label fw-bolder text-dark fs-6">Description</label>
-                                                    <textarea class="form-control form-control-lg form-control-solid"
-                                                        name="description" placeholder="Enter description"
-                                                        autocomplete="off"></textarea>
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-                                                <p style="color: red">${error}</p>
-                                                <a class="btn btn-bg-danger" href="/setting/system">Cancel</a>
-                                                <button type="submit" class="btn btn-primary">Create setting</button>
-                                                <!--end::Col-->
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                                     <!--end::Label-->
@@ -257,7 +200,7 @@
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
                                             <!--end::Input group-->
-                                            <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
+                                            <a class="btn btn-bg-danger" href="/setting/system">Cancel</a>
                                             <button type="submit" class="btn btn-primary">Create setting</button>
                                         </div>
 

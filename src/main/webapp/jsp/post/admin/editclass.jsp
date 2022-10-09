@@ -119,8 +119,8 @@
 
                                 <!--end::Row-->
                                 <!--begin::Form-->
-                                <form action="/classlist">
-                                    <input type="hidden" name="action" value="update">
+                                <form action="/class/list">
+                                    <input type="hidden" name="action" value="edit">
                                     <input type="hidden" name="id" value="<%=sd.getClass_id()%>">
                                     <div class="modal-body py-10 px-lg-17" >
                                         <!--begin::Input group-->
@@ -232,7 +232,7 @@
                                             <!--end::Input-->
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                         <!--end::Input group-->
-                                        <a class="btn btn-bg-danger" href="/classlist">Cancel</a>
+                                        <a class="btn btn-bg-danger" href="/class/list">Cancel</a>
                                         <button type="submit" class="btn btn-primary">Update Class</button>
                                     </div>
                                 </form>

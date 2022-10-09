@@ -161,7 +161,7 @@
                                                 <label class="fs-5 fw-bold mb-2">Display Order</label>
                                                 <!--end::Label-->
                                                 <!--end::Input-->
-                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplay_order()%>">
+                                                <input class="form-control form-control-lg form-control-solid" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplayOrder()%>">
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
@@ -186,7 +186,7 @@
                                             <label class="form-label fw-bolder text-dark fs-6">Description</label>
                                             <textarea class="form-control form-control-lg form-control-solid" name="description" autocomplete="off"><%=sd.getDescription()%></textarea>
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                        <a class="btn btn-bg-danger" href="/settingList">Cancel</a>
+                                        <a class="btn btn-bg-danger" href="/setting/system">Cancel</a>
                                         <button type="submit" class="btn btn-primary">Confirm</button>
                                     </div>                                
                                 </form>

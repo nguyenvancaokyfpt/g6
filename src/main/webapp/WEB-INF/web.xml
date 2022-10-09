@@ -179,11 +179,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClassServlet</servlet-name>
-        <url-pattern>/classlist</url-pattern>
+        <url-pattern>/class/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClassDetailServlet</servlet-name>
-        <url-pattern>/classdetail</url-pattern>
+        <url-pattern>/class/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

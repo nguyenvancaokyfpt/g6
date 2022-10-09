@@ -116,7 +116,7 @@
                                                             </svg>
                                                         </span>
                                                         <!--end::Svg Icon-->
-                                                        <form action="/classlist">
+                                                        <form action="/class/list">
                                                             <input name="searchword" type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Class Code" value="${searchword}">
                                                     </form>
                                                 </div>
@@ -150,7 +150,7 @@
                                                         <!--begin::Separator-->
                                                         <div class="separator border-gray-200"></div>
                                                         <!--end::Separator-->
-                                                        <form action="/classlist">
+                                                        <form action="/class/list">
                                                             <!--begin::Content-->
                                                             <div class="px-7 py-5">
                                                                 <!--begin::Input group-->
@@ -210,7 +210,7 @@
                                                     <!--end::Menu 1-->
                                                     <!--end::Filter-->
                                                     <!--begin::Add customer-->
-                                                    <a type="button" class="btn btn-primary" href="/classlist?action=add">
+                                                    <a type="button" class="btn btn-primary" href="/class/list?action=create">
                                                         <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                                         <span class="svg-icon svg-icon-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -244,17 +244,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('class_id') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_id&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">ID</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('class_id') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -262,17 +262,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('class_code') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_code&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Code</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Code</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('class_code') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -280,17 +280,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('setting_title') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=setting_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Term</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Term</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('setting_title') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -298,17 +298,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('a.full_name') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=a.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Trainer</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Trainer</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('a.full_name') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -316,17 +316,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('b.full_name') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=b.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Supporter</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Supporter</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('b.full_name') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -334,17 +334,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('status_title') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=status_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Status</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('status_title') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/classlist?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -383,17 +383,17 @@
                                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-6 w-125px py-4" data-kt-menu="true">
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/classdetail?id=${sl.class_id}" class="menu-link px-3">View</a>
+                                                                                    <a href="/class/detail?id=${sl.class_id}" class="menu-link px-3">View</a>
                                                                                 </div>
                                                                                 <!--end::Menu item-->
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/classlist?id=${sl.class_id}&action=edit" class="menu-link px-3">Edit</a>
+                                                                                    <a href="/class/list?id=${sl.class_id}&action=update" class="menu-link px-3">Edit</a>
                                                                                 </div>
                                                                                 <!--end::Menu item-->
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/classlist?id=${sl.class_id}&page=${i}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&action=status" 
+                                                                                    <a href="/class/list?id=${sl.class_id}&page=${i}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&action=delete" 
                                                                                        class="menu-link px-3">Status
                                                                                     </a>
                                                                                 </div>
@@ -405,16 +405,16 @@
                                                                 </c:forEach>
                                                             </tbody>
                                                         </table>
-                                                        <div class="pagination">
+                                                        <div class="pagination float-end">
                                                             <c:forEach begin="1" end="${endPage}" var="i">
                                                                 <c:choose>
                                                                     <c:when test="${i == page}">
                                                                         <a class="btn btn-icon btn-bg-primary" 
-                                                                           href="/classlist?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
+                                                                           href="/class/list?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
                                                                     </c:when>    
                                                                     <c:otherwise>
                                                                         <a class="btn btn-icon btn-active-light-primary" 
-                                                                           href="/classlist?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
+                                                                           href="/class/list?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </c:forEach>

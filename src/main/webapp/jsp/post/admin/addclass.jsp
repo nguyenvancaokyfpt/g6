@@ -113,8 +113,8 @@
                                 <div class="card-body p-9">
 
                                     <!--begin::Form-->
-                                    <form action="/classlist">
-                                        <input type="hidden" name="action" value="create">
+                                    <form action="/class/list">
+                                        <input type="hidden" name="action" value="add">
                                         <div class="modal-body py-10 px-lg-17" >
                                             <!--begin::Input group-->
                                             <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
@@ -196,7 +196,7 @@
                                             <!--end::Input-->
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                         <!--end::Input group-->
-                                        <a class="btn btn-bg-danger" href="/classlist">Cancel</a>
+                                        <a class="btn btn-bg-danger" href="/class/list">Cancel</a>
                                         <button type="submit" class="btn btn-primary">Create Class</button>
                                     </div>
                                 </form>

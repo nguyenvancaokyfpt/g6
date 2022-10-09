@@ -171,7 +171,7 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
-                                        <a href="#" class="fw-bold fs-6 text-dark text-hover-primary"><%=sd.getDisplay_order()%></a>
+                                        <a href="#" class="fw-bold fs-6 text-dark text-hover-primary"><%=sd.getDisplayOrder()%></a>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -204,7 +204,7 @@
                                     <!--end::Col-->
                                 </div>
                                 <div>
-                                    <a class="btn btn-bg-danger" href="/settingList">Back</a>
+                                    <a class="btn btn-bg-danger" href="/setting/system">Back</a>
                                 </div>
                                 <!--end::Input group-->
                             </div>

@@ -225,7 +225,7 @@ public class ClassDaoIml implements ClassDao {
             String sql = "select user.user_id,full_name,user_role.setting_id,setting_title\n"
                     + "from user inner join user_role on user.user_id = user_role.user_id\n"
                     + "inner join setting on user_role.setting_id = setting.setting_id\n"
-                    + "where user_role.setting_id = ?";
+                    + "where user_role.setting_id = ? and user.status_id = 1";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, role);
