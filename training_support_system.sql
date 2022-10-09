@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2022 at 02:33 PM
+-- Generation Time: Oct 09, 2022 at 04:50 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -89,17 +89,17 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
-(1, 'SE1627', 1, 23, 1, 1, 'SWP'),
-(2, 'SE1628', 1, 23, 2, 1, 'SWP'),
-(3, 'SE1629', 1, 23, 2, 1, 'SWP'),
-(4, 'SE1630', 1, 23, 3, 1, 'SWP'),
-(5, 'SE1631', 1, 23, 4, 1, 'SWP'),
-(6, 'SE1632', 1, 23, 5, 1, 'SWP'),
-(7, 'SE1633', 1, 23, 6, 1, 'SWP'),
-(8, 'SE1634', 1, 23, 7, 1, 'SWP'),
-(9, 'SE1635', 1, 23, 8, 1, 'SWP'),
-(10, 'SE1636', 1, 23, 9, 1, 'SWP'),
-(11, 'SE1637', 1, 23, 10, 1, 'SWP');
+(1, 'SE1627', 3, 23, 41, 1, 'SWP'),
+(2, 'SE1628', 3, 23, 41, 1, 'SWP'),
+(3, 'SE1629', 3, 23, 41, 1, 'SWP'),
+(4, 'SE1630', 3, 23, 41, 1, 'SWP'),
+(5, 'SE1631', 3, 23, 41, 1, 'SWP'),
+(6, 'SE1632', 3, 23, 41, 1, 'SWP'),
+(7, 'SE1633', 3, 23, 41, 1, 'SWP'),
+(8, 'SE1634', 3, 23, 41, 1, 'SWP'),
+(9, 'SE1635', 3, 23, 41, 1, 'SWP'),
+(10, 'SE1636', 3, 23, 41, 1, 'SWP'),
+(11, 'SE1637', 3, 23, 41, 1, 'SWP');
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,9 @@ CREATE TABLE `class_setting` (
 --
 
 INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `class_id`, `status_id`, `description`) VALUES
-(2, 31, 'Setting Test', 'oke', 'ASC', 1, 1, 'a');
+(2, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 1, 1, 'Video intro for class'),
+(3, 32, 'Studen can vote', 'true', 'ASC', 1, 1, 'Student can vote comment'),
+(5, 32, 'Studen can comment', 'true', 'DESC', 1, 0, 'Studen can commentss');
 
 -- --------------------------------------------------------
 
@@ -154,6 +156,14 @@ CREATE TABLE `class_user` (
   `note` varchar(500) NOT NULL,
   `dropout_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `class_user`
+--
+
+INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status_id`, `note`, `dropout_date`) VALUES
+(1, 19, 1, 1, 1, 'a', '2022-09-09'),
+(2, 19, 1, 1, 1, '1', '2022-09-09');
 
 -- --------------------------------------------------------
 
@@ -378,8 +388,18 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (12, 24, 0, 0, 0, 0),
 (12, 26, 0, 0, 0, 0),
 (13, 21, 1, 1, 1, 1),
+(13, 22, 0, 0, 0, 0),
+(13, 24, 0, 0, 0, 0),
+(13, 26, 1, 1, 1, 1),
+(14, 21, 1, 1, 1, 1),
 (20, 21, 1, 1, 1, 1),
-(22, 21, 1, 1, 1, 1);
+(20, 22, 0, 0, 0, 0),
+(20, 24, 0, 0, 0, 0),
+(20, 26, 0, 0, 0, 0),
+(22, 21, 1, 1, 1, 1),
+(22, 22, 0, 0, 0, 0),
+(22, 24, 0, 0, 0, 0),
+(22, 26, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -445,6 +465,7 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (11, 'Subject Details', '/subject/detail'),
 (12, 'Setting Role Permissions', '/setting/role/permissions'),
 (13, 'Setting Class', '/setting/class'),
+(14, 'Setting Class Detail', '/setting/class/detail'),
 (20, 'Subject Setting', '/subject/setting'),
 (22, 'Assignment List', '/assignment/list');
 
@@ -471,6 +492,7 @@ CREATE TABLE `setting` (
 INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `status_id`, `description`) VALUES
 (1, 0, 'User Role', NULL, NULL, 1, NULL),
 (2, 0, 'Class Setting Type', '', NULL, 1, NULL),
+(3, 0, 'Term', NULL, NULL, 1, 'Term'),
 (21, 1, 'ADMIN', NULL, NULL, 1, NULL),
 (22, 1, 'MANAGER', NULL, NULL, 1, NULL),
 (23, 1, 'EXPERT', NULL, NULL, 1, NULL),
@@ -479,7 +501,8 @@ INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`
 (26, 1, 'TRAINEE', NULL, NULL, 1, NULL),
 (31, 2, 'System', NULL, NULL, 1, 'System config for Class Setting'),
 (32, 2, 'Permission', NULL, NULL, 1, 'Permission config for Class Setting'),
-(33, 2, 'Information', NULL, NULL, 1, 'Information config for Class Setting');
+(33, 2, 'Information', NULL, NULL, 1, 'Information config for Class Setting'),
+(41, 3, 'Summer 2022', 'su2022', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -583,6 +606,13 @@ CREATE TABLE `team` (
   `status_id` int(11) NOT NULL,
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team`
+--
+
+INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
+(1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test');
 
 -- --------------------------------------------------------
 
@@ -1040,7 +1070,7 @@ ALTER TABLE `class_lesson`
 -- AUTO_INCREMENT for table `class_setting`
 --
 ALTER TABLE `class_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `client`
@@ -1106,7 +1136,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -1136,7 +1166,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
@@ -1193,7 +1223,8 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `class`
   ADD CONSTRAINT `class_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
-  ADD CONSTRAINT `class_ibfk_2` FOREIGN KEY (`trainer_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `class_ibfk_2` FOREIGN KEY (`trainer_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `class_ibfk_3` FOREIGN KEY (`term_id`) REFERENCES `setting` (`setting_id`);
 
 --
 -- Constraints for table `class_lesson`
@@ -1208,7 +1239,8 @@ ALTER TABLE `class_lesson`
 --
 ALTER TABLE `class_setting`
   ADD CONSTRAINT `class_setting_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
-  ADD CONSTRAINT `class_setting_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
+  ADD CONSTRAINT `class_setting_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+  ADD CONSTRAINT `class_setting_ibfk_3` FOREIGN KEY (`type_id`) REFERENCES `setting` (`setting_id`);
 
 --
 -- Constraints for table `class_user`
