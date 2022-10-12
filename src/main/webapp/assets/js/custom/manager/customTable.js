@@ -185,19 +185,21 @@ var KTUsersList = (function () {
               title: "Actions",
               orderable: false,
               className: "text-center",
-              render: function (data) {
+              render: function (data, type, row) {
+                console.log(row.status);
+                const actions = row.status == 1 ? "Deactive" : "Active";
                 return `
-                  <td>
-                      <div class="d-flex justify-content-center">
-                          <form action="/evalCriteria/evalCriteriaList?action=get" method="post">
-                              <input name="evalId" type="hidden" value="${data}">
-                              <button type="submit" class="btn btn-secondary">
-                                  View
-                              </button>
-                          </form>
-                      </div>
-                  </td>
-                  `;
+                <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="action${data}" data-bs-toggle="dropdown" aria-expanded="false">
+                  Actions
+                </button>
+                  <ul class="dropdown-menu" aria-labelledby="action${data}">
+                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=get&evalId=${data}">View</a></li>
+                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=update&evalId=${data}">Edit</a></li>
+                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&evalId=${data}&status=${row.status}">${actions}</a></li>
+                  </ul>
+                </div>
+                `;
               },
             },
           ],
@@ -216,7 +218,14 @@ var KTUsersList = (function () {
               .forEach((e) => {
                 $(e).val("").trigger("change");
               }),
-              e.columns(2).search("").columns(3).search("").columns(7).search("").draw();
+              e
+                .columns(2)
+                .search("")
+                .columns(3)
+                .search("")
+                .columns(7)
+                .search("")
+                .draw();
           }),
         (() => {
           const t = document.querySelector(
@@ -241,7 +250,14 @@ var KTUsersList = (function () {
               }
             }),
               //e.columns(2).search(role).columns(7).search(status).draw();
-              e.columns(2).search(subject).columns(3).search(assign).columns(7).search(status).draw();
+              e
+                .columns(2)
+                .search(subject)
+                .columns(3)
+                .search(assign)
+                .columns(7)
+                .search(status)
+                .draw();
           });
         })());
     },

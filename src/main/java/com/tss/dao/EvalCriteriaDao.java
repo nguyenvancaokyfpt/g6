@@ -29,4 +29,6 @@ public interface EvalCriteriaDao {
     int countAll(Connection connection, String search, String subjectFilter, String assignFilter, String statusFilter) throws SQLException;
 
     int getNewId(Connection connection) throws SQLException;
+    
+    int changeStatus(Connection connection, int id, int status) throws SQLException;
 }

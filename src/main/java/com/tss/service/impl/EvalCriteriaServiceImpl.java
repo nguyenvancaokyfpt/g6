@@ -52,7 +52,6 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
     @Override
     public boolean add(Object prams[]) {
         Connection connection = null;
@@ -103,8 +102,6 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
         return count;
     }
 
-
-
     @Override
     public List<EvalCriteria> findAll(int start, int length, String search, List<DataTablesColumns> columns, int orderColumn, String orderDir, String subjectFilter, String assignFilter, String statusFilter) {
         Connection connection = null;
@@ -135,14 +132,13 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
         return evalList;
     }
 
-
     @Override
     public int countAll(String search, String subjectFilter, String assignFilter, String statusFilter) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = evalDao.countAll(connection, search,subjectFilter,assignFilter,statusFilter);
+            count = evalDao.countAll(connection, search, subjectFilter, assignFilter, statusFilter);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -165,4 +161,20 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
         }
         return count;
     }
+
+    @Override
+    public boolean changeStatus(int id, int status) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = evalDao.changeStatus(connection, id, status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return (count > 0);
+    }
+
 }

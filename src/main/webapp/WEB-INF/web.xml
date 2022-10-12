@@ -69,6 +69,10 @@
         <servlet-name>EvalCriteriaServlet</servlet-name>
         <servlet-class>com.tss.controller.EvalCriteriaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
+        <servlet-class>com.tss.controller.EvalCriteriaDetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -160,6 +164,10 @@
     <servlet-mapping>
         <servlet-name>EvalCriteriaServlet</servlet-name>
         <url-pattern>/evalCriteria/evalCriteriaList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
+        <url-pattern>/evalCriteria/evalCriteriaDetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

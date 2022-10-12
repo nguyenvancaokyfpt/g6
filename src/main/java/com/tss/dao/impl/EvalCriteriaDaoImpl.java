@@ -241,4 +241,17 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 //        Connection connection = BaseDao.getConnection();
 //        System.out.println(test.getNewId(connection));
 //    }
+    @Override
+    public int changeStatus(Connection connection, int id, int status) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "UPDATE `eval_criteria` SET "
+                    + "`status_id` = ? "
+                    + "WHERE `eval_criteria`.`criteria_id` = ?;";
+            Object[] params = {status, id};
+            count = BaseDao.execute(connection, preparedStatement, sql, params);
+        }
+        return count;
+    }
 }

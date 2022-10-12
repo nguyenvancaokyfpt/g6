@@ -27,4 +27,6 @@ public interface EvalCriteriaService {
     int countAll(String search, String subjectFilter,String assignFilter, String statusFilter);
 
     public int getNewId();
+    
+    boolean changeStatus(int id,int status);
 }
