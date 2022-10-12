@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2022 at 09:11 AM
+-- Generation Time: Oct 12, 2022 at 03:35 PM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -139,7 +139,7 @@ CREATE TABLE `class_setting` (
 
 INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `class_id`, `status_id`, `description`) VALUES
 (2, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 1, 1, 'Video intro for class'),
-(3, 32, 'Studen can vote', 'true', 'ASC', 1, 1, 'Student can vote comment'),
+(3, 32, 'Studen can vote', 'true', 'DESC', 1, 0, 'Student can vote comment'),
 (5, 32, 'Studen can comment', 'true', 'DESC', 1, 0, 'Studen can commentss');
 
 -- --------------------------------------------------------
@@ -420,6 +420,8 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (13, 24, 0, 0, 0, 0),
 (13, 26, 1, 1, 1, 1),
 (14, 21, 1, 1, 1, 1),
+(16, 21, 1, 1, 1, 1),
+(17, 21, 1, 1, 1, 1),
 (20, 21, 1, 1, 1, 1),
 (20, 22, 0, 0, 0, 0),
 (20, 24, 0, 0, 0, 0),
