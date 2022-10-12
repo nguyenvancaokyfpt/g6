@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tss.constants.ActionConstants;
+import com.tss.constants.ScreenConstants;
+import com.tss.helper.ResponseHelper;
 import com.tss.model.Assignment;
+import com.tss.model.Subject;
 import com.tss.service.AssignmentService;
 import com.tss.service.SubjectService;
 import com.tss.service.impl.AssignmentServiceImpl;
@@ -117,17 +120,31 @@ public class AssignmentManagementServlet extends HttpServlet {
         }
         request.setAttribute("pages", totalPages);
         request.setAttribute("subjectList", subjectService.List(0, Integer.MAX_VALUE));
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             request.setAttribute("notice", "There no result as you expected!!!");
         }
-        
+
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("assign_id"));
+        System.out.println(request.getParameter("assign_subject"));
+        int sub_id = Integer.parseInt(request.getParameter("assign_subject"));
+        String name = request.getParameter("assign_name");
+        String body = request.getParameter("assign_description");
+        int is_team = Integer.parseInt(request.getParameter("assign_team"));
+        int weight = Integer.parseInt(request.getParameter("assign_weight"));
+        int is_going = Integer.parseInt(request.getParameter("assign_going"));
+        int status = Integer.parseInt(request.getParameter("assign_status"));
+        Assignment assign = new Assignment(id, sub_id, name, body, weight, is_team, is_going, status, "");
+
+        assignmentService.update(assign);
+        System.out.println("here");
+        response.sendRedirect("list");
     }
 
     private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -136,7 +153,19 @@ public class AssignmentManagementServlet extends HttpServlet {
         response.sendRedirect("/assignment/list");
     }
 
-    private void get(HttpServletRequest request, HttpServletResponse response) {
+    private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("jspPath", "shared/assignmentdetails.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Assignment/custom.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.ASSIGNNMENT_LIST));
+        Assignment assign = assignmentService.findById(Integer.parseInt(request.getParameter("assignId")));
+        SubjectServiceImpl sv = new SubjectServiceImpl();
+        List<Subject> subjects = sv.findAll(0, sv.countAll(), "");
+        request.setAttribute("assign", assign);
+        request.setAttribute("subjects", subjects);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
 }

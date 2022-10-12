@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2022 at 04:50 PM
+-- Generation Time: Oct 12, 2022 at 09:11 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,6 +43,7 @@ CREATE TABLE `assignment` (
 --
 
 INSERT INTO `assignment` (`ass_id`, `subject_id`, `title`, `ass_body`, `eval_weight`, `is_team_work`, `is_ongoing`, `status_id`) VALUES
+(1, 10, 'Documents & Iter1 Reports', 'Team to prepare & submit back below documents following attached templates:\n\n1. Updated SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n2. Updated SDs document  where the Records of change, Overview (part I) are filled\n3. Project Tracking: updated information in the sheets Project & Iter1\n4. Issue Report: with all the tasks/issues for the iter1 are filled, mapped to the Functions/Screens', 20, 0, 1, 1),
 (2, 1, 'Practical Exam', 'All students must do the exam with mark > 0 to pass the subject.', 30, 0, 0, 1),
 (3, 2, 'Final Exam', 'All students must do the exam with mark > 4, then total > 5 to pass the subject.', 40, 0, 0, 1),
 (4, 8, 'Computer Project', 'Team will do project by teacher\'s require, work about data, probability and statistic', 15, 1, 1, 1),
@@ -198,6 +199,26 @@ CREATE TABLE `eval_criteria` (
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `eval_criteria`
+--
+
+INSERT INTO `eval_criteria` (`criteria_id`, `ass_id`, `milestone_id`, `criteria_name`, `is_team_eval`, `eval_weight`, `max_loc`, `status_id`, `description`) VALUES
+(1, 1, 1, 'Writing SRS,SDS,Tracking', 0, 55, 0, 1, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
+(2, 1, 1, 'Coding Fucntion', 1, 40, 300, 1, '-Code and show mockup all function in iter 1.'),
+(3, 5, 1, 'Lab 1', 0, 60, 100, 0, '- Correct result and clean code.'),
+(4, 6, 1, 'Writing SRS,SDS,Tracking', 1, 20, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n-Updated SDs document  where the Records of change, Overview (part I) are filled\n-Project Tracking: updated information in the sheets Project & Iter2'),
+(5, 1, 1, 'Team Work', 1, 10, 0, 1, '- Each Person Work in with other productively'),
+(6, 5, 1, 'Presentation', 1, 40, 0, 0, '-Fluent, understand the problem'),
+(7, 7, 1, 'Lab 2', 0, 80, 150, 0, '- Correct result and clean code.'),
+(8, 6, 1, 'Coding Fucntion', 0, 50, 450, 1, '-Code and show mockup all function in iter 2.'),
+(9, 8, 1, 'Clean Code', 0, 20, 75, 1, '-Easy to understand'),
+(10, 8, 1, 'Data', 1, 20, 50, 0, '-Groups of students are required to collect secondary data (topics may be suggested by instructor), form their own questions, and apply learned knowledge and methods of inferential statistics to analyze data and make conclusions about the populations.'),
+(11, 6, 1, 'Present product', 1, 30, 0, 0, '-Fluent, understand the problem'),
+(12, 6, 1, 'Creation of product', 0, 20, 0, 0, '-New idea to excute code'),
+(13, 1, 1, 'Present product', 1, 20, 0, 1, '-Fluent, understand the problem'),
+(14, 1, 1, 'test', 0, 88, 88, 1, 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -283,6 +304,13 @@ CREATE TABLE `milestone` (
   `description` varchar(1000) NOT NULL,
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `milestone`
+--
+
+INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
+(1, 10, 1, '2022-09-12', '2022-09-24', '1', '1', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -466,6 +494,8 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (12, 'Setting Role Permissions', '/setting/role/permissions'),
 (13, 'Setting Class', '/setting/class'),
 (14, 'Setting Class Detail', '/setting/class/detail'),
+(16, 'Eval Criteria List', '/evalCriteria/evalCriteriaList'),
+(17, 'Eval Criteria Detail', '/evalCriteria/evalCriteriaDetails'),
 (20, 'Subject Setting', '/subject/setting'),
 (22, 'Assignment List', '/assignment/list');
 
@@ -746,7 +776,8 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (53, 26),
 (54, 22),
 (55, 26),
-(56, 26);
+(56, 26),
+(57, 22);
 
 -- --------------------------------------------------------
 
@@ -1082,7 +1113,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT for table `eval_criteria`
 --
 ALTER TABLE `eval_criteria`
-  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `issue`
@@ -1112,7 +1143,7 @@ ALTER TABLE `member_eval`
 -- AUTO_INCREMENT for table `milestone`
 --
 ALTER TABLE `milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `milestone_eval`
