@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2022 at 12:51 PM
+-- Generation Time: Oct 12, 2022 at 09:11 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,9 +34,26 @@ CREATE TABLE `assignment` (
   `ass_body` varchar(5000) NOT NULL,
   `eval_weight` int(11) NOT NULL,
   `is_team_work` tinyint(1) NOT NULL,
-  `is_ongoing` int(11) NOT NULL,
+  `is_ongoing` tinyint(1) NOT NULL,
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignment`
+--
+
+INSERT INTO `assignment` (`ass_id`, `subject_id`, `title`, `ass_body`, `eval_weight`, `is_team_work`, `is_ongoing`, `status_id`) VALUES
+(1, 10, 'Documents & Iter1 Reports', 'Team to prepare & submit back below documents following attached templates:\n\n1. Updated SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n2. Updated SDs document  where the Records of change, Overview (part I) are filled\n3. Project Tracking: updated information in the sheets Project & Iter1\n4. Issue Report: with all the tasks/issues for the iter1 are filled, mapped to the Functions/Screens', 20, 0, 1, 1),
+(2, 1, 'Practical Exam', 'All students must do the exam with mark > 0 to pass the subject.', 30, 0, 0, 1),
+(3, 2, 'Final Exam', 'All students must do the exam with mark > 4, then total > 5 to pass the subject.', 40, 0, 0, 1),
+(4, 8, 'Computer Project', 'Team will do project by teacher\'s require, work about data, probability and statistic', 15, 1, 1, 1),
+(5, 9, 'Progress test 1', 'Test about knowledge that students learned in study progress, jsp, servlet, ...', 5, 0, 1, 1),
+(6, 10, 'Documents & Iter 2 Reports', 'Team will make plan for iteration 2, assign duties for each member in team. Team will code and submit, review in class.', 20, 1, 1, 1),
+(7, 9, 'Progress test 2', 'Test about knowledge that students learned in study progress, jsp, servlet, and JDBC, CRUD data with database ...', 5, 0, 1, 1),
+(8, 9, 'Assignment', 'Student will choose one project topic to do assignment, and review the final project in week 9 of term.', 40, 0, 1, 1),
+(9, 8, '	Final Exam', 'All students must do the exam with mark > 4, then total > 5 to pass the subject.', 35, 0, 0, 1),
+(10, 4, 'Assignment', 'Student will do a small project by C, teacher will send request about it for students.', 10, 0, 1, 1),
+(11, 7, '	Final Exam', 'Student must do the theory exam, mark > 4 and total > 5 to pass this subject.', 30, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -61,12 +78,19 @@ CREATE TABLE `attendance` (
 CREATE TABLE `class` (
   `class_id` int(11) NOT NULL,
   `class_code` varchar(255) NOT NULL,
-  `combo_id` int(11) NOT NULL,
+  `combo_id` int(11) DEFAULT NULL,
   `trainer_id` int(11) NOT NULL,
   `term_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
+(1, 'test', 1, 57, 1, 1, '1');
 
 -- --------------------------------------------------------
 
@@ -147,6 +171,26 @@ CREATE TABLE `eval_criteria` (
   `status_id` int(11) NOT NULL,
   `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `eval_criteria`
+--
+
+INSERT INTO `eval_criteria` (`criteria_id`, `ass_id`, `milestone_id`, `criteria_name`, `is_team_eval`, `eval_weight`, `max_loc`, `status_id`, `description`) VALUES
+(1, 1, 1, 'Writing SRS,SDS,Tracking', 0, 55, 0, 1, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
+(2, 1, 1, 'Coding Fucntion', 1, 40, 300, 1, '-Code and show mockup all function in iter 1.'),
+(3, 5, 1, 'Lab 1', 0, 60, 100, 0, '- Correct result and clean code.'),
+(4, 6, 1, 'Writing SRS,SDS,Tracking', 1, 20, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n-Updated SDs document  where the Records of change, Overview (part I) are filled\n-Project Tracking: updated information in the sheets Project & Iter2'),
+(5, 1, 1, 'Team Work', 1, 10, 0, 1, '- Each Person Work in with other productively'),
+(6, 5, 1, 'Presentation', 1, 40, 0, 0, '-Fluent, understand the problem'),
+(7, 7, 1, 'Lab 2', 0, 80, 150, 0, '- Correct result and clean code.'),
+(8, 6, 1, 'Coding Fucntion', 0, 50, 450, 1, '-Code and show mockup all function in iter 2.'),
+(9, 8, 1, 'Clean Code', 0, 20, 75, 1, '-Easy to understand'),
+(10, 8, 1, 'Data', 1, 20, 50, 0, '-Groups of students are required to collect secondary data (topics may be suggested by instructor), form their own questions, and apply learned knowledge and methods of inferential statistics to analyze data and make conclusions about the populations.'),
+(11, 6, 1, 'Present product', 1, 30, 0, 0, '-Fluent, understand the problem'),
+(12, 6, 1, 'Creation of product', 0, 20, 0, 0, '-New idea to excute code'),
+(13, 1, 1, 'Present product', 1, 20, 0, 1, '-Fluent, understand the problem'),
+(14, 1, 1, 'test', 0, 88, 88, 1, 'test');
 
 -- --------------------------------------------------------
 
@@ -234,6 +278,13 @@ CREATE TABLE `milestone` (
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `milestone`
+--
+
+INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
+(1, 10, 1, '2022-09-12', '2022-09-24', '1', '1', '1', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -285,6 +336,10 @@ CREATE TABLE `permission` (
 
 INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `can_create`, `can_update`) VALUES
 (1, 21, 1, 1, 1, 1),
+(1, 22, 0, 0, 0, 0),
+(1, 23, 0, 0, 0, 0),
+(1, 24, 0, 0, 0, 0),
+(1, 26, 0, 0, 0, 0),
 (2, 21, 1, 1, 1, 1),
 (2, 22, 1, 1, 1, 1),
 (2, 23, 1, 1, 1, 1),
@@ -295,13 +350,50 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (3, 22, 1, 1, 1, 1),
 (3, 23, 1, 1, 1, 1),
 (3, 24, 1, 1, 1, 1),
+(3, 25, 1, 1, 1, 1),
 (3, 26, 1, 1, 1, 1),
 (4, 21, 1, 1, 1, 1),
+(4, 22, 0, 0, 0, 0),
+(4, 23, 0, 0, 0, 0),
+(4, 24, 0, 0, 0, 0),
+(4, 26, 0, 0, 0, 0),
 (5, 21, 1, 1, 1, 1),
+(5, 22, 0, 0, 0, 0),
+(5, 23, 0, 0, 0, 0),
+(5, 24, 0, 0, 0, 0),
+(5, 26, 0, 0, 0, 0),
 (6, 21, 1, 1, 1, 1),
+(6, 22, 0, 0, 0, 0),
+(6, 23, 0, 0, 0, 0),
+(6, 24, 0, 0, 0, 0),
+(6, 26, 0, 0, 0, 0),
 (7, 21, 1, 1, 1, 1),
-(10, 21, 1, 1, 1, 1),
-(11, 21, 1, 1, 1, 1);
+(7, 22, 0, 0, 0, 0),
+(7, 23, 0, 0, 0, 0),
+(7, 24, 0, 0, 0, 0),
+(7, 25, 1, 1, 1, 1),
+(7, 26, 0, 0, 0, 0),
+(10, 21, 1, 0, 0, 0),
+(10, 22, 0, 0, 0, 0),
+(10, 23, 0, 0, 0, 0),
+(10, 24, 0, 0, 0, 0),
+(10, 26, 0, 0, 0, 0),
+(11, 21, 1, 1, 1, 1),
+(11, 22, 0, 0, 0, 0),
+(11, 23, 0, 0, 0, 0),
+(11, 24, 0, 0, 0, 0),
+(11, 26, 0, 0, 0, 0),
+(12, 21, 1, 1, 1, 1),
+(12, 22, 0, 0, 0, 0),
+(12, 23, 0, 0, 0, 0),
+(12, 24, 0, 0, 0, 0),
+(12, 26, 0, 0, 0, 0),
+(16, 21, 1, 1, 1, 1),
+(16, 22, 1, 1, 1, 1),
+(17, 21, 1, 1, 1, 1),
+(17, 22, 1, 1, 1, 1),
+(20, 21, 1, 1, 1, 1),
+(22, 21, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -364,7 +456,12 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (6, 'User Details', '/management/user/detail'),
 (7, 'Web Contact List', '/webcontact/list'),
 (10, 'Subject List', '/subject/list'),
-(11, 'Subject Details', '/subject/detail');
+(11, 'Subject Details', '/subject/detail'),
+(12, 'Setting Role Permissions', '/setting/role/permissions'),
+(16, 'Eval Criteria List', '/evalCriteria/evalCriteriaList'),
+(17, 'Eval Criteria Detail', '/evalCriteria/evalCriteriaDetails'),
+(20, 'Subject Setting', '/subject/setting'),
+(22, 'Assignment List', '/assignment/list');
 
 -- --------------------------------------------------------
 
@@ -393,7 +490,7 @@ INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`
 (23, 1, 'EXPERT', NULL, NULL, 1, NULL),
 (24, 1, 'TRAINER', NULL, NULL, 1, NULL),
 (25, 1, 'SUPPORTER', NULL, NULL, 1, NULL),
-(26, 1, 'STUDENT', NULL, NULL, 1, NULL);
+(26, 1, 'TRAINEE', NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -617,19 +714,20 @@ CREATE TABLE `user_role` (
 
 INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (2, 21),
-(3, 23),
+(3, 25),
 (19, 26),
 (21, 26),
 (22, 24),
 (25, 26),
 (27, 25),
-(29, 23),
+(29, 24),
 (32, 26),
 (52, 26),
 (53, 26),
-(54, 26),
+(54, 22),
 (55, 26),
-(56, 26);
+(56, 26),
+(57, 22);
 
 -- --------------------------------------------------------
 
@@ -935,13 +1033,13 @@ ALTER TABLE `web_contact`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-  MODIFY `ass_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ass_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class_lesson`
@@ -965,7 +1063,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT for table `eval_criteria`
 --
 ALTER TABLE `eval_criteria`
-  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `issue`
@@ -995,7 +1093,7 @@ ALTER TABLE `member_eval`
 -- AUTO_INCREMENT for table `milestone`
 --
 ALTER TABLE `milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `milestone_eval`
@@ -1019,7 +1117,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `setting`
