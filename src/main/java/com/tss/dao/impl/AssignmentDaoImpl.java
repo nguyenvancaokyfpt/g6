@@ -173,7 +173,7 @@ public class AssignmentDaoImpl implements AssignmentDao {
         ResultSet resultSet = null;
         Assignment assignment = null;
         if (connection != null) {
-            String sql = "SELECT * FROM assignment WHERE ass_id = ?";
+            String sql = "SELECT a.*,s.subject_name FROM assignment a inner join subject s on a.subject_id = s.subject_id WHERE ass_id = ?";
             Object[] params = { id };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
