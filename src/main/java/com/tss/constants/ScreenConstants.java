@@ -29,7 +29,22 @@ public enum ScreenConstants {
     SUBJECT_SETTING(20, "Subject Setting", "/subject/setting"),
     ASSIGNNMENT_LIST(22, "Assignment List", "/assignment/list"),
     EVALCRITERIA_LIST(16, "Eval Criteria List", "/evalCriteria/evalCriteriaList"),
-    EVALCRITERIA_DETAIL(17, "Eval Criteria Detail", "/evalCriteria/evalCriteriaDetails");
+    EVALCRITERIA_DETAIL(17, "Eval Criteria Detail", "/evalCriteria/evalCriteriaDetails"),
+    CLASS_EVAL_CRITERIA_LIST(30, "Class Eval Criteria List", "/evalCriteria/classEvalCriteria/list"),
+    CLASS_EVAL_CRITERIA_DETAIL(31, "Class Eval Criteria Detail", "/evalCriteria/classEvalCriteria/detail"),
+    TRAINEE_LIST(32, "Trainee List", "/management/trainee/list"),
+    TRAINEE_DETAIL(33, "Trainee Detail", "/management/trainee/detail"),
+    SCHEDULE_LIST(34, "Schedule List", "/schedule/list"),
+    SCHEDULE_DETAIL(35, "Schedule Detail", "/schedule/detail"),
+    ATTENDANCE_TRACKING(36, "Attendance Tracking", "/attendance/tracking"),
+    ATTENDANCE_DETAIL(37, "Attendance Detail", "/attendance/detail"),
+    SCHEDULE_ATTENDACE(38, "Schedule Attendance", "/schedule/attendance"),
+    TEAM_LIST(39, "Team List", "/team/list"),
+    TEAM_NEW(40, "Team New", "/team/new"),
+    TEAM_DETAIL(41, "Team Detail", "/team/detail"),
+    ISSUE_LIST(42, "Issue List", "/issue/list"),
+    ISSUE_DETAIL(43, "Issue Detail", "/issue/detail");
+
 
 
 

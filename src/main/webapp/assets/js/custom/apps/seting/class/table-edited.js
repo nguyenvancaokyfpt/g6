@@ -136,31 +136,26 @@ var KTUsersList = (function () {
                                 settingId: n,
                               })
                               .then(function (response) {
-                                Swal.fire({
-                                  text: "You have deactivated setting id " + n,
+                                $.toast({
+                                  heading: "Success",
+                                  text: "Setting has been deactivated",
+                                  showHideTransition: "slide",
                                   icon: "success",
-                                  buttonsStyling: !1,
-                                  confirmButtonText: "Ok, got it!",
-                                  customClass: {
-                                    confirmButton: "btn fw-bold btn-primary",
-                                  },
-                                }).then(function () {
-                                  e.draw();
+                                  position: "bottom-right",
                                 });
+                                e.draw();
                               })
                               .catch(function (error) {
                                 console.log(error);
                               });
                           })()
                         : "cancel" === t.dismiss &&
-                          Swal.fire({
-                            text: "Setting id " + n + " was not deactivated.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                              confirmButton: "btn fw-bold btn-primary",
-                            },
+                          $.toast({
+                            heading: "Info",
+                            text: "Setting has not been deactivated",
+                            showHideTransition: "slide",
+                            icon: "info",
+                            position: "bottom-right",
                           });
                     });
                   });
@@ -180,7 +175,7 @@ var KTUsersList = (function () {
                       confirmButtonText: "Yes, activate!",
                       cancelButtonText: "No, cancel",
                       customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
+                        confirmButton: "btn fw-bold btn-success",
                         cancelButton: "btn fw-bold btn-active-light-primary",
                       },
                     }).then(function (t) {
@@ -192,31 +187,26 @@ var KTUsersList = (function () {
                                 settingId: n,
                               })
                               .then(function (response) {
-                                Swal.fire({
-                                  text: "You have activated setting id " + n,
+                                $.toast({
+                                  heading: "Success",
+                                  text: "Setting has been activated",
+                                  showHideTransition: "slide",
                                   icon: "success",
-                                  buttonsStyling: !1,
-                                  confirmButtonText: "Ok, got it!",
-                                  customClass: {
-                                    confirmButton: "btn fw-bold btn-primary",
-                                  },
-                                }).then(function () {
-                                  e.draw();
+                                  position: "bottom-right",
                                 });
+                                e.draw();
                               })
                               .catch(function (error) {
                                 console.log(error);
                               });
                           })()
                         : "cancel" === t.dismiss &&
-                          Swal.fire({
-                            text: "Setting id " + n + " was not activated.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                              confirmButton: "btn fw-bold btn-primary",
-                            },
+                          $.toast({
+                            heading: "Info",
+                            text: "Setting has not been activated",
+                            showHideTransition: "slide",
+                            icon: "info",
+                            position: "bottom-right",
                           });
                     });
                   });
@@ -513,6 +503,18 @@ var KTUsersList = (function () {
               value: false,
             };
         }
+      }
+      // if value is number or string
+      if (!isNaN(value)) {
+        return {
+          type: "number",
+          value: value,
+        };
+      } else {
+        return {
+          type: "string",
+          value: value,
+        };
       }
     },
   };

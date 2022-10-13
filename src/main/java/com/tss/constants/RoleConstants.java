@@ -11,7 +11,7 @@ public enum RoleConstants {
         EXPERT(23, "EXPERT"),
         TRAINER(24, "TRAINER"),
         SUPPORTER(25, "SUPPORTER"),
-        STUDENT(26, "STUDENT");
+        STUDENT(26, "TRAINEE");
 
         private int id;
         private String title;

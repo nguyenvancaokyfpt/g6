@@ -110,6 +110,17 @@
                                             </a>
                                         </div>
                                     </c:if>
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.TRAINEE_LIST)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.TRAINEE_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.TRAINEE_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">User</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:if>
@@ -297,7 +308,7 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
-                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_SYSTEM_LIST)}">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.ASSIGNNMENT_LIST)}">
                                         <div class="menu-item ">
                                             <a class="menu-link ${screen == ScreenConstants.ASSIGNNMENT_LIST ? 'active' : ''}"
                                                 href="${ScreenConstants.ASSIGNNMENT_LIST.getPath()}">
@@ -355,9 +366,216 @@
                                             </a>
                                         </div>
                                     </c:if>
+                                    <c:if
+                                        test="${permissionHelper.hasPermission(ScreenConstants.CLASS_EVAL_CRITERIA_LIST)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.CLASS_EVAL_CRITERIA_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.CLASS_EVAL_CRITERIA_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Class Eval Criteria List</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                             <!-- End Eval -->
+                        </c:if>
+
+                        <c:if test="${permissionHelper.hasGroupPermissions('/schedule')}">
+                            <!-- SCHEDULE -->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion ${screen.getParentPath() == '/schedule' ? 'show' : ''}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <path
+                                                    d="M7,11 L15,11 C16.1045695,11 17,10.1045695 17,9 L17,8 L19,8 L19,9 C19,11.209139 17.209139,13 15,13 L7,13 L7,15 C7,15.5522847 6.55228475,16 6,16 C5.44771525,16 5,15.5522847 5,15 L5,9 C5,8.44771525 5.44771525,8 6,8 C6.55228475,8 7,8.44771525 7,9 L7,11 Z"
+                                                    fill="#000000" opacity="0.3"></path>
+                                                <path
+                                                    d="M6,21 C7.1045695,21 8,20.1045695 8,19 C8,17.8954305 7.1045695,17 6,17 C4.8954305,17 4,17.8954305 4,19 C4,20.1045695 4.8954305,21 6,21 Z M6,23 C3.790861,23 2,21.209139 2,19 C2,16.790861 3.790861,15 6,15 C8.209139,15 10,16.790861 10,19 C10,21.209139 8.209139,23 6,23 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M18,7 C19.1045695,7 20,6.1045695 20,5 C20,3.8954305 19.1045695,3 18,3 C16.8954305,3 16,3.8954305 16,5 C16,6.1045695 16.8954305,7 18,7 Z M18,9 C15.790861,9 14,7.209139 14,5 C14,2.790861 15.790861,1 18,1 C20.209139,1 22,2.790861 22,5 C22,7.209139 20.209139,9 18,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Schedule</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SCHEDULE_LIST)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.SCHEDULE_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.SCHEDULE_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Schedule List</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SCHEDULE_ATTENDACE)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.SCHEDULE_ATTENDACE ? 'active' : ''}"
+                                                href="${ScreenConstants.SCHEDULE_ATTENDACE.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Schedule Attendance</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <!-- End SCHEDULE -->
+                        </c:if>
+
+                        <c:if test="${permissionHelper.hasGroupPermissions('/attendance')}">
+                            <!-- ATTENDANCE -->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion ${screen.getParentPath() == '/attendance' ? 'show' : ''}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <path
+                                                    d="M7,11 L15,11 C16.1045695,11 17,10.1045695 17,9 L17,8 L19,8 L19,9 C19,11.209139 17.209139,13 15,13 L7,13 L7,15 C7,15.5522847 6.55228475,16 6,16 C5.44771525,16 5,15.5522847 5,15 L5,9 C5,8.44771525 5.44771525,8 6,8 C6.55228475,8 7,8.44771525 7,9 L7,11 Z"
+                                                    fill="#000000" opacity="0.3"></path>
+                                                <path
+                                                    d="M6,21 C7.1045695,21 8,20.1045695 8,19 C8,17.8954305 7.1045695,17 6,17 C4.8954305,17 4,17.8954305 4,19 C4,20.1045695 4.8954305,21 6,21 Z M6,23 C3.790861,23 2,21.209139 2,19 C2,16.790861 3.790861,15 6,15 C8.209139,15 10,16.790861 10,19 C10,21.209139 8.209139,23 6,23 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M18,7 C19.1045695,7 20,6.1045695 20,5 C20,3.8954305 19.1045695,3 18,3 C16.8954305,3 16,3.8954305 16,5 C16,6.1045695 16.8954305,7 18,7 Z M18,9 C15.790861,9 14,7.209139 14,5 C14,2.790861 15.790861,1 18,1 C20.209139,1 22,2.790861 22,5 C22,7.209139 20.209139,9 18,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Attendance</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.ATTENDANCE_TRACKING)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.ATTENDANCE_TRACKING ? 'active' : ''}"
+                                                href="${ScreenConstants.ATTENDANCE_TRACKING.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Attendance Tracking</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <!-- End ATTENDANCE -->
+                        </c:if>
+
+                        <c:if test="${permissionHelper.hasGroupPermissions('/team')}">
+                            <!-- TEAM -->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion ${screen.getParentPath() == '/team' ? 'show' : ''}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <path
+                                                    d="M7,11 L15,11 C16.1045695,11 17,10.1045695 17,9 L17,8 L19,8 L19,9 C19,11.209139 17.209139,13 15,13 L7,13 L7,15 C7,15.5522847 6.55228475,16 6,16 C5.44771525,16 5,15.5522847 5,15 L5,9 C5,8.44771525 5.44771525,8 6,8 C6.55228475,8 7,8.44771525 7,9 L7,11 Z"
+                                                    fill="#000000" opacity="0.3"></path>
+                                                <path
+                                                    d="M6,21 C7.1045695,21 8,20.1045695 8,19 C8,17.8954305 7.1045695,17 6,17 C4.8954305,17 4,17.8954305 4,19 C4,20.1045695 4.8954305,21 6,21 Z M6,23 C3.790861,23 2,21.209139 2,19 C2,16.790861 3.790861,15 6,15 C8.209139,15 10,16.790861 10,19 C10,21.209139 8.209139,23 6,23 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M18,7 C19.1045695,7 20,6.1045695 20,5 C20,3.8954305 19.1045695,3 18,3 C16.8954305,3 16,3.8954305 16,5 C16,6.1045695 16.8954305,7 18,7 Z M18,9 C15.790861,9 14,7.209139 14,5 C14,2.790861 15.790861,1 18,1 C20.209139,1 22,2.790861 22,5 C22,7.209139 20.209139,9 18,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Team</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.TEAM_LIST)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.TEAM_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.TEAM_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Team List</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <!-- End TEAM -->
+                        </c:if>
+
+                        <c:if test="${permissionHelper.hasGroupPermissions('/issue')}">
+                            <!-- Issue -->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion ${screen.getParentPath() == '/issue' ? 'show' : ''}">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotone/Shopping/Box2.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <path
+                                                    d="M7,11 L15,11 C16.1045695,11 17,10.1045695 17,9 L17,8 L19,8 L19,9 C19,11.209139 17.209139,13 15,13 L7,13 L7,15 C7,15.5522847 6.55228475,16 6,16 C5.44771525,16 5,15.5522847 5,15 L5,9 C5,8.44771525 5.44771525,8 6,8 C6.55228475,8 7,8.44771525 7,9 L7,11 Z"
+                                                    fill="#000000" opacity="0.3"></path>
+                                                <path
+                                                    d="M6,21 C7.1045695,21 8,20.1045695 8,19 C8,17.8954305 7.1045695,17 6,17 C4.8954305,17 4,17.8954305 4,19 C4,20.1045695 4.8954305,21 6,21 Z M6,23 C3.790861,23 2,21.209139 2,19 C2,16.790861 3.790861,15 6,15 C8.209139,15 10,16.790861 10,19 C10,21.209139 8.209139,23 6,23 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M18,7 C19.1045695,7 20,6.1045695 20,5 C20,3.8954305 19.1045695,3 18,3 C16.8954305,3 16,3.8954305 16,5 C16,6.1045695 16.8954305,7 18,7 Z M18,9 C15.790861,9 14,7.209139 14,5 C14,2.790861 15.790861,1 18,1 C20.209139,1 22,2.790861 22,5 C22,7.209139 20.209139,9 18,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Issue</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.ISSUE_LIST)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.ISSUE_LIST ? 'active' : ''}"
+                                                href="${ScreenConstants.ISSUE_LIST.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Issue List</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <!-- End TEAM -->
                         </c:if>
 
                     </div>

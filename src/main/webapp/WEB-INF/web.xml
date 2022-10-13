@@ -85,6 +85,58 @@
         <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
         <servlet-class>com.tss.controller.EvalCriteriaDetailsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeListServlet</servlet-name>
+        <servlet-class>com.tss.controller.management.TraineeListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassEvalCriteriaListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassEvalCriteriaDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScheduleListServlet</servlet-name>
+        <servlet-class>com.tss.controller.ScheduleListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScheduleDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.ScheduleDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceTrackingServlet</servlet-name>
+        <servlet-class>com.tss.controller.AttendanceTrackingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.AttendanceDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScheduleAttendanceServlet</servlet-name>
+        <servlet-class>com.tss.controller.ScheduleAttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TeamListServlet</servlet-name>
+        <servlet-class>com.tss.controller.TeamListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TeamNewServlet</servlet-name>
+        <servlet-class>com.tss.controller.TeamNewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TeamDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.TeamDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IssueListServlet</servlet-name>
+        <servlet-class>com.tss.controller.IssueListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IssueDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.IssueDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -192,6 +244,58 @@
     <servlet-mapping>
         <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
         <url-pattern>/evalCriteria/evalCriteriaDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeListServlet</servlet-name>
+        <url-pattern>/management/trainee/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
+        <url-pattern>/evalCriteria/classEvalCriteria/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
+        <url-pattern>/evalCriteria/classEvalCriteria/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScheduleListServlet</servlet-name>
+        <url-pattern>/schedule/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScheduleDetailServlet</servlet-name>
+        <url-pattern>/schedule/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceTrackingServlet</servlet-name>
+        <url-pattern>/attendance/tracking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceDetailServlet</servlet-name>
+        <url-pattern>/attendance/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScheduleAttendanceServlet</servlet-name>
+        <url-pattern>/schedule/attendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeamListServlet</servlet-name>
+        <url-pattern>/team/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeamNewServlet</servlet-name>
+        <url-pattern>/team/new</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeamDetailServlet</servlet-name>
+        <url-pattern>/team/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IssueListServlet</servlet-name>
+        <url-pattern>/issue/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IssueDetailServlet</servlet-name>
+        <url-pattern>/issue/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
