@@ -207,6 +207,17 @@
                                             </a>
                                         </div>
                                     </c:if>
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SUBJECT_SETTING)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.SUBJECT_SETTING ? 'active' : ''}"
+                                                href="${ScreenConstants.SUBJECT_SETTING.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Subject Setting</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:if>
@@ -251,8 +262,7 @@
                                             </a>
                                         </div>
                                     </c:if>
-                                    <c:if
-                                        test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.SETTING_ROLE_PERMISSIONS)}">
                                         <div class="menu-item">
                                             <a class="menu-link ${screen == ScreenConstants.SETTING_ROLE_PERMISSIONS ? 'active' : ''}"
                                                 href="${ScreenConstants.SETTING_ROLE_PERMISSIONS.getPath()}">

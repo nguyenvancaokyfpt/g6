@@ -137,6 +137,14 @@
         <servlet-name>IssueDetailServlet</servlet-name>
         <servlet-class>com.tss.controller.IssueDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubjectSettingServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.SubjectSettingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddSubjectSettingServlet</servlet-name>
+        <servlet-class>com.tss.controller.setting.AddSubjectSettingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -296,6 +304,14 @@
     <servlet-mapping>
         <servlet-name>IssueDetailServlet</servlet-name>
         <url-pattern>/issue/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubjectSettingServlet</servlet-name>
+        <url-pattern>/subject/setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddSubjectSettingServlet</servlet-name>
+        <url-pattern>/subject/setting/add</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

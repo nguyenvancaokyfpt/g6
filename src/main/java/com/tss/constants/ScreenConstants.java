@@ -27,6 +27,7 @@ public enum ScreenConstants {
     SETTING_CLASS(13, "Setting Class", "/setting/class"),
     SETTING_CLASS_DETAIL(14, "Setting Class Detail", "/setting/class/detail"),
     SUBJECT_SETTING(20, "Subject Setting", "/subject/setting"),
+    ADD_SUBJECT_SETTING(21, "Add Subject Setting", "/subject/setting/add"),
     ASSIGNNMENT_LIST(22, "Assignment List", "/assignment/list"),
     EVALCRITERIA_LIST(16, "Eval Criteria List", "/evalCriteria/evalCriteriaList"),
     EVALCRITERIA_DETAIL(17, "Eval Criteria Detail", "/evalCriteria/evalCriteriaDetails"),

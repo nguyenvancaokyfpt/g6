@@ -14,7 +14,9 @@ import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.WebContact;
 import com.tss.model.payload.DataTablesMessage;
+import com.tss.service.UserService;
 import com.tss.service.WebContactService;
+import com.tss.service.impl.UserServiceImpl;
 import com.tss.service.impl.WebContactServiceImpl;
 
 import jakarta.servlet.ServletException;
@@ -25,10 +27,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class WebContactServlet extends HttpServlet {
 
     private WebContactService webContactService;
+    private UserService userService;
 
     @Override
     public void init() throws ServletException {
         webContactService = new WebContactServiceImpl();
+        userService = new UserServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -67,6 +71,7 @@ public class WebContactServlet extends HttpServlet {
         request.setAttribute("jspPath", "shared/webcontactdetails.jsp");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         WebContact webContact = webContactService.findById(categoryId);
+        request.setAttribute("userList", userService.findAll(0, Integer.MAX_VALUE, ""));
         request.setAttribute("webContactDetails", webContact);
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
