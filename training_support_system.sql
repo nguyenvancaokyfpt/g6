@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2022 at 03:35 PM
+-- Generation Time: Oct 14, 2022 at 02:46 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -139,8 +139,60 @@ CREATE TABLE `class_setting` (
 
 INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `class_id`, `status_id`, `description`) VALUES
 (2, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 1, 1, 'Video intro for class'),
-(3, 32, 'Studen can vote', 'true', 'DESC', 1, 0, 'Student can vote comment'),
-(5, 32, 'Studen can comment', 'true', 'DESC', 1, 0, 'Studen can commentss');
+(3, 32, 'Student can vote', 'true', 'DESC', 1, 1, 'Student can vote comment'),
+(5, 32, 'Student can comment', 'false', 'DESC', 1, 1, 'Studen can commentss'),
+(6, 31, 'Need to take attendance', 'true', 'ASC', 1, 0, 'Stduent need to attend'),
+(7, 31, '% Minimum attendance', '80', 'ASC', 1, 1, '% Minimum attendance'),
+(8, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 2, 1, 'Video intro for class'),
+(9, 32, 'Student can vote', 'true', 'DESC', 2, 1, 'Student can vote comment'),
+(10, 32, 'Student can comment', 'true', 'DESC', 2, 1, 'Studen can commentss'),
+(11, 31, 'Need to take attendance', 'true', 'ASC', 2, 1, 'Stduent need to attend'),
+(12, 31, '% Minimum attendance', '80', 'ASC', 2, 1, '% Minimum attendance'),
+(13, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 3, 1, 'Video intro for class'),
+(14, 32, 'Student can vote', 'true', 'DESC', 3, 1, 'Student can vote comment'),
+(15, 32, 'Student can comment', 'true', 'DESC', 3, 1, 'Studen can commentss'),
+(16, 31, 'Need to take attendance', 'true', 'ASC', 3, 1, 'Stduent need to attend'),
+(17, 31, '% Minimum attendance', '80', 'ASC', 3, 1, '% Minimum attendance'),
+(18, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 4, 1, 'Video intro for class'),
+(19, 32, 'Student can vote', 'true', 'DESC', 4, 1, 'Student can vote comment'),
+(20, 32, 'Student can comment', 'true', 'DESC', 4, 1, 'Studen can commentss'),
+(21, 31, 'Need to take attendance', 'true', 'ASC', 4, 1, 'Stduent need to attend'),
+(22, 31, '% Minimum attendance', '80', 'ASC', 4, 1, '% Minimum attendance'),
+(23, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 5, 1, 'Video intro for class'),
+(24, 32, 'Student can vote', 'true', 'DESC', 5, 1, 'Student can vote comment'),
+(25, 32, 'Student can comment', 'true', 'DESC', 5, 1, 'Studen can commentss'),
+(26, 31, 'Need to take attendance', 'true', 'ASC', 5, 1, 'Stduent need to attend'),
+(27, 31, '% Minimum attendance', '80', 'ASC', 5, 1, '% Minimum attendance'),
+(28, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 6, 1, 'Video intro for class'),
+(29, 32, 'Student can vote', 'true', 'DESC', 6, 1, 'Student can vote comment'),
+(30, 32, 'Student can comment', 'true', 'DESC', 6, 1, 'Studen can commentss'),
+(31, 31, 'Need to take attendance', 'true', 'ASC', 6, 1, 'Stduent need to attend'),
+(32, 31, '% Minimum attendance', '80', 'ASC', 6, 1, '% Minimum attendance'),
+(33, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 7, 1, 'Video intro for class'),
+(34, 32, 'Student can vote', 'true', 'DESC', 7, 1, 'Student can vote comment'),
+(35, 32, 'Student can comment', 'true', 'DESC', 7, 1, 'Studen can commentss'),
+(36, 31, 'Need to take attendance', 'true', 'ASC', 7, 1, 'Stduent need to attend'),
+(37, 31, '% Minimum attendance', '80', 'ASC', 7, 1, '% Minimum attendance'),
+(38, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 8, 1, 'Video intro for class'),
+(39, 32, 'Student can vote', 'true', 'DESC', 8, 1, 'Student can vote comment'),
+(40, 32, 'Student can comment', 'true', 'DESC', 8, 1, 'Studen can commentss'),
+(41, 31, 'Need to take attendance', 'true', 'ASC', 8, 1, 'Stduent need to attend'),
+(42, 31, '% Minimum attendance', '80', 'ASC', 8, 1, '% Minimum attendance'),
+(43, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 9, 1, 'Video intro for class'),
+(44, 32, 'Student can vote', 'true', 'DESC', 9, 1, 'Student can vote comment'),
+(45, 32, 'Student can comment', 'true', 'DESC', 9, 1, 'Studen can commentss'),
+(46, 31, 'Need to take attendance', 'true', 'ASC', 9, 1, 'Stduent need to attend'),
+(47, 31, '% Minimum attendance', '80', 'ASC', 9, 1, '% Minimum attendance'),
+(48, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 10, 1, 'Video intro for class'),
+(49, 32, 'Student can vote', 'true', 'DESC', 10, 1, 'Student can vote comment'),
+(50, 32, 'Student can comment', 'true', 'DESC', 10, 1, 'Studen can commentss'),
+(51, 31, 'Need to take attendance', 'true', 'ASC', 10, 1, 'Stduent need to attend'),
+(52, 31, '% Minimum attendance', '80', 'ASC', 10, 1, '% Minimum attendance'),
+(53, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'ASC', 11, 1, 'Video intro for class'),
+(54, 32, 'Student can vote', 'true', 'DESC', 11, 1, 'Student can vote comment'),
+(55, 32, 'Student can comment', 'true', 'DESC', 11, 1, 'Studen can commentss'),
+(56, 31, 'Need to take attendance', 'true', 'ASC', 11, 1, 'Stduent need to attend'),
+(57, 31, '% Minimum attendance', '80', 'ASC', 11, 1, '% Minimum attendance');
 
 -- --------------------------------------------------------
 
@@ -190,7 +242,7 @@ CREATE TABLE `client` (
 CREATE TABLE `eval_criteria` (
   `criteria_id` int(11) NOT NULL,
   `ass_id` int(11) NOT NULL,
-  `milestone_id` int(11) NOT NULL,
+  `milestone_id` int(11) DEFAULT NULL,
   `criteria_name` varchar(255) NOT NULL,
   `is_team_eval` tinyint(1) NOT NULL,
   `eval_weight` int(11) NOT NULL,
@@ -204,7 +256,7 @@ CREATE TABLE `eval_criteria` (
 --
 
 INSERT INTO `eval_criteria` (`criteria_id`, `ass_id`, `milestone_id`, `criteria_name`, `is_team_eval`, `eval_weight`, `max_loc`, `status_id`, `description`) VALUES
-(1, 1, 1, 'Writing SRS,SDS,Tracking', 0, 55, 0, 1, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
+(1, 1, 1, 'Writing SRS,SDS,Tracking', 0, 55, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
 (2, 1, 1, 'Coding Fucntion', 1, 40, 300, 1, '-Code and show mockup all function in iter 1.'),
 (3, 5, 1, 'Lab 1', 0, 60, 100, 0, '- Correct result and clean code.'),
 (4, 6, 1, 'Writing SRS,SDS,Tracking', 1, 20, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n-Updated SDs document  where the Records of change, Overview (part I) are filled\n-Project Tracking: updated information in the sheets Project & Iter2'),
@@ -381,7 +433,7 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (3, 26, 1, 1, 1, 1),
 (4, 21, 1, 1, 1, 1),
 (4, 22, 0, 0, 0, 0),
-(4, 23, 0, 0, 0, 0),
+(4, 23, 1, 1, 1, 1),
 (4, 24, 0, 0, 0, 0),
 (4, 26, 0, 0, 0, 0),
 (5, 21, 1, 1, 1, 1),
@@ -401,12 +453,12 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (7, 25, 1, 1, 1, 1),
 (7, 26, 0, 0, 0, 0),
 (10, 21, 1, 1, 1, 1),
-(10, 22, 0, 0, 0, 0),
+(10, 22, 1, 1, 1, 1),
 (10, 23, 0, 0, 0, 0),
 (10, 24, 0, 0, 0, 0),
 (10, 26, 0, 0, 0, 0),
 (11, 21, 1, 1, 1, 1),
-(11, 22, 0, 0, 0, 0),
+(11, 22, 1, 1, 1, 1),
 (11, 23, 0, 0, 0, 0),
 (11, 24, 0, 0, 0, 0),
 (11, 26, 0, 0, 0, 0),
@@ -416,20 +468,45 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (12, 24, 0, 0, 0, 0),
 (12, 26, 0, 0, 0, 0),
 (13, 21, 1, 1, 1, 1),
-(13, 22, 0, 0, 0, 0),
+(13, 22, 1, 1, 1, 1),
+(13, 23, 0, 0, 0, 0),
 (13, 24, 0, 0, 0, 0),
 (13, 26, 1, 1, 1, 1),
 (14, 21, 1, 1, 1, 1),
+(14, 22, 1, 1, 1, 1),
+(14, 23, 0, 0, 0, 0),
 (16, 21, 1, 1, 1, 1),
+(16, 22, 0, 0, 0, 0),
+(16, 23, 0, 0, 0, 0),
 (17, 21, 1, 1, 1, 1),
+(17, 22, 0, 0, 0, 0),
+(17, 23, 0, 0, 0, 0),
 (20, 21, 1, 1, 1, 1),
-(20, 22, 0, 0, 0, 0),
+(20, 22, 1, 1, 1, 1),
+(20, 23, 0, 0, 0, 0),
 (20, 24, 0, 0, 0, 0),
 (20, 26, 0, 0, 0, 0),
 (22, 21, 1, 1, 1, 1),
-(22, 22, 0, 0, 0, 0),
+(22, 22, 1, 1, 1, 1),
+(22, 23, 0, 0, 0, 0),
 (22, 24, 0, 0, 0, 0),
-(22, 26, 0, 0, 0, 0);
+(22, 26, 0, 0, 0, 0),
+(26, 21, 1, 1, 1, 1),
+(27, 21, 1, 1, 1, 1),
+(30, 21, 1, 1, 1, 1),
+(31, 21, 1, 1, 1, 1),
+(32, 21, 1, 1, 1, 1),
+(33, 21, 1, 1, 1, 1),
+(34, 21, 1, 1, 1, 1),
+(35, 21, 1, 1, 1, 1),
+(36, 21, 1, 1, 1, 1),
+(37, 21, 1, 1, 1, 1),
+(38, 21, 1, 1, 1, 1),
+(39, 21, 1, 1, 1, 1),
+(40, 21, 1, 1, 1, 1),
+(41, 21, 1, 1, 1, 1),
+(42, 21, 1, 1, 1, 1),
+(43, 21, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -499,7 +576,23 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (16, 'Eval Criteria List', '/evalCriteria/evalCriteriaList'),
 (17, 'Eval Criteria Detail', '/evalCriteria/evalCriteriaDetails'),
 (20, 'Subject Setting', '/subject/setting'),
-(22, 'Assignment List', '/assignment/list');
+(22, 'Assignment List', '/assignment/list'),
+(26, 'Milestone List', '/milestone/list'),
+(27, 'Milestone Details', '/milestone/detail'),
+(30, 'Class Eval Criteria List', '/evalCriteria/classEvalCriteria/list'),
+(31, 'Class Eval Criteria Detail', '/evalCriteria/classEvalCriteria/detail'),
+(32, 'Trainee List', '/management/trainee/list'),
+(33, 'Trainee Detail', '/management/trainee/detail'),
+(34, 'Schedule List', '/schedule/list'),
+(35, 'Schedule Detail', '/schedule/detail'),
+(36, 'Attendance Tracking', '/attendance/tracking'),
+(37, 'Attendance Detail', '/attendance/detail'),
+(38, 'Schedule Attendance', '/schedule/attendance'),
+(39, 'Team List', '/team/list'),
+(40, 'Team New', '/team/new'),
+(41, 'Team Detail', '/team/detail'),
+(42, 'Issue List', '/issue/list'),
+(43, 'Issue Detail', '/issue/detail');
 
 -- --------------------------------------------------------
 
@@ -1103,7 +1196,7 @@ ALTER TABLE `class_lesson`
 -- AUTO_INCREMENT for table `class_setting`
 --
 ALTER TABLE `class_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `client`
