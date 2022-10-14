@@ -43,9 +43,9 @@ public enum ScreenConstants {
     TEAM_NEW(40, "Team New", "/team/new"),
     TEAM_DETAIL(41, "Team Detail", "/team/detail"),
     ISSUE_LIST(42, "Issue List", "/issue/list"),
-    ISSUE_DETAIL(43, "Issue Detail", "/issue/detail");
-
-
+    ISSUE_DETAIL(43, "Issue Detail", "/issue/detail"),
+    MILESTONE_LIST(26, "Milestone List", "/milestone/list"),
+    MILESTONE_DETAILS(27, "Milestone Details", "/milestone/detail");
 
 
     private int id;

@@ -7,13 +7,14 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassDao;
 import com.tss.dao.impl.ClassDaoImpl;
+import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
 import com.tss.service.ClassService;
 
 public class ClassServiceImpl implements ClassService {
 
     private ClassDao classDao;
-    
+
     public ClassServiceImpl() {
         classDao = new ClassDaoImpl();
     }
@@ -62,5 +63,21 @@ public class ClassServiceImpl implements ClassService {
         }
         return classrooms;
     }
-    
+
+    @Override
+    public List<ClassEntity> List() {
+        Connection connection = null;
+        List<ClassEntity> classEntitys = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            classEntitys = classDao.List(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return classEntitys;
+    }
+
 }

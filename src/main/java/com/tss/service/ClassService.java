@@ -2,6 +2,7 @@ package com.tss.service;
 
 import java.util.List;
 
+import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
 
 public interface ClassService {
@@ -10,4 +11,6 @@ public interface ClassService {
     List<Classroom> findClassroomByStudent(int userId);
 
     List<Classroom> findClassroomByTeacher(int userId);
+
+    List<ClassEntity> List();
 }

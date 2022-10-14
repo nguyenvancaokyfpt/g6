@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassDao;
+import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
 
 public class ClassDaoImpl implements ClassDao {
@@ -104,6 +105,38 @@ public class ClassDaoImpl implements ClassDao {
             }
         }
         return classrooms;
+    }
+
+    @Override
+    public java.util.List<ClassEntity> List(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ClassEntity> classEntitys = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT \n" +
+                    "    c.class_id AS id, c.class_code AS classCode\n" +
+                    "FROM\n" +
+                    "    class AS c\n" +
+                    "        LEFT JOIN\n" +
+                    "    milestone AS m ON m.class_id = c.class_id;";
+            // Search and Paging
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+
+                while (resultSet.next()) {
+                    ClassEntity classEntity = new ClassEntity();
+                    classEntity.setId(resultSet.getInt("id"));
+                    classEntity.setClassCode(resultSet.getString("classCode"));
+                    classEntitys.add(classEntity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classEntitys;
     }
 
 }

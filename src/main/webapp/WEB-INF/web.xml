@@ -137,6 +137,10 @@
         <servlet-name>IssueDetailServlet</servlet-name>
         <servlet-class>com.tss.controller.IssueDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MilestoneServlet</servlet-name>
+        <servlet-class>com.tss.controller.MilestoneServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -296,6 +300,10 @@
     <servlet-mapping>
         <servlet-name>IssueDetailServlet</servlet-name>
         <url-pattern>/issue/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MilestoneServlet</servlet-name>
+        <url-pattern>/milestone/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
