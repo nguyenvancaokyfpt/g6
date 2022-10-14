@@ -5,8 +5,8 @@
 package com.tss.controller;
 
 import com.tss.dao.BaseDao;
-import com.tss.dao.impl.ClassDaoIml;
-import com.tss.dao.impl.SettingDaoIml;
+import com.tss.dao.impl.ClassDaoImpl;
+import com.tss.dao.impl.SettingDaoImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,8 +40,8 @@ public class ClassServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
-        ClassDaoIml dao = new ClassDaoIml();
-        SettingDaoIml settingDao = new SettingDaoIml();
+        ClassDaoImpl dao = new ClassDaoImpl();
+        SettingDaoImpl settingDao = new SettingDaoImpl();
         List<Class> list = new ArrayList<>();
         List<Setting> termList = new ArrayList<>();
         List<Class> trainerList = new ArrayList<>();
@@ -174,7 +174,7 @@ public class ClassServlet extends HttpServlet {
                     list = dao.listSearchFilter(connection, (page - 1) * 5, searchword, term, status, order, dir);
                     termList = settingDao.ListTerm(connection);
                 } catch (SQLException ex) {
-                    Logger.getLogger(SettingDaoIml.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SettingDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 request.setAttribute("page", page);
