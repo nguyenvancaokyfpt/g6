@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
 
@@ -22,10 +23,10 @@ public interface ClassDao {
     List<ClassEntity> List(Connection connection)
             throws SQLException;
 
-    List<Classroom> listSearchFilter(Connection connection, int offset, String searchword, String term, String status,
+    List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term, String status,
             String order, String dir) throws SQLException;
 
-    Classroom findById(Connection connection, int id) throws SQLException;
+    ClassAnhPT findById(Connection connection, int id) throws SQLException;
 
     int countSearchFilter(Connection connection, String searchword, String term, String status) throws SQLException;
 
@@ -37,6 +38,6 @@ public interface ClassDao {
 
     void changeStatus(Connection connection, int id, int status_id) throws SQLException;
 
-    List<Classroom> listTrainer(Connection connection, int role) throws SQLException;
+    List<ClassAnhPT> listTrainer(Connection connection, int role) throws SQLException;
 
 }

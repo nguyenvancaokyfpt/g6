@@ -4,15 +4,19 @@
  */
 package com.tss.controller;
 
+import java.io.IOException;
+import java.sql.Connection;
+
+import com.tss.constants.ScreenConstants;
 import com.tss.dao.BaseDao;
-import com.tss.dao.impl.ClassDaoIml;
+import com.tss.dao.impl.ClassDaoImpl;
+import com.tss.helper.ResponseHelper;
+import com.tss.model.ClassAnhPT;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import com.tss.model.Class;
-import java.sql.Connection;
 
 /**
  *
@@ -33,17 +37,21 @@ public class ClassDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Connection connection = BaseDao.getConnection();
-        ClassDaoIml dao = new ClassDaoIml();
+        ClassDaoImpl dao = new ClassDaoImpl();
         int id = 1;
         String idString = request.getParameter("id");
-        Class classdetail = new Class();
+        ClassAnhPT classdetail = new ClassAnhPT();
         try {
             id = Integer.parseInt(idString);
             classdetail = dao.findById(connection, id);
         } catch (Exception e) {
         }
         request.setAttribute("classdetail", classdetail);
-        request.getRequestDispatcher("/jsp/post/admin/classdetail.jsp").forward(request, response);;
+        request.setAttribute("jspPath", "shared/classdetail.jsp");
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.CLASS_DETAIL));
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -8,7 +8,7 @@ package com.tss.model;
  *
  * @author msi
  */
-public class Class {
+public class ClassAnhPT {
 
     private int class_id;
     private String class_code;
@@ -22,10 +22,10 @@ public class Class {
     private String supporterString;
     private String statusString;
 
-    public Class() {
+    public ClassAnhPT() {
     }
 
-    public Class(int class_id, String class_code, int combo_id, int trainer_id, int term_id, int status_id, String description, String termString, String trainerString, String supporterString, String statusString) {
+    public ClassAnhPT(int class_id, String class_code, int combo_id, int trainer_id, int term_id, int status_id, String description, String termString, String trainerString, String supporterString, String statusString) {
         this.class_id = class_id;
         this.class_code = class_code;
         this.combo_id = combo_id;
@@ -39,7 +39,7 @@ public class Class {
         this.statusString = statusString;
     }
 
-    public Class(int trainer_id, String trainerString) {
+    public ClassAnhPT(int trainer_id, String trainerString) {
         this.trainer_id = trainer_id;
         this.trainerString = trainerString;
     }

@@ -4,13 +4,6 @@
  */
 package com.tss.controller;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.impl.ClassDaoImpl;
-import com.tss.dao.impl.SettingDaoImpl;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,8 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.tss.model.Class;
+
+import com.tss.constants.ScreenConstants;
+import com.tss.dao.BaseDao;
+import com.tss.dao.impl.ClassDaoImpl;
+import com.tss.dao.impl.SettingDaoImpl;
+import com.tss.helper.ResponseHelper;
+import com.tss.model.ClassAnhPT;
 import com.tss.model.system.Setting;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -42,10 +46,10 @@ public class ClassServlet extends HttpServlet {
         Connection connection = BaseDao.getConnection();
         ClassDaoImpl dao = new ClassDaoImpl();
         SettingDaoImpl settingDao = new SettingDaoImpl();
-        List<Class> list = new ArrayList<>();
+        List<ClassAnhPT> list = new ArrayList<>();
         List<Setting> termList = new ArrayList<>();
-        List<Class> trainerList = new ArrayList<>();
-        List<Class> supporterList = new ArrayList<>();
+        List<ClassAnhPT> trainerList = new ArrayList<>();
+        List<ClassAnhPT> supporterList = new ArrayList<>();
         String action = request.getParameter("action");
         int id = 1;
         int status_id = 1;
@@ -67,7 +71,7 @@ public class ClassServlet extends HttpServlet {
         switch (action) {
             case "update":
                 idString = request.getParameter("id");
-                Class classdetail = new Class();
+                ClassAnhPT classdetail = new ClassAnhPT();
                 try {
                     id = Integer.parseInt(idString);
                     classdetail = dao.findById(connection, id);
@@ -80,7 +84,11 @@ public class ClassServlet extends HttpServlet {
                 request.setAttribute("termList", termList);
                 request.setAttribute("trainerList", trainerList);
                 request.setAttribute("supporterList", supporterList);
-                request.getRequestDispatcher("/jsp/post/admin/editclass.jsp").forward(request, response);
+                request.setAttribute("jspPath", "shared/editclass.jsp");
+                request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                        ScreenConstants.USER_DASHBOARD,
+                        ScreenConstants.CLASS_DETAIL));
+                request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
                 break;
             case "edit":
                 idString = request.getParameter("id");
@@ -102,7 +110,11 @@ public class ClassServlet extends HttpServlet {
                     request.setAttribute("termList", termList);
                     request.setAttribute("trainerList", trainerList);
                     request.setAttribute("supporterList", supporterList);
-                    request.getRequestDispatcher("/jsp/post/admin/addclass.jsp").forward(request, response);
+                    request.setAttribute("jspPath", "shared/addclass.jsp");
+                    request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                            ScreenConstants.USER_DASHBOARD,
+                            ScreenConstants.CLASS_LIST));
+                    request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
                     break;
                 }
             case "add":
@@ -186,7 +198,11 @@ public class ClassServlet extends HttpServlet {
                 request.setAttribute("dir", dir);
                 request.setAttribute("term", term);
                 request.setAttribute("status", status);
-                request.getRequestDispatcher("/jsp/post/admin/classlist.jsp").forward(request, response);
+                request.setAttribute("jspPath", "shared/classlist.jsp");
+                request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                        ScreenConstants.USER_DASHBOARD,
+                        ScreenConstants.CLASS_LIST));
+                request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
         }
     }
 
