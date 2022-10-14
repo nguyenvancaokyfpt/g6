@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2022 at 02:46 PM
+-- Generation Time: Oct 14, 2022 at 07:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -699,6 +699,20 @@ CREATE TABLE `subject_setting` (
   `subject_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `subject_setting`
+--
+
+INSERT INTO `subject_setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`, `display_order`, `status_id`, `description`, `subject_id`) VALUES
+(21, 2, 'Home Page', '60', 'Simple', 1, '\"Show the static contents and include the web header & footer as in the Mockups sheet\n Allow the guest to submit the contact information in a chosen category\"', 10),
+(22, 2, 'Demo Dashobard', '90', 'Normal', 1, '\"Show the sample dashboard information where the data are taken from below APIs (ref https://morioh.com/p/57a8d79967b5 for more details) the page include common Admin Header, Admin Footer, and Nav Bar as in the mockup screen\n- Covid India Data API: https://www.covid19india.org/\n- Saved calls for covid19india (Import this json in postman):    https://www.getpostman.com/collections/2afb23eddb8accf94c3e\"', 10),
+(23, 2, 'User Login', '120', 'Complex', 1, '\"Fields: Email, Password, Capcha; Links: Reset Password, Register\n User can choose Google Login using the FPT @fpt.edu.vn account\"', 10),
+(24, 2, 'Project Assignment', '180', 'Complex', 0, 'If you are struggling with writing a document like this, engaging with a third-party partner as Branch Strategy can help. We can help you ask the right questions of your team, determine how your project fits into your larger business goals, and get the Project Brief complete so it saves you money, allowing you to build the right website the first time.', 3),
+(25, 2, 'Practical Exam', '200', 'Complex', 0, 'Do the exam on PEA Client to finish the PE of subject.', 6),
+(26, 2, 'Progress Test', '60', 'Simple', 1, 'Use all knowledge that learned in week 1 - 2. Do test in EOS.', 7),
+(27, 2, 'Final Exam', '200', 'Complex', 0, 'Do theory exam in EOS, this test required student gain the marks > 4 and total marks > 5 to pass this subject.', 5),
+(28, 2, 'Final Exam', '200', 'Complex', 1, 'Do theory exam in EOS, this test required student gain the marks > 4 and total marks > 5 to pass this subject.', 7);
+
 -- --------------------------------------------------------
 
 --
@@ -1280,7 +1294,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `subject_setting`
 --
 ALTER TABLE `subject_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `submit`
