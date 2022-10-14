@@ -145,8 +145,6 @@
                                         data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-15px">ID</th>
-                            <th class="min-w-15px">Class ID</th>
                             <th class="min-w-100px">Type</th>
                             <th class="min-w-200px">Setting Title</th>
                             <th class="min-w-100px">Value</th>

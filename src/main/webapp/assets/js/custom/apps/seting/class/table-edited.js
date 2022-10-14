@@ -219,15 +219,13 @@ var KTUsersList = (function () {
             type: "POST",
             data: function (d) {
               return $.extend({}, d, {
-                numberOfColumns: 8,
+                numberOfColumns: 6,
                 classId: $("#classId").val(),
               });
             },
           },
           columns: [
             { data: "settingId" },
-            { data: "settingId" },
-            { data: "classId" },
             { data: "settingTitle" },
             { data: "title" },
             { data: "value" },
@@ -257,22 +255,6 @@ var KTUsersList = (function () {
             },
             {
               targets: 1,
-              title: "ID",
-              class: "text-center",
-              render: function (data) {
-                return data;
-              },
-            },
-            {
-              targets: 2,
-              title: "Class ID",
-              class: "text-center",
-              render: function (data) {
-                return data;
-              },
-            },
-            {
-              targets: 3,
               title: "Setting Type",
               class: "text-center",
               render: function (data, type, row) {
@@ -299,7 +281,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 4,
+              targets: 2,
               title: "Title",
               class: "text-start",
               render: function (data) {
@@ -307,7 +289,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 5,
+              targets: 3,
               title: "Value",
               class: "text-center",
               render: function (data) {
@@ -337,7 +319,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 6,
+              targets: 4,
               title: "Display Order",
               class: "text-center",
               render: function (data) {
@@ -345,7 +327,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 7,
+              targets: 5,
               title: "Status",
               class: "text-center",
               render: function (data, type, row) {
@@ -366,7 +348,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 8,
+              targets: 6,
               title: "Actions",
               orderable: false,
               class: "text-center",
@@ -436,7 +418,7 @@ var KTUsersList = (function () {
               .forEach((e) => {
                 $(e).val("").trigger("change");
               }),
-              e.columns(3).search("").columns(7).search("").draw();
+              e.columns(1).search("").columns(5).search("").draw();
           }),
         (() => {
           const t = document.querySelector(
@@ -462,7 +444,7 @@ var KTUsersList = (function () {
                   statusId = e.value;
                 }
               }),
-                e.columns(7).search(statusId).columns(3).search(typeId).draw();
+                e.columns(5).search(statusId).columns(1).search(typeId).draw();
             });
         })());
     },
