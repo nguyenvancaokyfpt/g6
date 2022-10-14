@@ -12,7 +12,6 @@ public enum ScreenConstants {
     CAPTCHA_GENERATOR(1007, "Captcha generate", "/captchaGenerator"),
     UPLOAD_FILE(1008, "Upload file", "/upload"),
 
-
     // Private screen
     USER_MANAGEMENT(1, "User Management", "/management/user"),
     USER_PROFILE(2, "User Profile", "/profile"),
@@ -46,8 +45,9 @@ public enum ScreenConstants {
     ISSUE_LIST(42, "Issue List", "/issue/list"),
     ISSUE_DETAIL(43, "Issue Detail", "/issue/detail"),
     MILESTONE_LIST(26, "Milestone List", "/milestone/list"),
-    MILESTONE_DETAILS(27, "Milestone Details", "/milestone/detail");
-
+    MILESTONE_DETAILS(27, "Milestone Details", "/milestone/detail"),
+    CLASS_LIST(23, "Class List", "/class/list"),
+    CLASS_DETAIL(24, "Class Detail", "/class/detail");
 
     private int id;
     private String title;

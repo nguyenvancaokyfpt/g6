@@ -116,8 +116,8 @@
                                                             </svg>
                                                         </span>
                                                         <!--end::Svg Icon-->
-                                                        <form action="/setting/system">
-                                                            <input name="searchword" type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Setting" value="${searchword}">
+                                                        <form action="/class/list">
+                                                            <input name="searchword" type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Class Code" value="${searchword}">
                                                     </form>
                                                 </div>
                                                 <!--end::Search-->
@@ -150,18 +150,18 @@
                                                         <!--begin::Separator-->
                                                         <div class="separator border-gray-200"></div>
                                                         <!--end::Separator-->
-                                                        <form action="/setting/system">
+                                                        <form action="/class/list">
                                                             <!--begin::Content-->
                                                             <div class="px-7 py-5">
                                                                 <!--begin::Input group-->
                                                                 <div class="mb-10">
                                                                     <!--begin::Label-->
-                                                                    <label class="form-label fs-5 fw-bold mb-3">Type</label>
+                                                                    <label class="form-label fs-5 fw-bold mb-3">Term</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="type">
+                                                                    <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="term">
                                                                         <option data-select2-id="select2-data-12-dqg1"></option>
-                                                                        <c:forEach items="${typelist}" var="tl">
+                                                                        <c:forEach items="${termList}" var="tl">
                                                                             <option value="${tl.title}">${tl.title}</option>
                                                                         </c:forEach>                                                                    
                                                                     </select>
@@ -210,7 +210,7 @@
                                                     <!--end::Menu 1-->
                                                     <!--end::Filter-->
                                                     <!--begin::Add customer-->
-                                                    <a type="button" class="btn btn-primary" href="/setting/system?action=add">
+                                                    <a type="button" class="btn btn-primary" href="/class/list?action=create">
                                                         <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                                         <span class="svg-icon svg-icon-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -218,7 +218,7 @@
                                                             <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1"></rect>
                                                             </svg>
                                                         </span>
-                                                        <!--end::Svg Icon-->Add Setting</a>
+                                                        <!--end::Svg Icon-->Add Class</a>
                                                     <!--end::Add customer-->
                                                 </div>
                                                 <!--end::Toolbar-->
@@ -242,91 +242,91 @@
                                                                 <tr class="text-gray-600 fw-bold">
                                                                     <th>                                                                       
                                                                         <c:choose>
-                                                                            <c:when test="${order.equals('a.setting_id') && dir.equals('asc')}">
+                                                                            <c:when test="${order.equals('class_id') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_id&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">ID</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
-                                                                            <c:when test="${order.equals('a.setting_id') && dir.equals('desc')}">
+                                                                            <c:when test="${order.equals('class_id') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_id&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_id&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">ID</a>
+                                                                                   href="/class/list?order=class_id&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">ID</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
                                                                     <th>
                                                                         <c:choose>
-                                                                            <c:when test="${order.equals('b.setting_title') && dir.equals('asc')}">
+                                                                            <c:when test="${order.equals('class_code') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=b.setting_title&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">Type</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Code</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
-                                                                            <c:when test="${order.equals('b.setting_title') && dir.equals('desc')}">
+                                                                            <c:when test="${order.equals('class_code') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=b.setting_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Type</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=b.setting_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Type</a>
+                                                                                   href="/class/list?order=class_code&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Code</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
                                                                     <th>
                                                                         <c:choose>
-                                                                            <c:when test="${order.equals('a.setting_title') && dir.equals('asc')}">
+                                                                            <c:when test="${order.equals('setting_title') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_title&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">Title</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Term</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
-                                                                            <c:when test="${order.equals('a.setting_title') && dir.equals('desc')}">
+                                                                            <c:when test="${order.equals('setting_title') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Title</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Title</a>
+                                                                                   href="/class/list?order=setting_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Term</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
                                                                     <th>
                                                                         <c:choose>
-                                                                            <c:when test="${order.equals('a.setting_value') && dir.equals('asc')}">
+                                                                            <c:when test="${order.equals('a.full_name') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_value&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">Value</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Trainer</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
-                                                                            <c:when test="${order.equals('a.setting_value') && dir.equals('desc')}">
+                                                                            <c:when test="${order.equals('a.full_name') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_value&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Value</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.setting_value&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Value</a>
+                                                                                   href="/class/list?order=a.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Trainer</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
                                                                     <th>
                                                                         <c:choose>
-                                                                            <c:when test="${order.equals('a.display_order') && dir.equals('asc')}">
+                                                                            <c:when test="${order.equals('b.full_name') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.display_order&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">Display Order</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Supporter</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
-                                                                            <c:when test="${order.equals('a.display_order') && dir.equals('desc')}">
+                                                                            <c:when test="${order.equals('b.full_name') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.display_order&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Display Order</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=a.display_order&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Display Order</a>
+                                                                                   href="/class/list?order=b.full_name&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Supporter</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -334,17 +334,17 @@
                                                                         <c:choose>
                                                                             <c:when test="${order.equals('status_title') && dir.equals('asc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=status_title&page=${i}&searchword=${searchword}&dir=desc&type=${type}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=desc&term=${term}&status=${status}">Status</a>
                                                                                 <i class="fas fa-sort-amount-down"></i>
                                                                             </c:when>
                                                                             <c:when test="${order.equals('status_title') && dir.equals('desc')}">
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=status_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
                                                                                 <i class="fas fa-sort-amount-up"></i>
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a class="text-gray-600 fw-bold" 
-                                                                                   href="/setting/system?order=status_title&page=${i}&searchword=${searchword}&dir=asc&type=${type}&status=${status}">Status</a>
+                                                                                   href="/class/list?order=status_title&page=${i}&searchword=${searchword}&dir=asc&term=${term}&status=${status}">Status</a>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </th>
@@ -352,13 +352,13 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="content">
-                                                                <c:forEach items="${settinglist}" var="sl">
+                                                                <c:forEach items="${classList}" var="sl">
                                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">                                                   
-                                                                        <td>${sl.id}</td>
-                                                                        <td>${sl.typeString}</td>
-                                                                        <td>${sl.title}</td>
-                                                                        <td>${sl.value}</td>
-                                                                        <td>${sl.displayOrder}</td>
+                                                                        <td>${sl.class_id}</td>
+                                                                        <td>${sl.class_code}</td>
+                                                                        <td>${sl.termString}</td>
+                                                                        <td>${sl.trainerString}</td>
+                                                                        <td>${sl.supporterString}</td>
                                                                         <c:choose>
                                                                             <c:when test="${sl.statusString=='Active'}">
                                                                                 <td><span class="badge badge-success fw-bold fs-6">${sl.statusString}</span></td>
@@ -383,17 +383,17 @@
                                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-6 w-125px py-4" data-kt-menu="true">
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/setting/system/detail?id=${sl.id}&action=view" class="menu-link px-3">View</a>
+                                                                                    <a href="/class/detail?id=${sl.class_id}" class="menu-link px-3">View</a>
                                                                                 </div>
                                                                                 <!--end::Menu item-->
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/setting/system/detail?id=${sl.id}&action=edit" class="menu-link px-3">Edit</a>
+                                                                                    <a href="/class/list?id=${sl.class_id}&action=update" class="menu-link px-3">Edit</a>
                                                                                 </div>
                                                                                 <!--end::Menu item-->
                                                                                 <!--begin::Menu item-->
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="/setting/system?page=${page}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}&id=${sl.id}&status_id=${sl.statusId}&action=status" 
+                                                                                    <a href="/class/list?id=${sl.class_id}&page=${i}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&action=delete" 
                                                                                        class="menu-link px-3">Status
                                                                                     </a>
                                                                                 </div>
@@ -410,11 +410,11 @@
                                                                 <c:choose>
                                                                     <c:when test="${i == page}">
                                                                         <a class="btn btn-icon btn-bg-primary" 
-                                                                           href="/setting/system?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}">${i}</a>
+                                                                           href="/class/list?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
                                                                     </c:when>    
                                                                     <c:otherwise>
                                                                         <a class="btn btn-icon btn-active-light-primary" 
-                                                                           href="/setting/system?page=${i}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}">${i}</a>
+                                                                           href="/class/list?page=${i}&searchword=${searchword}&term=${term}&status=${status}&order=${order}&dir=${dir}">${i}</a>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </c:forEach>

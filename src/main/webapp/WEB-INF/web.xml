@@ -74,6 +74,14 @@
         <servlet-class>com.tss.controller.setting.SettingClassServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ClassServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassDetailServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SettingClassDetailServlet</servlet-name>
         <servlet-class>com.tss.controller.setting.SettingClassDetailServlet</servlet-class>
     </servlet>
@@ -244,82 +252,6 @@
     <servlet-mapping>
         <servlet-name>SettingClassServlet</servlet-name>
         <url-pattern>/setting/class</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SettingClassDetailServlet</servlet-name>
-        <url-pattern>/setting/class/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EvalCriteriaServlet</servlet-name>
-        <url-pattern>/evalCriteria/evalCriteriaList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
-        <url-pattern>/evalCriteria/evalCriteriaDetails</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeListServlet</servlet-name>
-        <url-pattern>/management/trainee/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
-        <url-pattern>/evalCriteria/classEvalCriteria/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
-        <url-pattern>/evalCriteria/classEvalCriteria/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ScheduleListServlet</servlet-name>
-        <url-pattern>/schedule/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ScheduleDetailServlet</servlet-name>
-        <url-pattern>/schedule/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AttendanceTrackingServlet</servlet-name>
-        <url-pattern>/attendance/tracking</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AttendanceDetailServlet</servlet-name>
-        <url-pattern>/attendance/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ScheduleAttendanceServlet</servlet-name>
-        <url-pattern>/schedule/attendance</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TeamListServlet</servlet-name>
-        <url-pattern>/team/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TeamNewServlet</servlet-name>
-        <url-pattern>/team/new</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TeamDetailServlet</servlet-name>
-        <url-pattern>/team/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>IssueListServlet</servlet-name>
-        <url-pattern>/issue/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>IssueDetailServlet</servlet-name>
-        <url-pattern>/issue/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MilestoneServlet</servlet-name>
-        <url-pattern>/milestone/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SubjectSettingServlet</servlet-name>
-        <url-pattern>/subject/setting</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddSubjectSettingServlet</servlet-name>
-        <url-pattern>/subject/setting/add</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
