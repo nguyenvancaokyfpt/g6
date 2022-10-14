@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2022 at 07:23 PM
+-- Generation Time: Oct 14, 2022 at 08:32 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -90,7 +90,7 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
-(1, 'SE1627', 3, 23, 41, 1, 'SWP'),
+(1, 'SE1627', 3, 23, 41, 0, 'SWP'),
 (2, 'SE1628', 3, 23, 41, 1, 'SWP'),
 (3, 'SE1629', 3, 23, 41, 1, 'SWP'),
 (4, 'SE1630', 3, 23, 41, 1, 'SWP'),
@@ -491,6 +491,8 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (22, 23, 0, 0, 0, 0),
 (22, 24, 0, 0, 0, 0),
 (22, 26, 0, 0, 0, 0),
+(23, 21, 1, 1, 1, 1),
+(24, 21, 1, 1, 1, 1),
 (26, 21, 1, 1, 1, 1),
 (27, 21, 1, 1, 1, 1),
 (30, 21, 1, 1, 1, 1),
@@ -577,6 +579,8 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 (17, 'Eval Criteria Detail', '/evalCriteria/evalCriteriaDetails'),
 (20, 'Subject Setting', '/subject/setting'),
 (22, 'Assignment List', '/assignment/list'),
+(23, 'Class List', '/class/list'),
+(24, 'Class Detail', '/class/detail'),
 (26, 'Milestone List', '/milestone/list'),
 (27, 'Milestone Details', '/milestone/detail'),
 (30, 'Class Eval Criteria List', '/evalCriteria/classEvalCriteria/list'),
