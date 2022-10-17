@@ -27,14 +27,16 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Criteria Name</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Criteria Name
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-xl-9 fv-row">
-                                            <input type="text" class="form-control form-control-solid"
+                                            <input id="test" type="text" class="form-control form-control-solid"
                                                 name="criteria_name" placeholder="Type Criterial Name"
-                                                value="${requestScope.eval.name}" />
+                                                value="${requestScope.eval.name}" required />
                                             <!-- store ID to submit -->
                                             <input type="text" name="criteria_id" class="d-none"
                                                 value="${requestScope.eval.id}">
@@ -45,7 +47,31 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Assignment</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Subject
+                                                <span class="text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-xl-9 fv-row">
+                                            <select class="form-select" name="criteria_subject">
+                                                <c:forEach items="${requestScope.subjects}" var="s">
+                                                    <option value="${s.subjectId}" <c:if
+                                                        test="${s.subjectId == requestScope.sub.subjectId}">selected
+                                                        </c:if>
+                                                        >${s.subjectName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--end::Row-->
+                                    <!--begin::Row-->
+                                    <div class="row mb-8">
+                                        <!--begin::Col-->
+                                        <div class="col-xl-3">
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Assignment
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
@@ -81,7 +107,9 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Team Eval</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Team Eval
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
@@ -108,7 +136,9 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Eval Weight</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Eval Weight
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
@@ -116,7 +146,7 @@
                                             <input type="number" min="1" max="100"
                                                 class="form-control form-control-solid" name="criteria_weight"
                                                 placeholder="Type number of weight (%)"
-                                                value="${requestScope.eval.weight}" />
+                                                value="${requestScope.eval.weight}" required />
                                         </div>
                                     </div>
                                     <!--end::Row-->
@@ -124,14 +154,16 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Max LOC</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Max LOC
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-xl-9 fv-row">
                                             <input type="number" class="form-control form-control-solid"
                                                 name="criteria_loc" placeholder="Type Criterial Name"
-                                                value="${requestScope.eval.maxLoc}" />
+                                                value="${requestScope.eval.maxLoc}" required />
                                         </div>
                                     </div>
                                     <!--end::Row-->
@@ -139,7 +171,9 @@
                                     <div class="row mb-8">
                                         <!--begin::Col-->
                                         <div class="col-xl-3">
-                                            <div class="fs-6 fw-bold mt-2 mb-3">Status</div>
+                                            <div class="fs-6 fw-bold mt-2 mb-3">Status
+                                                <span class="text-danger">*</span>
+                                            </div>
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->

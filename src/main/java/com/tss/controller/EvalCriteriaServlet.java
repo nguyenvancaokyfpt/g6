@@ -19,6 +19,7 @@ import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.AssignmentService;
 import com.tss.service.EvalCriteriaService;
+import com.tss.service.SubjectService;
 import com.tss.service.UserService;
 import com.tss.service.impl.AssignmentServiceImpl;
 import com.tss.service.impl.EvalCriteriaServiceImpl;
@@ -41,10 +42,12 @@ public class EvalCriteriaServlet extends HttpServlet {
 
     private EvalCriteriaService evalService;
     private AssignmentService assignService;
+    private SubjectService subService;
 
     public EvalCriteriaServlet() {
         evalService = new EvalCriteriaServiceImpl();
         assignService = new AssignmentServiceImpl();
+        subService = new SubjectServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -88,6 +91,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
         SubjectServiceImpl sv = new SubjectServiceImpl();
         request.setAttribute("subjects", sv.findAll(0, sv.countAll(), ""));
+        request.setAttribute("toastStatus", request.getParameter("toastStatus"));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -161,8 +165,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.EVALCRITERIA_LIST));
         request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
+        request.setAttribute("subjects", subService.findAll(0, subService.countAll(), ""));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
-
+       
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -180,7 +185,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         int status = 1;
         Object prams[] = {id, ass_id, mile_id, name, is_team, weight, loc, status, des};
         evalService.add(prams);
-        response.sendRedirect("evalCriteriaList");
+        response.sendRedirect("evalCriteriaList?toastStatus=2");
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -214,7 +219,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         EvalCriteria eval = new EvalCriteria(id, ass_id, 0, name, is_team, weight, loc, status, des);
 
         evalService.modify(eval);
-        response.sendRedirect("evalCriteriaList");
+        response.sendRedirect("evalCriteriaList?toastStatus=1");
     }
 
 }

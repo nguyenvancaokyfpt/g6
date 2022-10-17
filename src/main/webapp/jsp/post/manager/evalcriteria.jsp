@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<input type="text" class="d-none" value="${requestScope.toastStatus == null ? 0: requestScope.toastStatus}" id="toastStatus">
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container-fluid">
