@@ -20,14 +20,15 @@
                         <div class="row mb-8">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Name</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Name
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9 fv-row">
-                                <input type="text" class="form-control form-control-solid itemHidden"
-                                    name="assign_name" placeholder="Type Criterial Name"
-                                    value="${requestScope.assign.title}" />
+                                <input type="text" class="form-control form-control-solid itemHidden" name="assign_name"
+                                    placeholder="Type Criterial Name" value="${requestScope.assign.title}" required />
                                 <input type="text" class="form-control form-control-solid itemShow" disabled
                                     value="${requestScope.assign.title}" />
                                 <!-- store ID to submit -->
@@ -39,7 +40,9 @@
                         <div class="row mb-8">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Subject</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Subject
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -48,7 +51,8 @@
                                     value="${requestScope.assign.subjectName}" />
                                 <select class="form-select itemHidden" name="assign_subject">
                                     <c:forEach items="${requestScope.subjects}" var="s">
-                                        <option value="${s.subjectId}" <c:if test="${s.subjectId == requestScope.assign.subjectId}">
+                                        <option value="${s.subjectId}" <c:if
+                                            test="${s.subjectId == requestScope.assign.subjectId}">
                                             selected</c:if>
                                             >${s.subjectName}</option>
                                     </c:forEach>
@@ -78,20 +82,24 @@
                         <div class="row mb-8">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Team Work</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Team Work
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9">
                                 <div class="d-flex fw-bold">
-                                    <div style="display: none;" class="form-check form-check-custom form-check-solid me-9 itemHidden">
-                                        <input class="form-check-input" type="radio" value="1" name="assign_team"
-                                            <c:if test="${requestScope.assign.isTeamwork ==1}">checked</c:if> />
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid me-9 itemHidden">
+                                        <input class="form-check-input" type="radio" value="1" name="assign_team" <c:if
+                                            test="${requestScope.assign.isTeamwork ==1}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="email">Group</label>
                                     </div>
-                                    <div style="display: none;" class="form-check form-check-custom form-check-solid itemHidden">
-                                        <input class="form-check-input" type="radio" value="0" name="assign_team"
-                                            <c:if test="${requestScope.assign.isTeamwork ==0}">checked</c:if> />
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid itemHidden">
+                                        <input class="form-check-input" type="radio" value="0" name="assign_team" <c:if
+                                            test="${requestScope.assign.isTeamwork ==0}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="phone">Individual</label>
                                     </div>
                                 </div>
@@ -106,14 +114,17 @@
                         <div class="row mb-8">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Weight</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Weight
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9 fv-row">
                                 <input type="number" min="1" max="100"
                                     class="form-control form-control-solid itemHidden" name="assign_weight"
-                                    placeholder="Type number of weight (%)" value="${requestScope.assign.evalWeight}" />
+                                    placeholder="Type number of weight (%)" value="${requestScope.assign.evalWeight}"
+                                    required />
                                 <input type="text" class="form-control form-control-solid itemShow" disabled
                                     value="${requestScope.assign.evalWeight}" />
                             </div>
@@ -123,20 +134,24 @@
                         <div class="row mb-8">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">On Going</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">On Going
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9">
                                 <div class="d-flex fw-bold">
-                                    <div style="display: none;"  class="form-check form-check-custom form-check-solid me-9 itemHidden">
-                                        <input class="form-check-input" type="radio" value="1" name="assign_going"
-                                            <c:if test="${requestScope.assign.isOngoing ==1}">checked</c:if> />
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid me-9 itemHidden">
+                                        <input class="form-check-input" type="radio" value="1" name="assign_going" <c:if
+                                            test="${requestScope.assign.isOngoing ==1}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="email">On-Going</label>
                                     </div>
-                                    <div  style="display: none;" class="form-check form-check-custom form-check-solid itemHidden">
-                                        <input class="form-check-input" type="radio" value="0" name="assign_going"
-                                            <c:if test="${requestScope.assign.isOngoing ==0}">checked</c:if> />
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid itemHidden">
+                                        <input class="form-check-input" type="radio" value="0" name="assign_going" <c:if
+                                            test="${requestScope.assign.isOngoing ==0}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="phone">Finished</label>
                                     </div>
                                 </div>
@@ -151,18 +166,22 @@
                         <div class="row">
                             <!--begin::Col-->
                             <div class="col-xl-3">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Status</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Status
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9">
                                 <div class="d-flex fw-bold">
-                                    <div style="display: none;" class="form-check form-check-custom form-check-solid me-9 itemHidden">
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid me-9 itemHidden">
                                         <input class="form-check-input" type="radio" value="1" name="assign_status"
                                             <c:if test="${requestScope.assign.statusId ==1}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="email">Active</label>
                                     </div>
-                                    <div style="display: none;" class="form-check form-check-custom form-check-solid itemHidden">
+                                    <div style="display: none;"
+                                        class="form-check form-check-custom form-check-solid itemHidden">
                                         <input class="form-check-input" type="radio" value="0" name="assign_status"
                                             <c:if test="${requestScope.assign.statusId ==0}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="phone">Inactive</label>

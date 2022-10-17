@@ -127,7 +127,7 @@ var KTUsersList = (function () {
               title: "Team Share",
               orderable: false,
               className: "text-center",
-              render: function (data, type, row) {
+              render: function (data) {
                 var Status;
                 var classStatus;
                 if (data == 1) {
@@ -138,17 +138,7 @@ var KTUsersList = (function () {
                   classStatus = "btn-primary";
                 }
 
-                return `
-                      <td>
-                          <div class="d-flex justify-content-center">
-                                  <button type="submit" class="btn ${classStatus}">
-                                      ${Status}
-                                  </button>
-                              </form>
-                          </div>
-                      </td>
-                      
-                      `;
+                return Status;
               },
             },
             {
@@ -186,8 +176,7 @@ var KTUsersList = (function () {
               orderable: false,
               className: "text-center",
               render: function (data, type, row) {
-                console.log(row.status);
-                const actions = row.status == 1 ? "Deactive" : "Active";
+                const actions = row.status == 1 ? "Deactivate" : "Active";
                 return `
                 <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="action${data}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -196,9 +185,32 @@ var KTUsersList = (function () {
                   <ul class="dropdown-menu" aria-labelledby="action${data}">
                     <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=get&evalId=${data}">View</a></li>
                     <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=update&evalId=${data}">Edit</a></li>
-                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&evalId=${data}&status=${row.status}">${actions}</a></li>
+                    <li>
+                    <!-- Button trigger modal -->
+                    <a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#model${data}">
+                    ${actions}
+                    </a>           
+                   </li>
                   </ul>
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="model${data}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Comfirm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Do you want to ${actions} this Eval Criteria?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&evalId=${data}&status=${row.status}">${actions}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
                 `;
               },
             },
@@ -265,4 +277,33 @@ var KTUsersList = (function () {
 })();
 KTUtil.onDOMContentLoaded(function () {
   KTUsersList.init();
+
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    newestOnTop: false,
+    progressBar: false,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: false,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
+
+  showToast();
 });
+
+function showToast() {
+  var type = document.getElementById("toastStatus").value;
+  if (type == "1") {
+    toastr.success("Update Successfully");
+  } else if (type == "2") {
+    toastr.success("Added Successfully");
+  }
+}

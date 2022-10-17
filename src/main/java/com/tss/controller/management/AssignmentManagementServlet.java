@@ -51,7 +51,6 @@ public class AssignmentManagementServlet extends HttpServlet {
                     get(request, response);
                     break;
                 default:
-                    System.out.println(action);
                     list(request, response);
                     break;
             }
@@ -76,6 +75,9 @@ public class AssignmentManagementServlet extends HttpServlet {
         request.setAttribute("pages", totalPages);
         request.setAttribute("currentPage", 1);
         request.setAttribute("subjectList", subjectService.List(0, Integer.MAX_VALUE));
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Assignment/custom.js"));
+        request.setAttribute("toastStatus", request.getParameter("toastStatus"));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -132,7 +134,6 @@ public class AssignmentManagementServlet extends HttpServlet {
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("assign_id"));
-        System.out.println(request.getParameter("assign_subject"));
         int sub_id = Integer.parseInt(request.getParameter("assign_subject"));
         String name = request.getParameter("assign_name");
         String body = request.getParameter("assign_description");
@@ -143,8 +144,7 @@ public class AssignmentManagementServlet extends HttpServlet {
         Assignment assign = new Assignment(id, sub_id, name, body, weight, is_team, is_going, status, "");
 
         assignmentService.update(assign);
-        System.out.println("here");
-        response.sendRedirect("list");
+        response.sendRedirect("list?toastStatus=1");
     }
 
     private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {

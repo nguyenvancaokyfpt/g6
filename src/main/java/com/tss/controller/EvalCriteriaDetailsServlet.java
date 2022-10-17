@@ -13,6 +13,7 @@ import com.tss.model.EvalCriteria;
 import com.tss.model.Subject;
 import com.tss.service.AssignmentService;
 import com.tss.service.EvalCriteriaService;
+import com.tss.service.SubjectService;
 import com.tss.service.impl.AssignmentServiceImpl;
 import com.tss.service.impl.EvalCriteriaServiceImpl;
 import com.tss.service.impl.SubjectServiceImpl;
@@ -21,6 +22,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -30,10 +32,12 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
 
     private EvalCriteriaService evalService;
     private AssignmentService assignService;
+    private SubjectService subService;
 
     public EvalCriteriaDetailsServlet() {
         evalService = new EvalCriteriaServiceImpl();
         assignService = new AssignmentServiceImpl();
+        subService = new SubjectServiceImpl();
     }
 
     @Override
@@ -87,7 +91,7 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("evalId"));
         int status = Integer.parseInt(request.getParameter("status")) == 1 ? 0 : 1;
         evalService.changeStatus(id, status);
-        response.sendRedirect("/evalCriteria/evalCriteriaList");
+        response.sendRedirect("/evalCriteria/evalCriteriaList?toastStatus=1");
     }
 
     private void updateDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -99,6 +103,13 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
                 ScreenConstants.EVALCRITERIA_LIST,
                 ScreenConstants.EVALCRITERIA_DETAIL));
         EvalCriteria eval = evalService.findById(Integer.parseInt(request.getParameter("evalId")));
+        List<Subject> subjects = subService.findAll(0, subService.countAll(), "");
+        Assignment ass = assignService.findById(eval.getAssign());
+        Subject sub = (subService.findById(ass.getSubjectId()));
+
+        request.setAttribute("assign", ass);
+        request.setAttribute("sub", sub);
+        request.setAttribute("subjects", subjects);
         request.setAttribute("eval", eval);
         request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
@@ -117,7 +128,8 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
         EvalCriteria eval = new EvalCriteria(id, ass_id, 0, name, is_team, weight, loc, status, des);
 
         evalService.modify(eval);
-        response.sendRedirect("evalCriteriaList");
+        response.sendRedirect("evalCriteriaList?toastStatus=1");
+
     }
 
 }
