@@ -186,8 +186,15 @@
 							axios.post('${googleClientSecret.getRedirect_uris()}', {
 								credential: response.credential
 							}).then(function (response) {
-								// Redirect to dashboard
-								window.location.href = '/dashboard';
+                                // get redirect param from url
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const redirect = urlParams.get('redirect');
+                                if (redirect) {
+                                    window.location.href = redirect;
+                                } else {
+                                // Redirect to dashboard
+                                window.location.href = '/dashboard';
+                                }
 								// hide loading
 								Swal.close();
 							}).catch(function (error) {

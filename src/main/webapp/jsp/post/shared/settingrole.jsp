@@ -49,8 +49,10 @@
                                 <div class="card-footer flex-wrap pt-0">
                                     <%-- <a href="${ScreenConstants.SETTING_ROLE_PERMISSIONS.getPath()}?action=view&role=${d.getRole().getId()}"
                                         class="btn btn-light btn-active-primary my-1 me-2">View Role</a> --%>
+                                    <c:if test="${d.getRole().getTitle() != 'ADMIN'}">
                                     <button type="button" class="btn btn-white btn-active-light-primary my-1"
                                         data-bs-toggle="modal" data-bs-target="#kt_modal_update_role" name="edit-role" role-title="${d.getRole().getTitle()}" role-id="${d.getRole().getId()}" >Edit Role</button>
+                                    </c:if>
                                 </div>
                                 <!--end::Card footer-->
                             </div>

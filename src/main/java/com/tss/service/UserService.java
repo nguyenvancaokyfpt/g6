@@ -2,6 +2,7 @@ package com.tss.service;
 
 import java.util.List;
 
+import com.tss.model.Trainee;
 import com.tss.model.User;
 import com.tss.model.util.DataTablesColumns;
 
@@ -51,4 +52,12 @@ public interface UserService {
             int orderColumn, String orderDir, String roleFilter, String statusFilter);
 
     int countAll(String search, String roleFilter, String statusFilter);
+
+    java.util.List<Trainee> findAllByClassId(int start, int length, String search,
+            java.util.List<DataTablesColumns> columns, int orderColumn, String orderDir, String statusFilter,
+            int classId);
+
+    int countAllByClassId(int classId);
+
+    int countAllByClassId(String search, String statusFilter, int classId);
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.tss.model.Trainee;
 import com.tss.model.User;
 
 public interface UserDao {
@@ -60,5 +61,12 @@ public interface UserDao {
                         String orderDir, String roleFilter, String statusFilter) throws SQLException;
 
         int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
+
+        java.util.List<Trainee> findAllByClassId(Connection connection, int start, int length, String search,
+                String columnName, String orderDir, String statusFilter, int classId) throws SQLException;
+
+        int countAllByClassId(Connection connection, int classId) throws SQLException;
+
+        int countAllByClassId(Connection connection, String search, String statusFilter, int classId) throws SQLException;
 
 }

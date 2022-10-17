@@ -10,6 +10,7 @@ import com.tss.dao.UserDao;
 import com.tss.dao.impl.UserDaoImpl;
 import com.tss.helper.EncryptHelper;
 import com.tss.helper.PasswordHelper;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.UserService;
@@ -350,6 +351,58 @@ public class UserServiceImpl implements UserService {
         try {
             connection = BaseDao.getConnection();
             count = userDao.countAll(connection, search, roleFilter, statusFilter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Trainee> findAllByClassId(int start, int length, String search,
+            java.util.List<DataTablesColumns> columns, int orderColumn, String orderDir, String statusFilter,
+            int classId) {
+        Connection connection = null;
+        List<Trainee> userList = null;
+        
+        // get orderColumn name
+        String columnName = columns.get(orderColumn).getData();
+
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.findAllByClassId(connection, start, length, search, columnName, orderDir, statusFilter, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+
+    }
+
+    @Override
+    public int countAllByClassId(int classId) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.countAllByClassId(connection, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
+    @Override
+    public int countAllByClassId(String search, String statusFilter, int classId) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = userDao.countAllByClassId(connection, search, statusFilter, classId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -57,6 +57,11 @@ public class User {
         this.fullname = fullname;
     }
 
+    public User(String fullname, String email) {
+        this.fullname = fullname;
+        this.email = email;
+    }
+
     /**
      * @return int return the userId
      */
@@ -246,7 +251,7 @@ public class User {
         for (int i = 0; i < parts.size() - 1; i++) {
             firstName += parts.get(i) + " ";
         }
-        return firstName;
+        return firstName.trim();
     }
 
     // get last name

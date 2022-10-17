@@ -146,24 +146,7 @@ var KTUsersList = (function () {
                                 e.draw();
                               })
                               .catch(function (error) {
-                                // if code 403
-                                if (error.response.status == 403) {
-                                  $.toast({
-                                    heading: "Error",
-                                    text: "You have no permission to deactivate this setting",
-                                    showHideTransition: "slide",
-                                    icon: "error",
-                                    position: "bottom-right",
-                                  });
-                                } else {
-                                  $.toast({
-                                    heading: "Error",
-                                    text: "Something went wrong",
-                                    showHideTransition: "slide",
-                                    icon: "error",
-                                    position: "bottom-right",
-                                  });
-                                }
+                                console.log(error);
                               });
                           })()
                         : "cancel" === t.dismiss &&
@@ -214,24 +197,7 @@ var KTUsersList = (function () {
                                 e.draw();
                               })
                               .catch(function (error) {
-                                // if code 403
-                                if (error.response.status == 403) {
-                                  $.toast({
-                                    heading: "Error",
-                                    text: "You have no permission to activate this setting",
-                                    showHideTransition: "slide",
-                                    icon: "error",
-                                    position: "bottom-right",
-                                  });
-                                } else {
-                                  $.toast({
-                                    heading: "Error",
-                                    text: "Something went wrong",
-                                    showHideTransition: "slide",
-                                    icon: "error",
-                                    position: "bottom-right",
-                                  });
-                                }
+                                console.log(error);
                               });
                           })()
                         : "cancel" === t.dismiss &&
@@ -249,23 +215,25 @@ var KTUsersList = (function () {
             }, 100);
           },
           ajax: {
-            url: window.location.origin + "/setting/class?action=list",
+            url:
+              window.location.origin + "/management/trainee/list?action=list",
             type: "POST",
             data: function (d) {
               return $.extend({}, d, {
-                numberOfColumns: 6,
+                numberOfColumns: 7,
                 classId: $("#classId").val(),
               });
             },
           },
           columns: [
-            { data: "settingId" },
-            { data: "settingTitle" },
-            { data: "title" },
-            { data: "value" },
-            { data: "displayOrder" },
-            { data: "statusTitle" },
-            { data: "settingId" },
+            { data: "userId" },
+            { data: "userId" },
+            { data: "avatarUrl" },
+            { data: "mobile" },
+            { data: "lastActive" },
+            { data: "createdAt" },
+            { data: "statusId" },
+            { data: "userId" },
           ],
           columnDefs: [
             {
@@ -289,103 +257,103 @@ var KTUsersList = (function () {
             },
             {
               targets: 1,
-              title: "Setting Type",
+              title: "ID",
               class: "text-center",
               render: function (data, type, row) {
-                switch (row.typeId) {
-                  case 31:
-                    return (
-                      `<a href="#" class="badge badge-light-danger fs-7 m-1">` +
-                      data +
-                      `</a>`
-                    );
-                  case 32:
-                    return (
-                      `<a href="#" class="badge badge-light-success fs-7 m-1">` +
-                      data +
-                      `</a>`
-                    );
-                  case 33:
-                    return (
-                      `<a href="#" class="badge badge-light-primary fs-7 m-1">` +
-                      data +
-                      `</a>`
-                    );
-                }
+                return data;
               },
             },
             {
               targets: 2,
-              title: "Title",
+              title: "User",
               class: "text-start",
-              render: function (data) {
-                return data;
+              render: function (data, type, row) {
+                return (
+                  `
+  <!--begin::User=-->
+  <td>
+      <!--begin:: Avatar -->
+  
+      <div class=" d-flex align-items-center">
+          <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+              <a href="/management/user/detail?id=` +
+                  row.userId +
+                  `">
+                  <div class="symbol-label">
+                      <img src="` +
+                  data +
+                  `" alt="Emma Smith" class="w-100" />
+                  </div>
+              </a>
+          </div>
+          <!--end::Avatar-->
+          <!--begin::User details-->
+          <div class="d-flex flex-column">
+              <a href="/management/user/detail?id=` +
+                  row.userId +
+                  `" class="text-gray-800 text-hover-primary mb-1">` +
+                  row.fullname +
+                  `</a>
+              <span>` +
+                  row.email +
+                  `</span>
+          </div>
+          <!--begin::User details-->
+      </div>
+  </td>
+  
+  <!--end::User=-->
+  `
+                );
               },
             },
             {
               targets: 3,
-              title: "Value",
-              class: "text-center",
-              render: function (data) {
-                const TypeValue = KTUsersList.checkTypeValue(data);
-                switch (TypeValue.type) {
-                  case "youtube":
-                    return (
-                      `
-                    <a href="` +
-                      TypeValue.value +
-                      `" target="_blank" class="btn btn-sm btn-icon btn-light-youtube"><i class="fab fa-youtube fs-2"></i></a>
-                    `
-                    );
-                  case "boolean":
-                    if (TypeValue.value) {
-                      return `
-                        <span class="btn btn-sm btn-icon btn-light-success"><i class="las la-check fs-4"></i></span>
-                      `;
-                    } else {
-                      return `
-                        <span class="btn btn-sm btn-icon btn-light-danger"><i class="las la-times fs-4"></i></span>
-                      `;
-                    }
-                  default:
-                    return data;
-                }
-              },
-            },
-            {
-              targets: 4,
-              title: "Display Order",
+              title: "Mobile",
               class: "text-center",
               render: function (data) {
                 return data;
               },
             },
             {
+              targets: 4,
+              title: "Last Active",
+              class: "text-center",
+              render: function (data) {
+                return (
+                  moment(data).format("DD/MM/YYYY") +
+                  "<br>" +
+                  moment(data).format("HH:mm:ss")
+                );
+              },
+            },
+            {
               targets: 5,
-              title: "Status",
+              title: "Join Date",
               class: "text-center",
               render: function (data, type, row) {
-                switch (row.statusId) {
-                  case 0:
-                    return (
-                      `<a href="#" class="badge badge-light-danger fs-7">` +
-                      data +
-                      `</a>`
-                    );
-                  case 1:
-                    return (
-                      `<a href="#" class="badge badge-light-success fs-7">` +
-                      data +
-                      `</a>`
-                    );
-                }
+                return moment(data).format("DD/MM/YYYY");
               },
             },
             {
               targets: 6,
-              title: "Actions",
-              orderable: false,
+              title: "Status",
               class: "text-center",
+              render: function (data, type, row) {
+                switch (data) {
+                  case 0:
+                    return `<a href="#" class="badge badge-light-dark fs-7">Inactive</a>`;
+                  case 1:
+                    return `<a href="#" class="badge badge-light-success fs-7">Active</a>`;
+                  case 2:
+                    return `<a href="#" class="badge badge-light-danger fs-7">Dropout</a>`;
+                }
+              },
+            },
+            {
+              targets: 7,
+              title: "Actions",
+              className: "text-center",
               render: function (data, type, row) {
                 const actions = row.statusId == 1 ? "Deactive" : "Active";
                 return (
@@ -405,14 +373,14 @@ var KTUsersList = (function () {
                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                   <!--begin::Menu item-->
                   <div class="menu-item px-3">
-                    <a href="setting/class/detail?id=` +
+                    <a href="management/trainee/detail?id=` +
                   data +
                   `" class="menu-link px-3">View</a>
                   </div>
                   <!--end::Menu item-->
                   <!--begin::Menu item-->
                   <div class="menu-item px-3">
-                    <a href="setting/class/detail?action=update&id=` +
+                    <a href="management/trainee/detail?action=update&id=` +
                   data +
                   `" class="menu-link px-3">Edit</a>
                   </div>
@@ -422,7 +390,7 @@ var KTUsersList = (function () {
                     <a href="#" value="` +
                   data +
                   `" class="menu-link px-3" data-kt-users-table-filter="` +
-                  row.statusTitle +
+                  row.statusId +
                   `">` +
                   actions +
                   `</a>
@@ -451,7 +419,7 @@ var KTUsersList = (function () {
               .forEach((e) => {
                 $(e).val("").trigger("change");
               }),
-              e.columns(1).search("").columns(5).search("").draw();
+              e.columns(6).search("").draw();
           }),
         (() => {
           const t = document.querySelector(
@@ -470,67 +438,13 @@ var KTUsersList = (function () {
             n.addEventListener("click", function () {
               r.forEach((e, n) => {
                 var filter = e.getAttribute("data-kt-user-table-filter");
-                if (filter == "type") {
-                  typeId = e.value;
-                }
                 if (filter == "status") {
                   statusId = e.value;
                 }
               }),
-                e.columns(5).search(statusId).columns(1).search(typeId).draw();
+                e.columns(6).search(statusId).draw();
             });
         })());
-    },
-    checkTypeValue: function (value) {
-      // if value is youtube link
-      if (
-        value.includes("https://youtu.be") ||
-        value.includes("https://www.youtube.com")
-      ) {
-        return {
-          type: "youtube",
-          value: value,
-        };
-      }
-      // if value is true or false
-      if (
-        value.toLowerCase() == "true" ||
-        value.toLowerCase() == "false" ||
-        value.toLowerCase() == "1" ||
-        value.toLowerCase() == "0" ||
-        value.toLowerCase() == "yes" ||
-        value.toLowerCase() == "no"
-      ) {
-        const v = value.toLowerCase();
-        switch (v) {
-          case "true":
-          case "1":
-          case "yes":
-            return {
-              type: "boolean",
-              value: true,
-            };
-          case "false":
-          case "0":
-          case "no":
-            return {
-              type: "boolean",
-              value: false,
-            };
-        }
-      }
-      // if value is number or string
-      if (!isNaN(value)) {
-        return {
-          type: "number",
-          value: value,
-        };
-      } else {
-        return {
-          type: "string",
-          value: value,
-        };
-      }
     },
   };
 })();

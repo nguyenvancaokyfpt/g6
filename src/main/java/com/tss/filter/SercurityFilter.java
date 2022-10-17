@@ -79,7 +79,7 @@ public class SercurityFilter implements Filter {
         User user = (User) request.getSession().getAttribute(SessionConstants.USER_SESSION);
         if (user == null) {
             if (method.equals("GET")) {
-                response.sendRedirect(ScreenConstants.LOGIN.getPath());
+                response.sendRedirect(ScreenConstants.LOGIN.getPath() + "?redirect=" + uri);
             } else {
                 ResponseHelper.sendResponse(response,
                         new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED, "Unauthorized access to " + uri));
@@ -122,11 +122,9 @@ public class SercurityFilter implements Filter {
                     request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request,
                             response);
                 } else {
-                    // ResponseHelper.sendResponse(response,
-                    // new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
-                    // + uri));
-                    request.getRequestDispatcher("/jsp/authentication/general/error-500.jsp").forward(request,
-                            response);
+                    ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
+                    + uri));
                 }
             }
         }

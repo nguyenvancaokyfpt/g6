@@ -61,8 +61,15 @@ var KTSigninGeneral = function () {
                                 password: e.querySelector('[name="password"]').value,
                                 captcha: e.querySelector('[name="captcha"]').value
                             }).then(function (response) {
+                                // get redirect param from url
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const redirect = urlParams.get('redirect');
+                                if (redirect) {
+                                    window.location.href = redirect;
+                                } else {
                                 // Redirect to dashboard
                                 window.location.href = '/dashboard';
+                                }
                             }).catch(function (error) {
                                 // Show error message
                                 Swal.fire({

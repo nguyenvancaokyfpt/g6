@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2022 at 02:41 PM
+-- Generation Time: Oct 17, 2022 at 07:38 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -95,12 +95,12 @@ INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_i
 (3, 'SE1629', 3, 23, 41, 1, 'SWP'),
 (4, 'SE1630', 3, 23, 41, 1, 'SWP'),
 (5, 'SE1631', 3, 23, 41, 1, 'SWP'),
-(6, 'SE1632', 3, 23, 41, 1, 'SWP'),
-(7, 'SE1633', 3, 23, 41, 1, 'SWP'),
-(8, 'SE1634', 3, 23, 41, 1, 'SWP'),
-(9, 'SE1635', 3, 23, 41, 1, 'SWP'),
-(10, 'SE1636', 3, 23, 41, 1, 'SWP'),
-(11, 'SE1637', 3, 23, 41, 1, 'SWP');
+(6, 'SE1632', 3, 22, 41, 1, 'SWP'),
+(7, 'SE1633', 3, 22, 41, 1, 'SWP'),
+(8, 'SE1634', 3, 22, 41, 1, 'SWP'),
+(9, 'SE1635', 3, 22, 41, 1, 'SWP'),
+(10, 'SE1636', 3, 22, 41, 1, 'SWP'),
+(11, 'SE1637', 3, 3, 41, 1, 'SWP');
 
 -- --------------------------------------------------------
 
@@ -207,7 +207,7 @@ CREATE TABLE `class_user` (
   `is_leader` tinyint(1) NOT NULL,
   `status_id` int(11) NOT NULL,
   `note` varchar(500) NOT NULL,
-  `dropout_date` date NOT NULL
+  `dropout_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -215,8 +215,9 @@ CREATE TABLE `class_user` (
 --
 
 INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status_id`, `note`, `dropout_date`) VALUES
-(1, 19, 1, 1, 1, 'a', '2022-09-09'),
-(2, 19, 1, 1, 1, '1', '2022-09-09');
+(1, 25, 1, 1, 1, 'a', NULL),
+(1, 56, 1, 1, 2, 'a', NULL),
+(2, 19, 1, 1, 1, '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -339,6 +340,13 @@ CREATE TABLE `member_eval` (
   `comment` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `member_eval`
+--
+
+INSERT INTO `member_eval` (`member_eval_id`, `evaluation_id`, `criteria_id`, `total_loc`, `grade`, `comment`) VALUES
+(23, 1, 10, 100, 10, 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -380,6 +388,13 @@ CREATE TABLE `milestone_eval` (
   `submit_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `milestone_eval`
+--
+
+INSERT INTO `milestone_eval` (`evaluation_id`, `milestone_id`, `class_id`, `bonus`, `grade`, `comment`, `submit_id`, `user_id`) VALUES
+(1, 1, 1, 0.2, 10, 'test', 1, 23);
 
 -- --------------------------------------------------------
 
@@ -440,13 +455,13 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (4, 26, 0, 0, 0, 0),
 (5, 21, 1, 1, 1, 1),
 (5, 22, 0, 0, 0, 0),
-(5, 23, 0, 0, 0, 0),
+(5, 23, 1, 1, 1, 1),
 (5, 24, 0, 0, 0, 0),
 (5, 25, 0, 0, 0, 0),
 (5, 26, 0, 0, 0, 0),
 (6, 21, 1, 1, 1, 1),
 (6, 22, 0, 0, 0, 0),
-(6, 23, 0, 0, 0, 0),
+(6, 23, 1, 1, 1, 1),
 (6, 24, 0, 0, 0, 0),
 (6, 25, 0, 0, 0, 0),
 (6, 26, 0, 0, 0, 0),
@@ -476,90 +491,111 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (12, 26, 0, 0, 0, 0),
 (13, 21, 1, 1, 1, 1),
 (13, 22, 1, 1, 1, 1),
-(13, 23, 0, 0, 0, 0),
-(13, 24, 0, 0, 0, 0),
-(13, 25, 0, 0, 0, 0),
+(13, 23, 1, 1, 1, 1),
+(13, 24, 1, 1, 1, 1),
+(13, 25, 1, 0, 0, 0),
 (13, 26, 1, 1, 1, 1),
 (14, 21, 1, 1, 1, 1),
 (14, 22, 1, 1, 1, 1),
-(14, 23, 0, 0, 0, 0),
-(14, 24, 0, 0, 0, 0),
-(14, 25, 0, 0, 0, 0),
+(14, 23, 1, 1, 1, 1),
+(14, 24, 1, 1, 1, 1),
+(14, 25, 1, 0, 0, 0),
 (16, 21, 1, 1, 1, 1),
 (16, 22, 0, 0, 0, 0),
-(16, 23, 0, 0, 0, 0),
-(16, 24, 0, 0, 0, 0),
+(16, 23, 1, 1, 1, 1),
+(16, 24, 1, 1, 1, 1),
 (16, 25, 0, 0, 0, 0),
 (17, 21, 1, 1, 1, 1),
 (17, 22, 0, 0, 0, 0),
-(17, 23, 0, 0, 0, 0),
-(17, 24, 0, 0, 0, 0),
+(17, 23, 1, 1, 1, 1),
+(17, 24, 1, 1, 1, 1),
 (17, 25, 0, 0, 0, 0),
 (20, 21, 1, 1, 1, 1),
 (20, 22, 1, 1, 1, 1),
-(20, 23, 0, 0, 0, 0),
+(20, 23, 1, 1, 1, 1),
 (20, 24, 0, 0, 0, 0),
 (20, 25, 0, 0, 0, 0),
 (20, 26, 0, 0, 0, 0),
 (21, 21, 1, 1, 1, 1),
+(21, 23, 1, 1, 1, 1),
+(21, 24, 0, 0, 0, 0),
+(21, 25, 0, 0, 0, 0),
 (22, 21, 1, 1, 1, 1),
 (22, 22, 1, 1, 1, 1),
-(22, 23, 0, 0, 0, 0),
-(22, 24, 0, 0, 0, 0),
+(22, 23, 1, 1, 1, 1),
+(22, 24, 1, 1, 1, 1),
 (22, 25, 0, 0, 0, 0),
 (22, 26, 0, 0, 0, 0),
 (23, 21, 1, 1, 1, 1),
-(23, 24, 0, 0, 0, 0),
+(23, 23, 0, 0, 0, 0),
+(23, 24, 1, 1, 1, 1),
 (23, 25, 0, 0, 0, 0),
 (24, 21, 1, 1, 1, 1),
-(24, 24, 0, 0, 0, 0),
+(24, 23, 0, 0, 0, 0),
+(24, 24, 1, 1, 1, 1),
 (24, 25, 0, 0, 0, 0),
 (26, 21, 1, 1, 1, 1),
+(26, 23, 0, 0, 0, 0),
 (26, 24, 0, 0, 0, 0),
 (26, 25, 0, 0, 0, 0),
 (27, 21, 1, 1, 1, 1),
+(27, 23, 0, 0, 0, 0),
 (27, 24, 0, 0, 0, 0),
 (27, 25, 0, 0, 0, 0),
 (30, 21, 1, 1, 1, 1),
+(30, 23, 0, 0, 0, 0),
 (30, 24, 0, 0, 0, 0),
 (30, 25, 0, 0, 0, 0),
 (31, 21, 1, 1, 1, 1),
+(31, 23, 0, 0, 0, 0),
 (31, 24, 0, 0, 0, 0),
 (31, 25, 0, 0, 0, 0),
 (32, 21, 1, 1, 1, 1),
+(32, 23, 0, 0, 0, 0),
 (32, 24, 1, 1, 1, 1),
-(32, 25, 1, 1, 1, 1),
+(32, 25, 1, 0, 0, 1),
 (33, 21, 1, 1, 1, 1),
+(33, 23, 0, 0, 0, 0),
 (33, 24, 1, 1, 1, 1),
-(33, 25, 1, 1, 1, 1),
+(33, 25, 1, 0, 0, 1),
 (34, 21, 1, 1, 1, 1),
+(34, 23, 0, 0, 0, 0),
 (34, 24, 0, 0, 0, 0),
 (34, 25, 0, 0, 0, 0),
 (35, 21, 1, 1, 1, 1),
+(35, 23, 0, 0, 0, 0),
 (35, 24, 0, 0, 0, 0),
 (35, 25, 0, 0, 0, 0),
 (36, 21, 1, 1, 1, 1),
+(36, 23, 0, 0, 0, 0),
 (36, 24, 0, 0, 0, 0),
 (36, 25, 0, 0, 0, 0),
 (37, 21, 1, 1, 1, 1),
+(37, 23, 0, 0, 0, 0),
 (37, 24, 0, 0, 0, 0),
 (37, 25, 0, 0, 0, 0),
 (38, 21, 1, 1, 1, 1),
+(38, 23, 0, 0, 0, 0),
 (38, 24, 0, 0, 0, 0),
 (38, 25, 0, 0, 0, 0),
 (39, 21, 1, 1, 1, 1),
+(39, 23, 0, 0, 0, 0),
 (39, 24, 0, 0, 0, 0),
 (39, 25, 0, 0, 0, 0),
 (40, 21, 1, 1, 1, 1),
+(40, 23, 0, 0, 0, 0),
 (40, 24, 0, 0, 0, 0),
 (40, 25, 0, 0, 0, 0),
 (41, 21, 1, 1, 1, 1),
+(41, 23, 0, 0, 0, 0),
 (41, 24, 0, 0, 0, 0),
 (41, 25, 0, 0, 0, 0),
 (42, 21, 1, 1, 1, 1),
+(42, 23, 0, 0, 0, 0),
 (42, 24, 0, 0, 0, 0),
 (42, 25, 0, 0, 0, 0),
 (43, 21, 1, 1, 1, 1),
+(43, 23, 0, 0, 0, 0),
 (43, 24, 0, 0, 0, 0),
 (43, 25, 0, 0, 0, 0);
 
@@ -706,7 +742,8 @@ CREATE TABLE `status` (
 
 INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
 (0, 'Inactive', 'inactive'),
-(1, 'Active', 'active');
+(1, 'Active', 'active'),
+(2, 'Dropout', 'dropout');
 
 -- --------------------------------------------------------
 
@@ -788,6 +825,13 @@ CREATE TABLE `submit` (
   `status_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `submit`
+--
+
+INSERT INTO `submit` (`submit_id`, `milestone_id`, `class_id`, `team_id`, `submit_file_url`, `submit_time`, `status_id`, `user_id`) VALUES
+(1, 1, 1, 1, 'assets/media/submit/test.zip', '2022-10-16 13:28:53', 1, 23);
 
 -- --------------------------------------------------------
 
@@ -1178,7 +1222,12 @@ ALTER TABLE `subject_setting`
 -- Indexes for table `submit`
 --
 ALTER TABLE `submit`
-  ADD PRIMARY KEY (`submit_id`);
+  ADD PRIMARY KEY (`submit_id`),
+  ADD KEY `milestone_id` (`milestone_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `team`
@@ -1305,7 +1354,7 @@ ALTER TABLE `loc_eval`
 -- AUTO_INCREMENT for table `member_eval`
 --
 ALTER TABLE `member_eval`
-  MODIFY `member_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `member_eval_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `milestone`
@@ -1317,7 +1366,7 @@ ALTER TABLE `milestone`
 -- AUTO_INCREMENT for table `milestone_eval`
 --
 ALTER TABLE `milestone_eval`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -1359,7 +1408,7 @@ ALTER TABLE `subject_setting`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `submit_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `submit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `team`
@@ -1483,7 +1532,8 @@ ALTER TABLE `lesson`
 --
 ALTER TABLE `member_eval`
   ADD CONSTRAINT `member_eval_ibfk_1` FOREIGN KEY (`criteria_id`) REFERENCES `eval_criteria` (`criteria_id`),
-  ADD CONSTRAINT `member_eval_ibfk_2` FOREIGN KEY (`evaluation_id`) REFERENCES `milestone_eval` (`evaluation_id`);
+  ADD CONSTRAINT `member_eval_ibfk_2` FOREIGN KEY (`evaluation_id`) REFERENCES `milestone_eval` (`evaluation_id`),
+  ADD CONSTRAINT `member_eval_ibfk_3` FOREIGN KEY (`member_eval_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `milestone`
@@ -1546,6 +1596,16 @@ ALTER TABLE `subject`
 ALTER TABLE `subject_setting`
   ADD CONSTRAINT `subject_setting_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`),
   ADD CONSTRAINT `subject_setting_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`);
+
+--
+-- Constraints for table `submit`
+--
+ALTER TABLE `submit`
+  ADD CONSTRAINT `submit_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
+  ADD CONSTRAINT `submit_ibfk_2` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`),
+  ADD CONSTRAINT `submit_ibfk_3` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`),
+  ADD CONSTRAINT `submit_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+  ADD CONSTRAINT `submit_ibfk_5` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `team`
