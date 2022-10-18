@@ -21,7 +21,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
         ResultSet resultSet = null;
         List<ClassSetting> settingList = new ArrayList<ClassSetting>();
         if (connection != null) {
-            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) AND class_id = ? ORDER BY "
+            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,value_type,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE ( setting_title LIKE ? OR setting_value LIKE ? ) AND( type_id LIKE ? AND class_setting.status_id LIKE ? ) AND class_id = ? ORDER BY "
                     + columnName + " " + orderDir + " LIMIT ?,?";
             Object[] params = { "%" + search + "%", "%" + search + "%", "%" + typeFilter + "%",
                     "%" + statusFilter + "%",
@@ -33,6 +33,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
                     setting.setSettingId(resultSet.getInt("setting_id"));
                     setting.setTitle(resultSet.getString("title"));
                     setting.setValue(resultSet.getString("value"));
+                    setting.setValueType(resultSet.getString("value_type"));
                     setting.setDescription(resultSet.getString("description"));
                     setting.setTypeId(resultSet.getInt("type_id"));
                     setting.setStatusId(resultSet.getInt("status_id"));
@@ -119,7 +120,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
         ResultSet resultSet = null;
         ClassSetting setting = null;
         if (connection != null) {
-            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE setting_id = ?";
+            String sql = "SELECT setting_id,type_id,setting_title as title ,setting_value as value,value_type,display_order,class_id,status.status_id,status.status_title,description FROM class_setting inner join status on class_setting.status_id = status.status_id WHERE setting_id = ?";
             Object[] params = { settingId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -128,6 +129,7 @@ public class ClassSettingDaoImpl implements ClassSettingDao {
                     setting.setSettingId(resultSet.getInt("setting_id"));
                     setting.setTitle(resultSet.getString("title"));
                     setting.setValue(resultSet.getString("value"));
+                    setting.setValueType(resultSet.getString("value_type"));
                     setting.setDescription(resultSet.getString("description"));
                     setting.setTypeId(resultSet.getInt("type_id"));
                     setting.setStatusId(resultSet.getInt("status_id"));

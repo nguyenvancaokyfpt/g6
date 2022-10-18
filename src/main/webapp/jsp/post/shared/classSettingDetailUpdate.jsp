@@ -47,11 +47,42 @@
 											<label class="col-lg-4 col-form-label required fw-bold fs-6">Value</label>
 											<!--end::Label-->
 											<!--begin::Col-->
-											<div class="col-lg-8 fv-row">
-												<input type="text" name="value"
-													class="form-control form-control-lg form-control-solid"
-													placeholder="Value" value="${setting.getValue()}" />
-											</div>
+											<c:if test="${setting.getValueType() == 'string'}">
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="value"
+														class="form-control form-control-lg form-control-solid"
+														placeholder="Value" value="${setting.getValue()}" />
+												</div>
+											</c:if>
+											<c:if test="${setting.getValueType() == 'boolean'}">
+												<div class="col-lg-8 fv-row">
+													<!--begin::Options-->
+													<div class="d-flex align-items-center mt-3">
+														<!--begin::Option-->
+														<label class="form-check form-check-inline form-check-solid me-5">
+															<input class="form-check-input" name="value" type="radio"
+																value="true" ${setting.getValue() == 'true' ? 'checked' : ''}/>
+															<span class="fw-bold ps-2 fs-6">True</span>
+														</label>
+														<!--end::Option-->
+														<!--begin::Option-->
+														<label class="form-check form-check-inline form-check-solid">
+															<input class="form-check-input" name="value" type="radio"
+																value="false" ${setting.getValue() == 'false' ? 'checked' : ''}/>
+															<span class="fw-bold ps-2 fs-6">False</span>
+														</label>
+														<!--end::Option-->
+													</div>
+													<!--end::Options-->
+												</div>
+											</c:if>
+											<c:if test="${setting.getValueType() == 'number'}">
+												<div class="col-lg-8 fv-row">
+													<input type="number" name="value" min="0" max="100"
+														class="form-control form-control-lg form-control-solid"
+														placeholder="Value" value="${setting.getValue()}" />
+												</div>
+											</c:if>
 											<!--end::Col-->
 										</div>
 										<!--end::Input group-->

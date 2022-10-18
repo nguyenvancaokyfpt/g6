@@ -8,15 +8,7 @@ $(document).ready(function () {
     axios
       .post("/setting/class/detail?action=update", json)
       .then(function (response) {
-        Swal.fire({
-          text: response.data.message,
-          icon: "success",
-          buttonsStyling: !1,
-          confirmButtonText: "Ok, got it!",
-          customClass: {
-            confirmButton: "btn btn-primary",
-          },
-        });
+        window.location.href = "/setting/class";
       })
       .catch(function (error) {
         Swal.fire({

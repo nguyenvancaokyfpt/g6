@@ -9,6 +9,7 @@ public class ClassSetting {
     private int typeId;
     private String title;
     private String value;
+    private String valueType;
     private String displayOrder;
     private int statusId;
     private String statusTitle;
@@ -166,5 +167,21 @@ public class ClassSetting {
     public void setStatusTitle(String statusTitle) {
         this.statusTitle = statusTitle;
     }
+
+    /**
+     * @return String return the valueType
+     */
+    public String getValueType() {
+        return valueType;
+    }
+
+    /**
+     * @param valueType the valueType to set
+     */
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
+    }
+
+
 
 }
