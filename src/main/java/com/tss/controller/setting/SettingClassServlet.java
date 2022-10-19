@@ -97,7 +97,8 @@ public class SettingClassServlet extends HttpServlet {
             }
             ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Update success"));
         } catch (Exception e) {
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR, "Update failed"));
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR, "Update failed"));
         }
     }
 

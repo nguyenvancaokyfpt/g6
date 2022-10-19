@@ -25,7 +25,8 @@ public class ClassAnhPT {
     public ClassAnhPT() {
     }
 
-    public ClassAnhPT(int class_id, String class_code, int combo_id, int trainer_id, int term_id, int status_id, String description, String termString, String trainerString, String supporterString, String statusString) {
+    public ClassAnhPT(int class_id, String class_code, int combo_id, int trainer_id, int term_id, int status_id,
+            String description, String termString, String trainerString, String supporterString, String statusString) {
         this.class_id = class_id;
         this.class_code = class_code;
         this.combo_id = combo_id;
@@ -134,7 +135,10 @@ public class ClassAnhPT {
 
     @Override
     public String toString() {
-        return "Class{" + "class_id=" + class_id + ", class_code=" + class_code + ", combo_id=" + combo_id + ", trainer_id=" + trainer_id + ", term_id=" + term_id + ", status_id=" + status_id + ", description=" + description + ", trainerString=" + trainerString + ", termString=" + termString + ", statusString=" + statusString + ", supporterString=" + supporterString + '}';
+        return "Class{" + "class_id=" + class_id + ", class_code=" + class_code + ", combo_id=" + combo_id
+                + ", trainer_id=" + trainer_id + ", term_id=" + term_id + ", status_id=" + status_id + ", description="
+                + description + ", trainerString=" + trainerString + ", termString=" + termString + ", statusString="
+                + statusString + ", supporterString=" + supporterString + '}';
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Date;
  * @author ADMIN
  */
 public class MilestoneRequest {
- private int milestoneId;
+    private int milestoneId;
     private int assId;
     private int classId;
     private Date fromDate;
@@ -24,7 +24,8 @@ public class MilestoneRequest {
     public MilestoneRequest() {
     }
 
-    public MilestoneRequest(int milestoneId, int assId, int classId, Date fromDate, Date toDate, String title, String assBody, String description, int statusId) {
+    public MilestoneRequest(int milestoneId, int assId, int classId, Date fromDate, Date toDate, String title,
+            String assBody, String description, int statusId) {
         this.milestoneId = milestoneId;
         this.assId = assId;
         this.classId = classId;
@@ -35,7 +36,7 @@ public class MilestoneRequest {
         this.description = description;
         this.statusId = statusId;
     }
-    
+
     public int getMilestoneId() {
         return milestoneId;
     }
@@ -107,5 +108,5 @@ public class MilestoneRequest {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
-   
+
 }

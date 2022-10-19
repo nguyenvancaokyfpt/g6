@@ -49,5 +49,4 @@ public class DataTablesMessage {
         this.data = data;
     }
 
-    
 }

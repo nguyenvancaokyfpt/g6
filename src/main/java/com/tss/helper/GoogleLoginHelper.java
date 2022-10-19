@@ -15,10 +15,11 @@ import com.tss.model.User;
 import com.tss.model.sercurity.GoogleClientSecret;
 
 public class GoogleLoginHelper {
-    
+
     public static GoogleClientSecret loadClientSecrets() {
         Properties properties = new Properties();
-        InputStream is = GoogleLoginHelper.class.getClassLoader().getResourceAsStream("google_client_secret.properties");
+        InputStream is = GoogleLoginHelper.class.getClassLoader()
+                .getResourceAsStream("google_client_secret.properties");
 
         try {
             properties.load(is);
@@ -32,7 +33,6 @@ public class GoogleLoginHelper {
         String redirect_uris = properties.getProperty("redirect_uris");
         return new GoogleClientSecret(client_id, client_secret, auth_uri, token_uri, redirect_uris);
     }
-    
 
     public static User getUserInfo(String accessToken) throws IOException {
         GoogleClientSecret googleClientSecret = GoogleLoginHelper.loadClientSecrets();

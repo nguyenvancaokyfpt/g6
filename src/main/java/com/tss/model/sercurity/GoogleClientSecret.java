@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 
 public class GoogleClientSecret {
 
-private String client_id;
+    private String client_id;
     private String client_secret;
     private String auth_uri;
     private String token_uri;
@@ -13,7 +13,8 @@ private String client_id;
     public GoogleClientSecret() {
     }
 
-    public GoogleClientSecret(String client_id, String client_secret, String auth_uri, String token_uri, String redirect_uris) {
+    public GoogleClientSecret(String client_id, String client_secret, String auth_uri, String token_uri,
+            String redirect_uris) {
         this.client_id = client_id;
         this.client_secret = client_secret;
         this.auth_uri = auth_uri;
@@ -95,7 +96,5 @@ private String client_id;
     public String toString() {
         return JSONArray.toJSONString(this);
     }
-    
-    
 
 }

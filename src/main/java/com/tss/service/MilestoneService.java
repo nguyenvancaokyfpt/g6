@@ -4,21 +4,27 @@
  */
 package com.tss.service;
 
-import com.tss.model.Milestone;
-import com.tss.model.MilestoneRequest;
 import java.util.Date;
 import java.util.List;
+
+import com.tss.model.Milestone;
 
 /**
  *
  * @author ADMIN
  */
 public interface MilestoneService {
-    List<Milestone> List(int currentPageNo, int PageSize, String search); 
+    List<Milestone> List(int currentPageNo, int PageSize, String search);
+
     int countAll();
+
     boolean add(Milestone milestone);
+
     Milestone findById(int mileStoneId);
-    boolean update(Milestone milestone, int classId , Date fromDate , Date toDate , String title, String assBody , String desscription , int statusId);
-    boolean updateAss(int assId,int subjectId);
+
+    boolean update(Milestone milestone, int classId, Date fromDate, Date toDate, String title, String assBody,
+            String desscription, int statusId);
+
+    boolean updateAss(int assId, int subjectId);
 
 }

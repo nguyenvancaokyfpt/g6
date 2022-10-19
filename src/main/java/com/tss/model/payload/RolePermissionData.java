@@ -20,8 +20,6 @@ public class RolePermissionData {
         this.permission = permission;
     }
 
-
-
     /**
      * @return RoleConstants return the role
      */

@@ -19,8 +19,6 @@ public class UploadHelper {
         String relativePath = "assets/media/" + destination;
         String savePath = appPath + relativePath;
 
-
-
         try {
             // creates the save directory if it does not exists
             java.io.File fileSaveDir = new java.io.File(savePath);
@@ -37,7 +35,7 @@ public class UploadHelper {
                     fileUrls.add(relativePath + "/" + uniqueFileName);
                     DebugHelper.print("Write attachment to file: " + filePath);
                     part.write(filePath);
-                    }
+                }
             }
             return fileUrls;
         } catch (Exception e) {

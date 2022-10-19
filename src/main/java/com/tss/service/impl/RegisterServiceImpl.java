@@ -18,13 +18,10 @@ public class RegisterServiceImpl implements RegisterService {
     private UserDao userDao;
     private RoleService roleService;
 
-
     public RegisterServiceImpl() {
         userDao = new UserDaoImpl();
         roleService = new RoleServiceImpl();
     }
-
-
 
     @Override
     public boolean register(User user) {

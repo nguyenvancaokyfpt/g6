@@ -141,7 +141,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term, String status, String order, String dir) throws SQLException {
+    public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term,
+            String status, String order, String dir) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassAnhPT> classList = new ArrayList<>();
@@ -233,7 +234,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public int countSearchFilter(Connection connection, String searchword, String term, String status) throws SQLException {
+    public int countSearchFilter(Connection connection, String searchword, String term, String status)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int totalSetting = 0;
@@ -267,7 +269,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public void add(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id, String description) throws SQLException {
+    public void add(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id,
+            String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -291,7 +294,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public void edit(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id, int status_id, String description) throws SQLException {
+    public void edit(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id,
+            int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -361,6 +365,5 @@ public class ClassDaoImpl implements ClassDao {
         }
         return classList;
     }
-
 
 }

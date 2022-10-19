@@ -4,6 +4,14 @@
  */
 package com.tss.controller.setting;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.SettingDaoImpl;
 import com.tss.model.system.Setting;
@@ -12,13 +20,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,10 +31,10 @@ public class SettingSystemServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -60,7 +61,7 @@ public class SettingSystemServlet extends HttpServlet {
                 String display_order = request.getParameter("display_order");
                 int status_id = Integer.parseInt(request.getParameter("status_id"));
                 String description = request.getParameter("description");
-                //Validate input
+                // Validate input
                 Setting setting = dao.findById(connection, id);
                 System.out.println(setting.toString());
                 if (setting.getTitle() == null) {
@@ -92,7 +93,7 @@ public class SettingSystemServlet extends HttpServlet {
                 String dir = request.getParameter("dir");
                 String type = request.getParameter("type");
                 String status = request.getParameter("status");
-                //Set default value
+                // Set default value
                 if (pageString == null || pageString.equals("")) {
                     page = 1;
                 } else {
@@ -115,7 +116,7 @@ public class SettingSystemServlet extends HttpServlet {
                 if (status == null) {
                     status = "";
                 }
-                //Paging
+                // Paging
                 int totalSetting = dao.countSearchFilter(connection, searchword, order, type, status);
                 int endPage = totalSetting / 5;
                 if (totalSetting % 5 != 0) {
@@ -128,7 +129,7 @@ public class SettingSystemServlet extends HttpServlet {
                     Logger.getLogger(SettingDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                //Retain paging
+                // Retain paging
                 request.setAttribute("page", page);
                 request.setAttribute("endPage", endPage);
                 request.setAttribute("settinglist", list);
@@ -143,14 +144,15 @@ public class SettingSystemServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -165,10 +167,10 @@ public class SettingSystemServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -6,20 +6,20 @@ import com.tss.model.Assignment;
 
 public interface AssignmentService {
 
-    List<Assignment> findAll(int start, int length, String search, 
-            String subjectFilter, String isTeamworkFilter, String isOngoingFilter,
-            String statusFilter);
+        List<Assignment> findAll(int start, int length, String search,
+                        String subjectFilter, String isTeamworkFilter, String isOngoingFilter,
+                        String statusFilter);
 
-    int countAll(String search, String subjectFilter,
-            String isTeamworkFilter, String isOngoingFilter, String statusFilter);
+        int countAll(String search, String subjectFilter,
+                        String isTeamworkFilter, String isOngoingFilter, String statusFilter);
 
-    int countAll();
+        int countAll();
 
-    boolean add(Assignment assignment);
+        boolean add(Assignment assignment);
 
-    boolean update(Assignment assignment);
+        boolean update(Assignment assignment);
 
-    boolean changeStatus(int id);
+        boolean changeStatus(int id);
 
-    Assignment findById(int id);
+        Assignment findById(int id);
 }

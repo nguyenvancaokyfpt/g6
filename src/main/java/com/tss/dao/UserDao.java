@@ -63,10 +63,11 @@ public interface UserDao {
         int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
 
         java.util.List<Trainee> findAllByClassId(Connection connection, int start, int length, String search,
-                String columnName, String orderDir, String statusFilter, int classId) throws SQLException;
+                        String columnName, String orderDir, String statusFilter, int classId) throws SQLException;
 
         int countAllByClassId(Connection connection, int classId) throws SQLException;
 
-        int countAllByClassId(Connection connection, String search, String statusFilter, int classId) throws SQLException;
+        int countAllByClassId(Connection connection, String search, String statusFilter, int classId)
+                        throws SQLException;
 
 }

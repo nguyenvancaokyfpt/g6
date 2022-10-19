@@ -150,7 +150,8 @@ public class TraineeListServlet extends HttpServlet {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        List<Trainee> list = userService.findAllByClassId(start, length, search, columns, orderColumn, orderDir, statusFilter,
+        List<Trainee> list = userService.findAllByClassId(start, length, search, columns, orderColumn, orderDir,
+                statusFilter,
                 classId);
         int recordsTotal = userService.countAllByClassId(classId);
         int recordsFiltered = userService.countAllByClassId(search, statusFilter, classId);

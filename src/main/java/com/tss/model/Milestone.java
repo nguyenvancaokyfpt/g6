@@ -27,7 +27,8 @@ public class Milestone {
     public Milestone() {
     }
 
-    public Milestone(int milestoneId, int assId, int subjectId, String subject, int classId, String classCode, Date fromDate, Date toDate, String title, String assBody, String description, int statusId) {
+    public Milestone(int milestoneId, int assId, int subjectId, String subject, int classId, String classCode,
+            Date fromDate, Date toDate, String title, String assBody, String description, int statusId) {
         this.milestoneId = milestoneId;
         this.assId = assId;
         this.subjectId = subjectId;
@@ -41,8 +42,6 @@ public class Milestone {
         this.description = description;
         this.statusId = statusId;
     }
-
-   
 
     public int getMilestoneId() {
         return milestoneId;
@@ -139,5 +138,5 @@ public class Milestone {
     public void setClassId(int classId) {
         this.classId = classId;
     }
-    
+
 }

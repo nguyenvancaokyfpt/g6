@@ -1,9 +1,10 @@
 package com.tss.dao;
 
-import com.tss.model.Assignment;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.tss.model.Assignment;
 
 public interface AssignmentDao {
 

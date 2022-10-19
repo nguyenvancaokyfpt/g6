@@ -19,5 +19,5 @@ public interface ClassSettingService {
     ClassSetting getSettingById(int settingId);
 
     void updateClassSetting(int settingId, String value, String description, String displayOrder, int active);
-    
+
 }

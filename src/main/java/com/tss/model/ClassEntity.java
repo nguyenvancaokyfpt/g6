@@ -9,7 +9,7 @@ package com.tss.model;
  * @author ADMIN
  */
 public class ClassEntity {
-   private int id;
+    private int id;
     private String classCode;
     private int comboId;
     private int tranierId;
@@ -20,7 +20,8 @@ public class ClassEntity {
     public ClassEntity() {
     }
 
-    public ClassEntity(int id, String classCode, int comboId, int tranierId, int termId, int statusId, String description) {
+    public ClassEntity(int id, String classCode, int comboId, int tranierId, int termId, int statusId,
+            String description) {
         this.id = id;
         this.classCode = classCode;
         this.comboId = comboId;
@@ -84,5 +85,5 @@ public class ClassEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    } 
+    }
 }

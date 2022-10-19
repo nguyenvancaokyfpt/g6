@@ -15,7 +15,8 @@ public class SubjectSetting {
     public SubjectSetting() {
     }
 
-    public SubjectSetting(int settingId, int typeId, String title, int value, String displayOrder, int statusId, String description, int subjectId, String subjectName) {
+    public SubjectSetting(int settingId, int typeId, String title, int value, String displayOrder, int statusId,
+            String description, int subjectId, String subjectName) {
         this.settingId = settingId;
         this.typeId = typeId;
         this.title = title;

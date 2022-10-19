@@ -34,8 +34,6 @@ public class ClassSetting {
         this.classId = classId;
     }
 
-
-
     /**
      * @return int return the typeId
      */
@@ -138,7 +136,6 @@ public class ClassSetting {
         return settingService.getSettingById(typeId).getTitle();
     }
 
-
     /**
      * @return int return the settingId
      */
@@ -152,7 +149,6 @@ public class ClassSetting {
     public void setSettingId(int settingId) {
         this.settingId = settingId;
     }
-
 
     /**
      * @return String return the statusTitle
@@ -181,7 +177,5 @@ public class ClassSetting {
     public void setValueType(String valueType) {
         this.valueType = valueType;
     }
-
-
 
 }

@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.SettingDao;
@@ -213,7 +211,8 @@ public class SettingDaoImpl implements SettingDao {
     }
 
     @Override
-    public List<Setting> ListSearchFilter(Connection connection, int offset, String searchword, String type, String status, String order, String dir) throws SQLException {
+    public List<Setting> ListSearchFilter(Connection connection, int offset, String searchword, String type,
+            String status, String order, String dir) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Setting> settingList = new ArrayList<>();
@@ -278,7 +277,8 @@ public class SettingDaoImpl implements SettingDao {
     }
 
     @Override
-    public int countSearchFilter(Connection connection, String searchword, String order, String type, String status) throws SQLException {
+    public int countSearchFilter(Connection connection, String searchword, String order, String type, String status)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int totalSetting = 0;
@@ -308,7 +308,8 @@ public class SettingDaoImpl implements SettingDao {
     }
 
     @Override
-    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException {
+    public void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
+            int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -368,7 +369,7 @@ public class SettingDaoImpl implements SettingDao {
         Setting setting = null;
         if (connection != null) {
             String sql = "SELECT setting_id, type_id, setting_title, setting_value, display_order, setting.status_id, status_title, description from setting inner join status on setting.status_id = status.status_id where setting_id = ?";
-            Object[] params = {id};
+            Object[] params = { id };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {

@@ -15,7 +15,8 @@ import com.tss.model.WebContact;
  * @author Dat Lai
  */
 public interface WebContactDao {
-     List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize) throws SQLException;
+    List<WebContact> List(Connection connection, String fullName, String email, int currentPageNo, int PageSize)
+            throws SQLException;
 
     WebContact findById(Connection connection, int catId) throws SQLException;
 

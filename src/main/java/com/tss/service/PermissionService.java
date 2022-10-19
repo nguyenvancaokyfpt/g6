@@ -5,7 +5,7 @@ import java.util.List;
 import com.tss.model.sercurity.Permission;
 
 public interface PermissionService {
-    
+
     List<Permission> List();
 
     List<Permission> ListByScreenId(int screenId);
@@ -23,5 +23,5 @@ public interface PermissionService {
     int del(int settingId, int screenId);
 
     int modify(int settingId, int screenId, Permission permission);
-    
+
 }

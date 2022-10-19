@@ -123,8 +123,8 @@ public class SercurityFilter implements Filter {
                             response);
                 } else {
                     ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
-                    + uri));
+                            new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
+                                    + uri));
                 }
             }
         }

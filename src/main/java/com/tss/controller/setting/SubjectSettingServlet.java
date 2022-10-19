@@ -1,18 +1,20 @@
 package com.tss.controller.setting;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tss.constants.ActionConstants;
 import com.tss.model.system.SubjectSetting;
 import com.tss.service.SubjectService;
 import com.tss.service.SubjectSettingService;
 import com.tss.service.impl.SubjectServiceImpl;
 import com.tss.service.impl.SubjectSettingServiceImpl;
-import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SubjectSettingServlet extends HttpServlet {
 
@@ -130,7 +132,7 @@ public class SubjectSettingServlet extends HttpServlet {
         int status = Integer.parseInt(request.getParameter("statusId"));
         String description = request.getParameter("description");
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
-        SubjectSetting subjectSetting = new SubjectSetting(0, 2, title, value, 
+        SubjectSetting subjectSetting = new SubjectSetting(0, 2, title, value,
                 displayOrder, status, description, subjectId, "");
         subjectSettingService.add(subjectSetting);
         response.sendRedirect("/subject/setting");
@@ -144,7 +146,7 @@ public class SubjectSettingServlet extends HttpServlet {
         int status = Integer.parseInt(request.getParameter("statusId"));
         String description = request.getParameter("description");
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
-        SubjectSetting subjectSetting = new SubjectSetting(settingId, 2, title, value, 
+        SubjectSetting subjectSetting = new SubjectSetting(settingId, 2, title, value,
                 displayOrder, status, description, subjectId, "");
         subjectSettingService.update(subjectSetting);
         response.sendRedirect("/subject/setting");

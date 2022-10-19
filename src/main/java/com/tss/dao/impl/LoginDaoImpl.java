@@ -1,4 +1,5 @@
 package com.tss.dao.impl;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,7 +7,6 @@ import java.sql.SQLException;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.LoginDao;
-
 
 public class LoginDaoImpl implements LoginDao {
 
@@ -17,7 +17,7 @@ public class LoginDaoImpl implements LoginDao {
         boolean flag = false;
         if (connection != null) {
             String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-            Object[] params = {email, password};
+            Object[] params = { email, password };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -33,4 +33,3 @@ public class LoginDaoImpl implements LoginDao {
     }
 
 }
-    

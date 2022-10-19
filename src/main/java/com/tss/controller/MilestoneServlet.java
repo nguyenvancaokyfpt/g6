@@ -4,40 +4,38 @@
  */
 package com.tss.controller;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
-import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Subject;
-import com.tss.model.WebContact;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.SubjectService;
-import com.tss.service.WebContactService;
 import com.tss.service.impl.ClassServiceImpl;
 import com.tss.service.impl.MilestoneServiceImpl;
 import com.tss.service.impl.SubjectServiceImpl;
-import com.tss.service.impl.WebContactServiceImpl;
-import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
 
 public class MilestoneServlet extends HttpServlet {
 
- private MilestoneService mileStoneService;
- private ClassService classService;
- private SubjectService subjectService;
-   @Override
+    private MilestoneService mileStoneService;
+    private ClassService classService;
+    private SubjectService subjectService;
+
+    @Override
     public void init() throws ServletException {
         mileStoneService = new MilestoneServiceImpl();
         classService = new ClassServiceImpl();
@@ -91,7 +89,7 @@ public class MilestoneServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int mileStoneId = Integer.parseInt(request.getParameter("milestoneId"));
         Milestone milestone = mileStoneService.findById(mileStoneId);
         int assId = milestone.getAssId();
@@ -103,28 +101,29 @@ public class MilestoneServlet extends HttpServlet {
         String assBody = request.getParameter("assBody");
         if (assBody.equals("")) {
             milestone.setAssBody(milestone.getAssBody());
-        }else{
+        } else {
             milestone.setAssBody(assBody);
         }
         String description = request.getParameter("description");
         if (description.equals("")) {
             milestone.setDescription(milestone.getDescription());
-        }else{
+        } else {
             milestone.setDescription(description);
         }
         String title = request.getParameter("title");
         if (title.equals("")) {
             milestone.setTitle(milestone.getTitle());
-        }else{
+        } else {
             milestone.setTitle(title);
         }
-       mileStoneService.updateAss(assId, subjectId);
-       mileStoneService.update(milestone,classId,fromDate,toDate,title,assBody,description,milestone.getStatusId());
-       response.sendRedirect("/milestone/list");
+        mileStoneService.updateAss(assId, subjectId);
+        mileStoneService.update(milestone, classId, fromDate, toDate, title, assBody, description,
+                milestone.getStatusId());
+        response.sendRedirect("/milestone/list");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            Milestone milestone = new Milestone();
+        Milestone milestone = new Milestone();
         milestone.setAssId(Integer.parseInt(request.getParameter("assId")));
         milestone.setClassId(Integer.parseInt(request.getParameter("classId")));
         milestone.setFromDate(Date.valueOf(request.getParameter("fromDate")));
@@ -138,25 +137,25 @@ public class MilestoneServlet extends HttpServlet {
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       JSONObject jsonObject = RequestHelper.getJsonData(request);
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
         int start = 0;
         int length = 10;
         String search = "";
         int draw = 1;
-//        if (jsonObject != null) {
-//            start = jsonObject.getInteger("start");
-//            length = jsonObject.getInteger("length");
-//            search = jsonObject.getString("search[value]");
-//            draw = jsonObject.getInteger("draw");
-//        } else {
-//            start = Integer.parseInt(request.getParameter("start"));
-//            length = Integer.parseInt(request.getParameter("length"));
-//            search = request.getParameter("search[value]");
-//            draw = Integer.parseInt(request.getParameter("draw"));
-//        }
-        List<Milestone> milestones = mileStoneService.List(0, 10 , search);
+        // if (jsonObject != null) {
+        // start = jsonObject.getInteger("start");
+        // length = jsonObject.getInteger("length");
+        // search = jsonObject.getString("search[value]");
+        // draw = jsonObject.getInteger("draw");
+        // } else {
+        // start = Integer.parseInt(request.getParameter("start"));
+        // length = Integer.parseInt(request.getParameter("length"));
+        // search = request.getParameter("search[value]");
+        // draw = Integer.parseInt(request.getParameter("draw"));
+        // }
+        List<Milestone> milestones = mileStoneService.List(0, 10, search);
         java.util.logging.Logger.getLogger("foo").info("My message");
-      
+
         int recordsTotal = mileStoneService.countAll();
         int recordsFiltered = mileStoneService.countAll();
         // response
@@ -169,12 +168,10 @@ public class MilestoneServlet extends HttpServlet {
 
         request.setAttribute("jspPath", "shared/milestone.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/milestone/table-edited.js"
-        ));
+                "apps/milestone/table-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.WEB_CONTACT_LIST
-        ));
+                ScreenConstants.WEB_CONTACT_LIST));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -185,11 +182,11 @@ public class MilestoneServlet extends HttpServlet {
     }
 
     private void reply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.setAttribute("jspPath", "shared/webcontact.jsp");
-//        int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
-//        String reply = request.getParameter("reply");
-//        webContactService.reply(categoryId, reply);
-//        response.sendRedirect("/webcontact/list");
+        // request.setAttribute("jspPath", "shared/webcontact.jsp");
+        // int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
+        // String reply = request.getParameter("reply");
+        // webContactService.reply(categoryId, reply);
+        // response.sendRedirect("/webcontact/list");
     }
 
 }

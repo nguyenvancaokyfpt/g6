@@ -4,15 +4,16 @@
  */
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.model.WebContact;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
 import com.tss.dao.WebContactDao;
+import com.tss.model.WebContact;
 
 /**
  *

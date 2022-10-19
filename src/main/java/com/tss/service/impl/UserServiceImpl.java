@@ -365,13 +365,14 @@ public class UserServiceImpl implements UserService {
             int classId) {
         Connection connection = null;
         List<Trainee> userList = null;
-        
+
         // get orderColumn name
         String columnName = columns.get(orderColumn).getData();
 
         try {
             connection = BaseDao.getConnection();
-            userList = userDao.findAllByClassId(connection, start, length, search, columnName, orderDir, statusFilter, classId);
+            userList = userDao.findAllByClassId(connection, start, length, search, columnName, orderDir, statusFilter,
+                    classId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

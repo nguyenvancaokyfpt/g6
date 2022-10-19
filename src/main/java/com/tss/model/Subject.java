@@ -14,7 +14,8 @@ public class Subject {
     public Subject() {
     }
 
-    public Subject(int subjectId, String subjectCode, String subjectName, int managerId, int expertId, int statusId, String body, String imgSrc) {
+    public Subject(int subjectId, String subjectCode, String subjectName, int managerId, int expertId, int statusId,
+            String body, String imgSrc) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
