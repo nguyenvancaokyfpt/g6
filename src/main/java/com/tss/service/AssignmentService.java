@@ -22,4 +22,7 @@ public interface AssignmentService {
         boolean changeStatus(int id);
 
         Assignment findById(int id);
+
+        List<Assignment> findBySubId(int id);
+
 }

@@ -11,20 +11,12 @@ const getSub = () => {
     })
     .then((data) => {
       let assSelect = document.getElementById("assSelect");
-      let ass = document.getElementById("assSelected").value;
       let content = ``;
-      //   let content = `<option value="">--- Select Assignment ---</option>`;
+      // let content = `<option value="">--- Select Assignment ---</option>`;
       data.forEach((e) => {
-        if (e.assId == ass) {
-          content += `
-              <option value="${e.assId}" selected>${e.title}</option>
-          `;
-        } else {
-          content += `
-          <option
-           value="${e.assId}">${e.title}</option>
-      `;
-        }
+        content += `
+            <option value="${e.assId}">${e.title}</option>
+        `;
       });
       assSelect.innerHTML = content;
     })
@@ -37,4 +29,14 @@ const getSub = () => {
 
 $(document).ready(function () {
   getSub();
+});
+
+const reset = () => {
+  document.getElementById(
+    "assSelect"
+  ).innerHTML = `<option value="" disabled selected>--- Empty ---</option>`;
+};
+
+$("#btnClear").click(function () {
+  reset();
 });

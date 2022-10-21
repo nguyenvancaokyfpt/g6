@@ -27,4 +27,5 @@ public interface AssignmentDao {
 
         Assignment findById(Connection connection, int id) throws SQLException;
 
+        List<Assignment> findBySubId(Connection connection, int id) throws SQLException;
 }

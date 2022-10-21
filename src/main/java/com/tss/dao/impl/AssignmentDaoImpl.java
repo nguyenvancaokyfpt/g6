@@ -198,4 +198,37 @@ public class AssignmentDaoImpl implements AssignmentDao {
         return assignment;
     }
 
+    @Override
+    public List<Assignment> findBySubId(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Assignment assignment = null;
+        List<Assignment> list = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT a.*,s.subject_name FROM assignment a inner join subject s on a.subject_id = s.subject_id WHERE a.subject_id = ?";
+            Object[] params = { id };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    assignment = new Assignment();
+                    assignment.setAssId(resultSet.getInt("ass_id"));
+                    assignment.setSubjectId(resultSet.getInt("subject_id"));
+                    assignment.setTitle(resultSet.getString("title"));
+                    assignment.setAssBody(resultSet.getString("ass_body"));
+                    assignment.setEvalWeight(resultSet.getInt("eval_weight"));
+                    assignment.setIsTeamwork(resultSet.getInt("is_team_work"));
+                    assignment.setIsOngoing(resultSet.getInt("is_ongoing"));
+                    assignment.setStatusId(resultSet.getInt("status_id"));
+                    assignment.setSubjectName(resultSet.getString("subject_name"));
+                    list.add(assignment);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return list;
+    }
+
 }
