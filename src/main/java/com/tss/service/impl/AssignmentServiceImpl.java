@@ -139,4 +139,19 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
         return assignment;
     }
+
+    @Override
+    public List<Assignment> findBySubId(int id) {
+        Connection connection = null;
+        List<Assignment> assignment = null;
+        try {
+            connection = BaseDao.getConnection();
+            assignment = assignmentDao.findBySubId(connection, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return assignment;
+    }
 }

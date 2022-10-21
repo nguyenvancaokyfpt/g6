@@ -14,21 +14,21 @@ import com.tss.model.Assignment;
 public class AssignmentDaoImpl implements AssignmentDao {
 
     @Override
-    public List<Assignment> findAll(Connection connection, int start, int length, String search, 
-             String subjectFilter, String isTeamworkFilter, String isOngoingFilter, String statusFilter)
+    public List<Assignment> findAll(Connection connection, int start, int length, String search,
+            String subjectFilter, String isTeamworkFilter, String isOngoingFilter, String statusFilter)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Assignment> list = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT a.*, s.subject_name\n"
-            +"FROM assignment a join subject s on a.subject_id = s.subject_id\n" 
-            +"WHERE (a.title LIKE ? or s.subject_name like ?)\n" 
-            +"AND a.subject_id LIKE ? AND a.is_ongoing LIKE ? AND a.is_team_work LIKE ? AND a.status_id like ?\n" 
-            +"LIMIT ?, ?;";
-            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + subjectFilter + "%",
-                    "%" + isOngoingFilter + "%",
-                    "%" + isTeamworkFilter + "%", "%" + statusFilter + "%", start, length };
+                    + "FROM assignment a join subject s on a.subject_id = s.subject_id\n"
+                    + "WHERE (a.title LIKE ? or s.subject_name like ?)\n"
+                    + "AND a.subject_id LIKE ? AND a.is_ongoing LIKE ? AND a.is_team_work LIKE ? AND a.status_id like ?\n"
+                    + "LIMIT ?, ?;";
+            Object[] params = {"%" + search + "%", "%" + search + "%", "%" + subjectFilter + "%",
+                "%" + isOngoingFilter + "%",
+                "%" + isTeamworkFilter + "%", "%" + statusFilter + "%", start, length};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -62,12 +62,12 @@ public class AssignmentDaoImpl implements AssignmentDao {
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(*)\n"
-            +"FROM assignment a join subject s on a.subject_id = s.subject_id\n" 
-            +"WHERE (a.title LIKE ? or s.subject_name like ?)\n" 
-            +"AND a.subject_id LIKE ? AND a.is_ongoing LIKE ? AND a.is_team_work LIKE ? AND a.status_id like ?"; 
-            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + subjectFilter + "%",
-                    "%" + isOngoingFilter + "%",
-                    "%" + isTeamworkFilter + "%", "%" + statusFilter + "%" };
+                    + "FROM assignment a join subject s on a.subject_id = s.subject_id\n"
+                    + "WHERE (a.title LIKE ? or s.subject_name like ?)\n"
+                    + "AND a.subject_id LIKE ? AND a.is_ongoing LIKE ? AND a.is_team_work LIKE ? AND a.status_id like ?";
+            Object[] params = {"%" + search + "%", "%" + search + "%", "%" + subjectFilter + "%",
+                "%" + isOngoingFilter + "%",
+                "%" + isTeamworkFilter + "%", "%" + statusFilter + "%"};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -110,9 +110,9 @@ public class AssignmentDaoImpl implements AssignmentDao {
         int updateRows = 0;
         if (connection != null) {
             String sql = "INSERT INTO assignment (subject_id, title, ass_body, eval_weight, is_team_work, is_ongoing, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            Object[] params = { assignment.getSubjectId(), assignment.getTitle(), assignment.getAssBody(),
-                    assignment.getEvalWeight(), assignment.getIsTeamwork(), assignment.getIsOngoing(),
-                    assignment.getStatusId() };
+            Object[] params = {assignment.getSubjectId(), assignment.getTitle(), assignment.getAssBody(),
+                assignment.getEvalWeight(), assignment.getIsTeamwork(), assignment.getIsOngoing(),
+                assignment.getStatusId()};
             try {
                 updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -130,9 +130,9 @@ public class AssignmentDaoImpl implements AssignmentDao {
         int updateRows = 0;
         if (connection != null) {
             String sql = "UPDATE assignment SET subject_id = ?, title = ?, ass_body = ?, eval_weight = ?, is_team_work = ?, is_ongoing = ?, status_id = ? WHERE ass_id = ?";
-            Object[] params = { assignment.getSubjectId(), assignment.getTitle(), assignment.getAssBody(),
-                    assignment.getEvalWeight(), assignment.getIsTeamwork(), assignment.getIsOngoing(),
-                    assignment.getStatusId(), assignment.getAssId() };
+            Object[] params = {assignment.getSubjectId(), assignment.getTitle(), assignment.getAssBody(),
+                assignment.getEvalWeight(), assignment.getIsTeamwork(), assignment.getIsOngoing(),
+                assignment.getStatusId(), assignment.getAssId()};
             try {
                 updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -155,7 +155,7 @@ public class AssignmentDaoImpl implements AssignmentDao {
             } else {
                 sql = "UPDATE assignment SET status_id = 1 WHERE ass_id = ?";
             }
-            Object[] params = { id };
+            Object[] params = {id};
             try {
                 updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -174,7 +174,7 @@ public class AssignmentDaoImpl implements AssignmentDao {
         Assignment assignment = null;
         if (connection != null) {
             String sql = "SELECT a.*,s.subject_name FROM assignment a inner join subject s on a.subject_id = s.subject_id WHERE ass_id = ?";
-            Object[] params = { id };
+            Object[] params = {id};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -196,6 +196,39 @@ public class AssignmentDaoImpl implements AssignmentDao {
             }
         }
         return assignment;
+    }
+
+    @Override
+    public List<Assignment> findBySubId(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Assignment assignment = null;
+        List<Assignment> list = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT a.*,s.subject_name FROM assignment a inner join subject s on a.subject_id = s.subject_id WHERE a.subject_id = ?";
+            Object[] params = {id};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    assignment = new Assignment();
+                    assignment.setAssId(resultSet.getInt("ass_id"));
+                    assignment.setSubjectId(resultSet.getInt("subject_id"));
+                    assignment.setTitle(resultSet.getString("title"));
+                    assignment.setAssBody(resultSet.getString("ass_body"));
+                    assignment.setEvalWeight(resultSet.getInt("eval_weight"));
+                    assignment.setIsTeamwork(resultSet.getInt("is_team_work"));
+                    assignment.setIsOngoing(resultSet.getInt("is_ongoing"));
+                    assignment.setStatusId(resultSet.getInt("status_id"));
+                    assignment.setSubjectName(resultSet.getString("subject_name"));
+                    list.add(assignment);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return list;
     }
 
 }

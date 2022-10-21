@@ -54,7 +54,7 @@
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-xl-9 fv-row">
-                                            <select class="form-select" name="criteria_subject">
+                                            <select class="form-select" name="criteria_subject" id="subSelect" onchange="getSub()">
                                                 <c:forEach items="${requestScope.subjects}" var="s">
                                                     <option value="${s.subjectId}" <c:if
                                                         test="${s.subjectId == requestScope.sub.subjectId}">selected
@@ -76,13 +76,10 @@
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-xl-9 fv-row">
-                                            <select class="form-select" name="criteria_assign">
-                                                <c:forEach items="${requestScope.assigns}" var="a">
-                                                    <option value="${a.assId}" <c:if
-                                                        test="${a.assId == requestScope.assign.assId}">selected</c:if>
-
-                                                        >${a.title}</option>
-                                                </c:forEach>
+                                            <input type="text" class="d-none" id="assSelected"
+                                                value="${requestScope.assign.assId}">
+                                            <select class="form-select" name="criteria_assign" id="assSelect" required>
+                                               
                                             </select>
                                         </div>
                                     </div>
@@ -200,6 +197,7 @@
                                 <!--end::Card body-->
                                 <!--begin::Card footer-->
                                 <div class="card-footer d-flex justify-content-center py-6 px-9">
+                                    <a type="submit" href="evalCriteria/evalCriteriaList" class="btn btn-secondary mx-5">Cancel</a>
                                     <button type="submit" class="btn btn-primary mx-5">Update</button>
                                 </div>
                                 <!--end::Card footer-->

@@ -6,7 +6,7 @@ import com.tss.model.Assignment;
 
 public interface AssignmentService {
 
-    List<Assignment> findAll(int start, int length, String search, 
+    List<Assignment> findAll(int start, int length, String search,
             String subjectFilter, String isTeamworkFilter, String isOngoingFilter,
             String statusFilter);
 
@@ -22,4 +22,7 @@ public interface AssignmentService {
     boolean changeStatus(int id);
 
     Assignment findById(int id);
+
+    List<Assignment> findBySubId(int id);
+
 }

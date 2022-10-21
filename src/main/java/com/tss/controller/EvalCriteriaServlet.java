@@ -4,6 +4,7 @@
  */
 package com.tss.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.*;
 import com.tss.helper.DTOHelper;
@@ -69,6 +70,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                     break;
                 case ActionConstants.GET:
                     view(request, response);
+                    break;
+                case "getSub":
+                    getSub(request, response);
                     break;
                 default:
                     list(request, response);
@@ -160,14 +164,28 @@ public class EvalCriteriaServlet extends HttpServlet {
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("jspPath", "manager/addEvalCriteria.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "manager/customTable.js"));
+                "manager/getSubject.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.EVALCRITERIA_LIST));
-        request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
+//            request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
         request.setAttribute("subjects", subService.findAll(0, subService.countAll(), ""));
+
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
-       
+    }
+
+    private void getSub(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        int id = Integer.parseInt(request.getParameter("subId"));
+        List<Assignment> as = assignService.findBySubId(id);
+        String jsonOutput;
+        if (as.size() == 0 || as == null) {
+            jsonOutput = "";
+        } else {
+            jsonOutput = JSON.toJSONString(as);
+        }
+        response.getWriter().println(jsonOutput);
+        response.getWriter().flush();
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {

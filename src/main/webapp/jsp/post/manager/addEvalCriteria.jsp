@@ -42,10 +42,10 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9 fv-row">
-                                <select class="form-select" name="criteria_subject">
+                                <select class="form-select" name="criteria_subject" id="subSelect" onchange="getSub()" required>
+                                    <option value="" selected disabled>--- Select Subject ---</option>
                                     <c:forEach items="${requestScope.subjects}" var="s">
-                                        <option value="${s.subjectId}"
-                                            >${s.subjectName}</option>
+                                        <option value="${s.subjectId}">${s.subjectName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -62,10 +62,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-9 fv-row">
-                                <select class="form-select" name="criteria_assign">
-                                    <c:forEach items="${requestScope.assigns}" var="a">
-                                        <option value="${a.assId}">${a.title}</option>
-                                    </c:forEach>
+                                <select class="form-select" name="criteria_assign" required id="assSelect">
                                 </select>
                             </div>
                         </div>
@@ -147,7 +144,7 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
-                        <button type="reset" class="btn btn-white btn-active-light-primary me-2">Clear</button>
+                        <button id="btnClear" type="reset" class="btn btn-white btn-active-light-primary me-2">Clear</button>
                         <button type="submit" class="btn btn-primary" id="kt_project_settings_submit">Add New</button>
                     </div>
                     <!--end::Card footer-->
