@@ -64,6 +64,12 @@ public class TeamListServlet extends HttpServlet {
                 case ActionConstants.GET:
                     view(request, response);
                     break;
+                case ActionConstants.CHANGE_STATUS:
+                    changestatus(request, response);
+                    break;
+                case ActionConstants.DELETE:
+                    remove(request, response);
+                    break;
                 default:
                     break;
             }
@@ -118,4 +124,14 @@ public class TeamListServlet extends HttpServlet {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    private void changestatus(HttpServletRequest request, HttpServletResponse response) {
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        int statusId = Integer.parseInt(request.getParameter("statusId")) == 1 ? 0 : 1;
+        teamService.changeStatus(teamId, statusId);
+    }
+
+    private void remove(HttpServletRequest request, HttpServletResponse response) {
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.RemoveTeam(teamId);
+    }
 }

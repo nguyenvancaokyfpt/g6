@@ -14,4 +14,6 @@ import com.tss.model.Team;
  */
 public interface TeamService {
     List<Team> FindByClassID(int classID);
+    boolean changeStatus(int id, int status);
+    boolean RemoveTeam(int teamId);
 }

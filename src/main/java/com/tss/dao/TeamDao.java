@@ -6,6 +6,7 @@ package com.tss.dao;
 
 import com.tss.model.Team;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,5 +16,9 @@ import java.util.List;
 public interface TeamDao {
 
     List<Team> FindByClassID(Connection connection, int classID);
-    
+
+    int changeStatus(Connection connection, int id, int status) throws SQLException;
+
+    int RemoveTeam(Connection connection, int teamId) throws SQLException;
+
 }

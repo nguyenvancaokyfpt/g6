@@ -67,12 +67,56 @@ public class TeamDaoImpl implements TeamDao {
                 }
 
             } catch (SQLException e) {
-                System.out.println("DAO");
                 e.printStackTrace();
             } finally {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
         }
         return teams;
+    }
+
+    @Override
+    public int changeStatus(Connection connection, int teamId, int statusId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                String sql = "UPDATE `team` SET `status_id` = ? WHERE `team_id` = ?";
+                Object[] params = { statusId, teamId };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int RemoveTeam(Connection connection, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                Object[] params = { teamId };
+                //update team of trainee to null
+                String sql = "UPDATE `class_user` SET `team_id` = NULL WHERE `team_id` = ?";
+                BaseDao.execute(connection, preparedStatement, sql, params);
+                //update submit of trainee to null
+                sql = "UPDATE `submit` SET `team_id` = NULL WHERE `team_id` = ?";
+                BaseDao.execute(connection, preparedStatement, sql, params);
+                //Delete team
+                sql = "DELETE FROM `team` WHERE `team_id` = ?";
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
     }
 }

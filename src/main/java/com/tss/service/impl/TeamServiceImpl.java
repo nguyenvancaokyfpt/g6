@@ -45,7 +45,45 @@ public class TeamServiceImpl implements TeamService{
     
     public static void main(String[] args) {
         TeamServiceImpl s = new TeamServiceImpl();
-        List<Team> t = s.FindByClassID(10);
-        System.out.println(t.get(0).getListTrainee().size());
+        s.changeStatus(2,1);
+    }
+
+    @Override
+    public boolean changeStatus(int id, int status) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = teamDao.changeStatus(connection, id, status) == 1;
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean RemoveTeam(int teamId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = teamDao.RemoveTeam(connection, teamId) == 1;
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
     }
 }

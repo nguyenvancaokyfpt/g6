@@ -14,6 +14,33 @@ const dropdown = () => {
   });
 };
 
+const changeStatus = (teamId,statusId) => {
+  fetch(
+    window.location.origin + `/team/list?action=changeStatus&teamId=${teamId}&statusId=${statusId}`,
+    { method: "POST" }
+  ).then((response) => {
+    if (response.status === 200) {
+      getClass();
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+const removeTeam = (teamId) => {
+  fetch(
+    window.location.origin + `/team/list?action=delete&teamId=${teamId}`,
+    { method: "POST" }
+  ).then((response) => {
+    if (response.status === 200) {
+      getClass();
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+
 const getClass = () => {
   let selectedMile = document.getElementById("selectedMile").value;
   if (selectedMile == "") return;
@@ -96,9 +123,9 @@ const getClass = () => {
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">View/Edit</a></li>
-                        <li><a class="dropdown-item" href="#">Remove Group</a></li>
-                        <li><a class="dropdown-item" href="#">Change Status</a></li>
+                        <li><a class="dropdown-item" >View/Edit</a></li>
+                        <li><a class="dropdown-item" onclick="removeTeam(${team.id})">Remove Group</a></li>
+                        <li><a class="dropdown-item" onclick="changeStatus(${team.id},${team.status_id})">${team.status_id ? "Deactive" : "Active"}</a></li>
                     </ul>
                 </div>
                   </div>
