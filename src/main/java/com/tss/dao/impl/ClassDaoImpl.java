@@ -53,7 +53,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status, class_user where class.status_id = status.status_id and class.class_id = class_user.class_id and class_user.user_id = ?;";
-            Object[] params = { userId };
+            Object[] params = {userId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -84,7 +84,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status where class.status_id = status.status_id and trainer_id = ?;";
-            Object[] params = { userId };
+            Object[] params = {userId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -114,12 +114,12 @@ public class ClassDaoImpl implements ClassDao {
         ResultSet resultSet = null;
         List<ClassEntity> classEntitys = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    c.class_id AS id, c.class_code AS classCode\n" +
-                    "FROM\n" +
-                    "    class AS c\n" +
-                    "        LEFT JOIN\n" +
-                    "    milestone AS m ON m.class_id = c.class_id;";
+            String sql = "SELECT \n"
+                    + "    c.class_id AS id, c.class_code AS classCode\n"
+                    + "FROM\n"
+                    + "    class AS c\n"
+                    + "        LEFT JOIN\n"
+                    + "    milestone AS m ON m.class_id = c.class_id;";
             // Search and Paging
             Object[] params = {};
             try {
@@ -366,4 +366,42 @@ public class ClassDaoImpl implements ClassDao {
         return classList;
     }
 
+    @Override
+    public ClassEntity findClassById(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ClassEntity classDetail = new ClassEntity();
+        if (connection != null) {
+            String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
+                    + "class.description,a.full_name,b.full_name,setting_title,status.status_title\n"
+                    + "from class\n"
+                    + "inner join user_role aa on aa.user_id = class.trainer_id\n"
+                    + "inner join user_role bb on bb.user_id = class.combo_id\n"
+                    + "inner join user a on a.user_id = aa.user_id\n"
+                    + "inner join user b on b.user_id = bb.user_id\n"
+                    + "inner join status on class.status_id = status.status_id\n"
+                    + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "where class_id = ?;";
+
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    classDetail.setId(resultSet.getInt(1));
+                    classDetail.setClassCode(resultSet.getString(2));
+                    classDetail.setComboId(resultSet.getInt(3));
+                    classDetail.setTranierId(resultSet.getInt(4));
+                    classDetail.setTermId(resultSet.getInt(5));
+                    classDetail.setStatusId(resultSet.getInt(6));
+                    classDetail.setDescription(resultSet.getString(7));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classDetail;
+    }
 }

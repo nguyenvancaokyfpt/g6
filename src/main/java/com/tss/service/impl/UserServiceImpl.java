@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updatePwd(String userCode, String password) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean add(User user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean del(int i) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -367,7 +367,12 @@ public class UserServiceImpl implements UserService {
         List<Trainee> userList = null;
 
         // get orderColumn name
-        String columnName = columns.get(orderColumn).getData();
+        String columnName;
+        if (columns == null || orderColumn == -1) {
+            columnName = "user_id";
+        } else {
+            columnName = columns.get(orderColumn).getData();
+        }
 
         try {
             connection = BaseDao.getConnection();

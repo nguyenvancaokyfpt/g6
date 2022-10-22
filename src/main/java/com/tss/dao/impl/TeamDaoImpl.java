@@ -1,0 +1,78 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.tss.dao.impl;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.TeamDao;
+import com.tss.model.Team;
+import com.tss.model.Trainee;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Dat Lai
+ */
+public class TeamDaoImpl implements TeamDao {
+
+    @Override
+    public List<Team> FindByClassID(Connection connection, int classID) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Team> teams = new ArrayList<>();
+        if (connection != null) {
+            try {
+                String sql = "SELECT * FROM `team` WHERE class_id = ?";
+                Object[] params = { classID };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Team team = new Team();
+                    team.setId(resultSet.getInt("team_id"));
+                    team.setDescription(resultSet.getString("description"));
+                    team.setProject_code(resultSet.getString("project_code"));
+                    team.setStatus_id(resultSet.getInt("status_id"));
+                    team.setTopic_code(resultSet.getString("topic_code"));
+                    team.setTopic_name(resultSet.getString("topic_name"));
+                    teams.add(team);
+                }
+
+                // find trainee
+                for (Team team : teams) {
+                    sql = "SELECT u.*,class_id,dropout_date FROM class_user c inner JOIN user u on c.user_id = u.user_id where c.class_id = ? and c.team_id = ?";
+                    params = new Object[] { classID, team.getId() };
+                    resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                    while (resultSet.next()) {
+                        Trainee user = new Trainee();
+                        user.setUserId(resultSet.getInt("user_id"));
+                        user.setFullname(resultSet.getString("full_name"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                        user.setAvatarUrl(resultSet.getString("avatar_url"));
+                        user.setStatusId(resultSet.getInt("status_id"));
+                        user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                        user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                        user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                        user.setLastActive(resultSet.getTimestamp("last_active"));
+                        user.setClassId(resultSet.getInt("class_id"));
+                        user.setDropoutDate(resultSet.getDate("dropout_date"));
+                        team.getListTrainee().add(user);
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.out.println("DAO");
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return teams;
+    }
+}

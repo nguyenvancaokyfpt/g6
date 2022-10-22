@@ -27,7 +27,9 @@ public interface ClassDao {
                         String status,
                         String order, String dir) throws SQLException;
 
-        ClassAnhPT findById(Connection connection, int id) throws SQLException;
+        ClassAnhPT findById(Connection connection, int id) throws SQLException;     
+
+        ClassEntity findClassById(Connection connection, int id) throws SQLException;
 
         int countSearchFilter(Connection connection, String searchword, String term, String status) throws SQLException;
 

@@ -80,4 +80,19 @@ public class ClassServiceImpl implements ClassService {
         return classEntitys;
     }
 
+    @Override
+    public ClassEntity findByID(int id) {
+        Connection connection = null;
+        ClassEntity myClass = null;
+        try {
+            connection = BaseDao.getConnection();
+            myClass = classDao.findClassById(connection, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return myClass;
+    }
+
 }
