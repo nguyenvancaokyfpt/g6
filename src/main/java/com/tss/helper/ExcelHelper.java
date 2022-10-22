@@ -34,25 +34,44 @@ public class ExcelHelper {
                 while (rowIterator.hasNext()) {
                     String fullname = "";
                     String email = "";
+                    String phone = "";
+                    Float grade = 0.0f;
                     Row row = rowIterator.next();
                     Iterator<Cell> cellIterator = row.cellIterator();
+                    int columnIndex = 0;
                     while (cellIterator.hasNext()) {
                         Cell cell = cellIterator.next();
                         switch (cell.getCellType()) {
                             case Cell.CELL_TYPE_STRING:
-                                if (fullname.equalsIgnoreCase("")) {
-                                    fullname = cell.getStringCellValue().trim();
-                                } else if (email.equalsIgnoreCase("")) {
-                                    email = cell.getStringCellValue().trim();
-                                } else {
-                                    System.out.println("Random data::" + cell.getStringCellValue());
+                                switch (columnIndex) {
+                                    case 0:
+                                        fullname = cell.getStringCellValue();
+                                        columnIndex++;
+                                        break;
+                                    case 1:
+                                        email = cell.getStringCellValue();
+                                        columnIndex++;
+                                        break;
+                                    case 2:
+                                        phone = cell.getStringCellValue();
+                                        columnIndex++;
+                                        break;
+                                    default:
+                                        break;
                                 }
                                 break;
                             case Cell.CELL_TYPE_NUMERIC:
-                                System.out.println("Random data::" + cell.getNumericCellValue());
+                                if (columnIndex == 3) {
+                                    grade = (float) cell.getNumericCellValue();
+                                    columnIndex++;
+                                }
                         }
                     }
-                    Trainee c = new Trainee(fullname, email);
+                    Trainee c = new Trainee();
+                    c.setFullname(fullname);
+                    c.setEmail(email);
+                    c.setMobile(phone);
+                    c.setGrade(grade);
                     traineeList.add(c);
                 }
 

@@ -34,7 +34,7 @@
 											<!--begin::Col-->
 											<div class="col-lg-8 fv-row">
 												<input type="text"
-													class="form-control form-control-lg form-control-solid"
+													class="form-control form-control-lg form-control"
 													placeholder="Value" value="${setting.getTitle()}" readonly/>
 												<input type="hidden" name="id" value="${setting.getSettingId()}"/>
 											</div>
@@ -50,7 +50,7 @@
 											<c:if test="${setting.getValueType() == 'string'}">
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="value"
-														class="form-control form-control-lg form-control-solid"
+														class="form-control form-control-lg form-control"
 														placeholder="Value" value="${setting.getValue()}" />
 												</div>
 											</c:if>
@@ -59,7 +59,7 @@
 													<!--begin::Options-->
 													<div class="d-flex align-items-center mt-3">
 														<!--begin::Option-->
-														<label class="form-check form-check-inline form-check-solid me-5">
+														<label class="form-check form-check-inline form-check me-5">
 															<input class="form-check-input" name="value" type="radio"
 																value="true" ${setting.getValue() == 'true' ? 'checked' : ''}/>
 															<span class="fw-bold ps-2 fs-6">True</span>
@@ -79,7 +79,7 @@
 											<c:if test="${setting.getValueType() == 'number'}">
 												<div class="col-lg-8 fv-row">
 													<input type="number" name="value" min="0" max="100"
-														class="form-control form-control-lg form-control-solid"
+														class="form-control form-control-lg form-control"
 														placeholder="Value" value="${setting.getValue()}" />
 												</div>
 											</c:if>

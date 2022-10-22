@@ -9,9 +9,11 @@ import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassDao;
+import com.tss.helper.DebugHelper;
 import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.User;
 
 public class ClassDaoImpl implements ClassDao {
 
@@ -364,6 +366,55 @@ public class ClassDaoImpl implements ClassDao {
             }
         }
         return classList;
+    }
+
+    @Override
+    public void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        boolean flag = false;
+        if (connection != null) {
+            String sql = "insert into class_user (class_id,user_id,grade) values (?,?,?);";
+            Object[] params = { classId, user.getUserId(), grade };
+            try {
+                int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
+                if (updateRows > 0) {
+                    flag = true;
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
+
+    @Override
+    public Classroom findClassById(Connection connection, int classId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Classroom classroom = null;
+        if (connection != null) {
+            String sql = "select * from class where class_id = ?;";
+            Object[] params = { classId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    classroom = new Classroom();
+                    classroom.setClassId(resultSet.getInt("class_id"));
+                    classroom.setClassCode(resultSet.getString("class_code"));
+                    classroom.setComboId(resultSet.getInt("combo_id"));
+                    classroom.setTrainerId(resultSet.getInt("trainer_id"));
+                    classroom.setTermId(resultSet.getInt("term_id"));
+                    classroom.setStatusId(resultSet.getInt("status_id"));
+                    classroom.setDescription(resultSet.getString("description"));
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classroom;
     }
 
 }

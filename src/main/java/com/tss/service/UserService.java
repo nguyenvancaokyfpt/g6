@@ -62,4 +62,8 @@ public interface UserService {
         int countAllByClassId(int classId);
 
         int countAllByClassId(String search, String statusFilter, int classId);
+
+        void createTraineeAccount(Trainee trainee);
+
+        void updateUser(int userId, String fullname, String mobile);
 }

@@ -412,4 +412,30 @@ public class UserServiceImpl implements UserService {
         return count;
     }
 
+    @Override
+    public void createTraineeAccount(Trainee trainee) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.createTraineeAccount(connection, trainee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public void updateUser(int userId, String fullname, String mobile) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.updateUser(connection, userId, fullname, mobile);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
 }

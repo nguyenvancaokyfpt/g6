@@ -6,6 +6,7 @@ package com.tss.controller.management;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
@@ -14,6 +15,8 @@ import com.tss.constants.HttpStatusCodeConstants;
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
+import com.tss.helper.DebugHelper;
+import com.tss.helper.ExcelHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Classroom;
@@ -23,10 +26,12 @@ import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.ClassService;
-import com.tss.service.ClassSettingService;
+import com.tss.service.RegisterService;
+import com.tss.service.TraineeService;
 import com.tss.service.UserService;
 import com.tss.service.impl.ClassServiceImpl;
-import com.tss.service.impl.ClassSettingServiceImpl;
+import com.tss.service.impl.RegisterServiceImpl;
+import com.tss.service.impl.TraineeServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
@@ -40,45 +45,43 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class TraineeListServlet extends HttpServlet {
 
-    private ClassSettingService classSettingService;
     private ClassService classService;
     private UserService userService;
+    private TraineeService traineeService;
+    private RegisterService registerService;
 
     @Override
     public void init() throws ServletException {
-        classSettingService = new ClassSettingServiceImpl();
         classService = new ClassServiceImpl();
         userService = new UserServiceImpl();
+        traineeService = new TraineeServiceImpl();
+        registerService = new RegisterServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String action = request.getParameter("action");
-            switch (action) {
-                case ActionConstants.LIST:
-                    list(request, response);
-                    break;
-                case ActionConstants.CREATE:
-                    create(request, response);
-                    break;
-                case ActionConstants.UPDATE:
-                    update(request, response);
-                    break;
-                case ActionConstants.DELETE:
-                    delete(request, response);
-                    break;
-                case ActionConstants.GET:
-                    get(request, response);
-                    break;
-                default:
-                    System.out.println(action);
-                    list(request, response);
-                    break;
-            }
-        } catch (NullPointerException e) {
-            list(request, response);
+        String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+        switch (action) {
+            case ActionConstants.LIST:
+                list(request, response);
+                break;
+            case ActionConstants.CREATE:
+                create(request, response);
+                break;
+            case ActionConstants.UPDATE:
+                update(request, response);
+                break;
+            case ActionConstants.DELETE:
+                delete(request, response);
+                break;
+            case ActionConstants.GET:
+                get(request, response);
+                break;
+            default:
+                list(request, response);
+                break;
         }
+
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -90,23 +93,120 @@ public class TraineeListServlet extends HttpServlet {
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject jsonObject = RequestHelper.getJsonData(request);
-        int settingId = jsonObject.getIntValue("settingId");
-        String action = jsonObject.getString("action");
-
         try {
-            if (action.equals("active")) {
-                classSettingService.updateStatus(settingId, true);
+            int userId = jsonObject.getIntValue("userID");
+            String action = jsonObject.getString("action");
+            Date dateDropout = null;
+            if (action.equals("dropout")) {
+                dateDropout = jsonObject.getDate("dateDropout");
+                if (dateDropout == null) {
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Date dropout is required"));
+                    return;
+                }
+
+                traineeService.dropout(userId, dateDropout);
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.OK, "Dropout " + userId + " success"));
+            } else if (action.equals("active")) {
+                traineeService.active(userId);
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.OK, "Active " + userId + " success"));
             } else if (action.equals("deactive")) {
-                classSettingService.updateStatus(settingId, false);
+                traineeService.deactive(userId);
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.OK, "Deactive " + userId + " success"));
+            } else {
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Action is not valid"));
+                return;
             }
-            ResponseHelper.sendResponse(response, new ResponseMessage(HttpStatusCodeConstants.OK, "Update success"));
         } catch (Exception e) {
             ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR, "Update failed"));
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Please check your input data"));
         }
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) {
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        try {
+            String action = jsonObject.getString("action");
+            switch (action) {
+                case "create":
+
+                    break;
+                case "import":
+                    createImport(jsonObject, response, request);
+                    break;
+                default:
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Action is not valid"));
+                    break;
+            }
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Action is not valid"));
+        }
+    }
+
+    private void createImport(JSONObject jsonObject, HttpServletResponse response, HttpServletRequest request)
+            throws IOException {
+        try {
+            int classId = jsonObject.getIntValue("classId");
+            String fileUrls = jsonObject.getString("fileUrls");
+            String appPath = request.getServletContext().getRealPath("");
+            appPath = appPath.replace('\\', '/');
+
+            Classroom classroom = classService.findClassById(classId);
+
+            List<Trainee> trainees = new ArrayList<>();
+            try {
+                trainees = ExcelHelper.readEcxelFile(appPath + fileUrls);
+                if (trainees.size() == 0) {
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "File is empty"));
+                    return;
+                }
+            } catch (Exception e) {
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "File is not valid"));
+                return;
+            }
+
+            // check if trainee is not exist
+            List<Trainee> traineesNotExist = new ArrayList<>();
+            for (Trainee trainee : trainees) {
+                User user = userService.findByEmail(trainee.getEmail());
+                if (user == null) {
+                    traineesNotExist.add(trainee);
+                } else {
+                    if ((!trainee.getFullname().equals(user.getFullname())
+                            || !trainee.getMobile().equals(user.getMobile()))) {
+                        userService.updateUser(user.getUserId(), trainee.getFullname(), trainee.getMobile());
+                    }
+                }
+            }
+            // create trainee account
+            for (Trainee trainee : traineesNotExist) {
+                registerService.registerTraineeFromFile(trainee, classroom.getClassCode());
+            }
+            // grant trainee to class
+            for (Trainee trainee : trainees) {
+                try {
+                    User user = userService.findByEmail(trainee.getEmail());
+                    if (user != null) {
+                        classService.grantTraineeToClass(user, classId, trainee.getGrade());
+                    }
+                } catch (Exception e) {
+                    DebugHelper.print(e);
+                }
+            }
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Import success"));
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Please check your input data"));
+        }
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {

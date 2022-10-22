@@ -11,6 +11,7 @@ import java.util.List;
 import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.User;
 
 public interface ClassDao {
 
@@ -40,5 +41,9 @@ public interface ClassDao {
         void changeStatus(Connection connection, int id, int status_id) throws SQLException;
 
         List<ClassAnhPT> listTrainer(Connection connection, int role) throws SQLException;
+
+        void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException;
+
+        Classroom findClassById(Connection connection, int classId) throws SQLException;
 
 }

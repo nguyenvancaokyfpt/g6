@@ -1,9 +1,8 @@
 "use strict";
 var KTUsersList = (function () {
   var e,
+    fileUrls,
     classId,
-    typeId,
-    statusId,
     t,
     n,
     r,
@@ -74,6 +73,10 @@ var KTUsersList = (function () {
           });
         });
     };
+  var bm = new bootstrap.Modal(
+    document.getElementById("kt_modal_export_users")
+  );
+  var fm = $("#kt_modal_export_users_form").get(0);
   const l = () => {
     const e = o.querySelectorAll('tbody [type="checkbox"]');
     let c = !1,
@@ -89,6 +92,24 @@ var KTUsersList = (function () {
   };
   return {
     init: function () {
+      var mydropzone = new Dropzone("#kt_modal_create_project_settings_logo", {
+        url: window.location.origin + "/upload",
+        paramName: "file",
+        maxFiles: 1,
+        maxFilesize: 10,
+        addRemoveLinks: !0,
+        acceptedFiles: ".xlsx, .xls",
+        accept: function (e, t) {
+          t();
+        },
+        init: function () {
+          fileUrls = "";
+          this.on("success", function (e, t) {
+            fileUrls = t.data[0];
+            console.log(fileUrls);
+          });
+        },
+      });
       o &&
         (o.querySelectorAll("tbody tr").forEach((e) => {
           const t = e.querySelectorAll("td");
@@ -110,65 +131,14 @@ var KTUsersList = (function () {
               KTMenu.init();
               KTMenu.init();
               document
-                .querySelectorAll('[data-kt-users-table-filter="Active"]')
+                .querySelectorAll('[data-kt-users-table-filter="0"]')
                 .forEach((t) => {
                   t.addEventListener("click", function (t) {
                     t.preventDefault();
                     const n = t.target.getAttribute("value");
                     console.log(n);
                     Swal.fire({
-                      text: "Are you sure you want deactivate setting id " + n,
-                      icon: "warning",
-                      showCancelButton: !0,
-                      buttonsStyling: !1,
-                      confirmButtonText: "Yes, deactivate!",
-                      cancelButtonText: "No, cancel",
-                      customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary",
-                      },
-                    }).then(function (t) {
-                      t.value
-                        ? (() => {
-                            axios
-                              .post("/setting/class?action=update", {
-                                action: "deactive",
-                                settingId: n,
-                              })
-                              .then(function (response) {
-                                $.toast({
-                                  heading: "Success",
-                                  text: "Setting has been deactivated",
-                                  showHideTransition: "slide",
-                                  icon: "success",
-                                  position: "bottom-right",
-                                });
-                                e.draw();
-                              })
-                              .catch(function (error) {
-                                console.log(error);
-                              });
-                          })()
-                        : "cancel" === t.dismiss &&
-                          $.toast({
-                            heading: "Info",
-                            text: "Setting has not been deactivated",
-                            showHideTransition: "slide",
-                            icon: "info",
-                            position: "bottom-right",
-                          });
-                    });
-                  });
-                });
-              document
-                .querySelectorAll('[data-kt-users-table-filter="Inactive"]')
-                .forEach((t) => {
-                  t.addEventListener("click", function (t) {
-                    t.preventDefault();
-                    const n = t.target.getAttribute("value");
-                    console.log(n);
-                    Swal.fire({
-                      text: "Are you sure you want activate setting id " + n,
+                      text: "Are you sure you want activate Trainee id " + n,
                       icon: "warning",
                       showCancelButton: !0,
                       buttonsStyling: !1,
@@ -182,14 +152,14 @@ var KTUsersList = (function () {
                       t.value
                         ? (() => {
                             axios
-                              .post("/setting/class?action=update", {
+                              .post("/management/trainee/list?action=update", {
                                 action: "active",
-                                settingId: n,
+                                userID: n,
                               })
                               .then(function (response) {
                                 $.toast({
                                   heading: "Success",
-                                  text: "Setting has been activated",
+                                  text: "Trainee has been activated",
                                   showHideTransition: "slide",
                                   icon: "success",
                                   position: "bottom-right",
@@ -203,7 +173,215 @@ var KTUsersList = (function () {
                         : "cancel" === t.dismiss &&
                           $.toast({
                             heading: "Info",
-                            text: "Setting has not been activated",
+                            text: "Trainee has not been activated",
+                            showHideTransition: "slide",
+                            icon: "info",
+                            position: "bottom-right",
+                          });
+                    });
+                  });
+                });
+              document
+                .querySelectorAll('[data-kt-users-table-filter="1"]')
+                .forEach((t) => {
+                  t.addEventListener("click", function (t) {
+                    t.preventDefault();
+                    const n = t.target.getAttribute("value");
+                    Swal.fire({
+                      text: "Are you sure you want deactivate trainee id " + n,
+                      icon: "warning",
+                      showCancelButton: !0,
+                      buttonsStyling: !1,
+                      confirmButtonText: "Yes, deactivate!",
+                      cancelButtonText: "No, cancel",
+                      customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary",
+                      },
+                    }).then(function (t) {
+                      t.value
+                        ? (() => {
+                            axios
+                              .post("/management/trainee/list?action=update", {
+                                action: "deactive",
+                                userID: n,
+                              })
+                              .then(function (response) {
+                                $.toast({
+                                  heading: "Success",
+                                  text: "Trainee has been deactivated",
+                                  showHideTransition: "slide",
+                                  icon: "success",
+                                  position: "bottom-right",
+                                });
+                                e.draw();
+                              })
+                              .catch(function (error) {
+                                console.log(error);
+                              });
+                          })()
+                        : "cancel" === t.dismiss &&
+                          $.toast({
+                            heading: "Info",
+                            text: "Trainee has not been deactivated",
+                            showHideTransition: "slide",
+                            icon: "info",
+                            position: "bottom-right",
+                          });
+                    });
+                  });
+                });
+              document
+                .querySelectorAll('[data-kt-users-table-filter="2"]')
+                .forEach((t) => {
+                  t.addEventListener("click", function (t) {
+                    t.preventDefault();
+                    const n = t.target.getAttribute("value");
+                    console.log(n);
+                    Swal.fire({
+                      text: "Are you sure you want activate trainee id " + n,
+                      icon: "warning",
+                      showCancelButton: !0,
+                      buttonsStyling: !1,
+                      confirmButtonText: "Yes, activate!",
+                      cancelButtonText: "No, cancel",
+                      customClass: {
+                        confirmButton: "btn fw-bold btn-success",
+                        cancelButton: "btn fw-bold btn-active-light-primary",
+                      },
+                    }).then(function (t) {
+                      t.value
+                        ? (() => {
+                            axios
+                              .post("/management/trainee/list?action=update", {
+                                action: "active",
+                                userID: n,
+                              })
+                              .then(function (response) {
+                                $.toast({
+                                  heading: "Success",
+                                  text: "Trainee has been activated",
+                                  showHideTransition: "slide",
+                                  icon: "success",
+                                  position: "bottom-right",
+                                });
+                                e.draw();
+                              })
+                              .catch(function (error) {
+                                console.log(error);
+                              });
+                          })()
+                        : "cancel" === t.dismiss &&
+                          $.toast({
+                            heading: "Info",
+                            text: "Trainee has not been activated",
+                            showHideTransition: "slide",
+                            icon: "info",
+                            position: "bottom-right",
+                          });
+                    });
+                  });
+                });
+              document
+                .querySelectorAll('[data-kt-users-table-filter="dropout"]')
+                .forEach((t) => {
+                  t.addEventListener("click", function (t) {
+                    t.preventDefault();
+                    const n = t.target.getAttribute("value");
+                    Swal.fire({
+                      title: "Day dropout",
+                      html: `
+                      <div class="col-md-12 fv-row">
+                      <!--begin::Input-->
+                      <div class="position-relative d-flex align-items-center">
+                        <!--begin::Icon-->
+                        <div class="symbol symbol-20px me-4 position-absolute ms-4">
+                          <span class="symbol-label bg-secondary">
+                            <!--begin::Svg Icon | path: icons/duotone/Layout/Layout-grid.svg-->
+                            <span class="svg-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                  <rect x="0" y="0" width="24" height="24" />
+                                  <rect fill="#000000" opacity="0.3" x="4" y="4" width="4" height="4" rx="1" />
+                                  <path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#000000" />
+                                </g>
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                          </span>
+                        </div>
+                        <!--end::Icon-->
+                        <!--begin::Datepicker-->
+                        <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="due_date" />
+                        <!--end::Datepicker-->
+                      </div>
+                      <!--end::Input-->
+                    </div>`,
+                      icon: "warning",
+                      showCancelButton: !0,
+                      buttonsStyling: !1,
+                      confirmButtonText: "Dropout",
+                      cancelButtonText: "Cancel",
+                      customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary",
+                      },
+                      didOpen: function () {
+                        $('[name="due_date"]').flatpickr({
+                          enableTime: !1,
+                          dateFormat: "Y-m-d",
+                          maxDate: new Date().fp_incr(5),
+                        });
+                      },
+                    }).then(function (t) {
+                      t.value
+                        ? (() => {
+                            if ($('[name="due_date"]').val() != "") {
+                              axios
+                                .post(
+                                  "/management/trainee/list?action=update",
+                                  {
+                                    action: "dropout",
+                                    userID: n,
+                                    dateDropout: $('[name="due_date"]').val(),
+                                  }
+                                )
+                                .then(function (response) {
+                                  $.toast({
+                                    heading: "Success",
+                                    text: "Trainee has been dropout",
+                                    showHideTransition: "slide",
+                                    icon: "success",
+                                    position: "bottom-right",
+                                  });
+                                  e.draw();
+                                })
+                                .catch(function (error) {
+                                  $.toast({
+                                    heading: "Error",
+                                    text: error.response.data.message,
+                                    showHideTransition: "slide",
+                                    icon: "error",
+                                    position: "bottom-right",
+                                  });
+                                });
+                            } else {
+                              Swal.fire({
+                                text: "Please select dropout date",
+                                icon: "warning",
+                                buttonsStyling: !1,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                  confirmButton:
+                                    "btn fw-bold btn-active-light-primary",
+                                },
+                              });
+                            }
+                          })()
+                        : "cancel" === t.dismiss &&
+                          $.toast({
+                            heading: "Info",
+                            text: "Trainee has not been dropout",
                             showHideTransition: "slide",
                             icon: "info",
                             position: "bottom-right",
@@ -230,8 +408,8 @@ var KTUsersList = (function () {
             { data: "userId" },
             { data: "avatarUrl" },
             { data: "mobile" },
-            { data: "lastActive" },
-            { data: "createdAt" },
+            { data: "grade" },
+            { data: "dropoutDate" },
             { data: "statusId" },
             { data: "userId" },
           ],
@@ -317,22 +495,22 @@ var KTUsersList = (function () {
             },
             {
               targets: 4,
-              title: "Last Active",
+              title: "Grade",
               class: "text-center",
               render: function (data) {
-                return (
-                  moment(data).format("DD/MM/YYYY") +
-                  "<br>" +
-                  moment(data).format("HH:mm:ss")
-                );
+                return data;
               },
             },
             {
               targets: 5,
-              title: "Join Date",
+              title: "Dropout Date",
               class: "text-center",
               render: function (data, type, row) {
-                return moment(data).format("DD/MM/YYYY");
+                if (row.statusId == 2) {
+                  return moment(data).format("DD/MM/YYYY");
+                } else {
+                  return "Not dropout";
+                }
               },
             },
             {
@@ -356,7 +534,19 @@ var KTUsersList = (function () {
               className: "text-center",
               render: function (data, type, row) {
                 const actions = row.statusId == 1 ? "Deactive" : "Active";
-                return (
+                const dropdownMenu =
+                  row.statusId == 2
+                    ? ``
+                    : `
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                  <a href="#" value="` +
+                      data +
+                      `" class="menu-link px-3" data-kt-users-table-filter="dropout">Dropout</a>
+                </div>
+                <!--end::Menu item-->
+                `;
+                const dataHtml =
                   `
                 <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">Actions
                 <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-down.svg-->
@@ -396,38 +586,130 @@ var KTUsersList = (function () {
                   `</a>
                   </div>
                   <!--end::Menu item-->
+                  ` +
+                  dropdownMenu +
+                  `
                 </div>
                 <!--end::Menu-->
-                `
-                );
+                `;
+                return dataHtml;
               },
             },
           ],
         })),
         c(),
         document
+          .querySelector('[data-kt-users-modal-action="close"]')
+          .addEventListener("click", (t) => {
+            t.preventDefault(),
+              Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                  confirmButton: "btn btn-primary",
+                  cancelButton: "btn btn-active-light",
+                },
+              }).then(function (t) {
+                t.value
+                  ? (bm.hide(),
+                    fm.reset(),
+                    $('[name="classImport"]').val("").trigger("change"),
+                    mydropzone.removeAllFiles(true))
+                  : "cancel" === bm.dismiss &&
+                    Swal.fire({
+                      text: "Your form has not been cancelled!.",
+                      icon: "error",
+                      buttonsStyling: !1,
+                      confirmButtonText: "Ok, got it!",
+                      customClass: {
+                        confirmButton: "btn btn-primary",
+                      },
+                    });
+              });
+          }),
+        document
+          .querySelector('[data-kt-users-modal-action="cancel"]')
+          .addEventListener("click", (t) => {
+            t.preventDefault(),
+              Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                  confirmButton: "btn btn-primary",
+                  cancelButton: "btn btn-active-light",
+                },
+              }).then(function (t) {
+                t.value
+                  ? (bm.hide(),
+                    fm.reset(),
+                    $('[name="classImport"]').val("").trigger("change"),
+                    mydropzone.removeAllFiles(true))
+                  : "cancel" === bm.dismiss &&
+                    Swal.fire({
+                      text: "Your form has not been cancelled!.",
+                      icon: "error",
+                      buttonsStyling: !1,
+                      confirmButtonText: "Ok, got it!",
+                      customClass: {
+                        confirmButton: "btn btn-primary",
+                      },
+                    });
+              });
+          }),
+        document
+          .querySelector('[data-kt-users-modal-action="submit"]')
+          .addEventListener("click", (t) => {
+            t.preventDefault(),
+              axios
+                .post("/management/trainee/list?action=create", {
+                  classId: $('[name="classImport"]').val(),
+                  fileUrls: fileUrls,
+                  action: "import",
+                })
+                .then(function (response) {
+                  $.toast({
+                    heading: "Success",
+                    text: "Trainee import successfully",
+                    showHideTransition: "slide",
+                    icon: "success",
+                    position: "bottom-right",
+                  });
+                  bm.hide();
+                  fm.reset();
+                  $('[name="classImport"]').val("").trigger("change");
+                  mydropzone.removeAllFiles(true);
+                  e.draw();
+                })
+                .catch(function (error) {
+                  $.toast({
+                    heading: "Error",
+                    text: "Something went wrong",
+                    showHideTransition: "slide",
+                    icon: "error",
+                    position: "bottom-right",
+                  });
+                });
+          }),
+        document
           .querySelector('[data-kt-user-table-filter="search"]')
           .addEventListener("keyup", function (t) {
             e.search(t.target.value).draw();
-          }),
-        document
-          .querySelector('[data-kt-user-table-filter="reset"]')
-          .addEventListener("click", function () {
-            document
-              .querySelector('[data-kt-user-table-filter="form"]')
-              .querySelectorAll("select")
-              .forEach((e) => {
-                $(e).val("").trigger("change");
-              }),
-              e.columns(6).search("").draw();
           }),
         (() => {
           const t = document.querySelector(
               '[data-kt-user-table-filter="form"]'
             ),
             k = document.querySelector('[data-kt-user-table-filter="class"]'),
-            n = t.querySelector('[data-kt-user-table-filter="filter"]'),
-            r = t.querySelectorAll("select");
+            n = document.querySelector('[data-kt-user-table-filter="status"]');
+          console.log(n);
           k.addEventListener("change", function (t) {
             classId = t.target.value;
             console.log($("#classId").val());
@@ -435,14 +717,9 @@ var KTUsersList = (function () {
             e.ajax.reload();
             e.draw();
           }),
-            n.addEventListener("click", function () {
-              r.forEach((e, n) => {
-                var filter = e.getAttribute("data-kt-user-table-filter");
-                if (filter == "status") {
-                  statusId = e.value;
-                }
-              }),
-                e.columns(6).search(statusId).draw();
+            n.addEventListener("change", function (t) {
+              console.log("status");
+              e.columns(6).search(t.target.value).draw();
             });
         })());
     },

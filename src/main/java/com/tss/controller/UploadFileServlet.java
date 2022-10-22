@@ -46,7 +46,8 @@ public class UploadFileServlet extends HttpServlet {
     // - file: File ( can be multiple )
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String destination = request.getParameter("destination");
+        String destination = request.getParameter("destination") != null ? request.getParameter("destination")
+                : "default";
         List<String> fileUrls = UploadHelper.upload(request, destination);
 
         if (!fileUrls.isEmpty()) {

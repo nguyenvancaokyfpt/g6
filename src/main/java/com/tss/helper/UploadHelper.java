@@ -18,7 +18,7 @@ public class UploadHelper {
         appPath = appPath.replace('\\', '/');
         String relativePath = "assets/media/" + destination;
         String savePath = appPath + relativePath;
-
+        DebugHelper.print(savePath);
         try {
             // creates the save directory if it does not exists
             java.io.File fileSaveDir = new java.io.File(savePath);
@@ -40,6 +40,7 @@ public class UploadHelper {
             return fileUrls;
         } catch (Exception e) {
             DebugHelper.print(e);
+            DebugHelper.print("Upload file failed");
             return null;
         }
     }

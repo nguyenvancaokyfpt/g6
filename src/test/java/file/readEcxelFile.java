@@ -19,6 +19,8 @@ public class readEcxelFile {
 		for (Trainee trainee : traineeList) {
 			System.out.println(trainee.getEmail());
 			System.out.println(trainee.getFullname());
+                        System.out.println(trainee.getMobile());
+                        System.out.println(trainee.getGrade());
 		}
 
     }

@@ -6,6 +6,7 @@ public class Trainee extends User {
 
     private int classId;
     private Date dropoutDate;
+    private float grade;
 
     public Trainee() {
     }
@@ -40,6 +41,20 @@ public class Trainee extends User {
      */
     public void setDropoutDate(Date dropoutDate) {
         this.dropoutDate = dropoutDate;
+    }
+
+    /**
+     * @return float return the grade
+     */
+    public float getGrade() {
+        return grade;
+    }
+
+    /**
+     * @param grade the grade to set
+     */
+    public void setGrade(float grade) {
+        this.grade = grade;
     }
 
 }

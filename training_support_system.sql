@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 18, 2022 at 02:40 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost:3306
+-- Generation Time: Oct 21, 2022 at 12:52 PM
+-- Server version: 8.0.30-0ubuntu0.20.04.2
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `training_support_system`
+-- Database: `swp`
 --
 
 -- --------------------------------------------------------
@@ -28,15 +29,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `assignment` (
-  `ass_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `ass_body` varchar(5000) NOT NULL,
-  `eval_weight` int(11) NOT NULL,
+  `ass_id` int NOT NULL,
+  `subject_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ass_body` varchar(5000) COLLATE utf8mb4_general_ci NOT NULL,
+  `eval_weight` int NOT NULL,
   `is_team_work` tinyint(1) NOT NULL,
   `is_ongoing` tinyint(1) NOT NULL,
-  `status_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `status_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assignment`
@@ -62,12 +63,12 @@ INSERT INTO `assignment` (`ass_id`, `subject_id`, `title`, `ass_body`, `eval_wei
 --
 
 CREATE TABLE `attendance` (
-  `class_id` int(11) NOT NULL,
-  `trainer_id` int(11) NOT NULL,
-  `schedule_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `comment` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `class_id` int NOT NULL,
+  `trainer_id` int NOT NULL,
+  `schedule_id` int NOT NULL,
+  `status_id` int NOT NULL,
+  `comment` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -76,21 +77,21 @@ CREATE TABLE `attendance` (
 --
 
 CREATE TABLE `class` (
-  `class_id` int(11) NOT NULL,
-  `class_code` varchar(255) NOT NULL,
-  `combo_id` int(11) DEFAULT NULL,
-  `trainer_id` int(11) NOT NULL,
-  `term_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `class_id` int NOT NULL,
+  `class_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `combo_id` int DEFAULT NULL,
+  `trainer_id` int NOT NULL,
+  `term_id` int NOT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class`
 --
 
 INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
-(1, 'SE1627', 3, 23, 41, 0, 'SWP'),
+(1, 'SE1610', 27, 29, 41, 0, 'SWP'),
 (2, 'SE1628', 3, 23, 41, 1, 'SWP'),
 (3, 'SE1629', 3, 23, 41, 1, 'SWP'),
 (4, 'SE1630', 3, 23, 41, 1, 'SWP'),
@@ -98,9 +99,14 @@ INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_i
 (6, 'SE1632', 3, 22, 41, 1, 'SWP'),
 (7, 'SE1633', 3, 22, 41, 1, 'SWP'),
 (8, 'SE1634', 3, 22, 41, 1, 'SWP'),
-(9, 'SE1635', 3, 3, 41, 1, 'SWP'),
+(9, 'SE1635', 3, 23, 41, 0, 'AAAAA'),
 (10, 'SE1636', 3, 3, 41, 1, 'SWP'),
-(11, 'SE1637', 3, 3, 41, 1, 'SWP');
+(11, 'SE1637', 3, 23, 41, 0, 'SWP'),
+(16, 'SE1637', 3, 23, 41, 0, 'SWP'),
+(17, 'SE1637', 27, 22, 42, 1, 'SWP'),
+(18, 'SE1111', 3, 22, 42, 1, 'New'),
+(19, 'FE1234', 27, 29, 42, 1, ''),
+(20, 'QE1111', 27, 29, 42, 1, 'AAAA');
 
 -- --------------------------------------------------------
 
@@ -109,12 +115,12 @@ INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_i
 --
 
 CREATE TABLE `class_lesson` (
-  `class_lesson_id` int(11) NOT NULL,
-  `lesson_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
-  `slot_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `class_lesson_id` int NOT NULL,
+  `lesson_id` int NOT NULL,
+  `subject_id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `slot_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -123,16 +129,16 @@ CREATE TABLE `class_lesson` (
 --
 
 CREATE TABLE `class_setting` (
-  `setting_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `setting_title` varchar(255) NOT NULL,
-  `setting_value` varchar(255) NOT NULL,
-  `value_type` varchar(255) NOT NULL,
-  `display_order` varchar(255) NOT NULL,
-  `class_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `setting_id` int NOT NULL,
+  `type_id` int NOT NULL,
+  `setting_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `setting_value` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `value_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `display_order` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `class_id` int NOT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class_setting`
@@ -142,8 +148,8 @@ INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_
 (2, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'string', 'ASC', 1, 1, 'Video intro for class'),
 (3, 32, 'Student can vote', 'false', 'boolean', 'DESC', 1, 1, 'Student can vote comment'),
 (5, 32, 'Student can comment', 'false', 'boolean', 'DESC', 1, 1, 'Studen can commentss'),
-(6, 31, 'Need to take attendance', 'true', 'boolean', 'ASC', 1, 0, 'Stduent need to attend'),
-(7, 31, '% Minimum attendance', '90', 'number', 'ASC', 1, 0, '% Minimum attendance'),
+(6, 31, 'Need to take attendance', 'false', 'boolean', 'ASC', 1, 0, 'Stduent need to attend'),
+(7, 31, '% Minimum attendance', '90', 'number', 'DESC', 1, 1, '% Minimum attendance'),
 (8, 33, 'Video intro', 'https://youtu.be/RgKAFK5djSk', 'string', 'ASC', 2, 1, 'Video intro for class'),
 (9, 32, 'Student can vote', 'true', 'boolean', 'DESC', 2, 1, 'Student can vote comment'),
 (10, 32, 'Student can comment', 'true', 'boolean', 'DESC', 2, 1, 'Studen can commentss'),
@@ -202,14 +208,14 @@ INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_
 --
 
 CREATE TABLE `class_user` (
-  `class_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
+  `class_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `team_id` int NOT NULL,
   `is_leader` tinyint(1) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `note` varchar(500) NOT NULL,
+  `status_id` int NOT NULL,
+  `note` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   `dropout_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class_user`
@@ -230,13 +236,13 @@ INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status
 --
 
 CREATE TABLE `client` (
-  `client_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `mobile` int(11) NOT NULL,
-  `address` int(11) NOT NULL,
-  `position` int(11) NOT NULL,
-  `company` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `client_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `mobile` int NOT NULL,
+  `address` int NOT NULL,
+  `position` int NOT NULL,
+  `company` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -245,16 +251,16 @@ CREATE TABLE `client` (
 --
 
 CREATE TABLE `eval_criteria` (
-  `criteria_id` int(11) NOT NULL,
-  `ass_id` int(11) NOT NULL,
-  `milestone_id` int(11) DEFAULT NULL,
-  `criteria_name` varchar(255) NOT NULL,
+  `criteria_id` int NOT NULL,
+  `ass_id` int NOT NULL,
+  `milestone_id` int DEFAULT NULL,
+  `criteria_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `is_team_eval` tinyint(1) NOT NULL,
-  `eval_weight` int(11) NOT NULL,
-  `max_loc` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `eval_weight` int NOT NULL,
+  `max_loc` int NOT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `eval_criteria`
@@ -283,18 +289,18 @@ INSERT INTO `eval_criteria` (`criteria_id`, `ass_id`, `milestone_id`, `criteria_
 --
 
 CREATE TABLE `issue` (
-  `issue_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `extra_labels` varchar(1000) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `linked_id` int(11) NOT NULL,
-  `gitlab_url` varchar(500) NOT NULL,
+  `issue_id` int NOT NULL,
+  `team_id` int NOT NULL,
+  `author_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type_id` int NOT NULL,
+  `status_id` int NOT NULL,
+  `extra_labels` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `linked_id` int NOT NULL,
+  `gitlab_url` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   `is_closed` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -303,14 +309,14 @@ CREATE TABLE `issue` (
 --
 
 CREATE TABLE `lesson` (
-  `lesson_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `video_url` varchar(500) NOT NULL,
-  `file_url` varchar(500) NOT NULL,
-  `body` text NOT NULL,
-  `module_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `lesson_id` int NOT NULL,
+  `subject_id` int NOT NULL,
+  `author_id` int NOT NULL,
+  `video_url` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_url` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `body` text COLLATE utf8mb4_general_ci NOT NULL,
+  `module_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -319,15 +325,15 @@ CREATE TABLE `lesson` (
 --
 
 CREATE TABLE `loc_eval` (
-  `loc_eval_id` int(11) NOT NULL,
-  `complexity_id` int(11) NOT NULL,
-  `quality_id` int(11) NOT NULL,
-  `converted_loc` int(11) NOT NULL,
+  `loc_eval_id` int NOT NULL,
+  `complexity_id` int NOT NULL,
+  `quality_id` int NOT NULL,
+  `converted_loc` int NOT NULL,
   `is_late_submit` tinyint(1) NOT NULL,
-  `comment` varchar(500) NOT NULL,
-  `new_milestone_id` int(11) NOT NULL,
-  `new_complexity_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `comment` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `new_milestone_id` int NOT NULL,
+  `new_complexity_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -336,20 +342,24 @@ CREATE TABLE `loc_eval` (
 --
 
 CREATE TABLE `member_eval` (
-  `member_eval_id` int(11) NOT NULL,
-  `evaluation_id` int(11) NOT NULL,
-  `criteria_id` int(11) NOT NULL,
-  `total_loc` int(11) NOT NULL,
+  `member_eval_id` int NOT NULL,
+  `evaluation_id` int NOT NULL,
+  `criteria_id` int NOT NULL,
+  `total_loc` int NOT NULL,
   `grade` float NOT NULL,
-  `comment` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `comment` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `member_eval`
 --
 
 INSERT INTO `member_eval` (`member_eval_id`, `evaluation_id`, `criteria_id`, `total_loc`, `grade`, `comment`) VALUES
-(23, 1, 10, 100, 10, 'test');
+(23, 1, 10, 100, 10, 'test'),
+(25, 1, 1, 100, 9, ''),
+(55, 1, 3, 100, 8, 'oke'),
+(56, 1, 1, 100, 9, 'good'),
+(57, 1, 11, 100, 7, 'ok');
 
 -- --------------------------------------------------------
 
@@ -358,16 +368,16 @@ INSERT INTO `member_eval` (`member_eval_id`, `evaluation_id`, `criteria_id`, `to
 --
 
 CREATE TABLE `milestone` (
-  `milestone_id` int(11) NOT NULL,
-  `ass_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
+  `milestone_id` int NOT NULL,
+  `ass_id` int NOT NULL,
+  `class_id` int NOT NULL,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `ass_body` varchar(1000) NOT NULL,
-  `description` varchar(1000) NOT NULL,
-  `status_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ass_body` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `status_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `milestone`
@@ -383,15 +393,15 @@ INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_
 --
 
 CREATE TABLE `milestone_eval` (
-  `evaluation_id` int(11) NOT NULL,
-  `milestone_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
+  `evaluation_id` int NOT NULL,
+  `milestone_id` int NOT NULL,
+  `class_id` int NOT NULL,
   `bonus` float NOT NULL,
   `grade` float NOT NULL,
-  `comment` varchar(500) NOT NULL,
-  `submit_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `comment` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `submit_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `milestone_eval`
@@ -407,11 +417,11 @@ INSERT INTO `milestone_eval` (`evaluation_id`, `milestone_id`, `class_id`, `bonu
 --
 
 CREATE TABLE `package` (
-  `package_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `subject_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `package_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `subject_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -420,13 +430,13 @@ CREATE TABLE `package` (
 --
 
 CREATE TABLE `permission` (
-  `screen_id` int(11) NOT NULL,
-  `setting_id` int(11) NOT NULL,
+  `screen_id` int NOT NULL,
+  `setting_id` int NOT NULL,
   `can_get` tinyint(1) NOT NULL,
   `can_delete` tinyint(1) NOT NULL,
   `can_create` tinyint(1) NOT NULL,
   `can_update` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `permission`
@@ -532,15 +542,15 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (22, 25, 1, 0, 0, 0),
 (22, 26, 0, 0, 0, 0),
 (23, 21, 1, 1, 1, 1),
-(23, 22, 0, 0, 0, 0),
+(23, 22, 1, 1, 1, 1),
 (23, 23, 0, 0, 0, 0),
-(23, 24, 1, 1, 1, 1),
-(23, 25, 0, 0, 0, 0),
+(23, 24, 1, 0, 0, 0),
+(23, 25, 1, 0, 0, 0),
 (24, 21, 1, 1, 1, 1),
-(24, 22, 0, 0, 0, 0),
+(24, 22, 1, 1, 1, 1),
 (24, 23, 0, 0, 0, 0),
-(24, 24, 1, 1, 1, 1),
-(24, 25, 0, 0, 0, 0),
+(24, 24, 1, 0, 0, 0),
+(24, 25, 1, 0, 0, 0),
 (26, 21, 1, 1, 1, 1),
 (26, 22, 0, 0, 0, 0),
 (26, 23, 0, 0, 0, 0),
@@ -629,11 +639,11 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 --
 
 CREATE TABLE `reset_password_token` (
-  `user_id` int(11) NOT NULL,
-  `token` varchar(500) NOT NULL,
-  `salt` bigint(20) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int NOT NULL,
+  `token` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `salt` bigint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reset_password_token`
@@ -649,15 +659,15 @@ INSERT INTO `reset_password_token` (`user_id`, `token`, `salt`, `created_at`) VA
 --
 
 CREATE TABLE `schedule` (
-  `schedule_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
-  `slot_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `schedule_id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `slot_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `training_date` date NOT NULL,
   `from_time` time NOT NULL,
   `to_time` time NOT NULL,
-  `room` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `room` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -666,10 +676,10 @@ CREATE TABLE `schedule` (
 --
 
 CREATE TABLE `screen` (
-  `screen_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `path` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `screen_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `screen`
@@ -719,14 +729,14 @@ INSERT INTO `screen` (`screen_id`, `title`, `path`) VALUES
 --
 
 CREATE TABLE `setting` (
-  `setting_id` int(11) NOT NULL,
-  `type_id` int(11) DEFAULT NULL,
-  `setting_title` varchar(255) NOT NULL,
-  `setting_value` varchar(255) DEFAULT NULL,
-  `display_order` varchar(255) DEFAULT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `setting_id` int NOT NULL,
+  `type_id` int DEFAULT NULL,
+  `setting_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `setting_value` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `display_order` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `setting`
@@ -755,10 +765,10 @@ INSERT INTO `setting` (`setting_id`, `type_id`, `setting_title`, `setting_value`
 --
 
 CREATE TABLE `status` (
-  `status_id` int(11) NOT NULL,
-  `status_title` varchar(255) NOT NULL,
-  `status_value` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `status_id` int NOT NULL,
+  `status_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `status_value` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `status`
@@ -776,15 +786,15 @@ INSERT INTO `status` (`status_id`, `status_title`, `status_value`) VALUES
 --
 
 CREATE TABLE `subject` (
-  `subject_id` int(11) NOT NULL,
-  `subject_code` varchar(255) NOT NULL,
-  `subject_name` varchar(255) NOT NULL,
-  `manager_id` int(11) NOT NULL,
-  `expert_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `body` text NOT NULL,
-  `img_src` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `subject_id` int NOT NULL,
+  `subject_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `subject_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `manager_id` int NOT NULL,
+  `expert_id` int NOT NULL,
+  `status_id` int NOT NULL,
+  `body` text COLLATE utf8mb4_general_ci NOT NULL,
+  `img_src` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subject`
@@ -809,15 +819,15 @@ INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`, `manager_id
 --
 
 CREATE TABLE `subject_setting` (
-  `setting_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `setting_title` varchar(255) NOT NULL,
-  `setting_value` int(255) NOT NULL,
-  `display_order` varchar(255) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `subject_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `setting_id` int NOT NULL,
+  `type_id` int NOT NULL,
+  `setting_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `setting_value` int NOT NULL,
+  `display_order` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `subject_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subject_setting`
@@ -840,22 +850,22 @@ INSERT INTO `subject_setting` (`setting_id`, `type_id`, `setting_title`, `settin
 --
 
 CREATE TABLE `submit` (
-  `submit_id` int(11) NOT NULL,
-  `milestone_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
-  `submit_file_url` varchar(500) NOT NULL,
-  `submit_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `submit_id` int NOT NULL,
+  `milestone_id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `team_id` int NOT NULL,
+  `submit_file_url` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `submit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`submit_id`, `milestone_id`, `class_id`, `team_id`, `submit_file_url`, `submit_time`, `status_id`, `user_id`) VALUES
-(1, 1, 1, 1, 'assets/media/submit/test.zip', '2022-10-16 13:28:53', 1, 23);
+INSERT INTO `submit` (`submit_id`, `milestone_id`, `class_id`, `team_id`, `submit_file_url`, `status_id`, `user_id`) VALUES
+(1, 1, 1, 1, 'assets/media/submit/test.zip', 1, 23);
 
 -- --------------------------------------------------------
 
@@ -864,14 +874,14 @@ INSERT INTO `submit` (`submit_id`, `milestone_id`, `class_id`, `team_id`, `submi
 --
 
 CREATE TABLE `team` (
-  `team_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
-  `project_code` varchar(255) NOT NULL,
-  `topic_code` varchar(255) NOT NULL,
-  `topic_name` varchar(255) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `team_id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `project_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `topic_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `topic_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `status_id` int NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `team`
@@ -887,12 +897,12 @@ INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_
 --
 
 CREATE TABLE `team_eval` (
-  `team_eval_id` int(11) NOT NULL,
-  `criteria_id` int(11) NOT NULL,
-  `submit_id` int(11) NOT NULL,
+  `team_eval_id` int NOT NULL,
+  `criteria_id` int NOT NULL,
+  `submit_id` int NOT NULL,
   `grade` float NOT NULL,
-  `comment` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `comment` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -901,11 +911,11 @@ CREATE TABLE `team_eval` (
 --
 
 CREATE TABLE `team_member` (
-  `team_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `team_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `is_leader` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -914,14 +924,14 @@ CREATE TABLE `team_member` (
 --
 
 CREATE TABLE `tracking` (
-  `tracking_id` int(11) NOT NULL,
-  `milestone_id` int(11) NOT NULL,
-  `issue_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `assignee_id` int(11) NOT NULL,
-  `submit_id` int(11) NOT NULL,
-  `change_log` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `tracking_id` int NOT NULL,
+  `milestone_id` int NOT NULL,
+  `issue_id` int NOT NULL,
+  `author_id` int NOT NULL,
+  `assignee_id` int NOT NULL,
+  `submit_id` int NOT NULL,
+  `change_log` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -930,13 +940,13 @@ CREATE TABLE `tracking` (
 --
 
 CREATE TABLE `update_history` (
-  `update_history_id` int(11) NOT NULL,
-  `tracking_id` int(11) NOT NULL,
-  `milestone_id` int(11) NOT NULL,
-  `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `update_title` varchar(255) NOT NULL,
-  `description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `update_history_id` int NOT NULL,
+  `tracking_id` int NOT NULL,
+  `milestone_id` int NOT NULL,
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -945,19 +955,19 @@ CREATE TABLE `update_history` (
 --
 
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `mobile` varchar(15) DEFAULT NULL,
-  `password` varchar(500) NOT NULL,
-  `avatar_url` varchar(500) NOT NULL DEFAULT 'assets/media/avatars/blank.png',
-  `status_id` int(11) NOT NULL DEFAULT 1,
-  `note` varchar(500) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_active` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `mobile` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar_url` varchar(500) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'assets/media/avatars/blank.png',
+  `status_id` int NOT NULL DEFAULT '1',
+  `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_active` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
@@ -989,9 +999,9 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 --
 
 CREATE TABLE `user_role` (
-  `user_id` int(11) NOT NULL,
-  `setting_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int NOT NULL,
+  `setting_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_role`
@@ -999,21 +1009,21 @@ CREATE TABLE `user_role` (
 
 INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (2, 21),
-(3, 25),
-(19, 26),
-(21, 26),
+(54, 22),
+(57, 22),
 (22, 24),
 (23, 24),
-(25, 26),
-(27, 25),
 (29, 24),
+(3, 25),
+(27, 25),
+(19, 26),
+(21, 26),
+(25, 26),
 (32, 26),
 (52, 26),
 (53, 26),
-(54, 22),
 (55, 26),
-(56, 26),
-(57, 22);
+(56, 26);
 
 -- --------------------------------------------------------
 
@@ -1022,15 +1032,15 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 --
 
 CREATE TABLE `web_contact` (
-  `web_contact_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `supporter_id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `mobile` varchar(15) NOT NULL,
-  `message` varchar(2000) NOT NULL,
-  `response` varchar(2000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `web_contact_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  `supporter_id` int NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `mobile` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `message` varchar(2000) COLLATE utf8mb4_general_ci NOT NULL,
+  `response` varchar(2000) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `web_contact`
@@ -1324,151 +1334,151 @@ ALTER TABLE `web_contact`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-  MODIFY `ass_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ass_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `class_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `class_lesson`
 --
 ALTER TABLE `class_lesson`
-  MODIFY `class_lesson_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `class_lesson_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_setting`
 --
 ALTER TABLE `class_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `setting_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `client_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `eval_criteria`
 --
 ALTER TABLE `eval_criteria`
-  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `criteria_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `issue_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lesson`
 --
 ALTER TABLE `lesson`
-  MODIFY `lesson_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lesson_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `loc_eval`
 --
 ALTER TABLE `loc_eval`
-  MODIFY `loc_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `loc_eval_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `member_eval`
 --
 ALTER TABLE `member_eval`
-  MODIFY `member_eval_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `member_eval_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `milestone`
 --
 ALTER TABLE `milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `milestone_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `milestone_eval`
 --
 ALTER TABLE `milestone_eval`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `evaluation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `package_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `screen_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `setting_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subject_setting`
 --
 ALTER TABLE `subject_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `setting_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `submit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `submit_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `team_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
 --
 ALTER TABLE `team_eval`
-  MODIFY `team_eval_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `team_eval_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tracking`
 --
 ALTER TABLE `tracking`
-  MODIFY `tracking_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tracking_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `update_history`
 --
 ALTER TABLE `update_history`
-  MODIFY `update_history_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `update_history_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `web_contact`
 --
 ALTER TABLE `web_contact`
-  MODIFY `web_contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `web_contact_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
