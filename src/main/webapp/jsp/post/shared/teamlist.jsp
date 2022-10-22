@@ -17,6 +17,16 @@
             text-align: left;
             transition: background 0.2s;
         }
+        .list-group-item {
+            height: 100%;
+            display: block;
+            border: none;
+            outline: none;
+            background-color: #f8f9fa;
+            color: black;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
 
         .accordion__button::before {
             content: '\25be';
@@ -65,6 +75,13 @@
             font-weight: 600;
             font-size: 16px;
         }
+        .after-none::after{
+            content: none!important;
+        }
+
+        .p-15{
+            padding: 15px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -96,6 +113,8 @@
                 <div id="teamBody" style="padding-bottom: 50px;">
 
                 </div>
+
+                
             </div>
         </div>
     </div>

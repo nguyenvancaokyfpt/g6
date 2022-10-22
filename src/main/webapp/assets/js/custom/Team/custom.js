@@ -2,7 +2,8 @@
 const dropdown = () => {
   document.querySelectorAll(".accordion__button").forEach((button) => {
     button.addEventListener("click", () => {
-      const accordionContent = button.nextElementSibling;
+      const accordionContent =
+        button.parentElement.parentElement.nextElementSibling;
       button.classList.toggle("accordion__button--active");
       if (button.classList.contains("accordion__button--active")) {
         accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
@@ -15,7 +16,7 @@ const dropdown = () => {
 
 const getClass = () => {
   let selectedMile = document.getElementById("selectedMile").value;
-  if(selectedMile == '')return
+  if (selectedMile == "") return;
   fetch(
     window.location.origin + `/team/list?action=list&mileId=${selectedMile}`,
     { method: "POST" }
@@ -44,6 +45,7 @@ const getClass = () => {
         return;
       }
 
+      //Team list content
       let teamContent = ``;
       listTeams.forEach((team, index) => {
         let traineeContent = ``;
@@ -54,52 +56,71 @@ const getClass = () => {
                         <div class="col-1">${trainee.userId}</div>
                         <div class="col-3">${trainee.fullname}</div>
                         <div class="col-4">${trainee.email.toUpperCase()}</div>
-                        <div class="col-2">${
+                        <div class="col-1">${
                           trainee.statusId == 1 ? "Active" : "Inactive"
                         }</div>
-                        <div class="col-2">
-                          <i class="fa fa-ellipsis-v"></i>
+                        <div class="col-3">
+                          <div class="btn-group dropend">
+                              <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                  aria-expanded="false"  style="padding: 0 10px;">
+                                  <i class="fa fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">View/Edit</a></li>
+                                  <li><a class="dropdown-item" href="#">Change Status</a></li>
+                              </ul>
+                          </div>
                         </div>
                     </div>
                 </div>
                 `;
         });
         teamContent += `
-        <div class="row">
+        <div class="row overflow-hidden">
             <div class="teamIteam p-0">
                 <div class="accordion">
+                <div class="row align-items-center">
+                  <div class="col-8" style="padding-right: 0;">
                     <button type="button" class="accordion__button">
-                        <div class="row">
-                            <div class="col-8">Group ${index + 1} (${
-          team.topic_name
-        })</div>
-                            <div class="col-2 text-center">${
-                              team.status_id ? "Active" : "Inactive"
-                            }</div>
-                            <div class="col-2 text-center">
-                              <i class="fa fa-ellipsis-v"></i>
-                            </div>
-                        </div>
+                        Group ${index + 1} (${team.topic_name})
                     </button>
-                    <div class="accordion__content">
-                        ${
-                          traineeContent != ``
-                            ? traineeContent
-                            : `
-                        <div class="memberItem text-center" style="padding-left: 20px;">
-                            <div class="row">
-                                There is no trainee in this group
-                            </div>
-                        </div>
-                        `
-                        }
-                    </div>
+                  </div>
+                  <div class="col-1 text-center list-group-item" style="padding: 15px;">
+                    ${team.status_id ? "Active" : "Inactive"}
+                  </div>
+                  <div class="col-3 text-center list-group-item" style="padding: 14px;">
+                    <div class="btn-group dropend">
+                    <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false" style="padding: 0 10px;">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">View/Edit</a></li>
+                        <li><a class="dropdown-item" href="#">Change Status</a></li>
+                    </ul>
                 </div>
+                  </div>
+                </div>
+                <div class="accordion__content">
+                    ${
+                      traineeContent != ``
+                        ? traineeContent
+                        : `
+                    <div class="memberItem text-center" style="padding-left: 20px;">
+                      <div class="row">
+                          There is no trainee in this group
+                      </div>
+                    </div>
+                    `
+                    }
+                </div>
+              </div>
             </div>
         </div>
         `;
       });
 
+      //Wating list content
       let waitingTrainees = ``;
       data.listWaiting.forEach((trainee) => {
         waitingTrainees += `
@@ -108,9 +129,18 @@ const getClass = () => {
               <div class="col-1">${trainee.userId}</div>
               <div class="col-3">${trainee.fullname}</div>
               <div class="col-4">${trainee.email.toUpperCase()}</div>
-              <div class="col-2"></div>
-              <div class="col-2">
-                <i class="fa fa-ellipsis-v"></i>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <div class="btn-group dropend">
+                  <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"  style="padding: 0 10px;">
+                      <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">View/Edit</a></li>
+                      <li><a class="dropdown-item" href="#">Change Status</a></li>
+                  </ul>
+                </div>
               </div>
           </div>
         </div>
@@ -120,9 +150,14 @@ const getClass = () => {
       <div class="row">
         <div class="teamIteam p-0">
             <div class="accordion">
+            <div>
+              <div>
                 <button type="button" class="accordion__button Waiting"><span
-                        style="color: #cc6961;">Waiting List</span> (These trainees would work
-                    personally)</button>
+                            style="color: #cc6961;">Waiting List</span> (These trainees would work
+                        personally)</button>
+              </div>
+            </div>
+                
                 <div class="accordion__content">
                     ${
                       waitingTrainees != ``
@@ -140,6 +175,8 @@ const getClass = () => {
         </div>
       </div>
       `;
+
+      //Team body content
       $("#teamBody").html(
         `
         <div class="memberItem" style="padding-left: 20px;">
@@ -156,8 +193,8 @@ const getClass = () => {
               <div class="col-1">#</div>
               <div class="col-3">Student</div>
               <div class="col-4">Email</div>
-              <div class="col-2">Status</div>
-              <div class="col-2">Actions</div>
+              <div class="col-1">Status</div>
+              <div class="col-3">Actions</div>
           </div>
           <div id="waitingsList">
           </div>
