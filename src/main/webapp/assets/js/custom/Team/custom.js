@@ -77,7 +77,7 @@ const getClass = () => {
                 `;
         });
         teamContent += `
-        <div class="row overflow-hidden">
+        <div class="row">
             <div class="teamIteam p-0">
                 <div class="accordion">
                 <div class="row align-items-center">
@@ -89,7 +89,7 @@ const getClass = () => {
                   <div class="col-1 text-center list-group-item" style="padding: 15px;">
                     ${team.status_id ? "Active" : "Inactive"}
                   </div>
-                  <div class="col-3 text-center list-group-item" style="padding: 14px;">
+                  <div class="col-3 text-center list-group-item" style="width: 24.4%;border-right: 1px solid #e4e6ef;padding: 14px;">
                     <div class="btn-group dropend">
                     <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false" style="padding: 0 10px;">
