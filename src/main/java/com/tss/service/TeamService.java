@@ -16,4 +16,5 @@ public interface TeamService {
     List<Team> FindByClassID(int classID);
     boolean changeStatus(int id, int status);
     boolean RemoveTeam(int teamId);
+    Team FindTeamById(int teamId,int class_id);
 }

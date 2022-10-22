@@ -45,7 +45,8 @@ public class TeamServiceImpl implements TeamService{
     
     public static void main(String[] args) {
         TeamServiceImpl s = new TeamServiceImpl();
-        s.changeStatus(2,1);
+        System.out.println("Hello");
+        // s.FindTeamById(2);
     }
 
     @Override
@@ -85,5 +86,21 @@ public class TeamServiceImpl implements TeamService{
             BaseDao.closeResource(connection, null, null);
         }
         return flag;
+    }
+
+
+    @Override
+    public Team FindTeamById(int teamId,int class_id) {
+        Connection connection = null;
+        Team team = null;
+        try {
+            connection = BaseDao.getConnection();
+            team = teamDao.FindTeamById(connection, teamId,class_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return team;
     }
 }

@@ -21,4 +21,6 @@ public interface TeamDao {
 
     int RemoveTeam(Connection connection, int teamId) throws SQLException;
 
+    Team FindTeamById(Connection connection, int teamId,int class_id) throws SQLException;
+
 }

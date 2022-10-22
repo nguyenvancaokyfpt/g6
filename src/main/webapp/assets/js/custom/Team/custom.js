@@ -123,7 +123,7 @@ const getClass = () => {
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" >View/Edit</a></li>
+                        <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${team.id}&classId=${data.id}">View/Edit</a></li>
                         <li><a class="dropdown-item" onclick="removeTeam(${team.id})">Remove Group</a></li>
                         <li><a class="dropdown-item" onclick="changeStatus(${team.id},${team.status_id})">${team.status_id ? "Deactive" : "Active"}</a></li>
                     </ul>

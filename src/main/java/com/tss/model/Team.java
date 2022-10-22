@@ -15,6 +15,7 @@ public class Team {
 
     private int id;
     private Class tClass;
+    private String className;
     private String project_code;
     private String topic_code;
     private String topic_name;
@@ -22,6 +23,14 @@ public class Team {
     private String description;
     private List<Trainee> listTrainee;
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+    
     public List<Trainee> getListTrainee() {
         return listTrainee;
     }
