@@ -80,4 +80,20 @@ public class ClassServiceImpl implements ClassService {
         return classEntitys;
     }
 
+    @Override
+    public List<ClassEntity> ListCbxa() {
+        Connection connection = null;
+        List<ClassEntity> classEntitys = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            classEntitys = classDao.ListCbx(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return classEntitys;
+    }
+
 }

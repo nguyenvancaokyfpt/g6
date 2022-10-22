@@ -1,10 +1,8 @@
-/* global axios, Swal, swal, KTUtil */
-
 "use strict";
 var KTUsersAddUser = function () {
 
-    const t = document.getElementById("addMilestone"),
-            e = t.querySelector("#kt_modal_add_user_form"),
+    const t = document.getElementById("kt_content_container"),
+            e = t.querySelector("#kt_modal_update_form"),
             n = new bootstrap.Modal(t);
     return {
         init: function () {
@@ -32,6 +30,13 @@ var KTUsersAddUser = function () {
                                 }
                             }
                         },
+                        assBody: {
+                            validators: {
+                                notEmpty: {
+                                    message: "Assignment Body is required"
+                                }
+                            }
+                        },
                         description: {
                             validators: {
                                 stringLength: {
@@ -53,16 +58,26 @@ var KTUsersAddUser = function () {
                 const i = t.querySelector('[data-kt-users-modal-action="submit"]');
                 i.addEventListener("click", (function (e) {
                     e.preventDefault(), console.log("click"), o.validate().then((function (t) {
-                        "Valid" === t ? // Post to server
-                                axios.post('/milestone/list?action=create', {
-                                    assId: document.getElementById("kt_modal_add_user_form").querySelector('[name="assId"]').value,
-                                    classId: document.getElementById("kt_modal_add_user_form").querySelector('[name="classId"]').value,
-                                    fromDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="fromDate"]').value,
-                                    toDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="toDate"]').value,
-                                    title: document.getElementById("kt_modal_add_user_form").querySelector('[name="title"]').value,
-                                    description: document.getElementById("kt_modal_add_user_form").querySelector('[name="description"]').value
+                        var status = document.getElementsByName("statusId");
+                        console.log(status);
+                        var statusValue="";
+                          for (var i = 0; i < status.length; i++){
+                    if (status[i].checked === true){
+                        statusValue = status[i].value;
+                    }
+                }
+                        "Valid" == t ? // Post to server
+                                axios.post('/milestone/list?action=update', {
+                                      milestoneId: document.getElementById("kt_modal_update_form").querySelector('[name="milestoneId"]').value,
+                                    classId: document.getElementById("kt_modal_update_form").querySelector('[name="classId"]').value,
+                                     subjectId: document.getElementById("kt_modal_update_form").querySelector('[name="subjectId"]').value,
+                                    fromDate: document.getElementById("kt_modal_update_form").querySelector('[name="fromDate"]').value,
+                                    toDate: document.getElementById("kt_modal_update_form").querySelector('[name="toDate"]').value,
+                                    title: document.getElementById("kt_modal_update_form").querySelector('[name="title"]').value,
+                                    assBody: document.getElementById("kt_modal_update_form").querySelector('[name="assBody"]').value,
+                                    description: document.getElementById("kt_modal_update_form").querySelector('[name="description"]').value,
+                                    statusId: statusValue,
                                 }).then(function (response) {
-                                  n.hide();
                           window.location.href ='/milestone/list?action=list';
                         }).catch(function (error) {
                             // Show error message
@@ -83,14 +98,14 @@ var KTUsersAddUser = function () {
                             customClass: {
                                 confirmButton: "btn font-weight-bold btn-light-primary"
                             }
-                        });
-                    }));
-                }));
-            })();
+                        })
+                    }))
+                }))
+            })()
         }
-    };
+    }
 }();
 
 KTUtil.onDOMContentLoaded((function () {
-    KTUsersAddUser.init();
+    KTUsersAddUser.init()
 }));

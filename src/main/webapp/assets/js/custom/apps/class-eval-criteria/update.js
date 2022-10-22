@@ -1,38 +1,36 @@
-/* global axios, Swal, swal, KTUtil */
-
 "use strict";
 var KTUsersAddUser = function () {
 
-    const t = document.getElementById("addMilestone"),
-            e = t.querySelector("#kt_modal_add_user_form"),
+    const t = document.getElementById("kt_content_container"),
+            e = t.querySelector("#kt_modal_update_eval_form"),
             n = new bootstrap.Modal(t);
     return {
         init: function () {
             (() => {
                 var o = FormValidation.formValidation(e, {
-                    fields: {
-                        fromDate: {
+                     fields: {
+                        criteria_name: {
                             validators: {
                                 notEmpty: {
-                                    message: "From Date is required"
+                                    message: "Criteria Name is required"
                                 }
                             }
                         },
-                        toDate: {
+                        criteria_loc: {
                             validators: {
                                 notEmpty: {
-                                    message: "To Date is required"
+                                    message: "Max LOC is required"
                                 }
                             }
                         },
-                        title: {
+                        criteria_weight: {
                             validators: {
                                 notEmpty: {
-                                    message: "Title is required"
+                                    message: "Eval weight is required"
                                 }
                             }
                         },
-                        description: {
+                        criteria_description: {
                             validators: {
                                 stringLength: {
                                     max: 100,
@@ -52,18 +50,27 @@ var KTUsersAddUser = function () {
                 });
                 const i = t.querySelector('[data-kt-users-modal-action="submit"]');
                 i.addEventListener("click", (function (e) {
-                    e.preventDefault(), console.log("click"), o.validate().then((function (t) {
-                        "Valid" === t ? // Post to server
-                                axios.post('/milestone/list?action=create', {
-                                    assId: document.getElementById("kt_modal_add_user_form").querySelector('[name="assId"]').value,
-                                    classId: document.getElementById("kt_modal_add_user_form").querySelector('[name="classId"]').value,
-                                    fromDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="fromDate"]').value,
-                                    toDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="toDate"]').value,
-                                    title: document.getElementById("kt_modal_add_user_form").querySelector('[name="title"]').value,
-                                    description: document.getElementById("kt_modal_add_user_form").querySelector('[name="description"]').value
+                    e.preventDefault(), console.log(e), o.validate().then((function (t) {
+                        var status = document.getElementsByName("criteria_status");
+                        console.log(t);
+                        var statusValue="";
+                          for (var i = 0; i < status.length; i++){
+                    if (status[i].checked === true){
+                        statusValue = status[i].value;
+                    }
+                }
+                        "Valid" == t ? // Post to server
+                                axios.post('/evalCriteria/classEvalCriteria/list?action=update', {
+                                    criteria_id:document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_id"]').value,
+                                    criteria_assign: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_assign"]').value,
+                                    criteria_name: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_name"]').value,
+                                    criteria_description: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_description"]').value,
+                                    criteria_team: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_team"]').value,
+                                    criteria_weight: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_weight"]').value,
+                                    criteria_loc: document.getElementById("kt_modal_update_eval_form").querySelector('[name="criteria_loc"]').value,
+                                    criteria_status: statusValue,
                                 }).then(function (response) {
-                                  n.hide();
-                          window.location.href ='/milestone/list?action=list';
+                          window.location.href ='/evalCriteria/classEvalCriteria/list?action=list';
                         }).catch(function (error) {
                             // Show error message
                             Swal.fire({
@@ -83,14 +90,14 @@ var KTUsersAddUser = function () {
                             customClass: {
                                 confirmButton: "btn font-weight-bold btn-light-primary"
                             }
-                        });
-                    }));
-                }));
-            })();
+                        })
+                    }))
+                }))
+            })()
         }
-    };
+    }
 }();
 
 KTUtil.onDOMContentLoaded((function () {
-    KTUsersAddUser.init();
+    KTUsersAddUser.init()
 }));

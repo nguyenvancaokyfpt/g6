@@ -13,4 +13,6 @@ public interface ClassService {
     List<Classroom> findClassroomByTeacher(int userId);
 
     List<ClassEntity> List();
+    
+    List<ClassEntity> ListCbxa();
 }

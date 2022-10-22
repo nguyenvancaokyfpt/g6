@@ -1,3 +1,5 @@
+/* global KTUtil, moment */
+
 "use strict";
 
 // Class definition
@@ -5,7 +7,6 @@ var KTDatatablesServerSide = function () {
     // Shared variables
     var table;
     var dt;
-     var filterPayment;
     // Private functions
     var initDatatable = function () {
         dt = $("#kt_table_milestone").DataTable({
@@ -26,11 +27,12 @@ var KTDatatablesServerSide = function () {
             columns: [
                  { data: 'milestoneId'},
                  { data: 'milestoneId'},
-                 { data: 'subject' },
+                 { data: 'title' },
                 { data: 'classCode' },
                 { data: 'fromDate' },
                 { data: 'toDate' },
-                { data: 'title' },
+                { data: 'assTitle'},
+                { data: 'statusId' },
                 { data: 'milestoneId'}
             ],
             columnDefs: [
@@ -59,7 +61,7 @@ var KTDatatablesServerSide = function () {
                 },
                 {
                     targets: 2,
-                    title: 'SUBJECT',
+                    title: 'MILESTONE NAME',
                     className: 'text-center',
                     render: function (data) {
                         return data;
@@ -78,7 +80,7 @@ var KTDatatablesServerSide = function () {
                     title: 'FROM DATE',
                     className: 'text-center',
                     render: function (data) {
-                        return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        return moment(data).format("DD/MM/YYYY");
                     }
                 },
                 {
@@ -86,26 +88,43 @@ var KTDatatablesServerSide = function () {
                     title: 'TO DATE',
                     className: 'text-center',
                     render: function (data) {
-                        return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        return moment(data).format("DD/MM/YYYY");
                     }
                 },
                     {
                     targets: 6,
-                    title: 'TITLE',
+                    title: 'ASSIGNMENT TITLE',
                     className: 'text-center',
                     render: function (data) {
                         return data;
                     }
                 },
+                  {
+              targets: 7,
+              title: "STATUS",
+              class: "text-center",
+              render: function (data) {
+                switch (data) {
+                  case 0:
+                    return (
+                      `<div href="#" class="badge badge-light-success fs-7">Active</div>`
+                    );
+                  case 1:
+                    return (
+                     `<div href="#" class="badge badge-light-danger fs-7">In Active</div>`
+                    );
+                }
+                }
+            },
                 {
-                    targets: 7,
-                    title: '',
+                    targets: 8,
+                    title: 'ACTION',
                     className: 'text-center',
                     render: function (data) {
                         return  `
                         <td>
                             <div class="d-flex justify-content-center">
-                                <form action="/milestone/list" method="post">
+                                <form action="/milestone/list?action=get" method="post">
                                     <input type="hidden" name="action" value="get">
                                     <input name="milestoneId" type="hidden" value="${data}">
                                     <button type="submit" class="btn btn-secondary">
@@ -116,28 +135,28 @@ var KTDatatablesServerSide = function () {
                         </td>
                         `;
                     }
-                },
+                }
 
-            ],
+            ]
         });
 
         table = dt.$;
-
-    }
+    };
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = function () {
-        const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-milestone-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
-            dt.search(e.target.value).draw();
+               dt.search(e.target.value).draw();
+               console.log(e.target.value);
         });
-    }
+    };
     // Public methods
     return {
         init: function () {
             initDatatable();
             handleSearchDatatable();
         }
-    }
+    };
 }();
 
 // On document ready

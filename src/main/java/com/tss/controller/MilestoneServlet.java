@@ -10,11 +10,13 @@ import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
+import com.tss.model.Assignment;
 import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Subject;
 import com.tss.model.WebContact;
 import com.tss.model.payload.DataTablesMessage;
+import com.tss.service.AssignmentService;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.SubjectService;
@@ -34,10 +36,12 @@ import java.sql.Date;
 
 public class MilestoneServlet extends HttpServlet {
 
- private MilestoneService mileStoneService;
- private ClassService classService;
- private SubjectService subjectService;
-   @Override
+    private MilestoneService mileStoneService;
+    private ClassService classService;
+    private SubjectService subjectService;
+    private AssignmentService assignmentService;
+
+    @Override
     public void init() throws ServletException {
         mileStoneService = new MilestoneServiceImpl();
         classService = new ClassServiceImpl();
@@ -78,10 +82,17 @@ public class MilestoneServlet extends HttpServlet {
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/milestonedetails.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Assignment/custom.js", "apps/milestone/update.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.MILESTONE_LIST,
+                ScreenConstants.MILESTONE_DETAILS));
         int id = Integer.parseInt(request.getParameter("milestoneId"));
         Milestone milestone = mileStoneService.findById(id);
-        List<ClassEntity> classEntity = classService.List();
+        List<ClassEntity> classEntity = classService.ListCbxa();
         List<Subject> subject = subjectService.findAll(0, 1000, "");
+//        List<Assignment> assignments = assignmentService.findAll(1, 1000, "", "", "", "", "");
+//        request.setAttribute("assignmentDetails", assignments);
         request.setAttribute("milestoneDetails", milestone);
         request.setAttribute("subjectList", subject);
         request.setAttribute("classList", classEntity);
@@ -91,90 +102,99 @@ public class MilestoneServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        int mileStoneId = Integer.parseInt(request.getParameter("milestoneId"));
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        int mileStoneId = Integer.parseInt(jsonObject.getString("milestoneId"));
         Milestone milestone = mileStoneService.findById(mileStoneId);
         int assId = milestone.getAssId();
-        int classId = Integer.parseInt(request.getParameter("classId"));
-        int subjectId = Integer.parseInt(request.getParameter("subjectId"));
-        Date fromDate = Date.valueOf(request.getParameter("fromDate"));
-        Date toDate = Date.valueOf(request.getParameter("toDate"));
-        milestone.setStatusId(Integer.parseInt(request.getParameter("statusId")));
-        String assBody = request.getParameter("assBody");
+        int classId = Integer.parseInt(jsonObject.getString("classId"));
+        int subjectId = Integer.parseInt(jsonObject.getString("subjectId"));
+        Date fromDate = Date.valueOf(jsonObject.getString("fromDate"));
+        Date toDate = Date.valueOf(jsonObject.getString("toDate"));
+        milestone.setStatusId(Integer.parseInt(jsonObject.getString("statusId")));
+        String assBody = jsonObject.getString("assBody");
         if (assBody.equals("")) {
             milestone.setAssBody(milestone.getAssBody());
-        }else{
+        } else {
             milestone.setAssBody(assBody);
         }
-        String description = request.getParameter("description");
+        String description = jsonObject.getString("description");
         if (description.equals("")) {
             milestone.setDescription(milestone.getDescription());
-        }else{
+        } else {
             milestone.setDescription(description);
         }
-        String title = request.getParameter("title");
+        String title = jsonObject.getString("title");
         if (title.equals("")) {
             milestone.setTitle(milestone.getTitle());
-        }else{
+        } else {
             milestone.setTitle(title);
         }
-       mileStoneService.updateAss(assId, subjectId);
-       mileStoneService.update(milestone,classId,fromDate,toDate,title,assBody,description,milestone.getStatusId());
-       response.sendRedirect("/milestone/list");
+        mileStoneService.updateAss(assId, subjectId);
+        mileStoneService.update(milestone, classId, fromDate, toDate, title, assBody, description, milestone.getStatusId());
+        response.sendRedirect("/milestone/list");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            Milestone milestone = new Milestone();
-        milestone.setAssId(Integer.parseInt(request.getParameter("assId")));
-        milestone.setClassId(Integer.parseInt(request.getParameter("classId")));
-        milestone.setFromDate(Date.valueOf(request.getParameter("fromDate")));
-        milestone.setToDate(Date.valueOf(request.getParameter("toDate")));
-        milestone.setTitle(request.getParameter("title"));
-        milestone.setAssBody(request.getParameter("assBody"));
-        milestone.setDescription(request.getParameter("description"));
-        milestone.setStatusId(Integer.parseInt(request.getParameter("statusId")));
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        Milestone milestone = new Milestone();
+        milestone.setAssId(Integer.parseInt(jsonObject.getString("assId")));
+        milestone.setClassId(Integer.parseInt(jsonObject.getString("classId")));
+        milestone.setFromDate(Date.valueOf(jsonObject.getString("fromDate")));
+        milestone.setToDate(Date.valueOf(jsonObject.getString("toDate")));
+        milestone.setTitle(jsonObject.getString("title"));
+        milestone.setAssBody(jsonObject.getString("description"));
+        milestone.setDescription(jsonObject.getString("description"));
+        milestone.setStatusId(0);
         mileStoneService.add(milestone);
         response.sendRedirect("/milestone/list");
     }
 
-    private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       JSONObject jsonObject = RequestHelper.getJsonData(request);
+    private void list(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+          JSONObject jsonObject = RequestHelper.getJsonData(request);
         int start = 0;
         int length = 10;
         String search = "";
         int draw = 1;
-//        if (jsonObject != null) {
-//            start = jsonObject.getInteger("start");
-//            length = jsonObject.getInteger("length");
-//            search = jsonObject.getString("search[value]");
-//            draw = jsonObject.getInteger("draw");
-//        } else {
-//            start = Integer.parseInt(request.getParameter("start"));
-//            length = Integer.parseInt(request.getParameter("length"));
-//            search = request.getParameter("search[value]");
-//            draw = Integer.parseInt(request.getParameter("draw"));
-//        }
-        List<Milestone> milestones = mileStoneService.List(0, 10 , search);
-        java.util.logging.Logger.getLogger("foo").info("My message");
-      
-        int recordsTotal = mileStoneService.countAll();
-        int recordsFiltered = mileStoneService.countAll();
-        // response
-        ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, milestones));
+        if (jsonObject != null) {
+            start = jsonObject.getInteger("start");
+            length = jsonObject.getInteger("length");
+            search = jsonObject.getString("search[value]");
+            draw = jsonObject.getInteger("draw");
+        } else {
+            start = Integer.parseInt(request.getParameter("start"));
+            length = Integer.parseInt(request.getParameter("length"));
+            search = request.getParameter("search[value]");
+            draw = Integer.parseInt(request.getParameter("draw"));
+        }
+        List<Milestone> milestones = mileStoneService.List(0, 10, search);
+        
+            int recordsTotal = mileStoneService.countAll();
+            int recordsFiltered = mileStoneService.countAll(search);
+
+            // java.util.logging.Logger.getLogger("foo").info(classEntity.size()+"");
+            // response
+            ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, milestones));
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        List<ClassEntity> classEntity = classService.ListCbxa();
+        List<Assignment> assignments = mileStoneService.findAll(0, 1000);
+        java.util.logging.Logger.getLogger("foo").info(assignments.size() + "");
+        request.setAttribute("assignmentDetails", assignments);
+        request.setAttribute("classList", classEntity);
         request.setAttribute("jspPath", "shared/milestone.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/milestone/table-edited.js"
+                "apps/milestone/table-edited.js",
+                "apps/milestone/add.js"
         ));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.WEB_CONTACT_LIST
+                ScreenConstants.MILESTONE_LIST
         ));
+
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 

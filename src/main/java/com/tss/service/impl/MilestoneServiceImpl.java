@@ -7,6 +7,7 @@ package com.tss.service.impl;
 import com.tss.dao.BaseDao;
 import com.tss.dao.MilestoneDao;
 import com.tss.dao.impl.MilestoneDaoImpl;
+import com.tss.model.Assignment;
 import com.tss.model.Milestone;
 import com.tss.model.MilestoneRequest;
 import com.tss.service.MilestoneService;
@@ -54,6 +55,20 @@ public class MilestoneServiceImpl implements MilestoneService {
             BaseDao.closeResource(connection, null, null);
         }
         return count; }
+     @Override
+    public int countAll(String search) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = mileStoneDao.countAll(connection, search);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
     @Override
     public boolean add(Milestone milestone) {
         Connection connection = null;
@@ -115,5 +130,19 @@ public class MilestoneServiceImpl implements MilestoneService {
         }
         return false;
     }
+
+    @Override
+    public List<Assignment> findAll(int start, int length) {
+        Connection connection = null;
+        List<Assignment> assignments = null;
+        try {
+            connection = BaseDao.getConnection();
+            assignments = mileStoneDao.findAll(connection, start, length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return assignments;}
     
 }

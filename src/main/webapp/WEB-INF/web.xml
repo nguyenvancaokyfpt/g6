@@ -98,14 +98,6 @@
         <servlet-class>com.tss.controller.management.TraineeListServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassEvalCriteriaListServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassEvalCriteriaDetailServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ScheduleListServlet</servlet-name>
         <servlet-class>com.tss.controller.ScheduleListServlet</servlet-class>
     </servlet>
@@ -156,6 +148,10 @@
     <servlet>
         <servlet-name>AddSubjectSettingServlet</servlet-name>
         <servlet-class>com.tss.controller.setting.AddSubjectSettingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassEvalCriteriaServlet</servlet-name>
+        <servlet-class>com.tss.controller.ClassEvalCriteriaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
@@ -278,14 +274,6 @@
         <url-pattern>/management/trainee/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
-        <url-pattern>/evalCriteria/classEvalCriteria/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
-        <url-pattern>/evalCriteria/classEvalCriteria/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ScheduleListServlet</servlet-name>
         <url-pattern>/schedule/list</url-pattern>
     </servlet-mapping>
@@ -336,6 +324,10 @@
     <servlet-mapping>
         <servlet-name>AddSubjectSettingServlet</servlet-name>
         <url-pattern>/subject/setting/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassEvalCriteriaServlet</servlet-name>
+        <url-pattern>/evalCriteria/classEvalCriteria/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

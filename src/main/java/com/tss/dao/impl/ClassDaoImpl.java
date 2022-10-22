@@ -362,5 +362,35 @@ public class ClassDaoImpl implements ClassDao {
         return classList;
     }
 
+    @Override
+    public List<ClassEntity> ListCbx(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ClassEntity> classEntitys = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT \n" +
+"    class_id, class_code\n" +
+"FROM\n" +
+"    class";
+            // Search and Paging
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+
+                while (resultSet.next()) {
+                    ClassEntity classEntity = new ClassEntity();
+                    classEntity.setId(resultSet.getInt("class_id"));
+                    classEntity.setClassCode(resultSet.getString("class_code"));
+                    classEntitys.add(classEntity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classEntitys;
+    }
+
 
 }

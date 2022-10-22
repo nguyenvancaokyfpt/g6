@@ -4,6 +4,7 @@
  */
 package com.tss.dao;
 
+import com.tss.model.Assignment;
 import com.tss.model.Milestone;
 import com.tss.model.MilestoneRequest;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ import java.util.List;
 public interface MilestoneDao {
     List<Milestone> List(Connection connection, String title , int currentPageNo, int PageSize) throws SQLException;
     int count(Connection connection) throws SQLException;
-    
+       int countAll(Connection connection, String search) throws SQLException;
     int add(Connection connection, Milestone milestone) throws SQLException;
 
     Milestone findById(Connection connection, int mileStoneId) throws SQLException;
@@ -27,4 +28,6 @@ public interface MilestoneDao {
             throws SQLException;
     void updateAssId(Connection connection, int assId , int subjectId)
             throws SQLException;
+    List<Assignment> findAll(Connection connection, int start, int length)
+                        throws SQLException;
 }
