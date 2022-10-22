@@ -103,4 +103,22 @@ public class TeamServiceImpl implements TeamService{
         }
         return team;
     }
+
+
+    @Override
+    public boolean UpdateTeam(Team team) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = teamDao.UpdateTeam(connection, team) == 1;
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
 }

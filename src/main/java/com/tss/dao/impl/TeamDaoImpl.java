@@ -177,4 +177,23 @@ public class TeamDaoImpl implements TeamDao {
         TeamDaoImpl t = new TeamDaoImpl();
        
     }
+
+    @Override
+    public int UpdateTeam(Connection connection, Team team) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                String sql = "UPDATE `team` SET `description` = ?, `topic_code` = ?, `topic_name` = ?, `project_code` = ?, `status_id` = ? WHERE `team_id` = ?";
+                Object[] params = { team.getDescription(), team.getTopic_code(), team.getTopic_name(), team.getProject_code(), team.getStatus_id(), team.getId() };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
+    }
 }

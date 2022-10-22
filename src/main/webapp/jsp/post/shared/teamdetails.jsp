@@ -13,7 +13,7 @@
             </div>
             <!--end::Card header-->
             <!--begin::Form-->
-            <form method="post" action="teamment/list?action=update" class="form">
+            <form method="post" action="team/detail?action=update" class="form">
                 <!--begin::Card body-->
                 <div class="card-body p-9">
                     <!--begin::Row-->

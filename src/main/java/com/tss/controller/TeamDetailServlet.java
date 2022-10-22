@@ -79,13 +79,18 @@ public class TeamDetailServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_DETAIL));
-        //BEGIN
-        int teamid = Integer.parseInt(request.getParameter("teamId"));
-        int classID = Integer.parseInt(request.getParameter("classId"));
+        //BEGIN'
+        int teamid = 0;
+        int classID = 0;
+        try {
+            teamid = Integer.parseInt(request.getParameter("teamId"));
+            classID = Integer.parseInt(request.getParameter("classId"));
+        } catch (Exception e) {
+            response.sendRedirect("list");
+            return;
+        }
+
         Team team = teamService.FindTeamById(teamid, classID);
-        
-        
-        System.out.println(team.getClassName());
         request.setAttribute("team", team);
         //END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
@@ -97,14 +102,21 @@ public class TeamDetailServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int teamId = Integer.parseInt(request.getParameter("team_id"));
+        String projectCode = request.getParameter("team_project");
+        String topicName = request.getParameter("team_topicName");
+        String topicCode = request.getParameter("team_topicCode");
+        String description = request.getParameter("team_description");
+        int statusId = Integer.parseInt(request.getParameter("team_status"));
+        Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
+        teamService.UpdateTeam(t);
+        response.sendRedirect("list");
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int teamid = Integer.parseInt(request.getParameter("teamId"));
         int classID = Integer.parseInt(request.getParameter("classId"));
-
         Team team = teamService.FindTeamById(teamid, classID);
         ResponseHelper.sendResponse(response, team);
     }
