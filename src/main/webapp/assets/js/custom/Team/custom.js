@@ -38,7 +38,7 @@ const getClass = () => {
         $("#teamBody").html(`
           <div class="memberItem" style="padding-left: 20px;">
               <div class="row">
-                <p class="create_notification">Trainees have not been grouped. <a class="btn-create">Creat Groups</a> </p>
+                <p class="create_notification">Trainees have not been grouped. <a class="btn-create">Create Groups</a> </p>
               </div>
           </div>
         `);
@@ -66,7 +66,8 @@ const getClass = () => {
                                   <i class="fa fa-ellipsis-v"></i>
                               </button>
                               <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">View/Edit</a></li>
+                                  <li><a class="dropdown-item" href="#">Change Group</a></li>
+                                  <li><a class="dropdown-item" href="#">Remove from group</a></li>
                                   <li><a class="dropdown-item" href="#">Change Status</a></li>
                               </ul>
                           </div>
@@ -96,6 +97,7 @@ const getClass = () => {
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">View/Edit</a></li>
+                        <li><a class="dropdown-item" href="#">Remove Group</a></li>
                         <li><a class="dropdown-item" href="#">Change Status</a></li>
                     </ul>
                 </div>
@@ -137,8 +139,7 @@ const getClass = () => {
                       <i class="fa fa-ellipsis-v"></i>
                   </button>
                   <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">View/Edit</a></li>
-                      <li><a class="dropdown-item" href="#">Change Status</a></li>
+                      <li><a class="dropdown-item" href="#">Add to group</a></li>
                   </ul>
                 </div>
               </div>

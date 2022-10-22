@@ -86,7 +86,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
-        <div id="kt_content_container" class="container">
+        <div id="kt_content_container" class="container-fluid">
             <!--begin::Card-->
             <div class="card">
                 <div class="p-5 teamFilter">
