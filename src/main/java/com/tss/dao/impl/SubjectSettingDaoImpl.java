@@ -88,13 +88,13 @@ public class SubjectSettingDaoImpl implements SubjectSettingDao {
                 sql = "SELECT count(*)\n"
                         + "FROM subject_setting ss join subject s on ss.subject_id = s.subject_id\n"
                         + "WHERE (s.subject_name LIKE ? OR ss.setting_title LIKE ?)\n"
-                        + "AND setting_value LIKE ? AND ss.status_id LIKE ?";
+                        + "AND display_order LIKE ? AND ss.status_id LIKE ?";
             } else {
                 sql = "SELECT count(*)\n"
                         + "FROM subject_setting ss join subject s on ss.subject_id = s.subject_id\n"
                         + "WHERE (s.subject_name LIKE ? OR ss.setting_title LIKE ?)\n"
                         + "AND ss.subject_id = " + subjectFilter
-                        + "\nAND setting_value LIKE ? AND ss.status_id LIKE ?";
+                        + "\nAND display_order LIKE ? AND ss.status_id LIKE ?";
             }
             Object[] params = { "%" + search + "%", "%" + search + "%",
                     "%" + displayOrderFilter + "%", "%" + statusFilter + "%" };

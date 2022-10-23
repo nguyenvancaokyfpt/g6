@@ -129,7 +129,24 @@ public class AssignmentManagementServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) {
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String subjectId = request.getParameter("subjectId");
+        int evalWeight = Integer.parseInt(request.getParameter("evalWeight"));
+        String isTeamwork = request.getParameter("teamwork");
+        String isOngoing = request.getParameter("ongoing");
+        String status = request.getParameter("status");
+        Assignment assignment = new Assignment();
+        assignment.setTitle(name);
+        assignment.setAssBody(description);
+        assignment.setSubjectId(Integer.parseInt(subjectId));
+        assignment.setIsTeamwork(Integer.parseInt(isTeamwork));
+        assignment.setEvalWeight(evalWeight);
+        assignment.setIsOngoing(Integer.parseInt(isOngoing));
+        assignment.setStatusId(Integer.parseInt(status));
+        assignmentService.add(assignment);
+        response.sendRedirect("/assignment/list");
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -154,7 +171,6 @@ public class AssignmentManagementServlet extends HttpServlet {
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("jspPath", "shared/assignmentdetails.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "Assignment/custom.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
@@ -163,8 +179,14 @@ public class AssignmentManagementServlet extends HttpServlet {
         Assignment assign = assignmentService.findById(Integer.parseInt(request.getParameter("assignId")));
         SubjectServiceImpl sv = new SubjectServiceImpl();
         List<Subject> subjects = sv.findAll(0, sv.countAll(), "");
-        request.setAttribute("assign", assign);
         request.setAttribute("subjects", subjects);
+        if (assign != null) {
+            request.setAttribute("jspPath", "shared/assignmentdetails.jsp");
+            request.setAttribute("assign", assign);
+        } else {
+            request.setAttribute("jspPath", "shared/addAssignment.jsp");
+        }
+
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
