@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2022 at 02:40 PM
+-- Generation Time: Oct 22, 2022 at 04:36 PM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -204,7 +204,7 @@ INSERT INTO `class_setting` (`setting_id`, `type_id`, `setting_title`, `setting_
 CREATE TABLE `class_user` (
   `class_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
+  `team_id` int(11) DEFAULT NULL,
   `is_leader` tinyint(1) NOT NULL,
   `status_id` int(11) NOT NULL,
   `note` varchar(500) NOT NULL,
@@ -219,6 +219,22 @@ INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status
 (1, 25, 1, 1, 1, 'a', NULL),
 (1, 56, 1, 1, 2, 'a', NULL),
 (2, 19, 1, 1, 1, '1', NULL),
+(3, 19, NULL, 0, 1, 'Member', NULL),
+(3, 21, NULL, 0, 1, 'Member', NULL),
+(3, 25, NULL, 0, 1, 'Member', NULL),
+(3, 32, NULL, 0, 1, 'Member', NULL),
+(3, 52, NULL, 0, 1, 'Member', NULL),
+(3, 53, NULL, 0, 1, 'Member', NULL),
+(3, 55, NULL, 0, 1, 'Member', NULL),
+(3, 56, NULL, 0, 1, 'Member', NULL),
+(10, 19, 2, 1, 1, 'leader', NULL),
+(10, 21, 2, 0, 1, 'member', NULL),
+(10, 25, 2, 0, 1, 'member', NULL),
+(10, 32, 3, 1, 1, 'leader', NULL),
+(10, 52, 3, 0, 1, 'member', NULL),
+(10, 53, 3, 0, 1, 'member', NULL),
+(10, 55, NULL, 0, 1, 'member', NULL),
+(10, 56, NULL, 0, 1, 'member', NULL),
 (11, 55, 1, 1, 1, '1', NULL),
 (11, 56, 1, 1, 1, 'a', NULL),
 (11, 57, 1, 1, 2, 'a', NULL);
@@ -374,7 +390,9 @@ CREATE TABLE `milestone` (
 --
 
 INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
-(1, 10, 1, '2022-09-12', '2022-09-24', '1', '1', '1', 1);
+(1, 10, 1, '2022-09-12', '2022-09-24', 'test', '1', '1', 1),
+(99, 1, 10, '2022-10-22', '2022-11-06', 'Iter 1', 'Iter1 report', 'Iter1 report', 1),
+(100, 6, 3, '2022-11-06', '2022-11-20', 'Iter 2', 'Documents & Iteration 2 Reports', 'Documents & Iteration 2 Reports', 1);
 
 -- --------------------------------------------------------
 
@@ -878,7 +896,10 @@ CREATE TABLE `team` (
 --
 
 INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
-(1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test');
+(1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test'),
+(2, 10, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
+(3, 10, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
+(4, 10, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system');
 
 -- --------------------------------------------------------
 
@@ -1384,7 +1405,7 @@ ALTER TABLE `member_eval`
 -- AUTO_INCREMENT for table `milestone`
 --
 ALTER TABLE `milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `milestone_eval`
@@ -1438,7 +1459,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
