@@ -61,7 +61,6 @@ public class SubjectSettingServlet extends HttpServlet {
         request.setAttribute("jspPath", "shared/subjectSetting.jsp");
         List<SubjectSetting> list = subjectSettingService.getSubjectSettingList(0, 5,
                 "", "", "", "", "");
-        response.getWriter().println(list.size());
         request.setAttribute("ssList", list);
         List<Integer> totalPages = new ArrayList<>();
         int totalRecord = subjectSettingService.countAll();
@@ -153,7 +152,7 @@ public class SubjectSettingServlet extends HttpServlet {
     private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int settingId = Integer.parseInt(request.getParameter("settingId"));
         subjectSettingService.changeStatus(settingId);
-        response.sendRedirect("/subjectSetting");
+        response.sendRedirect("/subject/setting");
     }
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
