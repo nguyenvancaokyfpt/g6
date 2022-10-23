@@ -162,7 +162,7 @@
                         <div class="pb-10">
                             <!--begin::Heading-->
                             <h1 class="anchor fw-bolder mb-5" id="basic-table">
-                                <a href="#basic-table"></a>Setting List
+                                <a href="#basic-table"></a>Class List
                             </h1>
                             <!--end::Heading-->
                             <!--begin::Block-->

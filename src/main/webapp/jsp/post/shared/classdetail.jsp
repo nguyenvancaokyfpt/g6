@@ -14,7 +14,7 @@
                             </div>
                             <!--end::Card title-->
                             <!--begin::Action-->
-                            <a href="/settingDetail?id=<%=sd.getClass_id()%>&action=update"
+                            <a href="/class/list?id=<%=sd.getClass_id()%>&action=update"
                                 class="btn btn-primary align-self-center">Edit Setting</a>
                             <!--end::Action-->
                         </div>
