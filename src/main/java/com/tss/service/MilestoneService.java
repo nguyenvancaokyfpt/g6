@@ -7,6 +7,7 @@ package com.tss.service;
 import java.util.Date;
 import java.util.List;
 
+import com.tss.model.Assignment;
 import com.tss.model.Milestone;
 
 /**
@@ -18,6 +19,8 @@ public interface MilestoneService {
 
     int countAll();
 
+    int countAll(String search);
+
     boolean add(Milestone milestone);
 
     Milestone findById(int mileStoneId);
@@ -27,4 +30,5 @@ public interface MilestoneService {
 
     boolean updateAss(int assId, int subjectId);
 
+    List<Assignment> findAll(int start, int length);
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.MilestoneDao;
 import com.tss.helper.DebugHelper;
+import com.tss.model.Assignment;
 import com.tss.model.Milestone;
 
 /**
@@ -30,7 +31,25 @@ public class MilestoneDaoImpl implements MilestoneDao {
         ResultSet resultSet = null;
         List<Milestone> milestoneList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT m.milestone_id AS mileStoneId,s.subject_code AS subject,c.class_code AS classCode, from_date,to_date,m.title AS title,m.ass_body AS assBody, m.description AS description, m.status_id AS statusId FROM milestone AS m LEFT JOIN assignment AS a ON m.ass_id = a.ass_id LEFT JOIN subject s ON a.subject_id = s.subject_id LEFT JOIN class AS c ON m.class_id = c.class_id WHERE m.title LIKE ? LIMIT ?, ?";
+            String sql = "SELECT \n" +
+                    "    m.milestone_id AS mileStoneId,\n" +
+                    "    a.title AS assTitle,\n" +
+                    "    c.class_code AS classCode,\n" +
+                    "    from_date,\n" +
+                    "    to_date,\n" +
+                    "    m.title AS title,\n" +
+                    "    m.ass_body AS assBody,\n" +
+                    "    m.description AS description,\n" +
+                    "    m.status_id AS statusId\n" +
+                    "FROM\n" +
+                    "    milestone AS m\n" +
+                    "        LEFT JOIN\n" +
+                    "    assignment AS a ON m.ass_id = a.ass_id\n" +
+                    "        LEFT JOIN\n" +
+                    "    class AS c ON m.class_id = c.class_id\n" +
+                    "WHERE\n" +
+                    "    m.title LIKE ?\n" +
+                    "LIMIT ? , ?";
             // Search and Paging
             Object[] params = { "%" + title + "%", currentPageNo, PageSize };
             try {
@@ -39,7 +58,7 @@ public class MilestoneDaoImpl implements MilestoneDao {
                 while (resultSet.next()) {
                     Milestone milestone = new Milestone();
                     milestone.setMilestoneId(resultSet.getInt("mileStoneId"));
-                    milestone.setSubject(resultSet.getString("subject"));
+                    milestone.setAssTitle(resultSet.getString("assTitle"));
                     milestone.setClassCode(resultSet.getString("classCode"));
                     milestone.setFromDate(resultSet.getTimestamp("from_date"));
                     milestone.setToDate(resultSet.getTimestamp("to_date"));
@@ -190,6 +209,66 @@ public class MilestoneDaoImpl implements MilestoneDao {
                 BaseDao.closeResource(null, preparedStatement, null);
             }
         }
+    }
+
+    @Override
+    public List<Assignment> findAll(Connection connection, int start, int length) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Assignment> list = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT \n" +
+                    "    a.*, s.subject_name\n" +
+                    "FROM\n" +
+                    "    assignment a\n" +
+                    "        JOIN\n" +
+                    "    subject s ON a.subject_id = s.subject_id\n" +
+                    "LIMIT ? , ?";
+            Object[] params = { start, length };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Assignment assignment = new Assignment();
+                    assignment.setAssId(resultSet.getInt("ass_id"));
+                    assignment.setSubjectId(resultSet.getInt("subject_id"));
+                    assignment.setTitle(resultSet.getString("title"));
+                    assignment.setAssBody(resultSet.getString("ass_body"));
+                    assignment.setEvalWeight(resultSet.getInt("eval_weight"));
+                    assignment.setIsTeamwork(resultSet.getInt("is_team_work"));
+                    assignment.setIsOngoing(resultSet.getInt("is_ongoing"));
+                    assignment.setStatusId(resultSet.getInt("status_id"));
+                    assignment.setSubjectName(resultSet.getString("subject_name"));
+                    list.add(assignment);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public int countAll(Connection connection, String search) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "SELECT COUNT(1) AS count FROM milestone WHERE title LIKE ?";
+            Object[] params = { "%" + search + "%" };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
     }
 
 }

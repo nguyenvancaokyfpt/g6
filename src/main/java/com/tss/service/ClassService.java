@@ -18,4 +18,6 @@ public interface ClassService {
     void grantTraineeToClass(User user, int classId, float f);
 
     Classroom findClassById(int classId);
+
+    List<ClassEntity> ListCbxa();
 }

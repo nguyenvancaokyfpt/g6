@@ -24,6 +24,9 @@ public interface ClassDao {
         List<ClassEntity> List(Connection connection)
                         throws SQLException;
 
+        List<ClassEntity> ListCbx(Connection connection)
+                        throws SQLException;
+
         List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term,
                         String status,
                         String order, String dir) throws SQLException;

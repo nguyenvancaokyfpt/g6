@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container">
@@ -20,7 +21,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search Contact" />
+                     <input type="text" data-kt-milestone-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
                     </div>
                     <!--end::Search-->
                 </div>
@@ -30,110 +31,12 @@
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                         <!--begin::Filter-->
-                        <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                            <!--begin::Svg Icon | path: icons/duotone/Text/Filter.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="0" y="0" width="24" height="24" />
-                                        <path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z" fill="#000000" />
-                                    </g>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->Filter</button>
-                        <!--begin::Menu 1-->
-                        <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                            <!--begin::Header-->
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Separator-->
-                            <div class="separator border-gray-200"></div>
-                            <!--end::Separator-->
-                            <!--begin::Content-->
-                            <div class="px-7 py-5" data-kt-user-table-filter="form">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fs-6 fw-bold">Role:</label>
-                                    <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
-                                        <option></option>
-                                        <option value="Administrator">Administrator</option>
-                                        <option value="Analyst">Analyst</option>
-                                        <option value="Developer">Developer</option>
-                                        <option value="Support">Support</option>
-                                        <option value="Trial">Trial</option>
-                                    </select>
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fs-6 fw-bold">Two Step Verification:</label>
-                                    <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="two-step" data-hide-search="true">
-                                        <option></option>
-                                        <option value="Enabled">Enabled</option>
-                                    </select>
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-white btn-active-light-primary fw-bold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Reset</button>
-                                    <button type="submit" class="btn btn-primary fw-bold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Content-->
-                        </div>
-                        <!--end::Menu 1-->
-                        <!--end::Filter-->
+                      
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMilestone">
                             Add Milestone
                         </button>
                     </div>
                     <!--end::Toolbar-->
-                    <!--begin::Group actions-->
-                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
-                        <div class="fw-bolder me-5">
-                            <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected</div>
-                        <button type="button" class="btn btn-danger" data-kt-user-table-select="delete_selected">Delete Selected</button>
-                    </div>
-                    <!--end::Group actions-->
-                    <!--begin::Modal - Adjust Balance-->
-                    <div class="modal fade" id="kt_modal_export_users" tabindex="-1" aria-hidden="true">
-                        <!--begin::Modal dialog-->
-                        <div class="modal-dialog modal-dialog-centered mw-650px">
-                            <!--begin::Modal content-->
-                            <div class="modal-content">
-                                <!--begin::Modal header-->
-                                <div class="modal-header">
-                                    <!--begin::Modal title-->
-                                    <h2 class="fw-bolder">Export Users</h2>
-                                    <!--end::Modal title-->
-                                    <!--begin::Close-->
-                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                                        <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
-                                        <span class="svg-icon svg-icon-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
-                                                    <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
-                                                    <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
-                                                </g>
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </div>
-                                    <!--end::Close-->
-                                </div>
-                                <!--end::Modal header-->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMilestone">
-                                    Add Milestone
-                                </button>
-                            </div>
-                            <!--end::Modal content-->
-                        </div>
-                        <!--end::Modal dialog-->
-                    </div>
-                    <!--end::Modal - New Card-->
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -152,12 +55,13 @@
                                 </div>
                             </th>
                             <th class="min-w-125px">ID</th>
-                            <th class="min-w-125px">SUBJECT</th>
+                            <th class="min-w-125px">MILESTONE NAME</th>
                             <th class="min-w-125px">CLASS</th>
                             <th class="min-w-125px">FROM DATE</th>                           
                             <th class="min-w-125px">TO DATE</th>
-                            <th class="min-w-125px">TITLE</th>
-                            <th class="text-end min-w-100px"></th>
+                            <th class="min-w-125px">ASSIGNMENT TITLE</th>                           
+                            <th class="min-w-125px">STATUS</th>
+                            <th class="text-end min-w-100px">ACTION</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -177,63 +81,139 @@
     <!--end::Container-->
 </div>
 <!--add subject-->
-<div class="modal fade" id="addMilestone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addMilestone" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog"> 
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Milestone</h5>
+                <h5 class="modal-title">Add Milestone</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/milestone/list" method="post">
+            <form id="kt_modal_add_user_form" class="form" action="/milestone/list" method="post">
                 <div class="modal-body">
                     <input hidden type="text" name="action" value="create" />
-                    <div class="">
-                        <div class="row r1">
-                            <div class="col-md-9 abc">
-                                <h1>
-                                    <label style="width: max-content">Assignment ID:</label>
-                                    <input type="type" name="assId" required/>
-                                </h1>
-                            </div>
-                            <p class="text-right para">
-                                <label>Class Code</label>
-                                <label style="width: max-content">Assignment ID:</label>
-                                <input type="type" name="classId" required/>
-                            </p>
-                            <p class="text-right para">
-                                <label>From Date</label>
-                                <input type="date" name="fromDate">
-                            </p>
-                            <p class="text-right para">
-                                <label>To Date</label>
-                                <input type="date" name="toDate">
-                            </p>
-                            <p class="text-right para">
-                                <label>Title</label>
-                                <input type="text" name="title">
-                            </p>
-                            <p class="text-right para">
-                                <label>Assignment Body</label>
-                                <input type="text" name="assBody">
-                            </p>
-                            <label>Description:</label>
-                            <textarea name="description" rows="7" cols="50">
-                             
-                            </textarea>
-                        </div>
-                        <div>
-                            <label>Status:</label>
-                            <input type="radio" name="statusId"
-                                   value="0" />Inactive&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="statusId" value="1" checked />Active
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+                    <!--begin::Card body-->
+                    <div class="card-body border-top p-9">
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Assignment</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <select
+                                id="assId"
+                                class="form-select form-select-solid fw-bolder"
+                                data-placeholder="Select Assigment"
+                                name="assId">
 
+                                <c:forEach items="${requestScope.assignmentDetails}" var="u">
+                                    <option value="${u.assId}">
+                                        ${u.title}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <select
+                                hidden
+                                id="assId2"
+                                class="form-select form-select-solid fw-bolder"
+                                data-placeholder="Select Assigment"
+                                name="assId">
+
+                                <c:forEach items="${requestScope.assignmentDetails}" var="u">
+                                    <option value="${u.assId}">
+                                        ${u.assBody}
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Class Code</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <select
+                                class="form-select form-select-solid fw-bolder"
+                                data-kt-select2="true" data-placeholder="Select Class"
+                                aria-hidden="true" name="classId">
+                                <c:forEach items="${requestScope.classList}" var="u">
+                                    <option value="${u.id}">
+                                        ${u.classCode}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">From Date</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                <input type="date" name="fromDate"
+                                       class="form-control form-control-lg form-control-solid"
+                                       />
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">To Date</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                <input type="date" id="input_to_date" name="toDate"
+                                       class="form-control form-control-lg form-control-solid"
+                                       />
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Title</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="title"
+                                       class="form-control form-control-lg form-control-solid"
+                                       />
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">Description</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                <textarea name="description"  class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                    </div>
+                    <!--end::Card body-->
+                    <!--begin::Actions-->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                            <span class="indicator-label">Add</span>
+                            <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                        <button type="reset" class="btn btn-white me-3" data-kt-users-modal-action="cancel">Discard</button>
+                    </div>
+                    <!--end::Actions-->
+                </div>
             </form>
         </div>
     </div>
@@ -241,6 +221,16 @@
 
 <script>
 
-
-
+    function inputChange(event) {
+        let assId2 = document.getElementById('assId2');
+        let max = assId2.options.length;
+         
+        for (var i = 0; i < max; i++) {
+            if (event.path[0].value === assId2.options[i].value)
+                document.getElementById("description").value = assId2.options[i].text;
+          
+        }
+    }
+    let assId = document.getElementById('assId');
+    assId.addEventListener('change', inputChange);
 </script>

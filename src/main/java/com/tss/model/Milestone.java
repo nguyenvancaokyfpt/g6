@@ -13,6 +13,7 @@ import java.util.Date;
 public class Milestone {
     private int milestoneId;
     private int assId;
+    private String assTitle;
     private int subjectId;
     private String subject;
     private int classId;
@@ -27,10 +28,12 @@ public class Milestone {
     public Milestone() {
     }
 
-    public Milestone(int milestoneId, int assId, int subjectId, String subject, int classId, String classCode,
-            Date fromDate, Date toDate, String title, String assBody, String description, int statusId) {
+    public Milestone(int milestoneId, int assId, String assTitle, int subjectId, String subject, int classId,
+            String classCode, Date fromDate, Date toDate, String title, String assBody, String description,
+            int statusId) {
         this.milestoneId = milestoneId;
         this.assId = assId;
+        this.assTitle = assTitle;
         this.subjectId = subjectId;
         this.subject = subject;
         this.classId = classId;
@@ -41,6 +44,14 @@ public class Milestone {
         this.assBody = assBody;
         this.description = description;
         this.statusId = statusId;
+    }
+
+    public String getAssTitle() {
+        return assTitle;
+    }
+
+    public void setAssTitle(String assTitle) {
+        this.assTitle = assTitle;
     }
 
     public int getMilestoneId() {

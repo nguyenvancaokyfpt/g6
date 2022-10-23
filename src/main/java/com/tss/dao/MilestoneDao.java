@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.tss.model.Assignment;
 import com.tss.model.Milestone;
 
 /**
@@ -20,6 +21,8 @@ public interface MilestoneDao {
 
         int count(Connection connection) throws SQLException;
 
+        int countAll(Connection connection, String search) throws SQLException;
+
         int add(Connection connection, Milestone milestone) throws SQLException;
 
         Milestone findById(Connection connection, int mileStoneId) throws SQLException;
@@ -29,5 +32,8 @@ public interface MilestoneDao {
                         throws SQLException;
 
         void updateAssId(Connection connection, int assId, int subjectId)
+                        throws SQLException;
+
+        List<Assignment> findAll(Connection connection, int start, int length)
                         throws SQLException;
 }

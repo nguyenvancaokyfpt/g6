@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<base href="/">
-	<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Training Support System</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="assets/css/custom.css">
 	<!-- --Jquery Toast Plugin CSS-- -->
 	<link rel="stylesheet" href="assets/css/jquery.toast.min.css">
-</head>
+         </head>
 <!--end::Head-->
 <!--begin::Body-->
 <body id="kt_body" data-kt-aside-minimize="on" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
