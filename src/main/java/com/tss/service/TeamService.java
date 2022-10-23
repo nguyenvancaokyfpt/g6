@@ -18,4 +18,7 @@ public interface TeamService {
     boolean RemoveTeam(int teamId);
     Team FindTeamById(int teamId,int class_id);
     boolean UpdateTeam(Team team);
+    boolean ChangeTeam(int traineeId,int classId,int teamId);
+    int GetNewTeamId();
+    boolean AddTeam(Team team);
 }

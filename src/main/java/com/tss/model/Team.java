@@ -16,6 +16,7 @@ public class Team {
     private int id;
     private Class tClass;
     private String className;
+    private int classId;
     private String project_code;
     private String topic_code;
     private String topic_name;
@@ -23,6 +24,21 @@ public class Team {
     private String description;
     private List<Trainee> listTrainee;
 
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" + "id=" + id + ", tClass=" + tClass + ", className=" + className + ", classId=" + classId + ", project_code=" + project_code + ", topic_code=" + topic_code + ", topic_name=" + topic_name + ", status_id=" + status_id + ", description=" + description + ", listTrainee=" + listTrainee + '}';
+    }
+
+    
+    
     public String getClassName() {
         return className;
     }

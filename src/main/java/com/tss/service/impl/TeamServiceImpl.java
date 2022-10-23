@@ -18,15 +18,14 @@ import com.tss.service.TeamService;
  *
  * @author Dat Lai
  */
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
 
     private TeamDao teamDao;
 
     public TeamServiceImpl() {
         teamDao = new TeamDaoImpl();
     }
-    
-    
+
     @Override
     public List<Team> FindByClassID(int classID) {
         Connection connection = null;
@@ -42,12 +41,8 @@ public class TeamServiceImpl implements TeamService{
         }
         return teams;
     }
+
     
-    public static void main(String[] args) {
-        TeamServiceImpl s = new TeamServiceImpl();
-        System.out.println("Hello");
-        // s.FindTeamById(2);
-    }
 
     @Override
     public boolean changeStatus(int id, int status) {
@@ -88,14 +83,13 @@ public class TeamServiceImpl implements TeamService{
         return flag;
     }
 
-
     @Override
-    public Team FindTeamById(int teamId,int class_id) {
+    public Team FindTeamById(int teamId, int class_id) {
         Connection connection = null;
         Team team = null;
         try {
             connection = BaseDao.getConnection();
-            team = teamDao.FindTeamById(connection, teamId,class_id);
+            team = teamDao.FindTeamById(connection, teamId, class_id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -103,7 +97,6 @@ public class TeamServiceImpl implements TeamService{
         }
         return team;
     }
-
 
     @Override
     public boolean UpdateTeam(Team team) {
@@ -120,5 +113,67 @@ public class TeamServiceImpl implements TeamService{
             BaseDao.closeResource(connection, null, null);
         }
         return flag;
+    }
+
+    @Override
+    public boolean ChangeTeam(int traineeId, int classId, int teamId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = teamDao.ChangeTeam(connection, traineeId, classId, teamId) == 1;
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
+    @Override
+    public int GetNewTeamId() {
+        Connection connection = null;
+        int teamId = 0;
+        try {
+            connection = BaseDao.getConnection();
+            teamId = teamDao.GetMaxTeamId(connection) + 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return teamId;
+    }
+
+    @Override
+    public boolean AddTeam(Team team) {
+        team.setId(GetNewTeamId());
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = teamDao.AddTeam(connection, team) == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+    public static void main(String[] args) {
+        TeamServiceImpl s = new TeamServiceImpl();
+        Team team = new Team();
+        int a = s.GetNewTeamId();
+        team.setId(s.GetNewTeamId());
+        team.setClassId(10);
+        team.setDescription("test");
+        team.setTopic_code("test");
+        team.setTopic_name("test");
+        team.setProject_code("test");
+        team.setStatus_id(1);
+
+        System.out.println(s.AddTeam(team));
     }
 }

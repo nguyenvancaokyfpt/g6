@@ -13,7 +13,8 @@
             </div>
             <!--end::Card header-->
             <!--begin::Form-->
-            <form method="post" action="team/detail?action=update" class="form">
+            <form method="get" action="team/detail" class="form">
+                <input type="text" class="d-none" name="action" value="update">
                 <!--begin::Card body-->
                 <div class="card-body p-9">
                     <!--begin::Row-->
@@ -27,11 +28,10 @@
                         <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-xl-3 fv-row">
-                            <input type="text" class="form-control form-control-solid itemHidden" name="team_class"
-                                   placeholder="Type Name" value="${requestScope.team.className}" required />
-                            <input type="text" class="form-control form-control-solid itemShow" disabled
+                            <input type="text" class="form-control form-control-solid" disabled
                                    value="${requestScope.team.className}" />
                             <!-- store ID to submit -->
+                            <input type="text" class="d-none" name="team_class" value="${requestScope.team.getClassId()}"/>
                             <input type="text" name="team_id" class="d-none" value="${requestScope.team.id}">
                         </div>
                         <!--end::Col-->
@@ -164,7 +164,7 @@
                 <!--begin::Card footer-->
                 <div class="card-footer d-flex justify-content-center py-6 px-9">
                     <button type="button" class="btn btn-secondary itemShow" onclick="showItem()">
-                        Edit teamment </button>
+                        Edit team </button>
                     <button type="button" onclick="hideItem()" class="btn btn-secondary itemHidden">Cancel</button>
                     <button type="submit" class="btn btn-primary mx-5 itemHidden">Update</button>
                 </div>

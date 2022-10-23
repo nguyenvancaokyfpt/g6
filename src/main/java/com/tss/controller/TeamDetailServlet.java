@@ -7,6 +7,7 @@ package com.tss.controller;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
+import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Team;
 import com.tss.service.ClassService;
@@ -50,9 +51,21 @@ public class TeamDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
+            if (action == null) {
+                response.sendRedirect("list");
+                return;
+            }
             switch (action) {
+                case ActionConstants.CREATE:
+                    create(request, response);
+                    break;
                 case ActionConstants.UPDATE:
                     update(request, response);
                     break;
@@ -63,6 +76,7 @@ public class TeamDetailServlet extends HttpServlet {
                     remove(request, response);
                     break;
                 default:
+                    response.sendRedirect("list");
                     break;
             }
         } catch (NullPointerException e) {
@@ -70,8 +84,27 @@ public class TeamDetailServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int teamId = Integer.parseInt(request.getParameter("team_id"));
+        System.out.println(request.getParameter("team_class"));
+        int classId = Integer.parseInt(request.getParameter("team_class"));
+        String projectCode = request.getParameter("team_project");
+        String topicName = request.getParameter("team_topicName");
+        String topicCode = request.getParameter("team_topicCode");
+        String description = request.getParameter("team_description");
+        int statusId = Integer.parseInt(request.getParameter("team_status"));
+        Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
+        teamService.UpdateTeam(t);
+        System.out.println("Update");
+        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId);
+    }
+
+    private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("jspPath", "shared/teamdetails.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "Team/details.js"));
@@ -96,32 +129,40 @@ public class TeamDetailServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int teamId = Integer.parseInt(request.getParameter("team_id"));
-        String projectCode = request.getParameter("team_project");
-        String topicName = request.getParameter("team_topicName");
-        String topicCode = request.getParameter("team_topicCode");
-        String description = request.getParameter("team_description");
-        int statusId = Integer.parseInt(request.getParameter("team_status"));
-        Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
-        teamService.UpdateTeam(t);
-        response.sendRedirect("list");
-    }
-
-    private void view(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int teamid = Integer.parseInt(request.getParameter("teamId"));
-        int classID = Integer.parseInt(request.getParameter("classId"));
-        Team team = teamService.FindTeamById(teamid, classID);
-        ResponseHelper.sendResponse(response, team);
-    }
-
     private void remove(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int classId = 0;
+        String doing = request.getParameter("doing");
+        if (doing != null) {
+            classId = Integer.parseInt(request.getParameter("team_class"));
+            String projectCode = request.getParameter("team_project");
+            String topicName = request.getParameter("team_topicName");
+            String topicCode = request.getParameter("team_topicCode");
+            String description = request.getParameter("team_description");
+            int statusId = Integer.parseInt(request.getParameter("team_status"));
+            Team t = new Team(0, null, projectCode, topicCode, topicName, statusId, description, null);
+            t.setClassId(classId);
+            teamService.AddTeam(t);
+            request.setAttribute("toast", "2");
+        }
+
+        request.setAttribute("jspPath", "shared/teamdetailsadd.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Team/details.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.TEAM_LIST,
+                ScreenConstants.TEAM_DETAIL));
+
+        if (classId == 0) {
+            classId = Integer.parseInt(request.getParameter("classId"));
+        }
+        ClassEntity myClass = classService.findByID(classId);
+        request.setAttribute("myClass", myClass);
+        System.out.println(myClass);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 }

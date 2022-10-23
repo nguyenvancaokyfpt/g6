@@ -14,48 +14,48 @@ function showItem() {
 }
 
 function hideItem() {
-    var show = document.getElementsByClassName("itemHidden");
-    var hide = document.getElementsByClassName("itemShow");
-    var inline = document.getElementsByClassName("itemHiddenInline");
-    hide.forEach((e) => {
-      e.style.setProperty("display", "block", "important");
-    });
-    inline.forEach((e) => {
-      e.style.setProperty("display", "inline", "important");
-    });
-    show.forEach((e) => {
-      e.style.setProperty("display", "none", "important");
-    });
-  }
+  var show = document.getElementsByClassName("itemHidden");
+  var hide = document.getElementsByClassName("itemShow");
+  var inline = document.getElementsByClassName("itemHiddenInline");
+  hide.forEach((e) => {
+    e.style.setProperty("display", "block", "important");
+  });
+  inline.forEach((e) => {
+    e.style.setProperty("display", "inline", "important");
+  });
+  show.forEach((e) => {
+    e.style.setProperty("display", "none", "important");
+  });
+}
 
-const updateTeam = (e) => {
-    console.log( $('form').serializeArray());
-    
-    // e.preventDefault();
-    // const form = e.target;
-    // const data = new FormData(form);
-    // const team = {
-    //     team_id: data.get("name"),
-    //     team_project: data.get("description"),
-    //     team_topicName: data.get("id"),
-    //     team_topicCode: data.get("id"),
-    //     team_description: data.get("id"),
-    //     team_status: data.get("id"),
-    // };
-    // fetch("/api/teams", {
-    //     method: "PUT",
-    //     headers: {
-    //     "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(team),
-    // })
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //     if (res.status === "success") {
-    //         window.location = "/teams";
-    //     } else {
-    //         alert("Error");
-    //     }
-    //     });
-    console.log(team);
+$(document).ready(function () {
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    newestOnTop: false,
+    progressBar: false,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: false,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
+  showToast();
+});
+
+function showToast() {
+  try {
+    var type = document.getElementById("toastStatus").value;
+    if (type == "1") {
+      toastr.success("Update Successfully");
+    } else if (type == "2") {
+      toastr.success("Added Successfully");
+    }
+  } catch {}
 }

@@ -14,32 +14,53 @@ const dropdown = () => {
   });
 };
 
-const changeStatus = (teamId,statusId) => {
+const changeStatus = (teamId, statusId) => {
   fetch(
-    window.location.origin + `/team/list?action=changeStatus&teamId=${teamId}&statusId=${statusId}`,
+    window.location.origin +
+      `/team/list?action=changeStatus&teamId=${teamId}&statusId=${statusId}`,
+    { method: "POST" }
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        getClass();
+        toastr.success("Team Status Updated Successfully!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+const changeTeam = (traineeId, classId) => {
+  teamId = document.getElementById(`selectAdd${traineeId}`).value;
+  fetch(
+    window.location.origin + `/team/list?action=update&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
     { method: "POST" }
   ).then((response) => {
     if (response.status === 200) {
       getClass();
+      toastr.success("Team Updated Successfully!");
     }
   }).catch((error) => {
     console.log(error);
   });
-}
+};
 
 const removeTeam = (teamId) => {
-  fetch(
-    window.location.origin + `/team/list?action=delete&teamId=${teamId}`,
-    { method: "POST" }
-  ).then((response) => {
-    if (response.status === 200) {
-      getClass();
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
+  fetch(window.location.origin + `/team/list?action=delete&teamId=${teamId}`, {
+    method: "POST",
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        getClass();
+        toastr.success("Team Deleted Successfully!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const getClass = () => {
   let selectedMile = document.getElementById("selectedMile").value;
@@ -93,10 +114,75 @@ const getClass = () => {
                                   <i class="fa fa-ellipsis-v"></i>
                               </button>
                               <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Change Group</a></li>
-                                  <li><a class="dropdown-item" href="#">Remove from group</a></li>
-                                  <li><a class="dropdown-item" href="#">Change Status</a></li>
+                                  <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelChange${
+                                    trainee.userId
+                                  }">Change Group</a></li>
+                                  <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelRemove${
+                                    trainee.userId
+                                  }">Remove from group</a></li>
+                                  <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatus${
+                                    trainee.userId
+                                  }">${
+            trainee.statusId == 0 ? "Active" : "Deactive"
+          }</a></li>
                               </ul>
+                              <div class="modal fade" id="modelChange${
+                                trainee.userId
+                              }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Comfirm</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Change Group pop-up
+                                    </div>
+                                    <div div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal fade" id="modelRemove${
+                                trainee.userId
+                              }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Comfirm</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Remove pop-up
+                                    </div>
+                                    <div div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal fade" id="modelStatus${
+                                trainee.userId
+                              }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Comfirm</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Change Status pop-up
+                                    </div>
+                                    <div div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                           </div>
                         </div>
                     </div>
@@ -123,9 +209,17 @@ const getClass = () => {
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${team.id}&classId=${data.id}">View/Edit</a></li>
-                        <li><a class="dropdown-item" onclick="removeTeam(${team.id})">Remove Group</a></li>
-                        <li><a class="dropdown-item" onclick="changeStatus(${team.id},${team.status_id})">${team.status_id ? "Deactive" : "Active"}</a></li>
+                        <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${
+                          team.id
+                        }&classId=${data.id}">View/Edit</a></li>
+                        <li><a class="dropdown-item" onclick="removeTeam(${
+                          team.id
+                        })">Remove Group</a></li>
+                        <li><a class="dropdown-item" onclick="changeStatus(${
+                          team.id
+                        },${team.status_id})">${
+          team.status_id ? "Deactive" : "Active"
+        }</a></li>
                     </ul>
                 </div>
                   </div>
@@ -166,8 +260,40 @@ const getClass = () => {
                       <i class="fa fa-ellipsis-v"></i>
                   </button>
                   <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Add to group</a></li>
+                      <li><a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#modelAdd${
+                        trainee.userId
+                      }">Add to group</a></li>
                   </ul>
+                  <div class="modal fade" id="modelAdd${
+                    trainee.userId
+                  }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Add to Group</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <select id="selectAdd${
+                            trainee.userId
+                          }" class="form-select" aria-label="Default select example">
+                            <option selected disabled>Select the group</option>
+                            ${data.listTeam
+                              .map((team, index) => {
+                                return `<option value="${team.id}">Group ${
+                                  index + 1
+                                }</option>`;
+                              })
+                              .join("")}
+                          </select>
+                        </div>
+                        <div div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Add</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
           </div>
@@ -211,8 +337,7 @@ const getClass = () => {
               <div class="row">
                 <p class="create_notification">This milestone has groups already. 
                   <a class="btn-create">Reset Groups</a> 
-                  <a class="btn-create">Remove Group</a>
-                  <a class="btn-create">Add New Group</a> 
+                  <a class="btn-create" href="team/detail?action=create&classId=${data.id}">Add New Group</a> 
                 </p>
               </div>
         </div>
@@ -265,6 +390,22 @@ const getWaitingList = (listTrainees, listTeams) => {
 //End
 
 $(document).ready(function () {
-  console.log("ready!");
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    newestOnTop: false,
+    progressBar: false,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: false,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
   getClass();
 });
