@@ -1,0 +1,82 @@
+.accordion {
+    border: 1px solid #e4e6ef;
+}
+
+.accordion__button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    color: black;
+    font-weight: 600;
+    text-align: left;
+    transition: background 0.2s;
+}
+.list-group-item {
+    height: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    background-color: #f8f9fa;
+    color: black;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.accordion__button::before {
+    content: '\25be';
+    float: left;
+    margin-right: 10px;
+    transform: scale(1.5);
+}
+
+.Waiting::before {
+    color: #cc6961;
+}
+
+/* .accordion__button--active + .accordion__content {
+display: block;
+} */
+
+.accordion__button--active::before {
+    content: '\25b4';
+}
+
+.accordion__content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.2s;
+
+    padding: 0 15px;
+
+    /* display: none;
+overflow: auto; */
+}
+
+.memberItem {
+    padding: 15px 0;
+}
+
+.btn-create {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 13px;
+    padding-left: 15px;
+}
+
+.create_notification {
+    color: #cc6961;
+    font-weight: 600;
+    font-size: 16px;
+}
+.after-none::after{
+    content: none!important;
+}
+
+.p-15{
+    padding: 15px;
+}

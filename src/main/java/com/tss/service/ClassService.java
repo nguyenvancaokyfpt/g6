@@ -20,4 +20,6 @@ public interface ClassService {
     Classroom findClassById(int classId);
 
     List<ClassEntity> ListCbxa();
+
+    ClassEntity findByID(int id);
 }
