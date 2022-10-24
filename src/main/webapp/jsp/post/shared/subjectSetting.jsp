@@ -11,7 +11,7 @@
         <!--begin::Card-->
         <div class="card">
             <!--begin::Card header-->
-            <div class="card-header border-0 pt-6">
+            <div class="card-header border-1 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
                     <!--begin::Search-->
@@ -103,9 +103,9 @@
                                             data-placeholder="Select option" data-allow-clear="true"
                                             data-hide-search="true" id="displayOrder">
                                         <option ${requestScope.displayOrderFilter == '' ? 'selected' : ''}></option>
-                                        <option value="1" ${requestScope.displayOrderFilter == 'Simple' ? 'selected' : ''}>Simple</option>
-                                        <option value="2" ${requestScope.displayOrderFilter == 'Normal' ? 'selected' : ''}>Normal</option>
-                                        <option value="3" ${requestScope.displayOrderFilter == 'Complex' ? 'selected' : ''}>Complex</option>
+                                        <option value="Simple" ${requestScope.displayOrderFilter == 'Simple' ? 'selected' : ''}>Simple</option>
+                                        <option value="Normal" ${requestScope.displayOrderFilter == 'Normal' ? 'selected' : ''}>Normal</option>
+                                        <option value="Complex" ${requestScope.displayOrderFilter == 'Complex' ? 'selected' : ''}>Complex</option>
                                     </select>
                                 </div>
                                 <div class="mb-10">
@@ -177,7 +177,7 @@
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
-            <div class="card-body pt-0">
+            <div class="card-body border-1 pt-6">
                 <!--begin::Table-->
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                     <!--begin::Table head-->
