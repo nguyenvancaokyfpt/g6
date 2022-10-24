@@ -57,5 +57,5 @@ function showToast() {
     } else if (type == "2") {
       toastr.success("Added Successfully");
     }
-  } catch {}
+  } catch (e) {}
 }
