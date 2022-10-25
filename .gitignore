@@ -35,3 +35,6 @@ build/
 
 ### Database Configuration ###
 src/main/resources/db.properties
+
+### Documentation ###
+document/
