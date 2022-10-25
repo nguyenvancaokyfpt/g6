@@ -63,6 +63,20 @@ const RemoveFromTeam = (traineeId, classId,teamId) => {
   });
 };
 
+const SetLeader = (traineeId, classId,teamId) => {
+  fetch(
+    window.location.origin + `/team/list?action=leader&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    { method: "POST" }
+  ).then((response) => {
+    if (response.status === 200) {
+      getClass();
+      toastr.success("Set leader Successfully!");
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
 const removeTeam = (teamId) => {
   fetch(window.location.origin + `/team/list?action=delete&teamId=${teamId}`, {
     method: "POST",
@@ -192,7 +206,7 @@ const getClass = () => {
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="SetLeader(${trainee.userId},${data.id},${team.id})">Submit</a>
                                     </div>
                                   </div>
                                 </div>
@@ -226,15 +240,53 @@ const getClass = () => {
                         <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${
                           team.id
                         }&classId=${data.id}">View/Edit</a></li>
-                        <li><a class="dropdown-item" onclick="removeTeam(${
+                        <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelRemoveTeam${
                           team.id
-                        })">Remove Group</a></li>
-                        <li><a class="dropdown-item" onclick="changeStatus(${
+                        }">Remove Group</a></li>
+                        <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatusTeam${
                           team.id
-                        },${team.status_id})">${
-          team.status_id ? "Deactive" : "Active"
-        }</a></li>
+                        }">${
+                          team.status_id ? "Deactive" : "Active"
+                        }</a></li>
                     </ul>
+                    <div class="modal fade" id="modelRemoveTeam${
+                      team.id
+                    }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Comfirm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure you want to remove this group?
+                          </div>
+                          <div div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="removeTeam(${team.id})">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal fade" id="modelStatusTeam${
+                      team.id
+                    }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Comfirm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure you want to ${team.status_id ? "Deactive" : "Active"} this group?
+                          </div>
+                          <div div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeStatus(${team.id },${team.status_id})">${team.status_id ? "Deactive" : "Active"}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
                   </div>
                 </div>

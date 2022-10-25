@@ -70,6 +70,9 @@ public class TeamListServlet extends HttpServlet {
                 case ActionConstants.DELETE:
                     remove(request, response);
                     break;
+                case "leader":
+                    SetLeader(request, response);
+                    break;
                 default:
                     break;
             }
@@ -119,9 +122,12 @@ public class TeamListServlet extends HttpServlet {
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.ChangeTeam(traineeId, classId, teamId);
     }
-    
-    private void GetLeader(HttpServletRequest request, HttpServletResponse response){
-        
+
+    private void SetLeader(HttpServletRequest request, HttpServletResponse response) {
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.SetLeader(traineeId, classId, teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {

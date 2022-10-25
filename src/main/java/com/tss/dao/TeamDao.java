@@ -33,5 +33,6 @@ public interface TeamDao {
 
     int RemoveFromTeam(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
 
+    int SetLeader(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
 
 }

@@ -190,4 +190,20 @@ public class TeamServiceImpl implements TeamService {
         }
         return flag;
     }
+
+    @Override
+    public boolean SetLeader(int traineeId, int classId, int teamId) {
+
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = teamDao.SetLeader(connection, traineeId, classId, teamId) == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
 }
