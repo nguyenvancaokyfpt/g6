@@ -31,4 +31,7 @@ public interface MilestoneService {
     boolean updateAss(int assId, int subjectId);
 
     List<Assignment> findAll(int start, int length);
+
+    List<Milestone> findAllBySupporter(int supID);
+
 }

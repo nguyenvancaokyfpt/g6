@@ -87,7 +87,8 @@ public class TeamListServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST));
         //BEGIN
-        List<Milestone> miles = mileService.List(0, mileService.countAll(), "");
+        User u = (User) request.getAttribute("user");
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
         request.setAttribute("miles", miles);
         //END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
@@ -113,10 +114,14 @@ public class TeamListServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {
-        int traineeId = Integer.parseInt(request.getParameter("traineeId"));       
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
         int classId = Integer.parseInt(request.getParameter("classId"));
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.ChangeTeam(traineeId, classId, teamId);
+    }
+    
+    private void GetLeader(HttpServletRequest request, HttpServletResponse response){
+        
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {

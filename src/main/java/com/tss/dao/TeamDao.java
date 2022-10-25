@@ -31,4 +31,7 @@ public interface TeamDao {
 
     int AddTeam(Connection connection, Team team) throws SQLException;
 
+    int RemoveFromTeam(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
+
+
 }

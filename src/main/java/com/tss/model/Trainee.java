@@ -7,7 +7,17 @@ public class Trainee extends User {
     private int classId;
     private Date dropoutDate;
     private float grade;
+    private int isLeader;
 
+    public int getIsLeader() {
+        return isLeader;
+    }
+
+    public void setIsLeader(int isLeader) {
+        this.isLeader = isLeader;
+    }
+    
+    
     public Trainee() {
     }
 

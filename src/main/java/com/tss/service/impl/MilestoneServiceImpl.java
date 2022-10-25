@@ -153,4 +153,20 @@ public class MilestoneServiceImpl implements MilestoneService {
         return assignments;
     }
 
+    @Override
+    public java.util.List<Milestone> findAllBySupporter(int supID) {
+        Connection connection = null;
+        List<Milestone> milestoneList = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            milestoneList = mileStoneDao.findAllBySupporter(connection, supID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return milestoneList;
+    }
+
 }

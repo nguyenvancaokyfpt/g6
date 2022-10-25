@@ -271,4 +271,44 @@ public class MilestoneDaoImpl implements MilestoneDao {
         return count;
     }
 
+    @Override
+    public java.util.List<Milestone> findAllBySupporter(Connection connection, int supID) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Milestone> milestoneList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT m.*,c.class_code from milestone m " +
+                    "INNER JOIN class c on m.class_id = c.class_id WHERE c.trainer_id = ?;";
+            // Search and Paging
+            Object[] params = { supID };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+
+                while (resultSet.next()) {
+                    Milestone milestone = new Milestone();
+                    milestone.setMilestoneId(resultSet.getInt("milestone_id"));
+                    milestone.setAssId(resultSet.getInt("ass_id"));
+                    milestone.setClassId(resultSet.getInt("class_id"));
+                    milestone.setClassCode(resultSet.getString("class_code"));
+                    milestone.setFromDate(resultSet.getDate("from_date"));
+                    milestone.setToDate(resultSet.getDate("to_date"));
+                    milestone.setTitle(resultSet.getString("title"));
+                    milestone.setAssBody(resultSet.getString("ass_body"));
+                    milestone.setDescription(resultSet.getString("description"));
+                    milestone.setStatusId(resultSet.getInt("status_id"));
+                    milestoneList.add(milestone);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return milestoneList;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        MilestoneDaoImpl t = new MilestoneDaoImpl();
+        System.out.println(t.findAllBySupporter(BaseDao.getConnection(), 2).size());
+    }
 }

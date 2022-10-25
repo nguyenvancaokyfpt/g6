@@ -130,7 +130,10 @@ public class TeamDetailServlet extends HttpServlet {
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.RemoveFromTeam(traineeId, classId, teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

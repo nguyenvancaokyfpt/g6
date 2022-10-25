@@ -42,8 +42,6 @@ public class TeamServiceImpl implements TeamService {
         return teams;
     }
 
-    
-
     @Override
     public boolean changeStatus(int id, int status) {
         Connection connection = null;
@@ -162,6 +160,7 @@ public class TeamServiceImpl implements TeamService {
         }
         return flag;
     }
+
     public static void main(String[] args) {
         TeamServiceImpl s = new TeamServiceImpl();
         Team team = new Team();
@@ -175,5 +174,20 @@ public class TeamServiceImpl implements TeamService {
         team.setStatus_id(1);
 
         System.out.println(s.AddTeam(team));
+    }
+
+    @Override
+    public boolean RemoveFromTeam(int traineeId, int classId, int teamId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = teamDao.RemoveFromTeam(connection, traineeId, classId, teamId) == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
     }
 }

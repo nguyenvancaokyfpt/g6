@@ -11,10 +11,16 @@
                     <div class="col-4">
                         <select id="selectedMile" style="margin-left:20x;" class="form-select"
                                 onchange="getClass()">
-                            <option value="" selected disabled>Select Milestone</option>
-                            <c:forEach items="${requestScope.miles}" var="m">
-                                <option value="${m.milestoneId}">${m.title} - ${m.classCode}</option>
-                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${requestScope.miles.size() == 0}">
+                                    <option value="">Empty Milestone</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach items="${requestScope.miles}" var="m">
+                                        <option value="${m.milestoneId}">${m.title} - ${m.classCode}</option>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
                         </select>
                     </div>
                     <div class="col-4">

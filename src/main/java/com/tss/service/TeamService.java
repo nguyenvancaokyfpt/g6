@@ -21,4 +21,6 @@ public interface TeamService {
     boolean ChangeTeam(int traineeId,int classId,int teamId);
     int GetNewTeamId();
     boolean AddTeam(Team team);
+    boolean RemoveFromTeam(int traineeId,int classId,int teamId);
+
 }

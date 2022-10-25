@@ -41,6 +41,22 @@ const changeTeam = (traineeId, classId) => {
     if (response.status === 200) {
       getClass();
       toastr.success("Team Updated Successfully!");
+    }else{
+      toastr.error("Team Updated Fail!");
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+const RemoveFromTeam = (traineeId, classId,teamId) => {
+  fetch(
+    window.location.origin + `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    { method: "GET" }
+  ).then((response) => {
+    if (response.status === 200) {
+      getClass();
+      toastr.success("Remove Successfully!");
     }
   }).catch((error) => {
     console.log(error);
@@ -99,10 +115,10 @@ const getClass = () => {
         let traineeContent = ``;
         team.listTrainee.forEach((trainee) => {
           traineeContent += `
-                <div class="memberItem text-center">
+                <div class="memberItem text-left">
                     <div class="row">
                         <div class="col-1">${trainee.userId}</div>
-                        <div class="col-3">${trainee.fullname}</div>
+                        <div class="col-3">${trainee.fullname} ${trainee.isLeader == 1 ? `<i class="fa fa-star text-warning"></i>` :""}</div>
                         <div class="col-4">${trainee.email.toUpperCase()}</div>
                         <div class="col-1">${
                           trainee.statusId == 1 ? "Active" : "Inactive"
@@ -114,17 +130,15 @@ const getClass = () => {
                                   <i class="fa fa-ellipsis-v"></i>
                               </button>
                               <ul class="dropdown-menu">
+                                  <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelLeader${
+                                    trainee.userId
+                                  }">Set as leader</a></li>
                                   <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelChange${
                                     trainee.userId
                                   }">Change Group</a></li>
                                   <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelRemove${
                                     trainee.userId
                                   }">Remove from group</a></li>
-                                  <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatus${
-                                    trainee.userId
-                                  }">${
-            trainee.statusId == 0 ? "Active" : "Deactive"
-          }</a></li>
                               </ul>
                               <div class="modal fade" id="modelChange${
                                 trainee.userId
@@ -155,16 +169,16 @@ const getClass = () => {
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      Remove pop-up
+                                      Are you sure you want to remove this trainee from the group?
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="RemoveFromTeam(${trainee.userId},${data.id},${team.id})">Remove</a>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="modal fade" id="modelStatus${
+                              <div class="modal fade" id="modelLeader${
                                 trainee.userId
                               }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
@@ -174,7 +188,7 @@ const getClass = () => {
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      Change Status pop-up
+                                      Are you sure you want to set this trainee as leader?
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -199,10 +213,10 @@ const getClass = () => {
                         Group ${index + 1} (${team.topic_name})
                     </button>
                   </div>
-                  <div class="col-1 text-center list-group-item" style="padding: 15px;">
+                  <div class="col-1 text-left list-group-item" style="padding: 15px;">
                     ${team.status_id ? "Active" : "Inactive"}
                   </div>
-                  <div class="col-3 text-center list-group-item" style="width: 24.4%;border-right: 1px solid #e4e6ef;padding: 14px;">
+                  <div class="col-3 text-left list-group-item" style="width: 24.4%;border-right: 1px solid #e4e6ef;padding: 14px;">
                     <div class="btn-group dropend">
                     <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false" style="padding: 0 10px;">
@@ -247,7 +261,7 @@ const getClass = () => {
       let waitingTrainees = ``;
       data.listWaiting.forEach((trainee) => {
         waitingTrainees += `
-        <div class="memberItem text-center">
+        <div class="memberItem text-left">
           <div class="row">
               <div class="col-1">${trainee.userId}</div>
               <div class="col-3">${trainee.fullname}</div>
@@ -342,7 +356,7 @@ const getClass = () => {
               </div>
         </div>
         <div class="container-fluid">
-          <div class="row py-5 fs-5 text-center fw-bold" style="border: 1px solid #e4e6ef;">
+          <div class="row py-5 fs-5 text-left fw-bold" style="border: 1px solid #e4e6ef;">
               <div class="col-1">#</div>
               <div class="col-3">Student</div>
               <div class="col-4">Email</div>
