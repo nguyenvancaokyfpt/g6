@@ -66,4 +66,6 @@ public interface UserService {
         void createTraineeAccount(Trainee trainee);
 
         void updateUser(int userId, String fullname, String mobile);
+
+        List<Trainee> GetWaitingList(int classId);
 }

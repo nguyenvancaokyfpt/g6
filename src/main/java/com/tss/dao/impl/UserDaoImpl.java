@@ -722,4 +722,45 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public java.util.List<Trainee> GetWaitingList(Connection connection, int classId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Trainee> userList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, class_user.status_id, class_user.grade,user.note, created_at, updated_at, last_active, status.status_title, status.status_value, user_role.setting_id AS role_id,class_user.is_leader, class_user.class_id, class_user.dropout_date,class_user.team_id FROM user INNER JOIN user_role ON user.user_id = user_role.user_id INNER JOIN class_user ON user.user_id = class_user.user_id INNER JOIN status ON class_user.status_id = status.status_id WHERE class_user.team_id IS NULL AND class_user.class_id =?";
+            Object[] params = { classId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Trainee user = new Trainee();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("role_id"));
+                    role.setTitle(RoleConstants.getRoleTitle(role.getId()));
+                    user.setRole(role);
+                    user.setClassId(resultSet.getInt("class_id"));
+                    user.setDropoutDate(resultSet.getDate("dropout_date"));
+                    user.setGrade(resultSet.getInt("grade"));
+                    user.setIsLeader(resultSet.getInt("is_leader"));
+                    userList.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return userList;
+    }
+
 }

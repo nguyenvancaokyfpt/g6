@@ -443,4 +443,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public java.util.List<Trainee> GetWaitingList(int classId) {
+        Connection connection = null;
+        List<Trainee> userList = null;
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.GetWaitingList(connection, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
+
+
+    public static void main(String[] args) throws SQLException {
+        UserServiceImpl t = new UserServiceImpl();
+        System.out.println(t.GetWaitingList( 2).size());
+    }
 }

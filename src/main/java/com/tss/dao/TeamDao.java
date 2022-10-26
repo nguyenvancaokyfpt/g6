@@ -26,6 +26,8 @@ public interface TeamDao {
     int UpdateTeam(Connection connection, Team team) throws SQLException;
 
     int ChangeTeam(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
+    
+    int ChangeTeam2(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
 
     int GetMaxTeamId(Connection connection) throws SQLException;
 

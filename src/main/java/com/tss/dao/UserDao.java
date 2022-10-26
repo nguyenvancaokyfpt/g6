@@ -76,4 +76,6 @@ public interface UserDao {
 
         void updateUser(Connection connection, int userId, String fullname, String mobile) throws SQLException;
 
+        List<Trainee> GetWaitingList(Connection connection,int classId) throws SQLException;
+
 }

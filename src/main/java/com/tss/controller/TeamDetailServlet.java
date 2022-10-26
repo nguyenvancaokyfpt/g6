@@ -10,6 +10,7 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Team;
+import com.tss.model.Trainee;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.SubjectService;
@@ -75,6 +76,12 @@ public class TeamDetailServlet extends HttpServlet {
                 case ActionConstants.DELETE:
                     remove(request, response);
                     break;
+                case "getMember":
+                    GetTeamMember(request, response);
+                    break;
+                case "getWaiting":
+                    GetWaitingList(request, response);
+                    break;
                 default:
                     response.sendRedirect("list");
                     break;
@@ -100,8 +107,7 @@ public class TeamDetailServlet extends HttpServlet {
         int statusId = Integer.parseInt(request.getParameter("team_status"));
         Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
         teamService.UpdateTeam(t);
-        System.out.println("Update");
-        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId);
+        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId + "&toast=1");
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -125,8 +131,22 @@ public class TeamDetailServlet extends HttpServlet {
 
         Team team = teamService.FindTeamById(teamid, classID);
         request.setAttribute("team", team);
+        request.setAttribute("toast", request.getParameter("toast"));
         //END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    }
+
+    private void GetTeamMember(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int teamid = Integer.parseInt(request.getParameter("teamId"));
+        int classID = Integer.parseInt(request.getParameter("classId"));
+        Team team = teamService.FindTeamById(teamid, classID);
+        ResponseHelper.sendResponse(response, team.getListTrainee());
+    }
+
+    private void GetWaitingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int classID = Integer.parseInt(request.getParameter("classId"));
+        List<Trainee> waiting = userService.GetWaitingList(classID);
+        ResponseHelper.sendResponse(response, waiting);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) {

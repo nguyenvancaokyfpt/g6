@@ -164,11 +164,23 @@ const getClass = () => {
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      Change Group pop-up
+                                    <select id="selectAdd${
+                                      trainee.userId
+                                    }" class="form-select" aria-label="Default select example">
+                                      <option selected disabled>Select the group</option>
+                                      ${data.listTeam
+                                        .map((team, indexx) => {
+                                          if(index == indexx) return "";
+                                          return `<option value="${team.id}">Group ${
+                                            indexx + 1
+                                          }</option>`;
+                                        })
+                                        .join("")}
+                                    </select>
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&amp;evalId=1&amp;status=1">Deactivate</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Change</a>
                                     </div>
                                   </div>
                                 </div>
@@ -475,3 +487,5 @@ $(document).ready(function () {
   };
   getClass();
 });
+
+

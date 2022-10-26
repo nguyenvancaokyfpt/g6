@@ -73,6 +73,9 @@ public class TeamListServlet extends HttpServlet {
                 case "leader":
                     SetLeader(request, response);
                     break;
+                case "update2":
+                    update2(request, response);
+                    break;
                 default:
                     break;
             }
@@ -121,6 +124,12 @@ public class TeamListServlet extends HttpServlet {
         int classId = Integer.parseInt(request.getParameter("classId"));
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.ChangeTeam(traineeId, classId, teamId);
+    }
+    private void update2(HttpServletRequest request, HttpServletResponse response) {
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.ChangeTeam2(traineeId, classId, teamId);
     }
 
     private void SetLeader(HttpServletRequest request, HttpServletResponse response) {
