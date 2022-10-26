@@ -1,4 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <style>
+        .teamMember {
+            width: 160px;
+            height: 64px;
+        }
+    </style>
     <!--begin::Content-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -16,7 +22,6 @@
                 <form method="get" action="team/detail" class="form">
                     <input type="text" class="d-none" name="action" value="create">
                     <input type="text" class="d-none" name="doing" value="doing">
-                    <input type="text" class="d-none" id="toastStatus" value="${requestScope.toast}">
                     <!--begin::Card body-->
                     <div class="card-body p-9">
                         <!--begin::Row-->
@@ -32,7 +37,8 @@
                             <div class="col-xl-3 fv-row">
                                 <input type="text" class="form-control form-control-solid " placeholder="Type Name"
                                     value="${requestScope.myClass.getClassCode()}" required disabled />
-                                <input type="text" class="d-none" value="${requestScope.myClass.id}" name="team_class">
+                                <input type="text" id="team_class" class="d-none" value="${requestScope.myClass.id}"
+                                    name="team_class">
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -44,7 +50,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " name="team_project"
+                                <input type="text" class="form-control form-control-solid " id="team_project" name="team_project"
                                     placeholder="Type Project Code" value="" required />
                             </div>
                             <!--end::Col-->
@@ -61,7 +67,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " name="team_topicName"
+                                <input type="text" class="form-control form-control-solid " id="team_topicName" name="team_topicName"
                                     placeholder="Type Topic Name" value="" required />
                             </div>
                             <!--end::Col-->
@@ -74,30 +80,27 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " name="team_topicCode"
+                                <input type="text" class="form-control form-control-solid " id="team_topicCode" name="team_topicCode"
                                     placeholder="Type Topic Code" value="" required />
                             </div>
                             <!--end::Col-->
                         </div>
                         <!--end::Row-->
                         <!--begin::Row-->
-                        <!-- <div class="row mb-8 justify-content-center"> -->
-                        <!--begin::Col-->
-                        <!-- <div class="col-xl-2">
-                            <div class="fs-6 fw-bold mt-2 mb-3"> Team Member
-                                <span class=" text-danger">*</span>
+                        <div class="row mb-8 justify-content-center">
+                            <!--begin::Col-->
+                            <div class="col-xl-2">
+                                <div class="fs-6 fw-bold mt-2 mb-3"> Team Member
+                                    <span class=" text-danger">*</span>
+                                </div>
                             </div>
-                        </div> -->
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <!-- <div class="col-xl-8 fv-row">
-                            <c:forEach items="${requestScope.team.listTrainee}" var="t">
-                                <button type="button" class="btn btn-secondary">${t.fullname }
-                                    <br>ID: ${t.userId}</button>
-                            </c:forEach>
-                        </div> -->
-                        <!--end::Col-->
-                        <!-- </div> -->
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-xl-8 fv-row" id="teamMember">
+
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <!--end::Row-->
                         <!--begin::Row-->
                         <div class="row mb-8 justify-content-center">
@@ -108,7 +111,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-8 fv-row">
-                                <textarea name="team_description" class="form-control form-control-solid h-200px "
+                                <textarea name="team_description" id="team_description" class="form-control form-control-solid h-200px "
                                     placeholder="Type something for description....."></textarea>
                             </div>
                             <!--begin::Col-->
@@ -146,8 +149,8 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer d-flex justify-content-center py-6 px-9">
-                        <button type="reset" class="btn btn-secondary ">Clear</button>
-                        <button type="submit" class="btn btn-primary mx-5 ">Add</button>
+                        <button type="reset" id="btnClear" class="btn btn-secondary ">Clear</button>
+                        <button type="button" class="btn btn-primary mx-5 " onclick="newTeam()">Add</button>
                     </div>
                     <!--end::Card footer-->
                 </form>

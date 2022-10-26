@@ -4,6 +4,7 @@
  */
 package com.tss.controller;
 
+import com.google.api.client.googleapis.auth.clientlogin.ClientLogin;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
@@ -81,6 +82,9 @@ public class TeamDetailServlet extends HttpServlet {
                     break;
                 case "getWaiting":
                     GetWaitingList(request, response);
+                    break;
+                case "doAdd":
+                    doAdd(request, response);
                     break;
                 default:
                     response.sendRedirect("list");
@@ -174,7 +178,7 @@ public class TeamDetailServlet extends HttpServlet {
 
         request.setAttribute("jspPath", "shared/teamdetailsadd.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "Team/details.js"));
+                "Team/add.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST,
@@ -187,5 +191,18 @@ public class TeamDetailServlet extends HttpServlet {
         request.setAttribute("myClass", myClass);
         System.out.println(myClass);
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    }
+
+    private void doAdd(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int classId = Integer.parseInt(request.getParameter("team_class"));
+        String projectCode = request.getParameter("team_project");
+        String topicName = request.getParameter("team_topicName");
+        String topicCode = request.getParameter("team_topicCode");
+        String description = request.getParameter("team_description");
+        int statusId = Integer.parseInt(request.getParameter("team_status"));
+        Team t = new Team(0, null, projectCode, topicCode, topicName, statusId, description, null);
+        t.setClassId(classId);
+        teamService.AddTeam(t);
+        ResponseHelper.sendResponse(response, teamService.GetNewTeamId() - 1);
     }
 }

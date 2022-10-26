@@ -57,9 +57,6 @@ $(document).ready(function () {
     hideItem();
     cancelEdit();
   });
-  $("#btnAdd").click(() => {
-    alert("Add");
-  });
 
   let classId = document.getElementById("classId").value;
   let teamId = document.getElementById("teamId").value;
