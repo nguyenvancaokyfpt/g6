@@ -421,7 +421,7 @@ const getClass = () => {
         </div>
         <div class="container-fluid">
           <div class="row py-5 fs-5 text-left fw-bold" style="border: 1px solid #e4e6ef;">
-              <div class="col-1">#</div>
+              <div class="col-1">ID</div>
               <div class="col-3">Student</div>
               <div class="col-4">Email</div>
               <div class="col-1">Status</div>

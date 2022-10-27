@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 04:36 PM
+-- Generation Time: Oct 27, 2022 at 08:35 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -90,9 +90,9 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`class_id`, `class_code`, `combo_id`, `trainer_id`, `term_id`, `status_id`, `description`) VALUES
-(1, 'SE1610', 27, 29, 41, 0, 'SWP'),
-(2, 'SE1628', 3, 23, 41, 1, 'SWP'),
-(3, 'SE1629', 3, 23, 41, 1, 'SWP'),
+(1, 'SE1610', 27, 57, 41, 0, 'SWP'),
+(2, 'SE1628', 3, 69, 41, 1, 'SWP'),
+(3, 'SE1629', 3, 69, 41, 1, 'SWP'),
 (4, 'SE1630', 3, 23, 41, 1, 'SWP'),
 (5, 'SE1631', 3, 23, 41, 1, 'SWP'),
 (6, 'SE1632', 3, 22, 41, 1, 'SWP'),
@@ -218,26 +218,34 @@ CREATE TABLE `class_user` (
 
 INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status_id`, `grade`, `note`, `dropout_date`) VALUES
 (1, 3, NULL, 0, 2, 0, NULL, '2022-10-13'),
-(1, 25, 1, 1, 1, 8.2, 'a', '2022-10-20'),
-(1, 29, NULL, 0, 1, 0, NULL, NULL),
-(1, 56, 1, 1, 1, 8.5, 'a', NULL),
-(1, 61, NULL, 0, 1, 0, NULL, NULL),
-(1, 62, NULL, 0, 1, 0, NULL, NULL),
+(1, 25, 5, 0, 1, 8.2, 'a', '2022-10-20'),
+(1, 29, 1, 0, 1, 0, NULL, NULL),
+(1, 56, NULL, 0, 1, 8.5, 'a', NULL),
+(1, 61, 1, 0, 1, 0, NULL, NULL),
+(1, 62, 5, 1, 1, 0, NULL, NULL),
 (1, 63, NULL, 0, 1, 0, NULL, NULL),
-(2, 3, NULL, 0, 2, 0, NULL, '2022-10-13'),
-(2, 19, 1, 1, 1, 9.1, '1', NULL),
-(2, 29, NULL, 0, 1, 0, NULL, NULL),
-(2, 61, NULL, 0, 1, 0, NULL, NULL),
-(2, 62, NULL, 0, 1, 0, NULL, NULL),
-(2, 63, NULL, 0, 1, 0, NULL, NULL),
+(2, 3, 2, 0, 2, 0, NULL, '2022-10-13'),
+(2, 19, 2, 1, 1, 9.1, '1', NULL),
+(2, 29, 3, 0, 1, 0, NULL, NULL),
+(2, 32, 2, 0, 1, 0, NULL, NULL),
+(2, 52, NULL, 0, 1, 0, NULL, NULL),
+(2, 53, 3, 0, 1, 0, NULL, NULL),
+(2, 61, 3, 0, 1, 0, NULL, NULL),
+(2, 62, 4, 1, 1, 0, NULL, NULL),
+(2, 63, 3, 0, 1, 0, NULL, NULL),
+(2, 64, 4, 0, 1, 0, NULL, NULL),
+(2, 65, NULL, 0, 1, 0, NULL, NULL),
+(2, 66, NULL, 0, 1, 0, NULL, NULL),
+(2, 67, NULL, 0, 1, 0, NULL, NULL),
+(2, 68, NULL, 0, 1, 0, NULL, NULL),
 (7, 64, NULL, 0, 2, 8.1, NULL, NULL),
 (7, 65, NULL, 0, 1, 8.2, NULL, NULL),
 (7, 66, NULL, 0, 1, 8.3, NULL, NULL),
 (7, 67, NULL, 0, 1, 8.4, NULL, NULL),
 (7, 68, NULL, 0, 1, 8.5, NULL, NULL),
-(11, 55, 1, 1, 1, 10, '1', NULL),
-(11, 56, 1, 1, 1, 9, 'a', NULL),
-(11, 57, 1, 1, 2, 9.5, 'a', NULL);
+(11, 55, 1, 0, 1, 10, '1', NULL),
+(11, 56, 1, 0, 1, 9, 'a', NULL),
+(11, 57, 1, 0, 2, 9.5, 'a', NULL);
 
 -- --------------------------------------------------------
 
@@ -396,7 +404,7 @@ CREATE TABLE `milestone` (
 
 INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
 (1, 10, 1, '2022-09-12', '2022-09-24', 'test', '1', '1', 1),
-(99, 1, 10, '2022-10-22', '2022-11-06', 'Iter 1', 'Iter1 report', 'Iter1 report', 1),
+(99, 1, 2, '2022-10-22', '2022-11-06', 'Iter 1', 'Iter1 report', 'Iter1 report', 1),
 (100, 6, 3, '2022-11-06', '2022-11-20', 'Iter 2', 'Documents & Iteration 2 Reports', 'Documents & Iteration 2 Reports', 1);
 
 -- --------------------------------------------------------
@@ -620,19 +628,19 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (38, 24, 0, 0, 0, 0),
 (38, 25, 0, 0, 0, 0),
 (39, 21, 1, 1, 1, 1),
-(39, 22, 0, 0, 0, 0),
+(39, 22, 1, 1, 1, 1),
 (39, 23, 0, 0, 0, 0),
-(39, 24, 0, 0, 0, 0),
+(39, 24, 1, 1, 1, 1),
 (39, 25, 0, 0, 0, 0),
 (40, 21, 1, 1, 1, 1),
 (40, 22, 0, 0, 0, 0),
 (40, 23, 0, 0, 0, 0),
-(40, 24, 0, 0, 0, 0),
+(40, 24, 1, 1, 1, 1),
 (40, 25, 0, 0, 0, 0),
 (41, 21, 1, 1, 1, 1),
-(41, 22, 0, 0, 0, 0),
+(41, 22, 1, 1, 1, 1),
 (41, 23, 0, 0, 0, 0),
-(41, 24, 0, 0, 0, 0),
+(41, 24, 1, 1, 1, 1),
 (41, 25, 0, 0, 0, 0),
 (42, 21, 1, 1, 1, 1),
 (42, 22, 0, 0, 0, 0),
@@ -902,9 +910,11 @@ CREATE TABLE `team` (
 
 INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
 (1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test'),
-(2, 10, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
-(3, 10, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
-(4, 10, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system');
+(2, 2, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
+(3, 2, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
+(4, 2, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system'),
+(5, 1, 'TEST2', 'test', 'test', 1, ''),
+(6, 2, 'HPO', 'HP212', 'Happy Programing', 1, 'Program for student ');
 
 -- --------------------------------------------------------
 
@@ -1014,7 +1024,8 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (65, 'Nguyen Van 2', 'nguyenvan2909785', 'nguyenvan2@gmail.com', '0977657818', '/4u7oCpNadzd33qU5rLg1muaOIct5cJ5NLhwrY2DUi4=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (66, 'Nguyen Van 3', 'nguyenvan3226504', 'nguyenvan3@gmail.com', '0977657819', 'WoXG/ZKIvH8syq7CKsI5dZzKYuOSusCPNYb+WvyrqBM=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (67, 'Nguyen Van 4U', 'nguyenvan4577677', 'nguyenvan4@gmail.com', '0977657820', 'G/GK9PGLlncrnezh+L0PRoIN8u4/qolZSGLK+frOd4M=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
-(68, 'Nguyen Van 5', 'nguyenvan565687', 'nguyenvan5@gmail.com', '0977657821', '+ls/MoG2papAhf9T3CNRnvY49C8EVFSSZePJx93u/zo=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18');
+(68, 'Nguyen Van 5', 'nguyenvan565687', 'nguyenvan5@gmail.com', '0977657821', '+ls/MoG2papAhf9T3CNRnvY49C8EVFSSZePJx93u/zo=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
+(69, 'LaiTheDat', 'datlt21298075', 'datlt212@gmail.com', NULL, '//epPTlvXYIcvv13vKsupOphPPpOln8BCEAoWjWTV24=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-27 03:26:24', '2022-10-27 03:26:24', '2022-10-27 03:26:24');
 
 -- --------------------------------------------------------
 
@@ -1047,7 +1058,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (54, 22),
 (55, 26),
 (56, 26),
-(57, 22),
+(57, 24),
 (61, 26),
 (62, 26),
 (63, 26),
@@ -1055,7 +1066,8 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (65, 26),
 (66, 26),
 (67, 26),
-(68, 26);
+(68, 26),
+(69, 24);
 
 -- --------------------------------------------------------
 
@@ -1480,7 +1492,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
@@ -1504,7 +1516,7 @@ ALTER TABLE `update_history`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `web_contact`

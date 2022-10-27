@@ -23,13 +23,13 @@
                             </c:choose>
                         </select>
                     </div>
-                    <div class="col-4">
+<!--                    <div class="col-4">
                         <select class="form-select">
                             <option>All Member Statuses</option>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                    </div>
+                    </div>-->
                 </div>
             </div>
 
