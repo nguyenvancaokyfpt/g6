@@ -137,6 +137,24 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public boolean ChangeTeam2(int traineeId, int classId, int teamId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = teamDao.ChangeTeam2(connection, traineeId, classId, teamId) == 1;
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
+
+    @Override
     public int GetNewTeamId() {
         Connection connection = null;
         int teamId = 0;
@@ -238,4 +256,33 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
+    public boolean RemoveFromTeam(int traineeId, int classId, int teamId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = teamDao.RemoveFromTeam(connection, traineeId, classId, teamId) == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean SetLeader(int traineeId, int classId, int teamId) {
+
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            flag = teamDao.SetLeader(connection, traineeId, classId, teamId) == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
 }

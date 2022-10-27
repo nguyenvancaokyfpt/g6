@@ -28,6 +28,8 @@ public interface TeamDao {
 
     int ChangeTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
+    int ChangeTeam2(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+
     int GetMaxTeamId(Connection connection) throws SQLException;
 
     int AddTeam(Connection connection, Team team) throws SQLException;
@@ -35,5 +37,9 @@ public interface TeamDao {
     void resetTeam(Connection connection, int classId);
 
     void setNullTeamId(Connection connection, int teamId);
+
+    int RemoveFromTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+
+    int SetLeader(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
 }

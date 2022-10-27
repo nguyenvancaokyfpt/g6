@@ -14,6 +14,7 @@ import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Team;
 import com.tss.model.Trainee;
+import com.tss.model.User;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.TeamService;
@@ -66,6 +67,12 @@ public class TeamListServlet extends HttpServlet {
                 case ActionConstants.DELETE:
                     remove(request, response);
                     break;
+                case "leader":
+                    SetLeader(request, response);
+                    break;
+                case "update2":
+                    update2(request, response);
+                    break;
                 default:
                     break;
             }
@@ -83,7 +90,8 @@ public class TeamListServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST));
         // BEGIN
-        List<Milestone> miles = mileService.List(0, mileService.countAll(), "");
+        User u = (User) request.getAttribute("user");
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
         request.setAttribute("miles", miles);
         // END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
@@ -114,6 +122,20 @@ public class TeamListServlet extends HttpServlet {
         int classId = Integer.parseInt(request.getParameter("classId"));
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.ChangeTeam(traineeId, classId, teamId);
+    }
+
+    private void update2(HttpServletRequest request, HttpServletResponse response) {
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.ChangeTeam2(traineeId, classId, teamId);
+    }
+
+    private void SetLeader(HttpServletRequest request, HttpServletResponse response) {
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.SetLeader(traineeId, classId, teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {

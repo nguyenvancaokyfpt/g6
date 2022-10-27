@@ -48,7 +48,7 @@ public class TeamDaoImpl implements TeamDao {
 
                 // find trainee
                 for (Team team : teams) {
-                    sql = "SELECT u.*,class_id,dropout_date FROM class_user c inner JOIN user u on c.user_id = u.user_id where c.class_id = ? and c.team_id = ?";
+                    sql = "SELECT u.*,class_id,dropout_date,is_leader FROM class_user c inner JOIN user u on c.user_id = u.user_id where c.class_id = ? and c.team_id = ?";
                     params = new Object[] { classID, team.getId() };
                     resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                     while (resultSet.next()) {
@@ -65,6 +65,7 @@ public class TeamDaoImpl implements TeamDao {
                         user.setLastActive(resultSet.getTimestamp("last_active"));
                         user.setClassId(resultSet.getInt("class_id"));
                         user.setDropoutDate(resultSet.getDate("dropout_date"));
+                        user.setIsLeader(resultSet.getInt("is_leader"));
                         team.getListTrainee().add(user);
                     }
                 }
@@ -105,8 +106,8 @@ public class TeamDaoImpl implements TeamDao {
         if (connection != null) {
             try {
                 Object[] params = { teamId };
-                // update team of trainee to null
-                String sql = "UPDATE `class_user` SET `team_id` = NULL WHERE `team_id` = ?";
+                // update team,leader of trainee to null
+                String sql = "UPDATE `class_user` SET `team_id` = NULL,`is_leader` =0 WHERE `team_id` = ?";
                 BaseDao.execute(connection, preparedStatement, sql, params);
                 // update submit of trainee to null
                 sql = "UPDATE `submit` SET `team_id` = NULL WHERE `team_id` = ?";
@@ -203,6 +204,25 @@ public class TeamDaoImpl implements TeamDao {
         int result = 0;
         if (connection != null) {
             try {
+                String sql = "UPDATE `class_user` SET `team_id` = ?,`is_leader` =0 WHERE `user_id` = ? and `class_id` = ?";
+                Object[] params = { teamId, traineeId, classId };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int ChangeTeam2(Connection connection, int traineeId, int classId, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
                 String sql = "UPDATE `class_user` SET `team_id` = ? WHERE `user_id` = ? and `class_id` = ?";
                 Object[] params = { teamId, traineeId, classId };
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
@@ -289,5 +309,46 @@ public class TeamDaoImpl implements TeamDao {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
         }
+    }
+
+    @Override
+    public int RemoveFromTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                String sql = "UPDATE `class_user` SET `team_id` = null ,`is_leader`= 0 WHERE `user_id` = ? and `class_id` = ? and `team_id` = ?";
+                Object[] params = { traineeId, classId, teamId };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int SetLeader(Connection connection, int traineeId, int classId, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                Object[] params = { classId, teamId };
+                String sql = "UPDATE `class_user` SET `is_leader`= 0 WHERE  `class_id` = ? and `team_id` = ?";
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+                sql = "UPDATE `class_user` SET `is_leader`= 1 WHERE `user_id` = ? and `class_id` = ? and `team_id` = ?";
+                params = new Object[] { traineeId, classId, teamId };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
     }
 }

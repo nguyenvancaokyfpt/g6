@@ -36,4 +36,7 @@ public interface MilestoneDao {
 
         List<Assignment> findAll(Connection connection, int start, int length)
                         throws SQLException;
+
+        List<Milestone> findAllBySupporter(Connection connection,int supID)
+                        throws SQLException;
 }

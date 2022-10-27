@@ -27,6 +27,8 @@ public interface TeamService {
 
     boolean ChangeTeam(int traineeId, int classId, int teamId);
 
+    boolean ChangeTeam2(int traineeId, int classId, int teamId);
+
     int GetNewTeamId();
 
     boolean AddTeam(Team team);
@@ -40,4 +42,9 @@ public interface TeamService {
     void removeStudentLinkToTeam(int classId);
 
     void setNullTeamId(int teamId);
+
+    boolean RemoveFromTeam(int traineeId, int classId, int teamId);
+
+    boolean SetLeader(int traineeId, int classId, int teamId);
+
 }

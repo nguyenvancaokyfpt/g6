@@ -7,8 +7,17 @@ public class Trainee extends User {
     private int classId;
     private Date dropoutDate;
     private float grade;
-    private boolean isLeader;
+    private boolean isLeaders;
     private int teamId;
+    private int isLeader;
+
+    public int getIsLeader() {
+        return isLeader;
+    }
+
+    public void setIsLeader(int isLeader) {
+        this.isLeader = isLeader;
+    }
 
     public Trainee() {
     }
@@ -63,14 +72,14 @@ public class Trainee extends User {
      * @return boolean return the isLeader
      */
     public boolean isIsLeader() {
-        return isLeader;
+        return isLeaders;
     }
 
     /**
      * @param isLeader the isLeader to set
      */
-    public void setIsLeader(boolean isLeader) {
-        this.isLeader = isLeader;
+    public void setIsLeader(boolean isLeaders) {
+        this.isLeaders = isLeaders;
     }
 
     /**
