@@ -6,13 +6,17 @@ package com.tss.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.TeamDao;
 import com.tss.dao.impl.TeamDaoImpl;
 import com.tss.model.Team;
+import com.tss.model.Trainee;
+import com.tss.model.User;
 import com.tss.service.TeamService;
+import com.tss.service.UserService;
 
 /**
  *
@@ -21,9 +25,11 @@ import com.tss.service.TeamService;
 public class TeamServiceImpl implements TeamService {
 
     private TeamDao teamDao;
+    private UserService userService;
 
     public TeamServiceImpl() {
         teamDao = new TeamDaoImpl();
+        userService = new UserServiceImpl();
     }
 
     @Override
@@ -41,8 +47,6 @@ public class TeamServiceImpl implements TeamService {
         }
         return teams;
     }
-
-    
 
     @Override
     public boolean changeStatus(int id, int status) {
@@ -162,18 +166,76 @@ public class TeamServiceImpl implements TeamService {
         }
         return flag;
     }
-    public static void main(String[] args) {
-        TeamServiceImpl s = new TeamServiceImpl();
-        Team team = new Team();
-        int a = s.GetNewTeamId();
-        team.setId(s.GetNewTeamId());
-        team.setClassId(10);
-        team.setDescription("test");
-        team.setTopic_code("test");
-        team.setTopic_name("test");
-        team.setProject_code("test");
-        team.setStatus_id(1);
 
-        System.out.println(s.AddTeam(team));
+    @Override
+    public void resetTeam(int classId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.resetTeam(connection, classId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
     }
+
+    @Override
+    public List<Integer> importTeam(List<Team> listTeam) {
+        List<Integer> listId = new java.util.ArrayList<>();
+        Connection connection = null;
+        for (Team team : listTeam) {
+            team.setId(GetNewTeamId());
+            listId.add(team.getId());
+            team.setStatus_id(1);
+            try {
+                connection = BaseDao.getConnection();
+                teamDao.AddTeam(connection, team);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(connection, null, null);
+            }
+        }
+        return listId;
+    }
+
+    @Override
+    public List<Integer> importStudent(HashMap<Integer, List<Trainee>> traineeTeamMap, List<Integer> listTeamId) {
+        List<Integer> listId = new java.util.ArrayList<>();
+        for (Integer key : traineeTeamMap.keySet()) {
+            int teamId = listTeamId.get(key - 1);
+            List<Trainee> traineeList = traineeTeamMap.get(key);
+            for (Trainee trainee : traineeList) {
+                User user = userService.findByEmail(trainee.getEmail());
+                if (user != null) {
+                    listId.add(user.getUserId());
+                    ChangeTeam(user.getUserId(), trainee.getClassId(), teamId);
+                }
+            }
+        }
+        return listId;
+    }
+
+    @Override
+    public void removeStudentLinkToTeam(int classId) {
+        List<Team> teamList = FindByClassID(classId);
+        for (Team team : teamList) {
+            setNullTeamId(team.getId());
+        }
+    }
+
+    @Override
+    public void setNullTeamId(int teamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.setNullTeamId(connection, teamId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
 }

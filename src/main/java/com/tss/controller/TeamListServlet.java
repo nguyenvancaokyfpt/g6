@@ -4,6 +4,9 @@
  */
 package com.tss.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
@@ -11,8 +14,6 @@ import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Team;
 import com.tss.model.Trainee;
-import com.tss.model.User;
-import com.tss.model.payload.DataTablesMessage;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.TeamService;
@@ -22,15 +23,10 @@ import com.tss.service.impl.MilestoneServiceImpl;
 import com.tss.service.impl.TeamServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -86,10 +82,10 @@ public class TeamListServlet extends HttpServlet {
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST));
-        //BEGIN
+        // BEGIN
         List<Milestone> miles = mileService.List(0, mileService.countAll(), "");
         request.setAttribute("miles", miles);
-        //END
+        // END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -104,7 +100,8 @@ public class TeamListServlet extends HttpServlet {
         int mileID = Integer.parseInt(request.getParameter("mileId"));
         Milestone mile = mileService.findById(mileID);
         ClassEntity myClass = classService.findByID(mile.getClassId());
-        List<Trainee> trainees = userService.findAllByClassId(0, userService.countAllByClassId(myClass.getId()), "", null, -1, "asc", "", myClass.getId());
+        List<Trainee> trainees = userService.findAllByClassId(0, userService.countAllByClassId(myClass.getId()), "",
+                null, -1, "asc", "", myClass.getId());
         myClass.setListTrainee(trainees);
         List<Team> teams = teamService.FindByClassID(myClass.getId());
         myClass.setListTeam(teams);
@@ -113,18 +110,20 @@ public class TeamListServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {
-        int traineeId = Integer.parseInt(request.getParameter("traineeId"));       
+        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
         int classId = Integer.parseInt(request.getParameter("classId"));
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.ChangeTeam(traineeId, classId, teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void changestatus(HttpServletRequest request, HttpServletResponse response) {

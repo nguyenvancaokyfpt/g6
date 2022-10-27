@@ -4,10 +4,11 @@
  */
 package com.tss.dao;
 
-import com.tss.model.Team;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.tss.model.Team;
 
 /**
  *
@@ -21,14 +22,18 @@ public interface TeamDao {
 
     int RemoveTeam(Connection connection, int teamId) throws SQLException;
 
-    Team FindTeamById(Connection connection, int teamId,int class_id) throws SQLException;
+    Team FindTeamById(Connection connection, int teamId, int class_id) throws SQLException;
 
     int UpdateTeam(Connection connection, Team team) throws SQLException;
 
-    int ChangeTeam(Connection connection, int traineeId,int classId,int teamId) throws SQLException;
+    int ChangeTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
     int GetMaxTeamId(Connection connection) throws SQLException;
 
     int AddTeam(Connection connection, Team team) throws SQLException;
+
+    void resetTeam(Connection connection, int classId);
+
+    void setNullTeamId(Connection connection, int teamId);
 
 }

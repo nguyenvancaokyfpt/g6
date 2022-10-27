@@ -7,6 +7,8 @@ public class Trainee extends User {
     private int classId;
     private Date dropoutDate;
     private float grade;
+    private boolean isLeader;
+    private int teamId;
 
     public Trainee() {
     }
@@ -55,6 +57,34 @@ public class Trainee extends User {
      */
     public void setGrade(float grade) {
         this.grade = grade;
+    }
+
+    /**
+     * @return boolean return the isLeader
+     */
+    public boolean isIsLeader() {
+        return isLeader;
+    }
+
+    /**
+     * @param isLeader the isLeader to set
+     */
+    public void setIsLeader(boolean isLeader) {
+        this.isLeader = isLeader;
+    }
+
+    /**
+     * @return int return the teamId
+     */
+    public int getTeamId() {
+        return teamId;
+    }
+
+    /**
+     * @param teamId the teamId to set
+     */
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
 }

@@ -15,6 +15,7 @@ public class Team {
 
     private int id;
     private Class tClass;
+    private String name;
     private String className;
     private int classId;
     private String project_code;
@@ -34,11 +35,11 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" + "id=" + id + ", tClass=" + tClass + ", className=" + className + ", classId=" + classId + ", project_code=" + project_code + ", topic_code=" + topic_code + ", topic_name=" + topic_name + ", status_id=" + status_id + ", description=" + description + ", listTrainee=" + listTrainee + '}';
+        return "Team{" + "id=" + id + ", tClass=" + tClass + ", className=" + className + ", classId=" + classId
+                + ", project_code=" + project_code + ", topic_code=" + topic_code + ", topic_name=" + topic_name
+                + ", status_id=" + status_id + ", description=" + description + ", listTrainee=" + listTrainee + '}';
     }
 
-    
-    
     public String getClassName() {
         return className;
     }
@@ -46,7 +47,7 @@ public class Team {
     public void setClassName(String className) {
         this.className = className;
     }
-    
+
     public List<Trainee> getListTrainee() {
         return listTrainee;
     }
@@ -59,7 +60,8 @@ public class Team {
         listTrainee = new ArrayList<Trainee>();
     }
 
-    public Team(int id, Class tClass, String project_code, String topic_code, String topic_name, int status_id, String description, List<Trainee> listTrainee) {
+    public Team(int id, Class tClass, String project_code, String topic_code, String topic_name, int status_id,
+            String description, List<Trainee> listTrainee) {
         this.id = id;
         this.tClass = tClass;
         this.project_code = project_code;
@@ -69,8 +71,6 @@ public class Team {
         this.description = description;
         this.listTrainee = listTrainee;
     }
-
-   
 
     public int getId() {
         return id;
@@ -128,5 +128,18 @@ public class Team {
         this.description = description;
     }
 
-    
+    /**
+     * @return String return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
