@@ -17,7 +17,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> getScheduleList(String begin, String end, String search, 
+    public List<Schedule> getScheduleList(String begin, String end, String search,
             String classFilter) {
         Connection connection = null;
         List<Schedule> scheduleList = null;
@@ -88,6 +88,23 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             connection = BaseDao.getConnection();
             flag = scheduleDao.checkDupSchedule(connection, schedule);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean checkAttendance(int scheduleId) {
+        Connection connection = null;
+        boolean flag = false;
+        try {
+            connection = BaseDao.getConnection();
+            if (scheduleDao.checkAttendance(connection, scheduleId) > 0) {
+                flag = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

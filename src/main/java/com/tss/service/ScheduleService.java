@@ -15,4 +15,6 @@ public interface ScheduleService {
     Schedule getScheduleById(int id);
     
     boolean checkDupSchedule(Schedule schedule);
+    
+    boolean checkAttendance(int scheduleId);
 }

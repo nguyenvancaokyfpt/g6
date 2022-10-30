@@ -41,8 +41,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
                         + "and s.class_id = " + classFilter + "\n"
                         + "order by training_date asc, slot_id asc";
             }
-            Object[] params = { "%" + search + "%", "%" + search + "%","%" + search + "%","%" + search + "%",
-                    begin, end};
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + search + "%",
+                    begin, end };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement,
                         resultSet, sql, params);
@@ -170,5 +170,26 @@ public class ScheduleDaoImpl implements ScheduleDao {
         }
         return flag;
     }
-    
+
+    @Override
+    public int checkAttendance(Connection connection, int scheduleId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "SELECT count(*) FROM attendance where schedule_id = ?";
+            Object[] params = { scheduleId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return count;
+    }
 }
