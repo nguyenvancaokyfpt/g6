@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2022 at 04:56 AM
+-- Generation Time: Oct 22, 2022 at 04:36 PM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -395,7 +395,9 @@ CREATE TABLE `milestone` (
 --
 
 INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
-(1, 10, 1, '2022-09-12', '2022-09-24', '1', '1', '1', 1);
+(1, 10, 1, '2022-09-12', '2022-09-24', 'test', '1', '1', 1),
+(99, 1, 10, '2022-10-22', '2022-11-06', 'Iter 1', 'Iter1 report', 'Iter1 report', 1),
+(100, 6, 3, '2022-11-06', '2022-11-20', 'Iter 2', 'Documents & Iteration 2 Reports', 'Documents & Iteration 2 Reports', 1);
 
 -- --------------------------------------------------------
 
@@ -899,7 +901,10 @@ CREATE TABLE `team` (
 --
 
 INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
-(1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test');
+(1, 1, 'SWP', 'SWP211', 'TEST', 1, 'Test'),
+(2, 10, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
+(3, 10, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
+(4, 10, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system');
 
 -- --------------------------------------------------------
 
@@ -1421,7 +1426,7 @@ ALTER TABLE `member_eval`
 -- AUTO_INCREMENT for table `milestone`
 --
 ALTER TABLE `milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `milestone_eval`
@@ -1475,7 +1480,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `team_eval`

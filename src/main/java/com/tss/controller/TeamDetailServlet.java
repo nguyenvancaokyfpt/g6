@@ -2,9 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package com.tss.controller;
 
+import com.tss.constants.ActionConstants;
+import com.tss.constants.ScreenConstants;
+import com.tss.helper.ResponseHelper;
+import com.tss.model.ClassEntity;
+import com.tss.model.Milestone;
+import com.tss.model.Team;
+import com.tss.service.ClassService;
+import com.tss.service.MilestoneService;
+import com.tss.service.SubjectService;
+import com.tss.service.TeamService;
+import com.tss.service.UserService;
+import com.tss.service.impl.ClassServiceImpl;
+import com.tss.service.impl.MilestoneServiceImpl;
+import com.tss.service.impl.SubjectServiceImpl;
+import com.tss.service.impl.TeamServiceImpl;
+import com.tss.service.impl.UserServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -12,6 +27,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -19,70 +35,134 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class TeamDetailServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TeamDetailServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TeamDetailServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    private MilestoneService mileService;
+    private ClassService classService;
+    private TeamService teamService;
+    private UserService userService;
+    private SubjectService subjectService;
+
+    public TeamDetailServlet() {
+        mileService = new MilestoneServiceImpl();
+        classService = new ClassServiceImpl();
+        teamService = new TeamServiceImpl();
+        userService = new UserServiceImpl();
+        subjectService = new SubjectServiceImpl();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String action = request.getParameter("action");
+            if (action == null) {
+                response.sendRedirect("list");
+                return;
+            }
+            switch (action) {
+                case ActionConstants.CREATE:
+                    create(request, response);
+                    break;
+                case ActionConstants.UPDATE:
+                    update(request, response);
+                    break;
+                case ActionConstants.GET:
+                    view(request, response);
+                    break;
+                case ActionConstants.DELETE:
+                    remove(request, response);
+                    break;
+                default:
+                    response.sendRedirect("list");
+                    break;
+            }
+        } catch (NullPointerException e) {
+        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     * 
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int teamId = Integer.parseInt(request.getParameter("team_id"));
+        System.out.println(request.getParameter("team_class"));
+        int classId = Integer.parseInt(request.getParameter("team_class"));
+        String projectCode = request.getParameter("team_project");
+        String topicName = request.getParameter("team_topicName");
+        String topicCode = request.getParameter("team_topicCode");
+        String description = request.getParameter("team_description");
+        int statusId = Integer.parseInt(request.getParameter("team_status"));
+        Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
+        teamService.UpdateTeam(t);
+        System.out.println("Update");
+        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId);
+    }
 
+    private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("jspPath", "shared/teamdetails.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Team/details.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.TEAM_LIST,
+                ScreenConstants.TEAM_DETAIL));
+        //BEGIN'
+        int teamid = 0;
+        int classID = 0;
+        try {
+            teamid = Integer.parseInt(request.getParameter("teamId"));
+            classID = Integer.parseInt(request.getParameter("classId"));
+        } catch (Exception e) {
+            response.sendRedirect("list");
+            return;
+        }
+
+        Team team = teamService.FindTeamById(teamid, classID);
+        request.setAttribute("team", team);
+        //END
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    }
+
+    private void remove(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int classId = 0;
+        String doing = request.getParameter("doing");
+        if (doing != null) {
+            classId = Integer.parseInt(request.getParameter("team_class"));
+            String projectCode = request.getParameter("team_project");
+            String topicName = request.getParameter("team_topicName");
+            String topicCode = request.getParameter("team_topicCode");
+            String description = request.getParameter("team_description");
+            int statusId = Integer.parseInt(request.getParameter("team_status"));
+            Team t = new Team(0, null, projectCode, topicCode, topicName, statusId, description, null);
+            t.setClassId(classId);
+            teamService.AddTeam(t);
+            request.setAttribute("toast", "2");
+        }
+
+        request.setAttribute("jspPath", "shared/teamdetailsadd.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "Team/details.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.TEAM_LIST,
+                ScreenConstants.TEAM_DETAIL));
+
+        if (classId == 0) {
+            classId = Integer.parseInt(request.getParameter("classId"));
+        }
+        ClassEntity myClass = classService.findByID(classId);
+        request.setAttribute("myClass", myClass);
+        System.out.println(myClass);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    }
 }

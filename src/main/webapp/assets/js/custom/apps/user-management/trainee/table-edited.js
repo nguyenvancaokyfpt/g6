@@ -668,35 +668,52 @@ var KTUsersList = (function () {
           .querySelector('[data-kt-users-modal-action="submit"]')
           .addEventListener("click", (t) => {
             t.preventDefault(),
-              axios
-                .post("/management/trainee/list?action=create", {
-                  classId: $('[name="classImport"]').val(),
-                  fileUrls: fileUrls,
-                  action: "import",
-                })
-                .then(function (response) {
-                  $.toast({
-                    heading: "Success",
-                    text: "Trainee import successfully",
-                    showHideTransition: "slide",
-                    icon: "success",
-                    position: "bottom-right",
-                  });
-                  bm.hide();
-                  fm.reset();
-                  $('[name="classImport"]').val("").trigger("change");
-                  mydropzone.removeAllFiles(true);
-                  e.draw();
-                })
-                .catch(function (error) {
-                  $.toast({
-                    heading: "Error",
-                    text: "Something went wrong",
-                    showHideTransition: "slide",
-                    icon: "error",
-                    position: "bottom-right",
-                  });
+              // show loading
+              Swal.fire({
+                title: "Please wait...",
+                icon: "info",
+                onBeforeOpen() {
+                  Swal.showLoading();
+                },
+                onAfterClose() {
+                  Swal.hideLoading();
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: false,
+              });
+            axios
+              .post("/management/trainee/list?action=create", {
+                classId: $('[name="classImport"]').val(),
+                fileUrls: fileUrls,
+                action: "import",
+              })
+              .then(function (response) {
+                $.toast({
+                  heading: "Success",
+                  text: "Trainee import successfully",
+                  showHideTransition: "slide",
+                  icon: "success",
+                  position: "bottom-right",
                 });
+                bm.hide();
+                fm.reset();
+                $('[name="classImport"]').val("").trigger("change");
+                mydropzone.removeAllFiles(true);
+                e.draw();
+                Swal.fire().close();
+              })
+              .catch(function (error) {
+                $.toast({
+                  heading: "Error",
+                  text: "Something went wrong",
+                  showHideTransition: "slide",
+                  icon: "error",
+                  position: "bottom-right",
+                });
+                Swal.fire().close();
+              });
           }),
         document
           .querySelector('[data-kt-user-table-filter="search"]')

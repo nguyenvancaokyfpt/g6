@@ -100,13 +100,27 @@ public class ClassServiceImpl implements ClassService {
         Classroom classroom = null;
         try {
             connection = BaseDao.getConnection();
-            classroom = classDao.findClassById(connection, classId);
+            classroom = classDao.findClassByIdK(connection, classId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
         return classroom;
+    }
+
+    public ClassEntity findByID(int id) {
+        Connection connection = null;
+        ClassEntity myClass = null;
+        try {
+            connection = BaseDao.getConnection();
+            myClass = classDao.findClassById(connection, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return myClass;
     }
 
     public List<ClassEntity> ListCbxa() {

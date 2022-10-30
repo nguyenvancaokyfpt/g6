@@ -33,6 +33,8 @@ public interface ClassDao {
 
         ClassAnhPT findById(Connection connection, int id) throws SQLException;
 
+        ClassEntity findClassById(Connection connection, int id) throws SQLException;
+
         int countSearchFilter(Connection connection, String searchword, String term, String status) throws SQLException;
 
         void add(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id,
@@ -47,6 +49,6 @@ public interface ClassDao {
 
         void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException;
 
-        Classroom findClassById(Connection connection, int classId) throws SQLException;
+        Classroom findClassByIdK(Connection connection, int classId) throws SQLException;
 
 }
