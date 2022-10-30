@@ -19,4 +19,6 @@ public interface IssueService {
     int countAll(int classFilter, int teamFilter);
 
     int countFilter(String search, int classFilter, int teamFilter, int assignFilter, int statusFilter);
+
+    int addIssue(Issue issue);
 }

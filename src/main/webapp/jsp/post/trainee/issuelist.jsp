@@ -1,6 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <input type="text" class="d-none" value="${requestScope.toastStatus == null ? 0: requestScope.toastStatus}"
-        id="toastStatus">
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container" class="container-fluid">
@@ -82,8 +80,8 @@
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                             <!--begin::Add user-->
-                            <form action="/issueCriteria/issueCriteriaList?action=create" method="post">
-                                <button type="submit" class="btn btn-primary" onclick="addissue()">
+                            <form action="/issue/detail" method="get">
+                                <button type="submit" class="btn btn-primary">
                                     <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg"

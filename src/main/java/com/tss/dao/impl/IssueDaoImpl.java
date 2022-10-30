@@ -96,10 +96,29 @@ public class IssueDaoImpl implements IssueDao {
 
     public static void main(String[] args) throws SQLException {
         IssueDaoImpl issueDaoImpl = new IssueDaoImpl();
-        List<Issue> issues = issueDaoImpl.findAll(BaseDao.getConnection(), 0, 10, "", "issue_id", "asc", -1, -1, -1, -1);
-        int count = issueDaoImpl.countFilter(BaseDao.getConnection(), "", -1, -1, -1, -1);
-        int count2 = issueDaoImpl.countAll(BaseDao.getConnection(), -1, -1);
-        System.out.println(count2);
+        // List<Issue> issues = issueDaoImpl.findAll(BaseDao.getConnection(), 0, 10, "", "issue_id", "asc", -1, -1, -1, -1);
+        // int count = issueDaoImpl.countFilter(BaseDao.getConnection(), "", -1, -1, -1, -1);
+        // int count2 = issueDaoImpl.countAll(BaseDao.getConnection(), -1, -1);
+        System.out.println(issueDaoImpl.getNewId(BaseDao.getConnection()));
+        Issue issue = new Issue();
+        issue.setIssueId(1);
+        Trainee t = new Trainee();
+        t.setUserId(57);
+        issue.setAssignee(t);
+        issue.setDecription("test");
+        issue.setExtra_labels("test");
+        issue.setGitlab_url("test");
+        issue.setIsClose(1);
+        issue.setLink_id(1);
+        Status s = new Status();
+        s.setStatusId(3);
+        issue.setStatus(s);
+        Team tt = new Team();
+        tt.setId(1);
+        issue.setTeam(tt);
+        issue.setTitle("test");
+        issue.setType(1);
+        issueDaoImpl.addIssue(BaseDao.getConnection(), issue);
     }
 
     @Override
@@ -174,6 +193,50 @@ public class IssueDaoImpl implements IssueDao {
             }
         }
         return count;
+    }
+
+    @Override
+    public int addIssue(Connection connection, Issue issue) throws SQLException {
+        issue.setIssueId(getNewId(connection));
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "INSERT INTO `issue`(`issue_id`,`team_id`, `author_id`, `title`, `type_id`, `status_id`, `extra_labels`, `description`, `linked_id`, `gitlab_url`, `is_closed`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            Object[] params = { issue.getIssueId(),issue.getTeam().getId(), issue.getAssignee().getUserId(), issue.getTitle(),
+                    issue.getType(), issue.getStatus().getStatusId(), issue.getExtra_labels(), issue.getDecription(),
+                    issue.getLink_id(), issue.getGitlab_url(), issue.getIsClose() };
+            try {
+                count = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int getNewId(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int id = 0;
+        if (connection != null) {
+            String sql = "SELECT MAX(issue_id) AS id FROM `issue`";
+            Object[] params = { };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return id + 1;
     }
 
 }

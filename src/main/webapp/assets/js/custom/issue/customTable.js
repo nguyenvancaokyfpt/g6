@@ -56,7 +56,6 @@ var KTUsersList = (function () {
             url: window.location.origin + "/issue/list?action=list",
             type: "POST",
             data: {
-              numberOfColumns: 6,
               classId: function () {
                 return document.getElementById("iterMilestone").value;
               },
@@ -200,7 +199,7 @@ const getTeam = (e) => {
         }</option>`;
       });
       if (data.length == 0) {
-        teamSelect.innerHTML += `<option value="-1">No Group</option>`;
+        teamSelect.innerHTML += `<option value="-1">Empty Group</option>`;
       }
       getAssignee();
       if (e != null) e.draw();

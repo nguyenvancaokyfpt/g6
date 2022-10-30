@@ -13,7 +13,9 @@ import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Issue;
 import com.tss.model.Milestone;
+import com.tss.model.Status;
 import com.tss.model.Team;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.util.DataTablesColumns;
@@ -48,7 +50,7 @@ public class IssueListServlet extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         String action = request.getParameter("action");
         switch (action) {
             case ActionConstants.LIST:
@@ -56,7 +58,6 @@ public class IssueListServlet extends HttpServlet {
                 break;
             case "getTeam":
                 getTeam(request, response);
-
             case ActionConstants.CREATE:
                 create(request, response);
             default:
@@ -72,7 +73,7 @@ public class IssueListServlet extends HttpServlet {
                 "issue/customTable.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.TRAINEE_LIST));
+                ScreenConstants.ISSUE_LIST));
         User u = (User) request.getAttribute("user");
         List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
         request.setAttribute("miles", miles);
@@ -91,7 +92,6 @@ public class IssueListServlet extends HttpServlet {
         int length = 10;
         String search = "";
         int draw = 1;
-        int numberofcolumn = -1;
         int orderColumn = 1;
         String orderDir = "asc";
         String orderBy = "issue_id";
@@ -106,7 +106,6 @@ public class IssueListServlet extends HttpServlet {
                 length = jsonObject.getJSONArray("length").getInteger(0);
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
-                numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
                 classFilter = jsonObject.getJSONArray("classId").getInteger(0);
                 teamFilter = jsonObject.getJSONArray("teamId").getInteger(0);
                 assignFilter = jsonObject.getJSONArray("assigneeId").getInteger(0);
@@ -118,7 +117,8 @@ public class IssueListServlet extends HttpServlet {
         } catch (NullPointerException e) {
             System.out.println(e);
         }
-        List<Issue> list = issueService.findAll(start, length, search, orderBy, orderDir, classFilter, teamFilter, assignFilter, statusFilter);
+        List<Issue> list = issueService.findAll(start, length, search, orderBy, orderDir, classFilter, teamFilter,
+                assignFilter, statusFilter);
         int recordsTotal = issueService.countAll(classFilter, teamFilter);
         int recordsFiltered = issueService.countFilter(search, classFilter, teamFilter, assignFilter, statusFilter);
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
@@ -149,8 +149,57 @@ public class IssueListServlet extends HttpServlet {
         ResponseHelper.sendResponse(response, teams);
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
+    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            Issue i = new Issue();
+            Team t = new Team();
+            t.setId(Integer.parseInt(request.getParameter("issue_team")));
+            i.setTeam(t);
+            Trainee tt = new Trainee();
+            tt.setUserId(Integer.parseInt(request.getParameter("issue_assignee")));
+            i.setAssignee(tt);
+            i.setTitle(request.getParameter("issue_title"));
+            i.setGitlab_url(request.getParameter("issue_url"));
+            Status s = new Status();
+            s.setStatusId(Integer.parseInt(request.getParameter("issue_status")));
+            i.setStatus(s);
+            i.setDecription(request.getParameter("issue_description"));
+            i.setExtra_labels("#none");
+            i.setIsClose(0);
+            i.setLink_id(1);
+            i.setType(1);
+            issueService.addIssue(i);
+            ResponseHelper.sendResponse(response, true);
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response, false);
+        }
     }
 
+//    private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        JSONObject jsonObject = RequestHelper.getJsonDataForm(request);
+//        try {
+//            if (jsonObject != null) {
+//                Issue i = new Issue();
+//                Team t = new Team();
+//                t.setId(jsonObject.getJSONArray("issue_team").getInteger(0));
+//                i.setTeam(t);
+//                Trainee tt = new Trainee();
+//                tt.setUserId(jsonObject.getJSONArray("issue_assignee").getInteger(0));
+//                i.setAssignee(tt);
+//                i.setTitle(jsonObject.getJSONArray("issue_title").getString(0));
+//                i.setGitlab_url(jsonObject.getJSONArray("issue_url").getString(0));
+//                Status s = new Status();
+//                s.setStatusId(jsonObject.getJSONArray("issue_status").getInteger(0));
+//                i.setStatus(s);
+//                i.setDecription(jsonObject.getJSONArray("issue_description").getString(0));
+//                i.setExtra_labels("#none");
+//                i.setIsClose(1);
+//                i.setLink_id(1);
+//                i.setType(1);
+//                issueService.addIssue(i);
+//            }
+//        } catch (NullPointerException e) {
+//            ResponseHelper.sendResponse(response, false);
+//        }
+//    }
 }

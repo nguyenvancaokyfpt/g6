@@ -79,4 +79,19 @@ public class InsueServiceImpl implements IssueService {
         return count;
     }
 
+    @Override
+    public int addIssue(Issue issue) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = issueDao.addIssue(connection, issue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
 }

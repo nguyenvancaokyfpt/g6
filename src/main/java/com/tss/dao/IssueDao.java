@@ -19,4 +19,6 @@ public interface IssueDao {
     String orderDir, int classFilter, int teamFilter, int assignFilter, int statusFilter) throws SQLException;
     int countAll(Connection connection, int classFilter, int teamFilter)throws SQLException;
     int countFilter(Connection connection,String search, int classFilter, int teamFilter, int assignFilter, int statusFilter)throws SQLException;
+    int addIssue(Connection connection, Issue issue) throws SQLException;
+    int getNewId(Connection connection) throws SQLException;
 }

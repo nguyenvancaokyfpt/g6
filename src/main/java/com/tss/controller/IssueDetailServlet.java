@@ -7,6 +7,14 @@ package com.tss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import com.tss.constants.ScreenConstants;
+import com.tss.helper.ResponseHelper;
+import com.tss.model.Milestone;
+import com.tss.model.User;
+import com.tss.service.MilestoneService;
+import com.tss.service.impl.MilestoneServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,16 +26,12 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author nguye
  */
 public class IssueDetailServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
+    private MilestoneService mileService;
+    
+    public IssueDetailServlet() {
+        mileService = new MilestoneServiceImpl();
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -45,44 +49,28 @@ public class IssueDetailServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("jspPath", "trainee/issueadd.jsp");
+        request.setAttribute("customJs", ResponseHelper.customJs(
+                "issue/add.js"));
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.ISSUE_LIST));
+        User u = (User) request.getAttribute("user");
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
+        request.setAttribute("miles", miles);
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * 
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
+
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     * 
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
