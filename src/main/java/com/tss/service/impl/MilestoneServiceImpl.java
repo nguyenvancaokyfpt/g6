@@ -4,16 +4,17 @@
  */
 package com.tss.service.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.MilestoneDao;
-import com.tss.dao.impl.MilestoneDaoImpl;
-import com.tss.model.Milestone;
-import com.tss.model.MilestoneRequest;
-import com.tss.service.MilestoneService;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.MilestoneDao;
+import com.tss.dao.impl.MilestoneDaoImpl;
+import com.tss.model.Assignment;
+import com.tss.model.Milestone;
+import com.tss.service.MilestoneService;
 
 /**
  *
@@ -26,6 +27,7 @@ public class MilestoneServiceImpl implements MilestoneService {
     public MilestoneServiceImpl() {
         mileStoneDao = new MilestoneDaoImpl();
     }
+
     @Override
     public java.util.List<Milestone> List(int currentPageNo, int PageSize, String search) {
         Connection connection = null;
@@ -33,17 +35,18 @@ public class MilestoneServiceImpl implements MilestoneService {
         try {
             connection = BaseDao.getConnection();
 
-            milestoneList = mileStoneDao.List(connection,search,currentPageNo, PageSize);
+            milestoneList = mileStoneDao.List(connection, search, currentPageNo, PageSize);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return milestoneList; }
+        return milestoneList;
+    }
 
     @Override
     public int countAll() {
-       Connection connection = null;
+        Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
@@ -53,7 +56,24 @@ public class MilestoneServiceImpl implements MilestoneService {
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return count; }
+        return count;
+    }
+
+    @Override
+    public int countAll(String search) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = mileStoneDao.countAll(connection, search);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
     @Override
     public boolean add(Milestone milestone) {
         Connection connection = null;
@@ -87,11 +107,13 @@ public class MilestoneServiceImpl implements MilestoneService {
     }
 
     @Override
-    public boolean update(Milestone milestone, int classId, Date fromDate, Date toDate, String title, String assBody, String desscription, int statusId) {
+    public boolean update(Milestone milestone, int classId, Date fromDate, Date toDate, String title, String assBody,
+            String desscription, int statusId) {
         Connection connection = null;
         try {
             connection = BaseDao.getConnection();
-            mileStoneDao.update(connection, milestone.getMilestoneId(), classId, fromDate ,toDate ,title , assBody,desscription , statusId);
+            mileStoneDao.update(connection, milestone.getMilestoneId(), classId, fromDate, toDate, title, assBody,
+                    desscription, statusId);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +128,7 @@ public class MilestoneServiceImpl implements MilestoneService {
         Connection connection = null;
         try {
             connection = BaseDao.getConnection();
-            mileStoneDao.updateAssId(connection,assId,subjectId);
+            mileStoneDao.updateAssId(connection, assId, subjectId);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,5 +137,36 @@ public class MilestoneServiceImpl implements MilestoneService {
         }
         return false;
     }
-    
+
+    @Override
+    public List<Assignment> findAll(int start, int length) {
+        Connection connection = null;
+        List<Assignment> assignments = null;
+        try {
+            connection = BaseDao.getConnection();
+            assignments = mileStoneDao.findAll(connection, start, length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return assignments;
+    }
+
+    @Override
+    public java.util.List<Milestone> findAllBySupporter(int supID) {
+        Connection connection = null;
+        List<Milestone> milestoneList = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            milestoneList = mileStoneDao.findAllBySupporter(connection, supID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return milestoneList;
+    }
+
 }

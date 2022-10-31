@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <input id="toastStatus" type="text" class="d-none"
-            value="${requestScope.toastStatus == null?0:requestScope.toastStatus}">
         <!--begin::Container-->
         <div id="kt_content_container" class="container">
             <!--begin::Card-->
@@ -125,7 +123,7 @@
                                             <option ${requestScope.statusFilter=='' ? 'selected' : '' }></option>
                                             <option value="1" ${requestScope.statusFilter=='1' ? 'selected' : '' }>
                                                 Active</option>
-                                            <option value="0" ${requestScope.statusFilter=='1' ? 'selected' : '' }>
+                                            <option value="0" ${requestScope.statusFilter=='0' ? 'selected' : '' }>
                                                 Inactive</option>
                                         </select>
                                     </div>
@@ -157,20 +155,24 @@
                             <!--end::Filter-->
 
                             <!--begin::Add user-->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_add_user">
-                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.5"
-                                            transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
-                                            x="4" y="11" width="16" height="2" rx="1" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->Add Assignment
-                            </button>
+                            <form action="/assignment/list?action=get" method="post">
+                                <input type="text" name="assignId" class="d-none" value="-1">
+                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_add_user">
+                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5"
+                                                transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
+                                                x="4" y="11" width="16" height="2" rx="1" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->Add Assignment
+                                </button>
+                            </form>
                             <!--end::Add user-->
                         </div>
                         <!--end::Toolbar-->
@@ -275,8 +277,6 @@
                                     </li>
                                 </c:forEach>
                             </ul>
-                        </nav>
-                    </div>  
                         </nav>
                     </div>
                 </div>

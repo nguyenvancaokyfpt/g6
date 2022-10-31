@@ -38,6 +38,8 @@ public interface UserDao {
 
         boolean registerWithGoogle(Connection connection, User user) throws SQLException;
 
+        boolean registerTraineeFromFile(Connection connection, Trainee user) throws SQLException;
+
         void updateResetPasswordToken(Connection connection, String token, int user_id, long millis)
                         throws SQLException;
 
@@ -63,10 +65,17 @@ public interface UserDao {
         int countAll(Connection connection, String search, String roleFilter, String statusFilter) throws SQLException;
 
         java.util.List<Trainee> findAllByClassId(Connection connection, int start, int length, String search,
-                String columnName, String orderDir, String statusFilter, int classId) throws SQLException;
+                        String columnName, String orderDir, String statusFilter, int classId) throws SQLException;
 
         int countAllByClassId(Connection connection, int classId) throws SQLException;
 
-        int countAllByClassId(Connection connection, String search, String statusFilter, int classId) throws SQLException;
+        int countAllByClassId(Connection connection, String search, String statusFilter, int classId)
+                        throws SQLException;
+
+        void createTraineeAccount(Connection connection, Trainee trainee) throws SQLException;
+
+        void updateUser(Connection connection, int userId, String fullname, String mobile) throws SQLException;
+
+        List<Trainee> GetWaitingList(Connection connection,int classId) throws SQLException;
 
 }

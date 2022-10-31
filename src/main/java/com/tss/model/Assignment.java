@@ -10,7 +10,8 @@ public class Assignment {
     public Assignment() {
     }
 
-    public Assignment(int assId, int subjectId, String title, String assBody, int evalWeight, int isTeamwork, int isOngoing, int statusId, String subjectName) {
+    public Assignment(int assId, int subjectId, String title, String assBody, int evalWeight, int isTeamwork,
+            int isOngoing, int statusId, String subjectName) {
         this.assId = assId;
         this.subjectId = subjectId;
         this.title = title;

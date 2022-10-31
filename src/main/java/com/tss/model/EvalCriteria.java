@@ -37,12 +37,12 @@ public class EvalCriteria {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
-    
-    
+
     public EvalCriteria() {
     }
 
-    public EvalCriteria(int id, int assign, int mile, String name, int isTeam, int weight, int maxLoc, int status, String description) {
+    public EvalCriteria(int id, int assign, int mile, String name, int isTeam, int weight, int maxLoc, int status,
+            String description) {
         this.id = id;
         this.assign = assign;
         this.mile = mile;
@@ -53,9 +53,7 @@ public class EvalCriteria {
         this.status = status;
         this.description = description;
     }
-     
-    
-    
+
     public int getId() {
         return id;
     }
@@ -128,5 +126,4 @@ public class EvalCriteria {
         this.description = description;
     }
 
-    
 }

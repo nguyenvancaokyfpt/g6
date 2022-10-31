@@ -13,7 +13,8 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(int classId, String classCode, int comboId, int trainerId, int termId, int statusId, String description) {
+    public Classroom(int classId, String classCode, int comboId, int trainerId, int termId, int statusId,
+            String description) {
         this.classId = classId;
         this.classCode = classCode;
         this.comboId = comboId;

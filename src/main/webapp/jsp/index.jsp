@@ -132,8 +132,10 @@
 								<!--begin::Toolbar-->
 								<c:if test="${logged==false}">
 									<div class="flex-equal text-end ms-1">
+                                                                            <a href="/register" class="btn btn-success">Sign Up</a>
 										<a href="/login" class="btn btn-success">Sign In</a>
 									</div>
+                                                                        
 								</c:if>
 								<c:if test="${logged==true}">
 									<div class="flex-equal text-end ms-1">

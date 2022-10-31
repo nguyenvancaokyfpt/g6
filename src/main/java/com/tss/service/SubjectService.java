@@ -26,5 +26,5 @@ public interface SubjectService {
 
     int countAll(String search, String filterStatus);
 
-    List<Integer> pages(int totalRecords,int pageSize);
+    List<Integer> pages(int totalRecords, int pageSize);
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.tss.constants.HttpStatusCodeConstants;
-
 import com.tss.helper.ResponseHelper;
 import com.tss.helper.UploadHelper;
 import com.tss.model.payload.ResponseMessage;
@@ -18,7 +17,6 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 /**
  *
@@ -48,7 +46,8 @@ public class UploadFileServlet extends HttpServlet {
     // - file: File ( can be multiple )
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String destination = request.getParameter("destination");
+        String destination = request.getParameter("destination") != null ? request.getParameter("destination")
+                : "default";
         List<String> fileUrls = UploadHelper.upload(request, destination);
 
         if (!fileUrls.isEmpty()) {

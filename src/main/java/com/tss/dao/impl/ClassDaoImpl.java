@@ -9,9 +9,11 @@ import java.util.List;
 
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassDao;
+import com.tss.helper.DebugHelper;
 import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.User;
 
 public class ClassDaoImpl implements ClassDao {
 
@@ -114,12 +116,12 @@ public class ClassDaoImpl implements ClassDao {
         ResultSet resultSet = null;
         List<ClassEntity> classEntitys = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    c.class_id AS id, c.class_code AS classCode\n" +
-                    "FROM\n" +
-                    "    class AS c\n" +
-                    "        LEFT JOIN\n" +
-                    "    milestone AS m ON m.class_id = c.class_id;";
+            String sql = "SELECT \n"
+                    + "    c.class_id AS id, c.class_code AS classCode\n"
+                    + "FROM\n"
+                    + "    class AS c\n"
+                    + "        LEFT JOIN\n"
+                    + "    milestone AS m ON m.class_id = c.class_id;";
             // Search and Paging
             Object[] params = {};
             try {
@@ -141,7 +143,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term, String status, String order, String dir) throws SQLException {
+    public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term,
+            String status, String order, String dir) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassAnhPT> classList = new ArrayList<>();
@@ -233,7 +236,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public int countSearchFilter(Connection connection, String searchword, String term, String status) throws SQLException {
+    public int countSearchFilter(Connection connection, String searchword, String term, String status)
+            throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int totalSetting = 0;
@@ -267,7 +271,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public void add(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id, String description) throws SQLException {
+    public void add(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id,
+            String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -291,7 +296,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public void edit(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id, int status_id, String description) throws SQLException {
+    public void edit(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id,
+            int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -362,5 +368,119 @@ public class ClassDaoImpl implements ClassDao {
         return classList;
     }
 
+    @Override
+    public void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        boolean flag = false;
+        if (connection != null) {
+            String sql = "insert into class_user (class_id,user_id,grade) values (?,?,?);";
+            Object[] params = { classId, user.getUserId(), grade };
+            try {
+                int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
+                if (updateRows > 0) {
+                    flag = true;
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+    }
 
+    @Override
+    public Classroom findClassByIdK(Connection connection, int classId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Classroom classroom = null;
+        if (connection != null) {
+            String sql = "select * from class where class_id = ?;";
+            Object[] params = { classId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    classroom = new Classroom();
+                    classroom.setClassId(resultSet.getInt("class_id"));
+                    classroom.setClassCode(resultSet.getString("class_code"));
+                    classroom.setComboId(resultSet.getInt("combo_id"));
+                    classroom.setTrainerId(resultSet.getInt("trainer_id"));
+                    classroom.setTermId(resultSet.getInt("term_id"));
+                    classroom.setStatusId(resultSet.getInt("status_id"));
+                    classroom.setDescription(resultSet.getString("description"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classroom;
+    }
+
+    public List<ClassEntity> ListCbx(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ClassEntity> classEntitys = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT \n" +
+                    "    class_id, class_code\n" +
+                    "FROM\n" +
+                    "    class";
+            // Search and Paging
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+
+                while (resultSet.next()) {
+                    ClassEntity classEntity = new ClassEntity();
+                    classEntity.setId(resultSet.getInt("class_id"));
+                    classEntity.setClassCode(resultSet.getString("class_code"));
+                    classEntitys.add(classEntity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classEntitys;
+    }
+
+    public ClassEntity findClassById(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ClassEntity classDetail = new ClassEntity();
+        if (connection != null) {
+            String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
+                    + "class.description,a.full_name,b.full_name,setting_title,status.status_title\n"
+                    + "from class\n"
+                    + "inner join user_role aa on aa.user_id = class.trainer_id\n"
+                    + "inner join user_role bb on bb.user_id = class.combo_id\n"
+                    + "inner join user a on a.user_id = aa.user_id\n"
+                    + "inner join user b on b.user_id = bb.user_id\n"
+                    + "inner join status on class.status_id = status.status_id\n"
+                    + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "where class_id = ?;";
+
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    classDetail.setId(resultSet.getInt(1));
+                    classDetail.setClassCode(resultSet.getString(2));
+                    classDetail.setComboId(resultSet.getInt(3));
+                    classDetail.setTranierId(resultSet.getInt(4));
+                    classDetail.setTermId(resultSet.getInt(5));
+                    classDetail.setStatusId(resultSet.getInt(6));
+                    classDetail.setDescription(resultSet.getString(7));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classDetail;
+    }
 }

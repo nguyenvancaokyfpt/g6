@@ -25,3 +25,21 @@
         </ul>
         <!--end::Breadcrumb-->
     </div>
+
+    <!--begin::Wrapper-->
+    <div class="d-flex align-items-center">
+        <!--begin::Input group-->
+        <div class="me-6">
+            <!--begin::Select-->
+            <select class="form-select form-select-sm form-select-solid" data-control="select2" data-placeholder="Class"
+                data-hide-search="true" data-width-resolve="true" name="system_class" style="width:150px;">
+                <option value="0">Classroom</option>
+                <c:forEach items="${USER_CLASS}" var="d">
+                    <option value="${d.getClassId()}"><span class="me-6">${d.getClassCode()}</span></option>
+                </c:forEach>
+            </select>
+            <!--end::Select-->
+        </div>
+        <!--end::Input group=-->
+    </div>
+    <!--end::Wrapper-->

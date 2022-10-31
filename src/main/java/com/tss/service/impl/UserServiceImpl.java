@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updatePwd(String userCode, String password) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean add(User user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean del(int i) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -365,13 +365,19 @@ public class UserServiceImpl implements UserService {
             int classId) {
         Connection connection = null;
         List<Trainee> userList = null;
-        
+
         // get orderColumn name
-        String columnName = columns.get(orderColumn).getData();
+        String columnName;
+        if (columns == null || orderColumn == -1) {
+            columnName = "user_id";
+        } else {
+            columnName = columns.get(orderColumn).getData();
+        }
 
         try {
             connection = BaseDao.getConnection();
-            userList = userDao.findAllByClassId(connection, start, length, search, columnName, orderDir, statusFilter, classId);
+            userList = userDao.findAllByClassId(connection, start, length, search, columnName, orderDir, statusFilter,
+                    classId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -411,4 +417,50 @@ public class UserServiceImpl implements UserService {
         return count;
     }
 
+    @Override
+    public void createTraineeAccount(Trainee trainee) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.createTraineeAccount(connection, trainee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public void updateUser(int userId, String fullname, String mobile) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            userDao.updateUser(connection, userId, fullname, mobile);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public java.util.List<Trainee> GetWaitingList(int classId) {
+        Connection connection = null;
+        List<Trainee> userList = null;
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.GetWaitingList(connection, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
+
+
+    public static void main(String[] args) throws SQLException {
+        UserServiceImpl t = new UserServiceImpl();
+        System.out.println(t.GetWaitingList( 2).size());
+    }
 }

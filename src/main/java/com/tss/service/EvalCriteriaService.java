@@ -2,7 +2,7 @@ package com.tss.service;
 
 import java.util.List;
 
-import com.tss.model.*;
+import com.tss.model.EvalCriteria;
 import com.tss.model.util.DataTablesColumns;
 
 public interface EvalCriteriaService {
@@ -22,11 +22,11 @@ public interface EvalCriteriaService {
     int countAll();
 
     List<EvalCriteria> findAll(int start, int length, String search, java.util.List<DataTablesColumns> columns,
-            int orderColumn, String orderDir, String subjectFilter,String assignFilter, String statusFilter);
+            int orderColumn, String orderDir, String subjectFilter, String assignFilter, String statusFilter);
 
-    int countAll(String search, String subjectFilter,String assignFilter, String statusFilter);
+    int countAll(String search, String subjectFilter, String assignFilter, String statusFilter);
 
     public int getNewId();
-    
-    boolean changeStatus(int id,int status);
+
+    boolean changeStatus(int id, int status);
 }

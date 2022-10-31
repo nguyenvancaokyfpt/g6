@@ -39,7 +39,8 @@ public class Setting {
         this.statusString = statusString;
     }
 
-    public Setting(int id, int type_id, String title, String value, String display_order, int status_id, String description, String statusString, String typeString) {
+    public Setting(int id, int type_id, String title, String value, String display_order, int status_id,
+            String description, String statusString, String typeString) {
         this.id = id;
         this.typeId = type_id;
         this.title = title;
@@ -170,6 +171,5 @@ public class Setting {
     public void setTypeString(String typeString) {
         this.typeString = typeString;
     }
-
 
 }

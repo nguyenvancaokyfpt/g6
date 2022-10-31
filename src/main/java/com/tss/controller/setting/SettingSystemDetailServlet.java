@@ -4,6 +4,13 @@
  */
 package com.tss.controller.setting;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.SettingDaoImpl;
 import com.tss.model.system.Setting;
@@ -12,19 +19,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author msi
  */
 public class SettingSystemDetailServlet extends HttpServlet {
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

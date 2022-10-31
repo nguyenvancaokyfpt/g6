@@ -1,13 +1,12 @@
 package com.tss.dao;
 
-import com.tss.model.*;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface EvalCriteriaDao {
+import com.tss.model.EvalCriteria;
 
+public interface EvalCriteriaDao {
 
     EvalCriteria findById(Connection connection, int Id) throws SQLException;
 
@@ -26,9 +25,10 @@ public interface EvalCriteriaDao {
     List<EvalCriteria> findAll(Connection connection, int start, int length, String search, String columnName,
             String orderDir, String subjectFilter, String assignFilter, String statusFilter) throws SQLException;
 
-    int countAll(Connection connection, String search, String subjectFilter, String assignFilter, String statusFilter) throws SQLException;
+    int countAll(Connection connection, String search, String subjectFilter, String assignFilter, String statusFilter)
+            throws SQLException;
 
     int getNewId(Connection connection) throws SQLException;
-    
+
     int changeStatus(Connection connection, int id, int status) throws SQLException;
 }

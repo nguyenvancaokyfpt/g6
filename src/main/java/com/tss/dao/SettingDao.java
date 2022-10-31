@@ -12,13 +12,16 @@ public interface SettingDao {
 
     List<Setting> ListPaging(Connection connection, int offset) throws SQLException;
 
-    List<Setting> CompleteList(Connection connection, int offset, String searchword, String order, String dir) throws SQLException;
+    List<Setting> CompleteList(Connection connection, int offset, String searchword, String order, String dir)
+            throws SQLException;
 
-    List<Setting> ListSearchFilter(Connection connection, int offset, String searchword, String type, String status, String order, String dir) throws SQLException;
+    List<Setting> ListSearchFilter(Connection connection, int offset, String searchword, String type, String status,
+            String order, String dir) throws SQLException;
 
     List<Setting> ListByTypeId(Connection connection) throws SQLException;
-    
+
     List<Setting> ListType(Connection connection) throws SQLException;
+
     List<Setting> ListTerm(Connection connection) throws SQLException;
 
     Setting findById(Connection connection, int id) throws SQLException;
@@ -35,15 +38,18 @@ public interface SettingDao {
 
     int countComplete(Connection connection, String searchword, String order) throws SQLException;
 
-    int countSearchFilter(Connection connection, String searchword, String order, String type, String status) throws SQLException;
+    int countSearchFilter(Connection connection, String searchword, String order, String type, String status)
+            throws SQLException;
 
-    void updateSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException;
+    void updateSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
+            int status_id, String description) throws SQLException;
 
     Setting getSettingById(Connection connection, int id) throws SQLException;
 
     void updateStatus(Connection connection, int id, int status_id) throws SQLException;
 
-    void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order, int status_id, String description) throws SQLException;
-    
+    void addSetting(Connection connection, int id, int type_id, String title, String value, String display_order,
+            int status_id, String description) throws SQLException;
+
     int getMaxId(Connection connection) throws SQLException;
 }

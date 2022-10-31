@@ -1,24 +1,42 @@
+/* global axios, Swal, swal, KTUtil */
+
 "use strict";
-var KTUsersAddUser = function() {
-    const t = document.getElementById("kt_modal_add_user"),
-        e = t.querySelector("#kt_modal_add_user_form"),
-        n = new bootstrap.Modal(t);
+var KTUsersAddUser = function () {
+
+    const t = document.getElementById("addMilestone"),
+            e = t.querySelector("#kt_modal_add_user_form"),
+            n = new bootstrap.Modal(t);
     return {
-        init: function() {
+        init: function () {
             (() => {
                 var o = FormValidation.formValidation(e, {
                     fields: {
-                        user_name: {
+                        fromDate: {
                             validators: {
                                 notEmpty: {
-                                    message: "Full name is required"
+                                    message: "From Date is required"
                                 }
                             }
                         },
-                        user_email: {
+                        toDate: {
                             validators: {
                                 notEmpty: {
-                                    message: "Valid email address is required"
+                                    message: "To Date is required"
+                                }
+                            }
+                        },
+                        title: {
+                            validators: {
+                                notEmpty: {
+                                    message: "Title is required"
+                                }
+                            }
+                        },
+                        description: {
+                            validators: {
+                                stringLength: {
+                                    max: 100,
+                                    message: "Description has to be less than 100 characters"
                                 }
                             }
                         }
@@ -33,81 +51,46 @@ var KTUsersAddUser = function() {
                     }
                 });
                 const i = t.querySelector('[data-kt-users-modal-action="submit"]');
-                i.addEventListener("click", (t => {
-                    t.preventDefault(), o && o.validate().then((function(t) {
-                        console.log("validated!"), "Valid" == t ? (i.setAttribute("data-kt-indicator", "on"), i.disabled = !0, setTimeout((function() {
-                            i.removeAttribute("data-kt-indicator"), i.disabled = !1, Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
+                i.addEventListener("click", (function (e) {
+                    e.preventDefault(), console.log("click"), o.validate().then((function (t) {
+                        "Valid" === t ? // Post to server
+                                axios.post('/milestone/list?action=create', {
+                                    assId: document.getElementById("kt_modal_add_user_form").querySelector('[name="assId"]').value,
+                                    classId: document.getElementById("kt_modal_add_user_form").querySelector('[name="classId"]').value,
+                                    fromDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="fromDate"]').value,
+                                    toDate: document.getElementById("kt_modal_add_user_form").querySelector('[name="toDate"]').value,
+                                    title: document.getElementById("kt_modal_add_user_form").querySelector('[name="title"]').value,
+                                    description: document.getElementById("kt_modal_add_user_form").querySelector('[name="description"]').value
+                                }).then(function (response) {
+                                  n.hide();
+                          window.location.href ='/milestone/list?action=list';
+                        }).catch(function (error) {
+                            // Show error message
+                            Swal.fire({
+                                text: error.response.data.message,
+                                icon: "error",
                                 buttonsStyling: !1,
                                 confirmButtonText: "Ok, got it!",
                                 customClass: {
                                     confirmButton: "btn btn-primary"
                                 }
-                            }).then((function(t) {
-                                t.isConfirmed && n.hide()
-                            }))
-                        }), 2e3)) : Swal.fire({
+                            });
+                        }) : swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
                             buttonsStyling: !1,
                             confirmButtonText: "Ok, got it!",
                             customClass: {
-                                confirmButton: "btn btn-primary"
+                                confirmButton: "btn font-weight-bold btn-light-primary"
                             }
-                        })
-                    }))
-                })), t.querySelector('[data-kt-users-modal-action="cancel"]').addEventListener("click", (t => {
-                    t.preventDefault(), Swal.fire({
-                        text: "Are you sure you would like to cancel?",
-                        icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
-                        confirmButtonText: "Yes, cancel it!",
-                        cancelButtonText: "No, return",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                            cancelButton: "btn btn-active-light"
-                        }
-                    }).then((function(t) {
-                        t.value ? (e.reset(), n.hide()) : "cancel" === t.dismiss && Swal.fire({
-                            text: "Your form has not been cancelled!.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        })
-                    }))
-                })), t.querySelector('[data-kt-users-modal-action="close"]').addEventListener("click", (t => {
-                    t.preventDefault(), Swal.fire({
-                        text: "Are you sure you would like to cancel?",
-                        icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
-                        confirmButtonText: "Yes, cancel it!",
-                        cancelButtonText: "No, return",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                            cancelButton: "btn btn-active-light"
-                        }
-                    }).then((function(t) {
-                        t.value ? (e.reset(), n.hide()) : "cancel" === t.dismiss && Swal.fire({
-                            text: "Your form has not been cancelled!.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        })
-                    }))
-                }))
-            })()
+                        });
+                    }));
+                }));
+            })();
         }
-    }
+    };
 }();
-KTUtil.onDOMContentLoaded((function() {
-    KTUsersAddUser.init()
+
+KTUtil.onDOMContentLoaded((function () {
+    KTUsersAddUser.init();
 }));

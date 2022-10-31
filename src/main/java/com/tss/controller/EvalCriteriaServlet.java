@@ -4,35 +4,33 @@
  */
 package com.tss.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tss.constants.*;
+import com.tss.constants.ActionConstants;
+import com.tss.constants.ScreenConstants;
 import com.tss.helper.DTOHelper;
-import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Assignment;
 import com.tss.model.EvalCriteria;
 import com.tss.model.Subject;
-import com.tss.model.User;
-import com.tss.model.WebContact;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.AssignmentService;
 import com.tss.service.EvalCriteriaService;
 import com.tss.service.SubjectService;
-import com.tss.service.UserService;
 import com.tss.service.impl.AssignmentServiceImpl;
 import com.tss.service.impl.EvalCriteriaServiceImpl;
 import com.tss.service.impl.SubjectServiceImpl;
-import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -69,6 +67,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                     break;
                 case ActionConstants.GET:
                     view(request, response);
+                    break;
+                case "getSub":
+                    getSub(request, response);
                     break;
                 default:
                     list(request, response);
@@ -119,7 +120,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i < numberofcolumn; i++) {
-                    columns.add(new DataTablesColumns(DTOHelper.convertToSnakeCase(jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
+                    columns.add(new DataTablesColumns(
+                            DTOHelper.convertToSnakeCase(
+                                    jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
                             jsonObject.getJSONArray("columns[" + i + "][name]").getString(0),
                             jsonObject.getJSONArray("columns[" + i + "][searchable]").getBoolean(0),
                             jsonObject.getJSONArray("columns[" + i + "][orderable]").getBoolean(0),
@@ -160,18 +163,32 @@ public class EvalCriteriaServlet extends HttpServlet {
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("jspPath", "manager/addEvalCriteria.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "manager/customTable.js"));
+                "manager/getSubject.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.EVALCRITERIA_LIST));
-        request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
+        // request.setAttribute("assigns", assignService.findAll(0,
+        // assignService.countAll(), "", "", "", "", ""));
         request.setAttribute("subjects", subService.findAll(0, subService.countAll(), ""));
+
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
-       
+    }
+
+    private void getSub(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        int id = Integer.parseInt(request.getParameter("subId"));
+        List<Assignment> as = assignService.findBySubId(id);
+        String jsonOutput;
+        if (as.size() == 0 || as == null) {
+            jsonOutput = "";
+        } else {
+            jsonOutput = JSON.toJSONString(as);
+        }
+        response.getWriter().println(jsonOutput);
+        response.getWriter().flush();
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        EvalCriteria eval = new EvalCriteria();
 
         int id = evalService.getNewId();
         int ass_id = Integer.parseInt(request.getParameter("criteria_assign"));
@@ -183,7 +200,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         int weight = Integer.parseInt(request.getParameter("criteria_weight"));
         int loc = Integer.parseInt(request.getParameter("criteria_loc"));
         int status = 1;
-        Object prams[] = {id, ass_id, mile_id, name, is_team, weight, loc, status, des};
+        Object prams[] = { id, ass_id, mile_id, name, is_team, weight, loc, status, des };
         evalService.add(prams);
         response.sendRedirect("evalCriteriaList?toastStatus=2");
     }

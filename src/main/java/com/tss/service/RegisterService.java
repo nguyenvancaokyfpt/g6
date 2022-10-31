@@ -1,5 +1,6 @@
 package com.tss.service;
 
+import com.tss.model.Trainee;
 import com.tss.model.User;
 
 public interface RegisterService {
@@ -8,4 +9,5 @@ public interface RegisterService {
 
     boolean registerUserWithGoogle(User user);
 
+    boolean registerTraineeFromFile(Trainee user, String classroom);
 }

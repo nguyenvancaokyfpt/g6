@@ -4,15 +4,16 @@
  */
 package com.tss.service;
 
-import com.tss.model.WebContact;
 import java.util.List;
+
+import com.tss.model.WebContact;
 
 /**
  *
  * @author Dat Lai
  */
 public interface WebContactService {
-     List<WebContact> List(String fullName, String email, int currentPageNo, int PageSize);
+    List<WebContact> List(String fullName, String email, int currentPageNo, int PageSize);
 
     List<WebContact> findAll(int start, int length, String search);
 

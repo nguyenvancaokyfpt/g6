@@ -7,8 +7,10 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassDao;
 import com.tss.dao.impl.ClassDaoImpl;
+import com.tss.helper.DebugHelper;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.User;
 import com.tss.service.ClassService;
 
 public class ClassServiceImpl implements ClassService {
@@ -70,8 +72,64 @@ public class ClassServiceImpl implements ClassService {
         List<ClassEntity> classEntitys = null;
         try {
             connection = BaseDao.getConnection();
-
             classEntitys = classDao.List(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return classEntitys;
+    }
+
+    @Override
+    public void grantTraineeToClass(User user, int classId, float grade) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            classDao.grantTraineeToClass(connection, user, classId, grade);
+        } catch (SQLException e) {
+            DebugHelper.print(e.getMessage());
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public Classroom findClassById(int classId) {
+        Connection connection = null;
+        Classroom classroom = null;
+        try {
+            connection = BaseDao.getConnection();
+            classroom = classDao.findClassByIdK(connection, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return classroom;
+    }
+
+    public ClassEntity findByID(int id) {
+        Connection connection = null;
+        ClassEntity myClass = null;
+        try {
+            connection = BaseDao.getConnection();
+            myClass = classDao.findClassById(connection, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return myClass;
+    }
+
+    public List<ClassEntity> ListCbxa() {
+        Connection connection = null;
+        List<ClassEntity> classEntitys = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            classEntitys = classDao.ListCbx(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

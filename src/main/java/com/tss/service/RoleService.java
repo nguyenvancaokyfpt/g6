@@ -10,7 +10,7 @@ import com.tss.model.sercurity.UserRole;
 import com.tss.model.system.Screen;
 
 public interface RoleService {
-    
+
     List<UserRole> findByUserId(int userId);
 
     TreeSet<RoleConstants> convertRoleListToRoleConstantsList(List<UserRole> roles);
@@ -24,5 +24,5 @@ public interface RoleService {
     Boolean updateRolePermission(int roleId, List<Permission> permissions);
 
     RolePermissionMessage getRolePermission(int roleId);
-    
+
 }

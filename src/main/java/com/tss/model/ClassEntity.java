@@ -4,12 +4,16 @@
  */
 package com.tss.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author ADMIN
  */
 public class ClassEntity {
-   private int id;
+
+    private int id;
     private String classCode;
     private int comboId;
     private int tranierId;
@@ -17,10 +21,20 @@ public class ClassEntity {
     private int statusId;
     private String description;
 
+    //DatLT Add
+    private User trainer;
+    private List<Team> listTeam;
+    private List<Trainee> listTrainee;
+    private List<Trainee> listWaiting;
+
     public ClassEntity() {
+        listTeam = new ArrayList<>();     
+        listTrainee = new ArrayList<>();
+        listWaiting = new ArrayList<>();
+
     }
 
-    public ClassEntity(int id, String classCode, int comboId, int tranierId, int termId, int statusId, String description) {
+    public ClassEntity(int id, String classCode, int comboId, int tranierId, int termId, int statusId, String description, User trainer, List<Team> listTeam, List<Trainee> listTrainee, List<Trainee> listWaiting) {
         this.id = id;
         this.classCode = classCode;
         this.comboId = comboId;
@@ -28,8 +42,15 @@ public class ClassEntity {
         this.termId = termId;
         this.statusId = statusId;
         this.description = description;
+        this.trainer = trainer;
+        this.listTeam = listTeam;
+        this.listTrainee = listTrainee;
+        this.listWaiting = listWaiting;
     }
 
+    
+    
+    
     public int getId() {
         return id;
     }
@@ -84,5 +105,39 @@ public class ClassEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    } 
+    }
+
+    public User getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(User trainer) {
+        this.trainer = trainer;
+    }
+
+    public List<Team> getListTeam() {
+        return listTeam;
+    }
+
+    public void setListTeam(List<Team> listTeam) {
+        this.listTeam = listTeam;
+    }
+
+    public List<Trainee> getListTrainee() {
+        return listTrainee;
+    }
+
+    public void setListTrainee(List<Trainee> listTrainee) {
+        this.listTrainee = listTrainee;
+    }
+
+    public List<Trainee> getListWaiting() {
+        return listWaiting;
+    }
+
+    public void setListWaiting(List<Trainee> listWaiting) {
+        this.listWaiting = listWaiting;
+    }
+
+    
 }

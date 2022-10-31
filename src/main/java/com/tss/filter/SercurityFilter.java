@@ -5,6 +5,7 @@
 package com.tss.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -16,12 +17,15 @@ import com.tss.helper.DebugHelper;
 import com.tss.helper.PermissionHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
+import com.tss.model.Classroom;
 import com.tss.model.User;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.sercurity.Permission;
 import com.tss.model.sercurity.UserRole;
+import com.tss.service.ClassService;
 import com.tss.service.PermissionService;
 import com.tss.service.RoleService;
+import com.tss.service.impl.ClassServiceImpl;
 import com.tss.service.impl.PermissionServiceImpl;
 import com.tss.service.impl.RoleServiceImpl;
 
@@ -42,11 +46,13 @@ public class SercurityFilter implements Filter {
 
     private RoleService roleService;
     private PermissionService permissionService;
+    private ClassService classService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         roleService = new RoleServiceImpl();
         permissionService = new PermissionServiceImpl();
+        classService = new ClassServiceImpl();
     }
 
     @Override
@@ -115,6 +121,16 @@ public class SercurityFilter implements Filter {
                 // set the main role to request attribute
                 request.setAttribute(RoleConstants.ROLE.getTitle(), roleNames.first().getTitle().toLowerCase());
                 request.setAttribute("ROLE_CONSTANTS", roleNames.first());
+                RoleConstants role = roleNames.first();
+                List<Classroom> userClass = new ArrayList<>();
+                if (role == RoleConstants.ADMIN) {
+                    userClass = classService.findAllClassroom();
+                } else if (role == RoleConstants.STUDENT) {
+                    userClass = classService.findClassroomByStudent(user.getUserId());
+                } else {
+                    userClass = classService.findClassroomByTeacher(user.getUserId());
+                }
+                request.setAttribute("USER_CLASS", userClass);
                 filterChain.doFilter(request, response);
             } else {
                 DebugHelper.log("DENIED ACCESS TO " + uri);
@@ -123,8 +139,8 @@ public class SercurityFilter implements Filter {
                             response);
                 } else {
                     ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
-                    + uri));
+                            new ResponseMessage(HttpStatusCodeConstants.FORBIDDEN, "Forbidden access to "
+                                    + uri));
                 }
             }
         }

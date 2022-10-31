@@ -21,7 +21,6 @@ public class ListResponseMessage {
         this.totalPages = totalPages;
     }
 
-
     /**
      * @return int return the code
      */

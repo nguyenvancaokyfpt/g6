@@ -184,13 +184,11 @@ public class SettingRolePermissionServlet extends HttpServlet {
 
         // delete role admin
         // for (RolePermissionData roleData : listRoleData) {
-        //     if (roleData.getRole().equals(RoleConstants.ADMIN)) {
-        //         listRoleData.remove(roleData);
-        //         break;
-        //     }
+        // if (roleData.getRole().equals(RoleConstants.ADMIN)) {
+        // listRoleData.remove(roleData);
+        // break;
         // }
-
-        
+        // }
 
         request.setAttribute("data", listRoleData);
         request.setAttribute("listScreen", listScreen);

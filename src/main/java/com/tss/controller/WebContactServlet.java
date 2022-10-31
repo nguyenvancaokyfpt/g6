@@ -117,12 +117,10 @@ public class WebContactServlet extends HttpServlet {
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/web-contact/table-edited.js",
                 "apps/web-contact/export-web-contact.js",
-                "apps/web-contact/add.js"
-        ));
+                "apps/web-contact/add.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.WEB_CONTACT_LIST
-        ));
+                ScreenConstants.WEB_CONTACT_LIST));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 

@@ -56,7 +56,7 @@ public class UserDetails extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        System.out.println(request.getParameter("userID"));
+        // System.out.println(request.getParameter("userID"));
         int userID = Integer.parseInt(request.getParameter("userID"));
         User u = userService.findById(userID);
         u.setFullname(request.getParameter("userName"));
@@ -65,7 +65,7 @@ public class UserDetails extends HttpServlet {
         u.setStatusId(Integer.parseInt(request.getParameter("userStatus")));
         u.setNote(request.getParameter("userNote"));
         userService.modify(u);
-        response.sendRedirect("/management/user/detail?id="+userID);
+        response.sendRedirect("/management/user/detail?id=" + userID);
     }
 
     @Override
@@ -78,13 +78,11 @@ public class UserDetails extends HttpServlet {
 
         request.setAttribute("user", u);
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/users/view/custom.js"
-        ));
+                "apps/user-management/users/view/custom.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT,
-                ScreenConstants.USER_DETAILS_MANAGEMENT
-        ));
+                ScreenConstants.USER_DETAILS_MANAGEMENT));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 

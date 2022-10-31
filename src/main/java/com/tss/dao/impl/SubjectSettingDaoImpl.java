@@ -1,14 +1,15 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.dao.SubjectSettingDao;
-import com.tss.model.system.SubjectSetting;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.dao.SubjectSettingDao;
+import com.tss.model.system.SubjectSetting;
 
 public class SubjectSettingDaoImpl implements SubjectSettingDao {
 
@@ -76,7 +77,7 @@ public class SubjectSettingDaoImpl implements SubjectSettingDao {
     }
 
     @Override
-    public int countAll(Connection connection, String search, String subjectFilter, 
+    public int countAll(Connection connection, String search, String subjectFilter,
             String displayOrderFilter, String statusFilter) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -87,13 +88,13 @@ public class SubjectSettingDaoImpl implements SubjectSettingDao {
                 sql = "SELECT count(*)\n"
                         + "FROM subject_setting ss join subject s on ss.subject_id = s.subject_id\n"
                         + "WHERE (s.subject_name LIKE ? OR ss.setting_title LIKE ?)\n"
-                        + "AND setting_value LIKE ? AND ss.status_id LIKE ?";
-            }else{
+                        + "AND display_order LIKE ? AND ss.status_id LIKE ?";
+            } else {
                 sql = "SELECT count(*)\n"
                         + "FROM subject_setting ss join subject s on ss.subject_id = s.subject_id\n"
                         + "WHERE (s.subject_name LIKE ? OR ss.setting_title LIKE ?)\n"
                         + "AND ss.subject_id = " + subjectFilter
-                        + "\nAND setting_value LIKE ? AND ss.status_id LIKE ?";
+                        + "\nAND display_order LIKE ? AND ss.status_id LIKE ?";
             }
             Object[] params = { "%" + search + "%", "%" + search + "%",
                     "%" + displayOrderFilter + "%", "%" + statusFilter + "%" };

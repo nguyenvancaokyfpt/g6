@@ -9,7 +9,8 @@ public class PermissionHelper {
 
     private List<Permission> permissions;
 
-    public PermissionHelper() {}
+    public PermissionHelper() {
+    }
 
     public PermissionHelper(List<Permission> permissions) {
         this.permissions = permissions;
@@ -50,6 +51,5 @@ public class PermissionHelper {
         }
         return false;
     }
-
 
 }
