@@ -169,4 +169,20 @@ public class MilestoneServiceImpl implements MilestoneService {
         return milestoneList;
     }
 
+    @Override
+    public java.util.List<Milestone> findByClassId(int classroomId) {
+        Connection connection = null;
+        List<Milestone> milestoneList = null;
+        try {
+            connection = BaseDao.getConnection();
+
+            milestoneList = mileStoneDao.findByClassId(connection, classroomId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return milestoneList;
+    }
+
 }

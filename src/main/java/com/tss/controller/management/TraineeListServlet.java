@@ -65,6 +65,15 @@ public class TraineeListServlet extends HttpServlet {
             case ActionConstants.LIST:
                 list(request, response);
                 break;
+            case "list2":
+                list2(request, response);
+                break;
+            case "addToClass":
+                addToClass(response, request);
+                break;
+            case "add":
+                add(response, request);
+                break;
             case ActionConstants.CREATE:
                 create(request, response);
                 break;
@@ -104,7 +113,7 @@ public class TraineeListServlet extends HttpServlet {
                             new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Date dropout is required"));
                     return;
                 }
-
+                DebugHelper.print(dateDropout);
                 traineeService.dropout(userId, dateDropout);
                 ResponseHelper.sendResponse(response,
                         new ResponseMessage(HttpStatusCodeConstants.OK, "Dropout " + userId + " success"));
@@ -209,6 +218,44 @@ public class TraineeListServlet extends HttpServlet {
         }
     }
 
+    private void add(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        String fullname = jsonObject.getString("fullname");
+        String email = jsonObject.getString("email");
+        String note = jsonObject.getString("note");
+        int classId = jsonObject.getIntValue("classId");
+
+        try {
+            User user = userService.findByEmail(email);
+            if (user != null) {
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Email is exist"));
+                return;
+            }
+
+            Trainee trainee = new Trainee();
+            trainee.setFullname(fullname);
+            trainee.setEmail(email);
+            trainee.setNote(note);
+            trainee.setClassId(classId);
+
+            Classroom classroom = classService.findClassById(classId);
+
+            registerService.registerTraineeFromFile(trainee, classroom.getClassCode());
+
+            // grant trainee to class
+            user = userService.findByEmail(email);
+            classService.grantTraineeToClass(user, classId, 0);
+
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.OK, "Create success"));
+        } catch (Exception e) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Please check your input data"));
+        }
+
+    }
+
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject jsonObject = RequestHelper.getJsonDataForm(request);
         int start = 0;
@@ -258,6 +305,72 @@ public class TraineeListServlet extends HttpServlet {
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
     }
 
+    private void list2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int classId = 1;
+        String q = "";
+        int page = 1;
+        try {
+            JSONObject jsonObject = RequestHelper.getJsonData(request);
+            DebugHelper.print(jsonObject);
+            q = jsonObject.getString("q") == null ? "" : jsonObject.getString("q");
+            page = jsonObject.getIntValue("page") == 0 ? 1 : jsonObject.getIntValue("page");
+        } catch (Exception e) {
+            DebugHelper.print(e);
+        }
+        try {
+            int start = (page - 1) * 10;
+            int length = 10;
+
+            List<User> list = userService.findAll(start, length, q, null, 1, "asc", "26", "1");
+            int recordsTotal = userService.countAll("", "26", "1");
+            int recordsFiltered = userService.countAll(q, "26", "1");
+            DataTablesMessage dataTablesMessage = new DataTablesMessage(0, recordsTotal, recordsFiltered, list);
+            ResponseHelper.sendResponse(response,
+                    dataTablesMessage);
+
+        } catch (Exception e) {
+            DebugHelper.print(e);
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Please check your input data"));
+        }
+    }
+
+    private void addToClass(HttpServletResponse response, HttpServletRequest request)
+            throws IOException {
+        JSONObject data = RequestHelper.getJsonData(request);
+        DebugHelper.print(data);
+        int classId = data.getIntValue("classId");
+        int userId = data.getIntValue("userId");
+
+        User user = userService.findById(userId);
+        if (user == null) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "User not found"));
+            return;
+        }
+
+        Classroom classroom = classService.findClassById(classId);
+        if (classroom == null) {
+            ResponseHelper.sendResponse(response,
+                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Class not found"));
+            return;
+        }
+
+        List<Trainee> list = userService.findAllByClassId(0, 9999, "", null, 1, "asc", "", classId);
+        for (Trainee trainee : list) {
+            if (trainee.getUserId() == userId) {
+                ResponseHelper.sendResponse(response,
+                        new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "User already in class"));
+                return;
+            }
+        }
+
+        classService.grantTraineeToClass(user, classId, 0);
+        ResponseHelper.sendResponse(response,
+                new ResponseMessage(HttpStatusCodeConstants.OK, "Add success"));
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -275,7 +388,8 @@ public class TraineeListServlet extends HttpServlet {
         request.setAttribute("myClass", myClass);
         request.setAttribute("jspPath", "shared/traineeList.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/trainee/table-edited.js"));
+                "apps/user-management/trainee/table-edited.js",
+                "apps/user-management/trainee/create-account.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TRAINEE_LIST));

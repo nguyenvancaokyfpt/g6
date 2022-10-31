@@ -63,6 +63,25 @@ public class SercurityFilter implements Filter {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+        int globalClassId = -1;
+        try {
+            globalClassId = Integer.parseInt(request.getParameter("globalClassId") == null ? "-1"
+                    : request.getParameter("globalClassId"));
+        } catch (Exception e) {
+            globalClassId = -1;
+        }
+        // set global class id for user
+        if (globalClassId != -1) {
+            request.getSession().setAttribute(SessionConstants.GLOBAL_CLASS_ID, globalClassId);
+        } else {
+            try {
+                globalClassId = (int) request.getSession().getAttribute(SessionConstants.GLOBAL_CLASS_ID);
+            } catch (Exception e) {
+                globalClassId = -1;
+            }
+        }
+        // set global class for user to request
+        request.setAttribute("globalClass", globalClassId);
 
         // Detect screen for request
         ScreenConstants screen = ScreenConstants.findScreenByPath(uri);
@@ -91,6 +110,7 @@ public class SercurityFilter implements Filter {
                         new ResponseMessage(HttpStatusCodeConstants.UNAUTHORIZED, "Unauthorized access to " + uri));
             }
         } else {
+
             // get all roles of user
             List<UserRole> roles = roleService.findByUserId(user.getUserId());
             // Convert to String list

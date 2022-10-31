@@ -579,7 +579,7 @@ public class UserDaoImpl implements UserDao {
                     userList.add(user);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                DebugHelper.print(e);
             } finally {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
@@ -643,7 +643,7 @@ public class UserDaoImpl implements UserDao {
                     user.setClassId(resultSet.getInt("class_id"));
                     user.setDropoutDate(resultSet.getDate("dropout_date"));
                     user.setGrade(resultSet.getInt("grade"));
-                    user.setIsLeader(resultSet.getInt("is_leader"));
+                    user.setIsLeader(resultSet.getBoolean("is_leader"));
                     userList.add(user);
                 }
             } catch (SQLException e) {
@@ -751,7 +751,7 @@ public class UserDaoImpl implements UserDao {
                     user.setClassId(resultSet.getInt("class_id"));
                     user.setDropoutDate(resultSet.getDate("dropout_date"));
                     user.setGrade(resultSet.getInt("grade"));
-                    user.setIsLeader(resultSet.getInt("is_leader"));
+                    user.setIsLeader(resultSet.getBoolean("is_leader"));
                     userList.add(user);
                 }
             } catch (SQLException e) {

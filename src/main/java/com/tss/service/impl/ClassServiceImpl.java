@@ -10,6 +10,7 @@ import com.tss.dao.impl.ClassDaoImpl;
 import com.tss.helper.DebugHelper;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 import com.tss.service.ClassService;
 
@@ -136,6 +137,21 @@ public class ClassServiceImpl implements ClassService {
             BaseDao.closeResource(connection, null, null);
         }
         return classEntitys;
+    }
+
+    @Override
+    public java.util.List<Trainee> findTraineeByClassId(int classId) {
+        Connection connection = null;
+        List<Trainee> trainees = null;
+        try {
+            connection = BaseDao.getConnection();
+            trainees = classDao.findTraineeByClassId(connection, classId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return trainees;
     }
 
 }

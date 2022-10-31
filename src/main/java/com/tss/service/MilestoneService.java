@@ -34,4 +34,6 @@ public interface MilestoneService {
 
     List<Milestone> findAllBySupporter(int supID);
 
+    java.util.List<Milestone> findByClassId(int classroomId);
+
 }

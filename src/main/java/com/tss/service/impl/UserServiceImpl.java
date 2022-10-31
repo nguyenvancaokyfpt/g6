@@ -328,9 +328,13 @@ public class UserServiceImpl implements UserService {
             int orderColumn, String orderDir, String roleFilter, String statusFilter) {
         Connection connection = null;
         List<User> userList = null;
-
+        String columnName;
         // get orderColumn name
-        String columnName = columns.get(orderColumn).getData();
+        try {
+            columnName = columns.get(orderColumn).getData();
+        } catch (Exception e) {
+            columnName = "user_id";
+        }
 
         try {
             connection = BaseDao.getConnection();
@@ -458,9 +462,8 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
-
     public static void main(String[] args) throws SQLException {
         UserServiceImpl t = new UserServiceImpl();
-        System.out.println(t.GetWaitingList( 2).size());
+        System.out.println(t.GetWaitingList(2).size());
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.TeamDao;
 import com.tss.dao.impl.TeamDaoImpl;
+import com.tss.helper.DebugHelper;
 import com.tss.model.Team;
 import com.tss.model.Trainee;
 import com.tss.model.User;
@@ -153,7 +154,6 @@ public class TeamServiceImpl implements TeamService {
         return flag;
     }
 
-
     @Override
     public int GetNewTeamId() {
         Connection connection = null;
@@ -224,11 +224,17 @@ public class TeamServiceImpl implements TeamService {
         for (Integer key : traineeTeamMap.keySet()) {
             int teamId = listTeamId.get(key - 1);
             List<Trainee> traineeList = traineeTeamMap.get(key);
+            boolean setLeader = false;
             for (Trainee trainee : traineeList) {
                 User user = userService.findByEmail(trainee.getEmail());
                 if (user != null) {
                     listId.add(user.getUserId());
                     ChangeTeam(user.getUserId(), trainee.getClassId(), teamId);
+                    if ((trainee.isIsLeader() && !setLeader)
+                            || (trainee == traineeList.get(traineeList.size() - 1) && !setLeader)) {
+                        SetLeader(user.getUserId(), trainee.getClassId(), teamId);
+                        setLeader = true;
+                    }
                 }
             }
         }
@@ -238,9 +244,15 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void removeStudentLinkToTeam(int classId) {
         List<Team> teamList = FindByClassID(classId);
+        List<Team> teamList2 = FindByClassUser(classId);
         for (Team team : teamList) {
             setNullTeamId(team.getId());
         }
+        DebugHelper.print(teamList2);
+        for (Team team : teamList2) {
+            DeleteTeam(team.getId());
+        }
+
     }
 
     @Override
@@ -284,5 +296,186 @@ public class TeamServiceImpl implements TeamService {
             BaseDao.closeResource(connection, null, null);
         }
         return flag;
+    }
+
+    @Override
+    public void DeleteTeam(int teamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.DeleteTeam(connection, teamId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public List<Team> FindByClassUser(int classId) {
+        Connection connection = null;
+        List<Team> teamList = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamList = teamDao.FindByClassUser(connection, classId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return teamList;
+    }
+
+    @Override
+    public void removeTeamMilestone(int classId, int milestoneId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.removeTeamMilestone(connection, classId, milestoneId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public List<Integer> importTeamMembers(HashMap<Integer, List<Trainee>> traineeTeamMap, List<Integer> listTeamId) {
+        List<Integer> listId = new java.util.ArrayList<>();
+        for (Integer key : traineeTeamMap.keySet()) {
+            int teamId = listTeamId.get(key - 1);
+            List<Trainee> traineeList = traineeTeamMap.get(key);
+            Boolean setLeader = false;
+            for (Trainee trainee : traineeList) {
+                User user = userService.findByEmail(trainee.getEmail());
+                if (user != null) {
+                    listId.add(user.getUserId());
+                    if ((trainee.isIsLeader() && !setLeader)
+                            || (trainee == traineeList.get(traineeList.size() - 1) && !setLeader)) {
+                        insertTeamMember(teamId, user.getUserId(), 1, 1);
+                        setLeader = true;
+                    } else {
+                        insertTeamMember(teamId, user.getUserId(), 0, 1);
+                    }
+                }
+            }
+        }
+        return listId;
+    }
+
+    @Override
+    public void insertTeamMember(int teamId, int traineeId, int isIsLeader, int status) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.insertTeamMember(connection, teamId, traineeId, isIsLeader, status);
+        } catch (SQLException e) {
+            DebugHelper.print(e);
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public void setTeamMilestone(int classId, int milestoneId, List<Integer> listTeamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            for (Integer teamId : listTeamId) {
+                teamDao.setTeamMilestone(connection, classId, milestoneId, teamId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public List<Integer> getTeamIdByClassIdAndMilestoneId(int classId, int milestoneId) {
+        Connection connection = null;
+        List<Integer> listTeamId = null;
+        try {
+            connection = BaseDao.getConnection();
+            listTeamId = teamDao.getTeamIdByClassIdAndMilestoneId(connection, classId, milestoneId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return listTeamId;
+    }
+
+    @Override
+    public List<Trainee> getTraineeByTeamId(Integer teamId) {
+        Connection connection = null;
+        List<Trainee> traineeList = null;
+        try {
+            connection = BaseDao.getConnection();
+            traineeList = teamDao.getTraineeByTeamId(connection, teamId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return traineeList;
+    }
+
+    @Override
+    public int cloneTeam(Integer id) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            int newTeamId = GetNewTeamId();
+            teamDao.cloneTeam(connection, id, newTeamId);
+            return newTeamId;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return 0;
+    }
+
+    @Override
+    public void cloneTeamMember(List<Integer> listTeamId, List<Integer> listNewTeamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            for (int i = 0; i < listTeamId.size(); i++) {
+                teamDao.cloneTeamMember(connection, listTeamId.get(i), listNewTeamId.get(i));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+    }
+
+    @Override
+    public boolean checkClassTeamMilestone(int classId, int newMilestoneId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            return teamDao.checkClassTeamMilestone(connection, classId, newMilestoneId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return false;
+    }
+
+    @Override
+    public void resetTeam(int classId, int milestoneId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            teamDao.resetTeam(connection, classId, milestoneId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
     }
 }

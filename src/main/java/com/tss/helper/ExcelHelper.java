@@ -130,10 +130,10 @@ public class ExcelHelper {
             Row row = groupSheet.createRow(i);
             row.createCell(0).setCellValue(i);
             row.createCell(1).setCellValue("Group " + i);
-            row.createCell(2).setCellValue("Project Code");
-            row.createCell(3).setCellValue("Topic Code");
-            row.createCell(4).setCellValue("Topic Name");
-            row.createCell(5).setCellValue("Group Description");
+            row.createCell(2).setCellValue("Project Code " + i);
+            row.createCell(3).setCellValue("Topic Code" + i);
+            row.createCell(4).setCellValue("Topic Name" + i);
+            row.createCell(5).setCellValue("Group Description" + i);
         }
 
         Sheet sheet = workbook.createSheet("Student");
@@ -273,6 +273,36 @@ public class ExcelHelper {
             for (Trainee trainee : traineeList) {
                 if (trainee.getTeamId() == team.getId()) {
                     traineeListInTeam.add(trainee);
+                }
+            }
+            // if leader not exist, set first trainee in team is leader
+            boolean isLeaderExist = false;
+            for (Trainee trainee : traineeListInTeam) {
+                if (trainee.isIsLeader()) {
+                    isLeaderExist = true;
+                    break;
+                }
+            }
+            if (!isLeaderExist) {
+                traineeListInTeam.get(0).setIsLeader(true);
+            }
+            // only one leader in team
+            int leaderCount = 0;
+            for (Trainee trainee : traineeListInTeam) {
+                if (trainee.isIsLeader()) {
+                    leaderCount++;
+                }
+            }
+            if (leaderCount > 1) {
+                for (Trainee trainee : traineeListInTeam) {
+                    if (trainee.isIsLeader()) {
+                        if (leaderCount != 1) {
+                            if (trainee.isIsLeader()) {
+                                trainee.setIsLeader(false);
+                                leaderCount--;
+                            }
+                        }
+                    }
                 }
             }
             traineeMap.put(team.getId(), traineeListInTeam);

@@ -31,11 +31,12 @@
         <!--begin::Input group-->
         <div class="me-6">
             <!--begin::Select-->
-            <select class="form-select form-select-sm form-select-solid" data-control="select2" data-placeholder="Class"
-                data-hide-search="true" data-width-resolve="true" name="system_class" style="width:150px;">
-                <option value="0">Classroom</option>
+            <select id="kt-class-selector-global" class="form-select form-select-sm form-select-solid"
+                data-control="select2" data-placeholder="Class" data-hide-search="true" data-width-resolve="true"
+                name="system_class" style="width:150px;">
+                <option value="0">All Classroom</option>
                 <c:forEach items="${USER_CLASS}" var="d">
-                    <option value="${d.getClassId()}"><span class="me-6">${d.getClassCode()}</span></option>
+                    <option value="${d.getClassId()}" ${globalClassId == d.getClassId() ? 'selected' : ''} ><span class="me-6">${d.getClassCode()}</span></option>
                 </c:forEach>
             </select>
             <!--end::Select-->

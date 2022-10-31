@@ -11,6 +11,7 @@ import java.util.List;
 import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 
 public interface ClassDao {
@@ -50,5 +51,7 @@ public interface ClassDao {
         void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException;
 
         Classroom findClassByIdK(Connection connection, int classId) throws SQLException;
+
+        java.util.List<Trainee> findTraineeByClassId(Connection connection, int classId) throws SQLException;
 
 }

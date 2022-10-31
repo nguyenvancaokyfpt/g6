@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 
 public interface ClassService {
@@ -22,4 +23,6 @@ public interface ClassService {
     List<ClassEntity> ListCbxa();
 
     ClassEntity findByID(int id);
+
+    java.util.List<Trainee> findTraineeByClassId(int classId);
 }

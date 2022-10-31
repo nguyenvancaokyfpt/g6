@@ -1,23 +1,14 @@
 package com.tss.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Trainee extends User {
 
     private int classId;
     private Date dropoutDate;
     private float grade;
-    private boolean isLeaders;
+    private boolean isLeader;
     private int teamId;
-    private int isLeader;
-
-    public int getIsLeader() {
-        return isLeader;
-    }
-
-    public void setIsLeader(int isLeader) {
-        this.isLeader = isLeader;
-    }
 
     public Trainee() {
     }
@@ -69,20 +60,6 @@ public class Trainee extends User {
     }
 
     /**
-     * @return boolean return the isLeader
-     */
-    public boolean isIsLeader() {
-        return isLeaders;
-    }
-
-    /**
-     * @param isLeader the isLeader to set
-     */
-    public void setIsLeader(boolean isLeaders) {
-        this.isLeaders = isLeaders;
-    }
-
-    /**
      * @return int return the teamId
      */
     public int getTeamId() {
@@ -94,6 +71,26 @@ public class Trainee extends User {
      */
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    /**
+     * @return boolean return the isLeader
+     */
+    public boolean isIsLeader() {
+        return isLeader;
+    }
+
+    /**
+     * @param isLeader the isLeader to set
+     */
+    public void setIsLeader(boolean isLeader) {
+        this.isLeader = isLeader;
+    }
+
+    @Override
+    public String toString() {
+        return "Trainee [name " + super.getFullname() + " , isLeader="
+                + isLeader + ", teamId=" + teamId + "]";
     }
 
 }

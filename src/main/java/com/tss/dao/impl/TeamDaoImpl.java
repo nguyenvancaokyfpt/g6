@@ -65,7 +65,7 @@ public class TeamDaoImpl implements TeamDao {
                         user.setLastActive(resultSet.getTimestamp("last_active"));
                         user.setClassId(resultSet.getInt("class_id"));
                         user.setDropoutDate(resultSet.getDate("dropout_date"));
-                        user.setIsLeader(resultSet.getInt("is_leader"));
+                        user.setIsLeader(resultSet.getBoolean("is_leader"));
                         team.getListTrainee().add(user);
                     }
                 }
@@ -350,5 +350,233 @@ public class TeamDaoImpl implements TeamDao {
             }
         }
         return result;
+    }
+
+    @Override
+    public void DeleteTeam(Connection connection, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "DELETE FROM `team` WHERE `team_id` = ?";
+                Object[] params = { teamId };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public List<Team> FindByClassUser(Connection connection, int classId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Team> teamList = new ArrayList<>();
+        if (connection != null) {
+            try {
+                String sql = "SELECT team.* FROM class_user INNER JOIN team ON class_user.team_id = team.team_id WHERE class_user.class_id = ? GROUP BY team.team_id;";
+                Object[] params = { classId };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Team team = new Team();
+                    team.setId(resultSet.getInt("team_id"));
+                    team.setClassId(resultSet.getInt("class_id"));
+                    team.setDescription(resultSet.getString("description"));
+                    team.setTopic_code(resultSet.getString("topic_code"));
+                    team.setTopic_name(resultSet.getString("topic_name"));
+                    team.setProject_code(resultSet.getString("project_code"));
+                    team.setStatus_id(resultSet.getInt("status_id"));
+                    teamList.add(team);
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return teamList;
+    }
+
+    @Override
+    public void removeTeamMilestone(Connection connection, int classId, int milestoneId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "DELETE FROM `team_milestone` WHERE `class_id` = ? and `milestone_id` = ?";
+                Object[] params = { classId, milestoneId };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public void insertTeamMember(Connection connection, int teamId, int traineeId, int isIsLeader, int status) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "INSERT INTO `team_member`(`team_id`, `user_id`, `is_leader`, `is_active`) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE `is_leader` = ?, `is_active` = ?";
+                Object[] params = { teamId, traineeId, isIsLeader, status, isIsLeader, status };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public void setTeamMilestone(Connection connection, int classId, int milestoneId, Integer teamId)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        DebugHelper.print("setTeamMilestone " + classId + " " + milestoneId + " " + teamId);
+        if (connection != null) {
+            try {
+                String sql = "INSERT INTO `team_milestone`(`class_id`, `milestone_id`, `team_id`) VALUES (?,?,?) ON DUPLICATE KEY UPDATE `team_id` = ?";
+                Object[] params = { classId, milestoneId, teamId, teamId };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public List<Integer> getTeamIdByClassIdAndMilestoneId(Connection connection, int classId, int milestoneId)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Integer> teamIdList = new ArrayList<>();
+        if (connection != null) {
+            try {
+                String sql = "SELECT `team_id` FROM `team_milestone` WHERE `class_id` = ? and `milestone_id` = ?";
+                Object[] params = { classId, milestoneId };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    teamIdList.add(resultSet.getInt("team_id"));
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return teamIdList;
+    }
+
+    @Override
+    public List<Trainee> getTraineeByTeamId(Connection connection, Integer teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Trainee> traineeList = new ArrayList<>();
+        if (connection != null) {
+            try {
+                String sql = "SELECT user.*, team_member.is_leader  FROM team_member INNER JOIN user ON team_member.user_id = user.user_id WHERE team_member.team_id = ?";
+                Object[] params = { teamId };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Trainee trainee = new Trainee();
+                    trainee.setUserId(resultSet.getInt("user_id"));
+                    trainee.setFullname(resultSet.getString("full_name"));
+                    trainee.setAvatarUrl(resultSet.getString("avatar_url"));
+                    trainee.setUsername(resultSet.getString("username"));
+                    trainee.setEmail(resultSet.getString("email"));
+                    trainee.setMobile(resultSet.getString("mobile"));
+                    trainee.setStatusId(resultSet.getInt("status_id"));
+                    trainee.setIsLeader(resultSet.getBoolean("is_leader"));
+                    traineeList.add(trainee);
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return traineeList;
+    }
+
+    @Override
+    public int cloneTeam(Connection connection, Integer id, int newTeamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "INSERT INTO `team`(`team_id`, `class_id`, `description`, `topic_code`, `topic_name`, `project_code`, `status_id`) SELECT ?, `class_id`, `description`, `topic_code`, `topic_name`, `project_code`, `status_id` FROM `team` WHERE `team_id` = ?";
+                Object[] params = { newTeamId, id };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return newTeamId;
+    }
+
+    @Override
+    public void cloneTeamMember(Connection connection, Integer oldTeamId, Integer newTeamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "INSERT INTO `team_member`(`team_id`, `user_id`, `is_leader`, `is_active`) SELECT ?, `user_id`, `is_leader`, `is_active` FROM `team_member` WHERE `team_id` = ?";
+                Object[] params = { newTeamId, oldTeamId };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public boolean checkClassTeamMilestone(Connection connection, int classId, int newMilestoneId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean isExist = false;
+        if (connection != null) {
+            try {
+                String sql = "SELECT * FROM `team_milestone` WHERE `class_id` = ? and `milestone_id` = ?";
+                Object[] params = { classId, newMilestoneId };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                if (resultSet.next()) {
+                    isExist = true;
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return isExist;
+    }
+
+    @Override
+    public void resetTeam(Connection connection, int classId, int milestoneId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                String sql = "DELETE FROM `team_milestone` WHERE `class_id` = ? and `milestone_id` = ?";
+                Object[] params = { classId, milestoneId };
+                BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
     }
 }

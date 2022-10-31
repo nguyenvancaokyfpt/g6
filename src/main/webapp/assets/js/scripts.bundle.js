@@ -3503,12 +3503,13 @@ var KTApp = (function () {
           var t = {
             dir: document.body.getAttribute("direction"),
             allowClear: true,
+            tags: true,
           };
           "true" == e.getAttribute("data-width-resolve") &&
             (t.width = "resolve"),
             "true" == e.getAttribute("data-hide-search") &&
-              (t.minimumResultsForSearch = 1 / 0),
-            $(e).select2(t);
+              (t.minimumResultsForSearch = 1 / 0);
+          $(e).select2(t);
         });
     },
     initCountUp: function () {

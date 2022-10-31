@@ -31,7 +31,7 @@ public class readEcxelFile {
 
 	public static void readTeamImportModel() {
 		TeamImportModel teamImportModel = ExcelHelper
-				.readTeamImportFile("E:\\Repositories\\Project\\g6\\src\\test\\java\\file\\test3.xlsx");
+				.readTeamImportFile("E:\\Repositories\\Project\\g6\\src\\test\\java\\file\\test2.xlsx");
 
 		HashMap<Integer, List<Trainee>> map = teamImportModel.getTraineeTeamMap();
 		for (Integer key : map.keySet()) {

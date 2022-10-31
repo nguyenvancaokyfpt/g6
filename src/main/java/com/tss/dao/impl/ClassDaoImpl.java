@@ -13,6 +13,7 @@ import com.tss.helper.DebugHelper;
 import com.tss.model.ClassAnhPT;
 import com.tss.model.ClassEntity;
 import com.tss.model.Classroom;
+import com.tss.model.Trainee;
 import com.tss.model.User;
 
 public class ClassDaoImpl implements ClassDao {
@@ -482,5 +483,11 @@ public class ClassDaoImpl implements ClassDao {
             }
         }
         return classDetail;
+    }
+
+    @Override
+    public java.util.List<Trainee> findTraineeByClassId(Connection connection, int classId) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

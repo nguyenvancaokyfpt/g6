@@ -90,6 +90,7 @@ var KTUsersList = (function () {
           n.classList.remove("d-none"))
         : (t.classList.remove("d-none"), n.classList.add("d-none"));
   };
+  $('[name="ClasstraineeAdd"]').val(1);
   return {
     init: function () {
       var mydropzone = new Dropzone("#kt_modal_create_project_settings_logo", {
@@ -565,6 +566,8 @@ var KTUsersList = (function () {
                   <div class="menu-item px-3">
                     <a href="management/trainee/detail?id=` +
                   data +
+                  `&classId=` +
+                  $("#classId").val() +
                   `" class="menu-link px-3">View</a>
                   </div>
                   <!--end::Menu item-->
@@ -572,6 +575,8 @@ var KTUsersList = (function () {
                   <div class="menu-item px-3">
                     <a href="management/trainee/detail?action=update&id=` +
                   data +
+                  `&classId=` +
+                  $("#classId").val() +
                   `" class="menu-link px-3">Edit</a>
                   </div>
                   <!--end::Menu item-->
@@ -730,6 +735,8 @@ var KTUsersList = (function () {
           k.addEventListener("change", function (t) {
             classId = t.target.value;
             console.log($("#classId").val());
+            $('[name="ClasstraineeAdd"]').val($("#classId").val());
+            $('[name="ClasstraineeAdd"]').trigger("change");
             // reload ajax
             e.ajax.reload();
             e.draw();

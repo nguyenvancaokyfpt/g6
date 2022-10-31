@@ -83,6 +83,24 @@
                                 <!--end::Svg Icon-->Import
                             </button>
                             <!--end::Export-->
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                                data-bs-target="#kt_modal_create_account">
+                                <!--begin::Svg Icon | path: icons/duotone/Files/Export.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                            <path
+                                                d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z"
+                                                fill="#000000" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->Add new
+                            </button>
+                            <!--end::Export-->
                             <!--end::Toolbar-->
                             <!--begin::Group actions-->
                             <div class="d-flex justify-content-end align-items-center d-none"
@@ -96,7 +114,7 @@
                             </div>
                             <!--end::Group actions-->
                             <!--begin::Modal - Adjust Balance-->
-                            <div class="modal fade" id="kt_modal_export_users" tabindex="-1" aria-hidden="true">
+                            <div class="modal fade" id="kt_modal_export_users" aria-hidden="true">
                                 <!--begin::Modal dialog-->
                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                     <!--begin::Modal content-->
@@ -227,6 +245,410 @@
                                 <!--end::Modal dialog-->
                             </div>
                             <!--end::Modal - New Card-->
+                            <!--begin::Modal - Create account-->
+                            <div class="modal fade" id="kt_modal_create_account" aria-hidden="true">
+                                <!--begin::Modal dialog-->
+                                <div class="modal-dialog mw-1000px">
+                                    <!--begin::Modal content-->
+                                    <div class="modal-content">
+                                        <!--begin::Modal header-->
+                                        <div class="modal-header">
+                                            <!--begin::Title-->
+                                            <h2>Add Trainee</h2>
+                                            <!--end::Title-->
+                                            <!--begin::Close-->
+                                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                data-bs-dismiss="modal">
+                                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                        height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                                            fill="#000000">
+                                                            <rect fill="#000000" x="0" y="7" width="16" height="2"
+                                                                rx="1" />
+                                                            <rect fill="#000000" opacity="0.5"
+                                                                transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)"
+                                                                x="0" y="7" width="16" height="2" rx="1" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+                                        <!--end::Modal header-->
+                                        <!--begin::Modal body-->
+                                        <div class="modal-body scroll-y m-5">
+                                            <!--begin::Stepper-->
+                                            <div class="stepper stepper-links d-flex flex-column"
+                                                id="kt_create_account_stepper">
+                                                <!--begin::Nav-->
+                                                <div class="stepper-nav py-5">
+                                                    <!--begin::Step 1-->
+                                                    <div class="stepper-item current" data-kt-stepper-element="nav">
+                                                        <h3 class="stepper-title">Add Method</h3>
+                                                    </div>
+                                                    <!--end::Step 1-->
+                                                    <!--begin::Step 2-->
+                                                    <div class="stepper-item" data-kt-stepper-element="nav">
+                                                        <h3 class="stepper-title">Add To Class</h3>
+                                                    </div>
+                                                    <!--end::Step 2-->
+                                                    <!--begin::Step 3-->
+                                                    <div class="stepper-item" data-kt-stepper-element="nav">
+                                                        <h3 class="stepper-title">Create New</h3>
+                                                    </div>
+                                                    <!--end::Step 3-->
+                                                </div>
+                                                <!--end::Nav-->
+                                                <!--begin::Form-->
+                                                <form class="mx-auto mw-600px w-100 py-10" novalidate="novalidate"
+                                                    id="kt_create_account_form">
+                                                    <!--begin::Step 1-->
+                                                    <div class="current" data-kt-stepper-element="content">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="w-100">
+                                                            <!--begin::Heading-->
+                                                            <div class="pb-10 pb-lg-15">
+                                                                <!--begin::Title-->
+                                                                <h2
+                                                                    class="fw-bolder d-flex align-items-center text-dark">
+                                                                    Choose Method
+                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                        data-bs-toggle="tooltip"
+                                                                        title="Add users to classroom or create new user"></i>
+                                                                </h2>
+                                                                <!--end::Title-->
+                                                                <!--begin::Notice-->
+                                                                <div class="text-gray-400 fw-bold fs-6">Select
+                                                                    method to add trainee.
+                                                                </div>
+                                                                <!--end::Notice-->
+                                                            </div>
+                                                            <!--end::Heading-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row">
+                                                                <!--begin::Row-->
+                                                                <div class="row">
+                                                                    <!--begin::Col-->
+                                                                    <div class="col-lg-6">
+                                                                        <!--begin::Option-->
+                                                                        <input type="radio" class="btn-check"
+                                                                            name="account_type" value="1"
+                                                                            checked="checked"
+                                                                            id="kt_create_account_form_account_type_personal" />
+                                                                        <label
+                                                                            class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
+                                                                            for="kt_create_account_form_account_type_personal">
+                                                                            <!--begin::Svg Icon | path: icons/duotone/Interface/User.svg-->
+                                                                            <span class="svg-icon svg-icon-3x me-5">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="24" height="24"
+                                                                                    viewBox="0 0 24 24" fill="none">
+                                                                                    <path
+                                                                                        d="M17 6C17 8.76142 14.7614 11 12 11C9.23858 11 7 8.76142 7 6C7 3.23858 9.23858 1 12 1C14.7614 1 17 3.23858 17 6Z"
+                                                                                        fill="#121319" />
+                                                                                    <path opacity="0.25"
+                                                                                        fill-rule="evenodd"
+                                                                                        clip-rule="evenodd"
+                                                                                        d="M18.818 14.1248C18.2016 13.4101 17.1428 13.4469 16.3149 13.9001C15.0338 14.6013 13.5635 15 12 15C10.4365 15 8.96618 14.6013 7.68505 13.9001C6.85717 13.4469 5.79841 13.4101 5.182 14.1248C3.82222 15.7014 3 17.7547 3 20V21C3 22.1045 3.89543 23 5 23H19C20.1046 23 21 22.1045 21 21V20C21 17.7547 20.1778 15.7014 18.818 14.1248Z"
+                                                                                        fill="#191213" />
+                                                                                </svg>
+                                                                            </span>
+                                                                            <!--end::Svg Icon-->
+                                                                            <!--begin::Info-->
+                                                                            <span class="d-block fw-bold text-start">
+                                                                                <span
+                                                                                    class="text-dark fw-bolder d-block fs-4 mb-2">Existing
+                                                                                    Trainee</span>
+                                                                                <span
+                                                                                    class="text-gray-400 fw-bold fs-6">Add
+                                                                                    existing trainee to this
+                                                                                    classroom.</span>
+                                                                            </span>
+                                                                            <!--end::Info-->
+                                                                        </label>
+                                                                        <!--end::Option-->
+                                                                    </div>
+                                                                    <!--end::Col-->
+                                                                    <!--begin::Col-->
+                                                                    <div class="col-lg-6">
+                                                                        <!--begin::Option-->
+                                                                        <input type="radio" class="btn-check"
+                                                                            name="account_type" value="2"
+                                                                            id="kt_create_account_form_account_type_corporate" />
+                                                                        <label
+                                                                            class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
+                                                                            for="kt_create_account_form_account_type_corporate">
+                                                                            <!--begin::Svg Icon | path: icons/duotone/Interface/Briefcase.svg-->
+                                                                            <span class="svg-icon svg-icon-3x me-5">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="24" height="24"
+                                                                                    viewBox="0 0 24 24" fill="none">
+                                                                                    <circle fill="#000000" opacity="0.3"
+                                                                                        cx="12" cy="12" r="10" />
+                                                                                    <path
+                                                                                        d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg>
+                                                                            </span>
+                                                                            <!--end::Svg Icon-->
+                                                                            <!--begin::Info-->
+                                                                            <span class="d-block fw-bold text-start">
+                                                                                <span
+                                                                                    class="text-dark fw-bolder d-block fs-4 mb-2">Create
+                                                                                    new Trainee</span>
+                                                                                <span
+                                                                                    class="text-gray-400 fw-bold fs-6">Create
+                                                                                    new trainee and add to this
+                                                                                    classroom.</span>
+                                                                            </span>
+                                                                            <!--end::Info-->
+                                                                        </label>
+                                                                        <!--end::Option-->
+                                                                    </div>
+                                                                    <!--end::Col-->
+                                                                </div>
+                                                                <!--end::Row-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Step 1-->
+                                                    <!--begin::Step 2-->
+                                                    <div data-kt-stepper-element="content">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="w-100" style="margin-bottom: 180px !important;">
+                                                            <!--begin::Heading-->
+                                                            <div class="pb-10 pb-lg-15">
+                                                                <!--begin::Title-->
+                                                                <h2 class="fw-bolder text-dark">Add Trainee to Class
+                                                                </h2>
+                                                                <!--end::Title-->
+                                                            </div>
+                                                            <!--end::Heading-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label
+                                                                    class="required fs-6 fw-bold form-label mb-2">Select
+                                                                    Class:</label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <select name="ClasstraineeAdd" data-control="select2"
+                                                                    data-placeholder="Select a class"
+                                                                    data-hide-search="true"
+                                                                    class="form-select form-select-solid fw-bolder">
+                                                                    <option></option>
+                                                                    <c:forEach items="${myClass}" var="d">
+                                                                        <option value="${d.getClassId()}">
+                                                                            ${d.getClassCode()}
+                                                                        </option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row">
+                                                                <!--begin::Label-->
+                                                                <label
+                                                                    class="required fs-6 fw-bold form-label mb-2">Select
+                                                                    Trainee:</label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <select class="form-select form-select-solid"
+                                                                    name="traineeAddId" data-control="select2-c"
+                                                                    data-dropdown-parent="#kt_create_account_stepper">
+                                                                    <option>Trainee</option>
+                                                                </select>
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Step 2-->
+                                                    <!--begin::Step 3-->
+                                                    <div data-kt-stepper-element="content">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="w-100">
+                                                            <!--begin::Heading-->
+                                                            <div class="pb-10 pb-lg-12">
+                                                                <!--begin::Title-->
+                                                                <h2 class="fw-bolder text-dark">Create Trainee</h2>
+                                                                <!--end::Title-->
+                                                            </div>
+                                                            <!--end::Heading-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label required">Fullname</label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <input name="trainee_name"
+                                                                    class="form-control form-control-lg form-control"
+                                                                    placeholder="Fullname" value="" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="d-flex align-items-center form-label">
+                                                                    <span class="required">Email</span>
+                                                                </label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <input name="trainee_email"
+                                                                    class="form-control form-control-lg form-control"
+                                                                    placeholder="Email" value="" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-10">
+                                                                <!--end::Label-->
+                                                                <label class="form-label">Note</label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <textarea name="trainee_note"
+                                                                    class="form-control form-control-lg form-control"
+                                                                    rows="3"></textarea>
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label
+                                                                    class="required fs-6 fw-bold form-label mb-2">Select
+                                                                    Class:</label>
+                                                                <!--end::Label-->
+                                                                <!--begin::Input-->
+                                                                <select name="ClasstraineeAdd" data-control="select2"
+                                                                    data-placeholder="Select a class"
+                                                                    data-hide-search="true"
+                                                                    class="form-select form-select-solid fw-bolder">
+                                                                    <option></option>
+                                                                    <c:forEach items="${myClass}" var="d">
+                                                                        <option value="${d.getClassId()}">
+                                                                            ${d.getClassCode()}
+                                                                        </option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Step 3-->
+                                                    <!--begin::Actions-->
+                                                    <div class="d-flex flex-stack pt-15">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="mr-2">
+                                                            <button type="button"
+                                                                class="btn btn-lg btn-light-primary me-3"
+                                                                data-kt-stepper-action="previous">
+                                                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Left-2.svg-->
+                                                                <span class="svg-icon svg-icon-4 me-1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                                            <rect fill="#000000" opacity="0.3"
+                                                                                transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000)"
+                                                                                x="14" y="7" width="2" height="10"
+                                                                                rx="1" />
+                                                                            <path
+                                                                                d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997)" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->Back
+                                                            </button>
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                        <!--begin::Wrapper-->
+                                                        <div>
+                                                            <button type="button" class="btn btn-lg btn-primary me-3"
+                                                                data-kt-stepper-action="submit">
+                                                                <span class="indicator-label">Submit
+                                                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                                                                    <span class="svg-icon svg-icon-3 ms-2 me-0">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                            width="24px" height="24px"
+                                                                            viewBox="0 0 24 24" version="1.1">
+                                                                            <g stroke="none" stroke-width="1"
+                                                                                fill="none" fill-rule="evenodd">
+                                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                                <rect fill="#000000" opacity="0.5"
+                                                                                    transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)"
+                                                                                    x="7.5" y="7.5" width="2" height="9"
+                                                                                    rx="1" />
+                                                                                <path
+                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                                    fill="#000000" fill-rule="nonzero"
+                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                                            </g>
+                                                                        </svg>
+                                                                    </span>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="indicator-progress">Please wait...
+                                                                    <span
+                                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                            </button>
+                                                            <button type="button" class="btn btn-lg btn-primary"
+                                                                data-kt-stepper-action="next">Continue
+                                                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Right-2.svg-->
+                                                                <span class="svg-icon svg-icon-4 ms-1 me-0">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                                                            <rect fill="#000000" opacity="0.5"
+                                                                                transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)"
+                                                                                x="7.5" y="7.5" width="2" height="9"
+                                                                                rx="1" />
+                                                                            <path
+                                                                                d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </button>
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Actions-->
+                                                </form>
+                                                <!--end::Form-->
+                                            </div>
+                                            <!--end::Stepper-->
+                                        </div>
+                                        <!--end::Modal body-->
+                                    </div>
+                                    <!--end::Modal content-->
+                                </div>
+                                <!--end::Modal dialog-->
+                            </div>
+                            <!--end::Modal - Create project-->
                         </div>
                         <!--end::Card toolbar-->
                     </div>
