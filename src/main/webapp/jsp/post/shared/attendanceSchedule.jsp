@@ -21,6 +21,7 @@
                                             <c:choose>
                                                 <c:when test="${class_id == d.getClassId()}">
                                                     <option value="${d.getClassId()}" selected="true">${d.getClassCode()}</option>
+                                                    <c:set var="class_name" value="${d.getClassCode()}"></c:set>
                                                 </c:when>    
                                                 <c:otherwise>
                                                     <option value="${d.getClassId()}">${d.getClassCode()}</option>
@@ -41,7 +42,7 @@
                     </div>
                     <!--begin::Heading-->
                     <h1 class="anchor fw-bolder mb-5" id="basic-table">
-                        <a href="#basic-table"></a>List of Schedule
+                        <a href="#basic-table"></a>Schedule Attendance for class ${class_name}
                     </h1>
                     <!--end::Heading-->
                     <!--begin::Block-->
@@ -52,29 +53,32 @@
                                 <c:when test="${!scheduleList.isEmpty()}">
                                     <table class="table table-sm">
                                         <thead>
-                                            <tr class="text-gray-600 fw-bold">
+                                            <tr class="text-gray-600 fw-bold ">
                                                 <th class="">Slot</th>
                                                 <th class="">Training date</th>
-                                                <th class="">From time</th>
-                                                <th class="">To time</th>
+                                                <th class="">Topic</th>
+                                                <th class="">Time</th>
                                                 <th class="">Room</th>
-                                                <th class="">Take attendance</th> 
+                                                <th class="">Attendance</th> 
                                                 <th class="">Status</th> 
+                                                <th class="">Comment</th> 
                                             </tr>
                                         </thead>
                                         <tbody id="content">
+                                            <c:set var = "i" value = "1"/>
                                             <c:forEach items="${scheduleList}" var="sl">
                                                 <c:set var = "flag" value = "false"/>
-                                                <tr>
-                                                    <td>${sl.schedule_id}</td>
-                                                    <td>${sl.training_date}</td>
-                                                    <td>${sl.from_time}</td>
-                                                    <td>${sl.to_time}</td>
+                                                <tr class="border-2 border-gray-300">
+                                                    <td style="padding-left: 3px;">${i}</td>
+                                                    <c:set var = "i" value = "${i+1}"/>
+                                                    <td><span class="badge badge-danger fw-bold fs-6">${sl.training_date}</span></td>
+                                                    <td>${sl.title}</td>
+                                                    <td><span class="badge badge-success fw-bold fs-6">${sl.from_time} - ${sl.to_time}</span></td>
                                                     <td>${sl.room}</td>
-                                                    
+
                                                     <c:forEach items="${attendanceList}" var="al">
                                                         <c:choose>
-                                                            <c:when test="${al.slot_id == sl.schedule_id}">
+                                                            <c:when test="${al.schedule_id == sl.schedule_id}">
                                                                 <c:set var = "flag" value = "true"/>
                                                             </c:when>    
                                                             <c:otherwise>
@@ -83,19 +87,20 @@
                                                     </c:forEach>
                                                     <c:forEach items="${attendanceList}" var="al">
                                                         <c:choose>
-                                                            <c:when test="${al.slot_id == sl.schedule_id}">
+                                                            <c:when test="${al.schedule_id == sl.schedule_id}">
                                                                 <td style="color: green">True</td>
                                                                 <c:choose>
-                                                                        <c:when test="${al.status == 'Present'}">
-                                                                            <td style="color: green">Present</td>
-                                                                        </c:when>
-                                                                        <c:when test="${al.status == 'Absent'}">
-                                                                            <td style="color: red">Absent</td>
-                                                                        </c:when>
-                                                                        <c:when test="${al.status == 'Late'}">
-                                                                            <td style="color: orange">Late</td>
-                                                                        </c:when>
-                                                                    </c:choose>
+                                                                    <c:when test="${al.status == 'Present'}">
+                                                                        <td style="color: green">Present</td>
+                                                                    </c:when>
+                                                                    <c:when test="${al.status == 'Absent'}">
+                                                                        <td style="color: red">Absent</td>
+                                                                    </c:when>
+                                                                    <c:when test="${al.status == 'Late'}">
+                                                                        <td style="color: orange">Late</td>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                                <td>${al.comment}</td>
                                                             </c:when>    
                                                             <c:otherwise>
                                                             </c:otherwise>
@@ -105,11 +110,16 @@
                                                         <c:when test="${flag != true}">
                                                             <td style="color: red">False</td>
                                                             <td>Not yet</td>
+                                                            <td></td>
                                                         </c:when>
                                                     </c:choose>
 
                                                 </tr>
+
                                             </c:forEach>
+                                                <tr>
+                                                    <h3>Absent: ${absentSofar}% absent so far (${absent} out of ${totalSchedule})</h3>
+                                                </tr>
                                         </tbody>
                                     </table>                                 
                                 </c:when>    

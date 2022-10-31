@@ -55,24 +55,26 @@
                                             <tr class="text-gray-600 fw-bold">
                                                 <th class="">Slot</th>
                                                 <th class="">Training date</th>
-                                                <th class="">From time</th>
-                                                <th class="">To time</th>
+                                                <th class="">Title</th>
+                                                <th class="">Time</th>
                                                 <th class="">Room</th>
                                                 <th class="">Action</th> 
                                             </tr>
                                         </thead>
                                         <tbody id="content">
+                                            <c:set var = "i" value = "1"/>
                                             <c:forEach items="${scheduleList}" var="sl">
                                                 <c:set var = "flag" value = "false"/>
                                                 <tr class="border-bottom-1 border-gray-200">
-                                                    <td>${sl.slot_id}</td>
+                                                    <td>${i}</td>
+                                                    <c:set var = "i" value = "${i+1}"/>
                                                     <td>${sl.training_date}</td>
-                                                    <td>${sl.from_time}</td>
-                                                    <td>${sl.to_time}</td>
+                                                    <td>${sl.title}</td>
+                                                    <td>${sl.from_time} - ${sl.to_time}</td>
                                                     <td>${sl.room}</td>
                                                     <c:forEach items="${attendanceList}" var="al">
                                                         <c:choose>
-                                                            <c:when test="${al.slot_id == sl.slot_id}">
+                                                            <c:when test="${al.schedule_id == sl.schedule_id}">
                                                                 <c:set var = "flag" value = "true"/>
                                                             </c:when>
                                                         </c:choose>
@@ -80,12 +82,12 @@
                                                     <c:choose>
                                                         <c:when test="${flag != true}">
                                                             <td>
-                                                                <a href="/attendance/detail?action=take&class_id=${sl.class_id}&schedule_id=${sl.schedule_id}">Take attendance</a>
+                                                                <a href="/attendance/detail?action=take&class_id=${sl.class_id}&schedule_id=${sl.schedule_id}"><span class="badge badge-success fw-bold fs-6">Take attendance</span></a>
                                                             </td>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <td>
-                                                                <a href="/attendance/detail?action=change&class_id=${sl.class_id}&schedule_id=${sl.schedule_id}">Change attendance</a>
+                                                                <a href="/attendance/detail?action=change&class_id=${sl.class_id}&schedule_id=${sl.schedule_id}"><span class="badge badge-secondary fw-bold fs-6">Change attendance</span></a>
                                                             </td>
                                                         </c:otherwise>
                                                     </c:choose>

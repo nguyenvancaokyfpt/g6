@@ -80,10 +80,18 @@ public class ScheduleAttendanceServlet extends HttpServlet {
                 int class_id = Integer.parseInt(request.getParameter("class_id"));
                 ScheduleList = dao.findAllSchedule(connection, class_id);
                 int user_id = user.getUserId();
+                int totalSchedule = dao.countTotalSchedule(connection, class_id, user_id);
+                int absent = dao.countAbsent(connection, class_id, user_id);
+                int absentSofar = 0;
+                double absentPercent = (double) absent / totalSchedule * 100;
+                absentSofar = (int) absentPercent;
                 AttendanceList = dao.findAttendanceByUser(connection, class_id, user_id);
                 request.setAttribute("scheduleList", ScheduleList);
                 request.setAttribute("attendanceList", AttendanceList);
                 request.setAttribute("class_id", class_id);
+                request.setAttribute("absentSofar", absentSofar);
+                request.setAttribute("absent", absent);
+                request.setAttribute("totalSchedule", totalSchedule);
                 request.setAttribute("jspPath", "shared/attendanceSchedule.jsp");
                 request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                         ScreenConstants.USER_DASHBOARD,

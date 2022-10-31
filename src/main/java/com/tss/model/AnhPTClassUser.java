@@ -15,6 +15,8 @@ public class AnhPTClassUser {
     private String class_code;
     private String subject_code;
     private String term;
+    private String avatarUrl;
+    private int absent;
 
     public AnhPTClassUser() {
     }
@@ -26,6 +28,42 @@ public class AnhPTClassUser {
         this.class_code = class_code;
         this.subject_code = subject_code;
         this.term = term;
+    }
+
+    public AnhPTClassUser(int user_id, int class_id, String full_name, String class_code, String subject_code, String term, int absent) {
+        this.user_id = user_id;
+        this.class_id = class_id;
+        this.full_name = full_name;
+        this.class_code = class_code;
+        this.subject_code = subject_code;
+        this.term = term;
+        this.absent = absent;
+    }
+
+    public AnhPTClassUser(int user_id, int class_id, String full_name, String class_code, String subject_code, String term, String avatarUrl) {
+        this.user_id = user_id;
+        this.class_id = class_id;
+        this.full_name = full_name;
+        this.class_code = class_code;
+        this.subject_code = subject_code;
+        this.term = term;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public int getAbsent() {
+        return absent;
+    }
+
+    public void setAbsent(int absent) {
+        this.absent = absent;
     }
 
     public int getUser_id() {

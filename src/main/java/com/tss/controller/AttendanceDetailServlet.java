@@ -48,7 +48,6 @@ public class AttendanceDetailServlet extends HttpServlet {
         Connection connection = BaseDao.getConnection();
         AttendanceDaoImpl dao = new AttendanceDaoImpl();
         List<AnhPTClassUser> UserList = new ArrayList<>();
-        UserList = dao.findAllClassUser(connection, 1);
         List<AnhPTSchedule> ScheduleList = new ArrayList<>();
         List<Attendance> AttendanceList = new ArrayList<>();
 
@@ -82,20 +81,21 @@ public class AttendanceDetailServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
+                int totalSchedule = 0;
                 class_id = Integer.parseInt(request.getParameter("class_id"));
+                UserList = dao.findAllClassUser(connection, class_id);
                 int schedule_id = Integer.parseInt(request.getParameter("schedule_id"));
                 for (AnhPTClassUser classUser : UserList) {
                     int trainer_id = classUser.getUser_id();
                     int status_id = Integer.parseInt(request.getParameter("user_status[" + trainer_id + "]"));
                     String comment = request.getParameter("user_comment[" + trainer_id + "]");
                     dao.takeAttendance(connection, class_id, trainer_id, schedule_id, status_id, comment);
+                    totalSchedule = dao.countTotalSchedule(connection, class_id,classUser.getUser_id());
+                    int absent = dao.countAbsent(connection, class_id, classUser.getUser_id());
+                    double absentPercent = (double)absent/totalSchedule*100;
+                    classUser.setAbsent((int)absentPercent);
                 }
-                ScheduleList = dao.findAllSchedule(connection, class_id);
-                AttendanceList = dao.findAllAttendance(connection, class_id);
-                request.setAttribute("userList", UserList);
-                request.setAttribute("scheduleList", ScheduleList);
-                request.setAttribute("attendanceList", AttendanceList);
-                request.setAttribute("jspPath", "shared/attendanceTracking.jsp");
+                request.setAttribute("jspPath", "shared/noticePage.jsp");
                 request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                         ScreenConstants.USER_DASHBOARD,
                         ScreenConstants.ATTENDANCE_DETAIL));
@@ -103,6 +103,7 @@ public class AttendanceDetailServlet extends HttpServlet {
                 break;
             case "take":
                 class_idString = request.getParameter("class_id");
+                UserList = dao.findAllClassUser(connection, Integer.parseInt(class_idString));
                 schedule_idString = request.getParameter("schedule_id");
                 request.setAttribute("class_id", class_idString);
                 request.setAttribute("schedule_id", schedule_idString);
@@ -115,6 +116,7 @@ public class AttendanceDetailServlet extends HttpServlet {
                 break;
             case "change":
                 class_idString = request.getParameter("class_id");
+                UserList = dao.findAllClassUser(connection, Integer.parseInt(class_idString));
                 schedule_idString = request.getParameter("schedule_id");
                 schedule_id = Integer.parseInt(schedule_idString);
                 AttendanceList = dao.findAttendanceBySchedule(connection, schedule_id);
@@ -130,20 +132,19 @@ public class AttendanceDetailServlet extends HttpServlet {
                 break;
             case "edit":
                 class_id = Integer.parseInt(request.getParameter("class_id"));
+                UserList = dao.findAllClassUser(connection, class_id);
                 schedule_id = Integer.parseInt(request.getParameter("schedule_id"));
                 for (AnhPTClassUser classUser : UserList) {
                     int trainer_id = classUser.getUser_id();
                     int status_id = Integer.parseInt(request.getParameter("user_status[" + trainer_id + "]"));
                     String comment = request.getParameter("user_comment[" + trainer_id + "]");
                     dao.changeAttendance(connection, class_id, trainer_id, schedule_id, status_id, comment);
+                    totalSchedule = dao.countTotalSchedule(connection, class_id,classUser.getUser_id());
+                    int absent = dao.countAbsent(connection, class_id, classUser.getUser_id());
+                    double absentPercent = (double)absent/totalSchedule*100;
+                    classUser.setAbsent((int)absentPercent);
                 }
-                ScheduleList = dao.findAllSchedule(connection, class_id);
-                AttendanceList = dao.findAllAttendance(connection, class_id);
-                request.setAttribute("class_id", class_id);
-                request.setAttribute("userList", UserList);
-                request.setAttribute("scheduleList", ScheduleList);
-                request.setAttribute("attendanceList", AttendanceList);
-                request.setAttribute("jspPath", "shared/attendanceTracking.jsp");
+                request.setAttribute("jspPath", "shared/noticePage.jsp");
                 request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                         ScreenConstants.USER_DASHBOARD,
                         ScreenConstants.ATTENDANCE_DETAIL));
@@ -151,6 +152,7 @@ public class AttendanceDetailServlet extends HttpServlet {
                 break;
             case "get":
                 class_id = Integer.parseInt(request.getParameter("class_id"));
+                UserList = dao.findAllClassUser(connection, class_id);
                 ScheduleList = dao.findAllSchedule(connection, class_id);
                 AttendanceList = dao.findAllAttendance(connection, class_id);
                 request.setAttribute("class_id", class_id);
@@ -170,6 +172,7 @@ public class AttendanceDetailServlet extends HttpServlet {
                         ScreenConstants.USER_DASHBOARD,
                         ScreenConstants.ATTENDANCE_DETAIL));
                 request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+                break;
         }
 
     }

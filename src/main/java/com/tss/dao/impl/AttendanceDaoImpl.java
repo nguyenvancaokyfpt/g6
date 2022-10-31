@@ -22,7 +22,7 @@ public class AttendanceDaoImpl {
         ResultSet resultSet = null;
         List<Attendance> attendanceList = new ArrayList<>();
         if (connection != null) {
-            String sql = "select class.class_code, user.full_name,user.user_id, DATE_FORMAT(schedule.training_date, \"%d/%m/%Y\") as training_date,schedule.slot_id,status.status_title, attendance.comment \n"
+            String sql = "select class.class_code, user.full_name,user.user_id, DATE_FORMAT(schedule.training_date, \"%d/%m/%Y\") as training_date,schedule.slot_id,schedule.schedule_id,status.status_title, attendance.comment \n"
                     + "from attendance \n"
                     + "inner join class on class.class_id = attendance.class_id\n"
                     + "inner join user on user.user_id = attendance.trainer_id\n"
@@ -38,6 +38,7 @@ public class AttendanceDaoImpl {
                     attendance.setFull_name(resultSet.getString("full_name"));
                     attendance.setTraining_date(resultSet.getString("training_date"));
                     attendance.setSlot_id(resultSet.getInt("slot_id"));
+                    attendance.setSchedule_id(resultSet.getInt("schedule_id"));
                     attendance.setTrainer_id(resultSet.getInt("user_id"));
                     attendance.setStatus(resultSet.getString("status_title"));
                     attendance.setComment(resultSet.getString("comment"));
@@ -169,6 +170,7 @@ public class AttendanceDaoImpl {
                     + "user.full_name,\n"
                     + "class.class_code,\n"
                     + "subject.subject_code,\n"
+                    + "user.avatar_url, \n"
                     + "setting.setting_title as term \n"
                     + "from \n"
                     + "class_user inner join user on class_user.user_id = user.user_id\n"
@@ -188,6 +190,7 @@ public class AttendanceDaoImpl {
                     user.setClass_code(resultSet.getString("class_code"));
                     user.setSubject_code(resultSet.getString("subject_code"));
                     user.setTerm(resultSet.getString("term"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
                     userList.add(user);
                 }
             } catch (SQLException e) {
@@ -197,6 +200,52 @@ public class AttendanceDaoImpl {
             }
         }
         return userList;
+    }
+    
+    public int countTotalSchedule(Connection connection, int class_id, int trainer_id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int a=0;
+        if (connection != null) {
+            String sql = "select count(*) from attendance where class_id = ? and trainer_id = ?";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, class_id);
+                preparedStatement.setInt(2, trainer_id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    a = resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return a;
+    }
+    public int countAbsent(Connection connection, int class_id, int trainer_id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<AnhPTClassUser> userList = new ArrayList<>();
+        int a=0;
+        if (connection != null) {
+            String sql = "select count(*) from attendance where class_id = ? and trainer_id = ? and status_id = 4";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, class_id);
+                preparedStatement.setInt(2, trainer_id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    a=resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return a;
     }
 
     public void takeAttendance(Connection connection, int class_id, int trainer_id, int schedule_id, int status_id, String comment) throws SQLException {
@@ -246,11 +295,11 @@ public class AttendanceDaoImpl {
     public static void main(String[] args) throws SQLException {
         AttendanceDaoImpl dao = new AttendanceDaoImpl();
         Connection connection = BaseDao.getConnection();
-        List<Attendance> AttendanceList = new ArrayList<Attendance>();
-        List<AnhPTSchedule> ScheduleList = new ArrayList<AnhPTSchedule>();
-        AttendanceList = dao.findAllAttendance(connection, 1);
-        for (Attendance attendance : AttendanceList) {
-            System.out.println(attendance.toString());
-        }
+        int a = dao.countTotalSchedule(connection, 1, 19);
+        int b = dao.countAbsent(connection, 1, 19);
+        System.out.println(a);
+        System.out.println(b);
+        double c = ((double)b/a)*100;
+        System.out.println(c);
     }
 }

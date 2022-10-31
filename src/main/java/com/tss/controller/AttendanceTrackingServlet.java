@@ -79,13 +79,21 @@ public class AttendanceTrackingServlet extends HttpServlet {
         switch (action) {
             case "get":
                 int class_id = Integer.parseInt(request.getParameter("class_id"));
+                int totalSchedule = 0;
                 ScheduleList = dao.findAllSchedule(connection, class_id);
                 UserList = dao.findAllClassUser(connection, class_id);
+                for (AnhPTClassUser cUser : UserList) {
+                    totalSchedule = dao.countTotalSchedule(connection, class_id,cUser.getUser_id());
+                    int absent = dao.countAbsent(connection, class_id, cUser.getUser_id());
+                    double absentPercent = (double)absent/totalSchedule*100;
+                    cUser.setAbsent((int)absentPercent);
+                }
                 AttendanceList = dao.findAllAttendance(connection,class_id);
                 request.setAttribute("attendanceList", AttendanceList);
                 request.setAttribute("scheduleList", ScheduleList);
                 request.setAttribute("userList", UserList);
                 request.setAttribute("class_id", class_id);
+                request.setAttribute("totalSchedule", totalSchedule);
                 break;
             default:
                 break;

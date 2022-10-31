@@ -67,15 +67,15 @@
                                             <td>
                                                 <input type="text" name="user_comment[${ul.user_id}]" placeholder="Enter comment" class="form-control" value="${commentFlag}">
                                             </td>
-                                            <td class="float-lg-start"><img src="assets/media/avatars/blank.png" alt="Avatar" style="width:105px;height:110px;"></td>
+                                            <td class="float-lg-start"><object data="${ul.avatarUrl}" type="image/png" style="width:105px;height:110px;">
+                                                    <img src="assets/media/avatars/blank.png" alt="No image found" style="width:105px;height:110px;">
+                                                </object></td>
                                         </tr>
 
                                     </c:forEach>
-                                    <tr>
-                                        <td><input type="submit" class="btn btn-primary" value="Take attendance"></td>
-                                    </tr>
                                     </tbody>
                                 </table>
+                                <input type="submit" class="btn btn-primary" value="Take attendance">
                             </form>
                         </div>
                         <!--end::Block-->

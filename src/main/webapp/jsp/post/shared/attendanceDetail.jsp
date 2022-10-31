@@ -35,28 +35,30 @@
                                     <input type="hidden" name="schedule_id" value="${schedule_id}">
                                     <c:forEach items="${userList}" var="ul">
                                         <tr>
-                                        <td class="fw-bolder text-dark fs-6">${ul.class_code}</td>
-                                        <td class="fw-bolder text-dark fs-6">${ul.full_name}</td>
-                                        <td class="form-label fw-bolder text-dark fs-6">
-                                            <input type="radio" name="user_status[${ul.user_id}]" value="3" class="form-check-input" checked="true"> Present
-                                        </td>
-                                        <td class="form-label fw-bolder text-dark fs-6">
-                                            <input type="radio" name="user_status[${ul.user_id}]" value="4" class="form-check-input"> Absent
-                                        </td>
-                                        <td class="form-label fw-bolder text-dark fs-6">
-                                            <input type="radio" name="user_status[${ul.user_id}]" value="5" class="form-check-input"> Late
-                                        </td>
-                                        <td>
-                                            <input type="text" name="user_comment[${ul.user_id}]" placeholder="Enter comment" class="form-control">
-                                        </td>
-                                        <td class="float-lg-start"><img src="assets/media/avatars/blank.png" alt="Avatar" style="width:105px;height:110px;"></td>
+                                            <td class="fw-bolder text-dark fs-6">${ul.class_code}</td>
+                                            <td class="fw-bolder text-dark fs-6">${ul.full_name}</td>
+                                            <td class="form-label fw-bolder text-dark fs-6">
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="3" class="form-check-input" checked="true"> Present
+                                            </td>
+                                            <td class="form-label fw-bolder text-dark fs-6">
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="4" class="form-check-input"> Absent
+                                            </td>
+                                            <td class="form-label fw-bolder text-dark fs-6">
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="5" class="form-check-input"> Late
+                                            </td>
+                                            <td>
+                                                <input type="text" name="user_comment[${ul.user_id}]" placeholder="Enter comment" class="form-control">
+                                            </td>
+                                            <td class="float-lg-start">
+                                                <object data="${ul.avatarUrl}" type="image/png" style="width:105px;height:110px;">
+                                                    <img src="assets/media/avatars/blank.png" alt="No image found" style="width:105px;height:110px;">
+                                                </object>
+                                            </td>
                                         </tr>
                                     </c:forEach>
-                                        <tr>
-                                            <td><input type="submit" class="btn btn-primary" value="Take attendance"></td>
-                                        </tr>
                                     </tbody>
                                 </table>
+                                    <input type="submit" class="btn btn-primary" value="Take attendance">
                             </form>
                         </div>
                         <!--end::Block-->
