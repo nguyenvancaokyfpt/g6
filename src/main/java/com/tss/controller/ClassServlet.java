@@ -118,12 +118,17 @@ public class ClassServlet extends HttpServlet {
                     break;
                 }
             case "add":
-                class_code = request.getParameter("class_code");
-                combo_id = Integer.parseInt(request.getParameter("supporter_id"));
-                trainer_id = Integer.parseInt(request.getParameter("trainer_id"));
-                term_id = Integer.parseInt(request.getParameter("term_id"));
-                addstatus_id = Integer.parseInt(request.getParameter("status_id"));
-                dao.add(connection, class_code, combo_id, trainer_id, term_id, addstatus_id, description);
+                if (!action.equals("add")) {
+
+                } else {
+                    class_code = request.getParameter("class_code");
+                    combo_id = Integer.parseInt(request.getParameter("supporter_id"));
+                    trainer_id = Integer.parseInt(request.getParameter("trainer_id"));
+                    term_id = Integer.parseInt(request.getParameter("term_id"));
+                    addstatus_id = Integer.parseInt(request.getParameter("status_id"));
+                    description = request.getParameter("description");
+                    dao.add(connection, class_code, combo_id, trainer_id, term_id, addstatus_id, description);
+                }
             case "delete":
                 if (!action.equals("delete")) {
 

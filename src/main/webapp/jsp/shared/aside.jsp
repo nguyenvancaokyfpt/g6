@@ -531,6 +531,19 @@
                                         </div>
                                     </c:if>
                                 </div>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <c:if test="${permissionHelper.hasPermission(ScreenConstants.ATTENDANCE_DETAIL)}">
+                                        <div class="menu-item">
+                                            <a class="menu-link ${screen == ScreenConstants.ATTENDANCE_DETAIL ? 'active' : ''}"
+                                                href="${ScreenConstants.ATTENDANCE_DETAIL.getPath()}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Attendance Detail</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
+                                </div>
                             </div>
                         </c:if>
                         <!-- End ATTENDANCE -->
