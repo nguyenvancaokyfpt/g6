@@ -11,15 +11,15 @@
     </filter-mapping>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>com.tss.controller.IndexServlet</servlet-class>
+        <servlet-class>com.tss.controller.util.IndexServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>com.tss.controller.ProfileServlet</servlet-class>
+        <servlet-class>com.tss.controller.user.ProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DashboardServlet</servlet-name>
-        <servlet-class>com.tss.controller.DashboardServlet</servlet-class>
+        <servlet-class>com.tss.controller.util.DashboardServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
@@ -39,7 +39,7 @@
     </servlet>
     <servlet>
         <servlet-name>WebServiceServlet</servlet-name>
-        <servlet-class>com.tss.controller.WebContactServlet</servlet-class>
+        <servlet-class>com.tss.controller.webContact.WebContactServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CaptchaGeneratorServlet</servlet-name>
@@ -47,7 +47,7 @@
     </servlet>
     <servlet>
         <servlet-name>UserDetails</servlet-name>
-        <servlet-class>com.tss.controller.UserDetails</servlet-class>
+        <servlet-class>com.tss.controller.user.UserDetails</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SettingSystemServlet</servlet-name>
@@ -59,7 +59,7 @@
     </servlet>
     <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
-        <servlet-class>com.tss.controller.UploadFileServlet</servlet-class>
+        <servlet-class>com.tss.controller.util.UploadFileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SettingRolePermissionServlet</servlet-name>
@@ -79,19 +79,19 @@
     </servlet>
     <servlet>
         <servlet-name>ClassServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassServlet</servlet-class>
+        <servlet-class>com.tss.controller.classroom.ClassServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClassDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.classroom.ClassDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EvalCriteriaServlet</servlet-name>
-        <servlet-class>com.tss.controller.EvalCriteriaServlet</servlet-class>
+        <servlet-class>com.tss.controller.evalCriteria.EvalCriteriaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EvalCriteriaDetailsServlet</servlet-name>
-        <servlet-class>com.tss.controller.EvalCriteriaDetailsServlet</servlet-class>
+        <servlet-class>com.tss.controller.evalCriteria.EvalCriteriaDetailsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TraineeListServlet</servlet-name>
@@ -99,55 +99,55 @@
     </servlet>
     <servlet>
         <servlet-name>ClassEvalCriteriaListServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassEvalCriteriaListServlet</servlet-class>
+        <servlet-class>com.tss.controller.classroom.ClassEvalCriteriaListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClassEvalCriteriaDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassEvalCriteriaDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.classroom.ClassEvalCriteriaDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ScheduleListServlet</servlet-name>
-        <servlet-class>com.tss.controller.ScheduleListServlet</servlet-class>
+        <servlet-class>com.tss.controller.schedule.ScheduleListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ScheduleDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.ScheduleDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.schedule.ScheduleDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AttendanceTrackingServlet</servlet-name>
-        <servlet-class>com.tss.controller.AttendanceTrackingServlet</servlet-class>
+        <servlet-class>com.tss.controller.attendance.AttendanceTrackingServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AttendanceDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.AttendanceDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.attendance.AttendanceDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ScheduleAttendanceServlet</servlet-name>
-        <servlet-class>com.tss.controller.ScheduleAttendanceServlet</servlet-class>
+        <servlet-class>com.tss.controller.schedule.ScheduleAttendanceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TeamListServlet</servlet-name>
-        <servlet-class>com.tss.controller.TeamListServlet</servlet-class>
+        <servlet-class>com.tss.controller.team.TeamListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TeamNewServlet</servlet-name>
-        <servlet-class>com.tss.controller.TeamNewServlet</servlet-class>
+        <servlet-class>com.tss.controller.team.TeamNewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TeamDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.TeamDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.team.TeamDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>IssueListServlet</servlet-name>
-        <servlet-class>com.tss.controller.IssueListServlet</servlet-class>
+        <servlet-class>com.tss.controller.issue.IssueListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>IssueDetailServlet</servlet-name>
-        <servlet-class>com.tss.controller.IssueDetailServlet</servlet-class>
+        <servlet-class>com.tss.controller.issue.IssueDetailServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MilestoneServlet</servlet-name>
-        <servlet-class>com.tss.controller.MilestoneServlet</servlet-class>
+        <servlet-class>com.tss.controller.milestone.MilestoneServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SubjectSettingServlet</servlet-name>
@@ -159,7 +159,7 @@
     </servlet>
     <servlet>
         <servlet-name>ClassEvalCriteriaServlet</servlet-name>
-        <servlet-class>com.tss.controller.ClassEvalCriteriaServlet</servlet-class>
+        <servlet-class>com.tss.controller.classroom.ClassEvalCriteriaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>

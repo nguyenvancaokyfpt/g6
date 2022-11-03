@@ -2,18 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller;
+package com.tss.controller.classroom;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.tss.constants.HttpStatusCodeConstants;
-import com.tss.helper.ResponseHelper;
-import com.tss.helper.UploadHelper;
-import com.tss.model.payload.ResponseMessage;
+import java.io.PrintWriter;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,11 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 100 // 100 MB
-)
-public class UploadFileServlet extends HttpServlet {
+public class ClassEvalCriteriaListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +27,21 @@ public class UploadFileServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
      */
-
-    // Api to upload file
-    // Method: POST
-    // Path: /upload
-    // Form data:
-    // - description: String
-    // - file: File ( can be multiple )
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String destination = request.getParameter("destination") != null ? request.getParameter("destination")
-                : "default";
-        List<String> fileUrls = UploadHelper.upload(request, destination);
-
-        if (!fileUrls.isEmpty()) {
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.OK, "Upload file successfully", fileUrls));
-        } else {
-            ResponseHelper.sendResponse(response,
-                    new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "Upload file failed"));
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ClassEvalCriteriaListServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ClassEvalCriteriaListServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -73,7 +57,7 @@ public class UploadFileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

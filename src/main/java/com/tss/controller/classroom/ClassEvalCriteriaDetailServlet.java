@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.tss.controller;
+
+package com.tss.controller.classroom;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,12 +17,12 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-public class ClassEvalCriteriaListServlet extends HttpServlet {
+public class ClassEvalCriteriaDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     *
+     * 
      * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -35,10 +36,10 @@ public class ClassEvalCriteriaListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ClassEvalCriteriaListServlet</title>");
+            out.println("<title>Servlet ClassEvalCriteriaDetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ClassEvalCriteriaListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ClassEvalCriteriaDetailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -48,7 +49,7 @@ public class ClassEvalCriteriaListServlet extends HttpServlet {
     // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
-     *
+     * 
      * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -62,7 +63,7 @@ public class ClassEvalCriteriaListServlet extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
+     * 
      * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -76,7 +77,7 @@ public class ClassEvalCriteriaListServlet extends HttpServlet {
 
     /**
      * Returns a short description of the servlet.
-     *
+     * 
      * @return a String containing servlet description
      */
     @Override

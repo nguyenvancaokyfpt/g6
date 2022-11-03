@@ -1,4 +1,4 @@
-package com.tss.controller;
+package com.tss.controller.user;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

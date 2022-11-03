@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package com.tss.controller;
+package com.tss.controller.team;
 
 import java.io.IOException;
 import java.util.ArrayList;

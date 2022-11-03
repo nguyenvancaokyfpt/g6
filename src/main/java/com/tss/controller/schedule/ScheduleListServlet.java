@@ -1,4 +1,4 @@
-package com.tss.controller;
+package com.tss.controller.schedule;
 
 import com.tss.constants.ActionConstants;
 import com.tss.helper.ScheduleHelper;
