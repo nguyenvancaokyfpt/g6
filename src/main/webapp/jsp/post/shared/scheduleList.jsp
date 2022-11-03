@@ -204,12 +204,12 @@
                                 <fmt:formatDate var="time" value="${now}" pattern="HH:mm:ss" />
                                 <fmt:formatDate var="day" value="${now}" pattern="yyyy-MM-dd" />
                                 <td>
-                                    <c:if test="${s.trainingDate gt day or (s.trainingDate eq day and s.from gt time)}">
+                                    <c:if test="${s.isAttendance(s.scheduleId) eq false}">
                                         <div class="btn btn-secondary">
                                             Not yet
                                         </div>
                                     </c:if>
-                                    <c:if test="${s.trainingDate lt day or (s.trainingDate eq day and s.from lt time)}">
+                                    <c:if test="${s.isAttendance(s.scheduleId) eq true}">
                                         <div class="btn btn-success">
                                             Attend
                                         </div>
@@ -225,9 +225,16 @@
                                 </td>
                                 <td>
                                     <c:if test="${s.trainingDate eq day}">
-                                        <button onclick="" type="button" class="btn btn-primary">
-                                            Take Attendance
-                                        </button>
+                                        <c:if test="${s.isAttendance(s.scheduleId) eq false}">
+                                            <button onclick="" type="button" class="btn btn-primary">
+                                                Take Attendance
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${s.isAttendance(s.scheduleId) eq true}">
+                                            <button onclick="" type="button" class="btn btn-primary">
+                                                Edit Attendance
+                                            </button>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${s.trainingDate gt day}">
                                         <button onclick="" type="button" class="btn btn-secondary">

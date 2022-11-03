@@ -18,4 +18,6 @@ public interface ScheduleDao {
     Schedule getScheduleById(Connection connection, int id) throws SQLException;
 
     boolean checkDupSchedule(Connection connection, Schedule schedule) throws SQLException;
+
+    int checkAttendance(Connection connection, int scheduleId) throws SQLException;
 }

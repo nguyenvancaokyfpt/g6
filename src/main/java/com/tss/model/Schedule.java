@@ -1,6 +1,7 @@
 package com.tss.model;
 
 import com.tss.helper.ScheduleHelper;
+import com.tss.service.impl.ScheduleServiceImpl;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -12,9 +13,17 @@ public class Schedule {
     private Date trainingDate;
     private Time from, to;
     private String room, classCode;
-    
-    public String fmtDate(String x){
+
+    public String fmtDate(String x) {
         return ScheduleHelper.getStringFromDate(x);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isAttendance(30));
+    }
+
+    public static boolean isAttendance(int scheduleId) {
+        return new ScheduleServiceImpl().checkAttendance(scheduleId);
     }
 
     public Schedule() {

@@ -116,8 +116,8 @@ public class ScheduleListServlet extends HttpServlet {
         int slot = Integer.parseInt(request.getParameter("slot"));
         Time from = ScheduleHelper.getTimeOfSlot(slot, "from");
         Time to = ScheduleHelper.getTimeOfSlot(slot, "to");
-        String date = request.getParameter("invoice_date");
-        Date trainingDate = Date.valueOf(ScheduleHelper.convertStringToDate(date));
+        String date = request.getParameter("date");
+        Date trainingDate = Date.valueOf(date);
         int classId = Integer.parseInt(request.getParameter("classId"));
         String title = request.getParameter("title");
         String room = request.getParameter("room");
@@ -137,8 +137,8 @@ public class ScheduleListServlet extends HttpServlet {
         int slot = Integer.parseInt(request.getParameter("slot"));
         Time from = ScheduleHelper.getTimeOfSlot(slot, "from");
         Time to = ScheduleHelper.getTimeOfSlot(slot, "to");
-        String date = request.getParameter("invoice_date");
-        Date trainingDate = Date.valueOf(ScheduleHelper.convertStringToDate(date));
+        String date = request.getParameter("date");
+        Date trainingDate = Date.valueOf(date);
         int classId = Integer.parseInt(request.getParameter("classId"));
         String title = request.getParameter("title");
         String room = request.getParameter("room");

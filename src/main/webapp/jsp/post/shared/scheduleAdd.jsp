@@ -67,21 +67,9 @@
                                                 <!--begin::Datepicker-->
                                                 <input required style="background-color: #f5f8fa; border-color: #f5f8fa;" 
                                                        class="form-control form-control-white fw-bolder pe-6" 
-                                                       placeholder="Select date" name="invoice_date"
-                                                       value=""/>
+                                                       placeholder="Select date" type="date" name="date"
+                                                       id="datepicker" />
                                                 <!--end::Datepicker-->
-                                                <!--begin::Icon-->
-                                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-down.svg-->
-                                                <span style="transform: translateX(-10px)" class="svg-icon svg-icon-2 position-absolute ms-4 end-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                                    <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)" />
-                                                    </g>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                                <!--end::Icon-->
                                             </div>
                                             <!--end::Input-->
                                         </div>
@@ -121,6 +109,23 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    
+    var today = new Date();
+    var dd = today.getDate() + 1;
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("datepicker").setAttribute("min", today);
+    
+    
+</script>
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script src="assets/js/custom/apps/invoices/create.js"></script>
