@@ -10,6 +10,7 @@ import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
+import com.tss.model.system.Role;
 import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
 
@@ -17,6 +18,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -56,16 +58,17 @@ public class UserDetails extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // System.out.println(request.getParameter("userID"));
-        int userID = Integer.parseInt(request.getParameter("userID"));
+        System.out.println("Action Updated");
+        int userID = Integer.parseInt(request.getParameter("id"));
         User u = userService.findById(userID);
         u.setFullname(request.getParameter("userName"));
-        u.setEmail(request.getParameter("userEmail"));
-        u.setMobile(request.getParameter("userMobile"));
-        u.setStatusId(Integer.parseInt(request.getParameter("userStatus")));
-        u.setNote(request.getParameter("userNote"));
-        userService.modify(u);
-        response.sendRedirect("/management/user/detail?id=" + userID);
+        u.setEmail(request.getParameter("email"));
+        u.setMobile(request.getParameter("mobile"));
+        u.setStatusId(Integer.parseInt(request.getParameter("status")));
+        u.setNote(request.getParameter("note"));
+        boolean flag = userService.modify(u) && userService.
+                UpdateRole(userID, Integer.parseInt(request.getParameter("role")));
+        ResponseHelper.sendResponse(response, flag);
     }
 
     @Override
@@ -75,8 +78,9 @@ public class UserDetails extends HttpServlet {
 
         UserServiceImpl usi = new UserServiceImpl();
         User u = usi.findById(Integer.parseInt(request.getParameter("id")));
-
+        List<Role> roles = usi.getRoles();
         request.setAttribute("user", u);
+        request.setAttribute("roles", roles);
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/user-management/users/view/custom.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(

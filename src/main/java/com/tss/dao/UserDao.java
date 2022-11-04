@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.tss.model.Trainee;
 import com.tss.model.User;
+import com.tss.model.system.Role;
 
 public interface UserDao {
 
@@ -76,6 +77,12 @@ public interface UserDao {
 
         void updateUser(Connection connection, int userId, String fullname, String mobile) throws SQLException;
 
-        List<Trainee> GetWaitingList(Connection connection,int classId) throws SQLException;
+        List<Trainee> GetWaitingList(Connection connection,int classId) throws SQLException;   
+        
+        List<Role> GetUserRole(Connection connection) throws SQLException;
+
+        int UpdateRole(Connection connection, int userId, int roleId) throws SQLException;
+
+        List<User> getSupporter(Connection connection) throws SQLException;
 
 }

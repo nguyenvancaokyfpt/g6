@@ -554,9 +554,9 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         List<User> userList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status .status_value, user_role.setting_id AS role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE (full_name LIKE ? OR email LIKE ?) AND( user_role.setting_id LIKE ? AND user.status_id LIKE ? ) ORDER BY "
+            String sql = "SELECT user.user_id, full_name, email, mobile, avatar_url, user.status_id, note, created_at, updated_at, last_active, status.status_title, status .status_value, user_role.setting_id AS role_id FROM user INNER JOIN status ON user.status_id = status.status_id INNER JOIN user_role ON user.user_id = user_role.user_id WHERE (full_name LIKE ? OR email LIKE ? or mobile LIKE ?) AND( user_role.setting_id LIKE ? AND user.status_id LIKE ? ) ORDER BY "
                     + columnName + " " + orderDir + " LIMIT ?, ?";
-            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + roleFilter + "%",
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + roleFilter + "%",
                     "%" + statusFilter + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -763,4 +763,81 @@ public class UserDaoImpl implements UserDao {
         return userList;
     }
 
+    @Override
+    public java.util.List<Role> GetUserRole(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Role> roleList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "SELECT * FROM `setting` WHERE type_id = 1";
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("setting_id"));
+                    role.setTitle(resultSet.getString("setting_title"));
+                    roleList.add(role);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return roleList;
+    }
+
+    @Override
+    public int UpdateRole(Connection connection, int userId, int roleId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        int result = 0;
+        if (connection != null) {
+            String sql = "UPDATE user_role SET setting_id = ? WHERE user_id = ?";
+            Object[] params = { roleId, userId };
+            try {
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, null);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public java.util.List<User> getSupporter(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> userList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "with t as ( SELECT * FROM `web_contact` w group by supporter_id ) SELECT u.* from t inner join user u on u.user_id = t.supporter_id";
+            Object[] params = {};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Trainee user = new Trainee();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    userList.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return userList;
+    }
 }
+
+

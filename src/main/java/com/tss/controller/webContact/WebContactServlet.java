@@ -86,27 +86,53 @@ public class WebContactServlet extends HttpServlet {
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        JSONObject jsonObject = RequestHelper.getJsonDataForm(request);
         int start = 0;
         int length = 10;
+        String orderDir = "asc";
+        String orderBy = "web_contact_id";
+        int orderColumn = 1;
+        int supFilter = -1;
         String search = "";
         int draw = 1;
-        if (jsonObject != null) {
-            start = jsonObject.getInteger("start");
-            length = jsonObject.getInteger("length");
-            search = jsonObject.getString("search[value]");
-            draw = jsonObject.getInteger("draw");
-        } else {
-            start = Integer.parseInt(request.getParameter("start"));
-            length = Integer.parseInt(request.getParameter("length"));
-            search = request.getParameter("search[value]");
-            draw = Integer.parseInt(request.getParameter("draw"));
+        try {
+            if (jsonObject != null) {
+                start = jsonObject.getJSONArray("start").getInteger(0);
+                length = jsonObject.getJSONArray("length").getInteger(0);
+                search = jsonObject.getJSONArray("search[value]").getString(0);
+                draw = jsonObject.getJSONArray("draw").getInteger(0);
+                orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
+                orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
+                orderBy = getOrderCol(orderColumn);
+                supFilter = jsonObject.getJSONArray("supId").getInteger(0);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        List<WebContact> users = webContactService.findAll(start, length, search);
+        List<WebContact> users = webContactService.findAll(start, length, search, orderBy, orderDir, supFilter);
         int recordsTotal = webContactService.countAll();
-        int recordsFiltered = webContactService.countAll(search);
+        int recordsFiltered = webContactService.countAll(search,supFilter);
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
+    }
+
+    private String getOrderCol(int index) {
+        switch (index) {
+            case 0:
+                return "web_contact_id";
+            case 1:
+                return "full_name";
+            case 2:
+                return "email";
+            case 3:
+                return "mobile";
+            case 4:
+                return "Date";
+            case 5:
+                return "supporter_name";
+            default:
+                return "web_contact_id";
+        }
     }
 
     @Override
@@ -115,12 +141,11 @@ public class WebContactServlet extends HttpServlet {
 
         request.setAttribute("jspPath", "shared/webcontact.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/web-contact/table-edited.js",
-                "apps/web-contact/export-web-contact.js",
-                "apps/web-contact/add.js"));
+                "apps/web-contact/table-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.WEB_CONTACT_LIST));
+        request.setAttribute("sups", userService.getSupporter());
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 

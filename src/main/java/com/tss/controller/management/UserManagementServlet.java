@@ -94,8 +94,12 @@ public class UserManagementServlet extends HttpServlet {
         } else {
             u.setStatusId(1);
         }
-        userService.modify(u);
-        response.sendRedirect("/management/user");
+        boolean flag = userService.modify(u);
+        if(flag){
+            ResponseHelper.sendResponse(response, true);
+        }else{
+            ResponseHelper.sendResponse(response, false);
+        }
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
@@ -122,24 +126,10 @@ public class UserManagementServlet extends HttpServlet {
                 numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
-                for (int i = 0; i <= numberofcolumn; i++) {
-                    columns.add(new DataTablesColumns(
-                            DTOHelper.convertToSnakeCase(
-                                    jsonObject.getJSONArray("columns[" + i + "][data]").getString(0)),
-                            jsonObject.getJSONArray("columns[" + i + "][name]").getString(0),
-                            jsonObject.getJSONArray("columns[" + i + "][searchable]").getBoolean(0),
-                            jsonObject.getJSONArray("columns[" + i + "][orderable]").getBoolean(0),
-                            jsonObject.getJSONArray("columns[" + i + "][search][value]").getString(0),
-                            jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
-                }
-                for (DataTablesColumns dataTablesColumns : columns) {
-                    if (dataTablesColumns.getData().equals("role")) {
-                        roleFilter = dataTablesColumns.getSearchValue();
-                    }
-                    if (dataTablesColumns.getData().equals("status_id")) {
-                        statusFilter = dataTablesColumns.getSearchValue();
-                    }
-                }
+                roleFilter = jsonObject.getJSONArray("role").getString(0);
+                statusFilter = jsonObject.getJSONArray("status").getString(0);
+                if(roleFilter.equalsIgnoreCase("-1")) roleFilter = "";
+                if(statusFilter.equalsIgnoreCase("-1")) statusFilter = "";
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -158,8 +148,7 @@ public class UserManagementServlet extends HttpServlet {
 
         request.setAttribute("jspPath", "shared/user.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/users/list/table-edited.js",
-                "apps/user-management/users/list/export-users.js"));
+                "apps/user-management/users/list/table-edited.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT));

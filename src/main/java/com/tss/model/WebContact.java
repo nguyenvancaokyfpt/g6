@@ -4,12 +4,15 @@
  */
 package com.tss.model;
 
+import java.util.Date;
+
 /**
  *
  * @author Dat Lai
  */
 public class WebContact {
 
+    private int id;
     private int category_id;
     private int supporter_id;
     private String full_name;
@@ -17,10 +20,50 @@ public class WebContact {
     private String mobile;
     private String message;
     private String response;
-
+    private String suporter;
+    private Date date;
+    private int status;
     public WebContact() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
+    
+    public String getSuporter() {
+        return suporter;
+    }
+
+    public void setSuporter(String suporter) {
+        this.suporter = suporter;
+    }
+
+    
+    
     public int getCategory_id() {
         return category_id;
     }

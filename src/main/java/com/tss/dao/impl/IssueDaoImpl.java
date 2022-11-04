@@ -52,7 +52,6 @@ public class IssueDaoImpl implements IssueDao {
             if (statusFilter != -1) {
                 sql += " and i.status_id =  " + statusFilter;
             }
-
             sql += " order BY " + columnName + " " + orderDir + " limit ?,?";
 
             Object[] params = { "%" + search + "%", start, length };
