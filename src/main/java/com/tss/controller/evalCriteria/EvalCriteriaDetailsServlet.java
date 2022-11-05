@@ -13,6 +13,7 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.Assignment;
 import com.tss.model.EvalCriteria;
 import com.tss.model.Subject;
+import com.tss.model.User;
 import com.tss.service.AssignmentService;
 import com.tss.service.EvalCriteriaService;
 import com.tss.service.SubjectService;
@@ -78,6 +79,7 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
                 ScreenConstants.EVALCRITERIA_LIST,
                 ScreenConstants.EVALCRITERIA_DETAIL
         ));
+        
         EvalCriteria eval = evalService.findById(Integer.parseInt(request.getParameter("evalId")));
         Assignment ass = assignService.findById(eval.getAssign());
         Subject sub = (new SubjectServiceImpl()).findById(ass.getSubjectId());

@@ -131,13 +131,13 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
     }
 
     @Override
-    public int countAll(Connection connection) throws SQLException {
+    public int countAll(Connection connection, int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria`";
-            Object[] params = {};
+            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id WHERE s.manager_id = ?";
+            Object[] params = { userId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -154,20 +154,26 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 
     @Override
     public List<EvalCriteria> findAll(Connection connection, int start, int length, String search,
-            String columnName, String orderDir, String subjectFilter, String assignFilter, String statusFilter)
+            String columnName, String orderDir, int subjectFilter, int assignFilter, int statusFilter, int userId)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<EvalCriteria> evalList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT e.*,a.title,s.subject_name FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id"
-                    + " WHERE criteria_name LIKE ? AND s.subject_name LIKE ? AND a.title LIKE ? AND e.status_id LIKE ? ORDER BY "
-                    + columnName + " " + orderDir + " LIMIT ?, ?";
-            Object[] params = { "%" + search + "%", "%" + subjectFilter + "%", "%" + assignFilter + "%",
-                    "%" + statusFilter + "%", start, length };
-            System.out.println("subjectFilter: " + subjectFilter + "\nassignFilter: " + assignFilter
-                    + "\nstatusFilter: " + statusFilter);
+            String sql = "SELECT e.*,a.title,s.subject_name FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
+            sql += " WHERE s.manager_id = ? and e.criteria_name LIKE ? ";
+            if (subjectFilter != -1) {
+                sql += " AND s.subject_id = " + subjectFilter;
+            }
+            if (assignFilter != -1) {
+                sql += " AND a.ass_id = " + assignFilter;
+            }
+            if (statusFilter != -1) {
+                sql += " AND e.status_id = " + statusFilter;
+            }
 
+            sql += " ORDER BY " + columnName + " " + orderDir + " LIMIT ?, ?";
+            Object[] params = { userId, "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -194,16 +200,25 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
     }
 
     @Override
-    public int countAll(Connection connection, String search, String subjectFilter, String assignFilter,
-            String statusFilter) throws SQLException {
+    public int countAll(Connection connection, String search, int subjectFilter, int assignFilter, int statusFilter,
+            int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id"
-                    + " WHERE criteria_name LIKE ? AND s.subject_name LIKE ? AND a.title LIKE ? AND e.status_id LIKE ?";
-            Object[] params = { "%" + search + "%", "%" + subjectFilter + "%", "%" + assignFilter + "%",
-                    "%" + statusFilter + "%" };
+            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
+            sql += " WHERE s.manager_id = ? and e.criteria_name LIKE ? ";
+            if (subjectFilter != -1) {
+                sql += " AND s.subject_id = " + subjectFilter;
+            }
+            if (assignFilter != -1) {
+                sql += " AND a.ass_id = " + assignFilter;
+            }
+            if (statusFilter != -1) {
+                sql += " AND e.status_id = " + statusFilter;
+            }
+
+            Object[] params = { userId, "%" + search + "%" };
 
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -220,7 +235,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
     }
 
     @Override
-    public int getNewId(Connection connection) {
+    public int getNewId(Connection connection) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
@@ -242,11 +257,15 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
         return count;
     }
 
-    // public static void main(String[] args) {
-    // EvalCriteriaDaoImpl test = new EvalCriteriaDaoImpl();
-    // Connection connection = BaseDao.getConnection();
-    // System.out.println(test.getNewId(connection));
-    // }
+    public static void main(String[] args) throws SQLException {
+        EvalCriteriaDaoImpl test = new EvalCriteriaDaoImpl();
+        Connection connection = BaseDao.getConnection();
+        // test find all with params
+        List<EvalCriteria> evalList = test.findAll(connection, 0, 10, "", "criteria_id", "ASC", -1, -1, -1, 70);
+        System.out.println(test.countAll(connection, "", -1, -1, -1, 70));
+
+    }
+
     @Override
     public int changeStatus(Connection connection, int id, int status) throws SQLException {
         PreparedStatement preparedStatement = null;

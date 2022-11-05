@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package com.tss.service.impl;
 
 import java.sql.Connection;
@@ -194,6 +195,28 @@ public class SubjectServiceImpl implements SubjectService {
             pages.add(i);
         }
         return pages;
+    }
+
+    @Override
+    public List<Subject> findAllOfManager(int managerId){
+        Connection connection = null;
+        List<Subject> subjectList = null;
+        try {
+            connection = BaseDao.getConnection();
+            subjectList = subjectDao.findAllOfManager(connection, managerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return subjectList;
+    }  
+
+    public static void main(String[] args) {
+        SubjectService subjectService = new SubjectServiceImpl();
+        List<Subject> subjectList = subjectService.findAllOfManager(70);
+        System.out.println(subjectList.size());
+        
     }
 
 }

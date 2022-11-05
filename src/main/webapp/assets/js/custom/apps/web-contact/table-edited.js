@@ -34,6 +34,7 @@ var KTDatatablesServerSide = (function () {
         { data: "mobile" },
         { data: "date" },
         { data: "suporter" },
+        { data: "status" },
         { data: "category_id" },
       ],
       columnDefs: [
@@ -71,7 +72,7 @@ var KTDatatablesServerSide = (function () {
         },
         {
           targets: 4,
-          title: "DATE",
+          title: "CONTACT TIME",
           className: "text-center",
           render: function (data) {
             return moment(data).format("DD/MM/YYYY HH:mm:ss");
@@ -87,6 +88,32 @@ var KTDatatablesServerSide = (function () {
         },
         {
           targets: 6,
+          title: "STATUS",
+          className: "text-center",
+          render: function (data, type, row) {
+            var Status;
+            var classStatus;
+            if (data == 1) {
+              Status = "Activate";
+              classStatus = "btn-success";
+            } else {
+              Status = "Deactivate";
+              classStatus = "btn-danger";
+            }
+
+            return `
+                <td>
+                    <div class="d-flex justify-content-center">
+                            <button type="button" class="btn ${classStatus}">
+                                ${Status}
+                            </button>
+                    </div>
+                </td>
+`;
+          },
+        },
+        {
+          targets: 7,
           title: "ACTIONS",
           className: "text-center",
           render: function (data) {

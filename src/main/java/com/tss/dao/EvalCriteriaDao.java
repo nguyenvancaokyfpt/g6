@@ -20,12 +20,12 @@ public interface EvalCriteriaDao {
 
     List<EvalCriteria> findAll(Connection connection, int start, int length, String search) throws SQLException;
 
-    int countAll(Connection connection) throws SQLException;
+    int countAll(Connection connection,int userId) throws SQLException;
 
     List<EvalCriteria> findAll(Connection connection, int start, int length, String search, String columnName,
-            String orderDir, String subjectFilter, String assignFilter, String statusFilter) throws SQLException;
+            String orderDir, int subjectFilter, int assignFilter, int statusFilter,int userId) throws SQLException;
 
-    int countAll(Connection connection, String search, String subjectFilter, String assignFilter, String statusFilter)
+    int countAll(Connection connection, String search, int subjectFilter, int assignFilter, int statusFilter,int userId)
             throws SQLException;
 
     int getNewId(Connection connection) throws SQLException;

@@ -27,4 +27,6 @@ public interface SubjectService {
     int countAll(String search, String filterStatus);
 
     List<Integer> pages(int totalRecords, int pageSize);
+    
+    List<Subject> findAllOfManager(int managerId);
 }

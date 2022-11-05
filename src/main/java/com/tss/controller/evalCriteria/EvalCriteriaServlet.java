@@ -18,6 +18,7 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.Assignment;
 import com.tss.model.EvalCriteria;
 import com.tss.model.Subject;
+import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.AssignmentService;
@@ -90,8 +91,8 @@ public class EvalCriteriaServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.EVALCRITERIA_LIST));
         request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
-        SubjectServiceImpl sv = new SubjectServiceImpl();
-        request.setAttribute("subjects", sv.findAll(0, sv.countAll(), ""));
+        User u = (User) request.getAttribute("user");
+        request.setAttribute("subjects", new SubjectServiceImpl().findAllOfManager(u.getUserId()));
         request.setAttribute("toastStatus", request.getParameter("toastStatus"));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
@@ -105,9 +106,9 @@ public class EvalCriteriaServlet extends HttpServlet {
         int numberofcolumn = -1;
         int orderColumn = 1;
         String orderDir = "asc";
-        String subjectFilter = "";
-        String assignFilter = "";
-        String statusFilter = "";
+        int subjectFilter = -1;
+        int assignFilter = -1;
+        int statusFilter = -1;
         List<DataTablesColumns> columns = new ArrayList<DataTablesColumns>();
 
         try {
@@ -117,6 +118,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
                 numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
+                statusFilter = jsonObject.getJSONArray("status").getInteger(0);        
+                assignFilter = jsonObject.getJSONArray("assId").getInteger(0);               
+                subjectFilter = jsonObject.getJSONArray("subjectId").getInteger(0);               
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i < numberofcolumn; i++) {
@@ -129,26 +133,15 @@ public class EvalCriteriaServlet extends HttpServlet {
                             jsonObject.getJSONArray("columns[" + i + "][search][value]").getString(0),
                             jsonObject.getJSONArray("columns[" + i + "][search][regex]").getBoolean(0)));
                 }
-
-                for (DataTablesColumns dataTablesColumns : columns) {
-                    if (dataTablesColumns.getData().equals("subject_name")) {
-                        subjectFilter = dataTablesColumns.getSearchValue();
-                    }
-                    if (dataTablesColumns.getData().equals("assign_name")) {
-                        assignFilter = dataTablesColumns.getSearchValue();
-                    }
-                    if (dataTablesColumns.getData().equals("status")) {
-                        statusFilter = dataTablesColumns.getSearchValue();
-                    }
-                }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+        User u = (User)request.getAttribute("user");
         List<EvalCriteria> evalList = evalService.findAll(start, length, search, columns, orderColumn,
-                orderDir, subjectFilter, assignFilter, statusFilter);
-        int recordsTotal = evalService.countAll();
-        int recordsFiltered = evalService.countAll(search, subjectFilter, assignFilter, statusFilter);
+                orderDir, subjectFilter, assignFilter, statusFilter,u.getUserId());
+        int recordsTotal = evalService.countAll(u.getUserId());
+        int recordsFiltered = evalService.countAll(search, subjectFilter, assignFilter, statusFilter,u.getUserId());
 
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, evalList));

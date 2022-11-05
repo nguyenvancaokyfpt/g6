@@ -26,6 +26,8 @@ public interface SubjectDao {
         List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus)
                         throws SQLException;
 
+        List<Subject> findAllOfManager(Connection connection, int managerId) throws SQLException;
+
         int countAll(Connection connection) throws SQLException;
 
         int countAll(Connection connection, String search) throws SQLException;

@@ -287,4 +287,36 @@ public class SubjectDaoImpl implements SubjectDao {
         return count;
     }
 
+
+    @Override
+     public List<Subject> findAllOfManager(Connection connection, int managerId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Subject> subjectList = new ArrayList<Subject>();
+        if (connection != null) {
+            String sql = "select * from subject where manager_id = ?";
+            Object[] params = { managerId };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Subject subject = new Subject();
+                    subject.setSubjectId(resultSet.getInt("subject_id"));
+                    subject.setSubjectCode(resultSet.getString("subject_code"));
+                    subject.setSubjectName(resultSet.getString("subject_name"));
+                    subject.setManagerId(resultSet.getInt("manager_id"));
+                    subject.setExpertId(resultSet.getInt("expert_id"));
+                    subject.setStatusId(resultSet.getInt("status_id"));
+                    subject.setBody(resultSet.getString("body"));
+                    subject.setImgSrc(resultSet.getString("img_src"));
+                    subjectList.add(subject);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return subjectList;
+    }
+
 }
