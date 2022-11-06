@@ -93,6 +93,8 @@ var KTUsersList = (function () {
   $('[name="ClasstraineeAdd"]').val(1);
   return {
     init: function () {
+      $('[name="classImport"]').val(1);
+      $('[name="classImport"]').trigger("change");
       var mydropzone = new Dropzone("#kt_modal_create_project_settings_logo", {
         url: window.location.origin + "/upload",
         paramName: "file",
@@ -712,7 +714,7 @@ var KTUsersList = (function () {
               .catch(function (error) {
                 $.toast({
                   heading: "Error",
-                  text: "Something went wrong",
+                  text: error.response.data.message,
                   showHideTransition: "slide",
                   icon: "error",
                   position: "bottom-right",
@@ -737,6 +739,8 @@ var KTUsersList = (function () {
             console.log($("#classId").val());
             $('[name="ClasstraineeAdd"]').val($("#classId").val());
             $('[name="ClasstraineeAdd"]').trigger("change");
+            $('[name="classImport"]').val($("#classId").val());
+            $('[name="classImport"]').trigger("change");
             // reload ajax
             e.ajax.reload();
             e.draw();

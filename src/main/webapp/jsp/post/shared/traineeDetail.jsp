@@ -21,18 +21,18 @@
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">Fullname</label>
-                                <input type="text" class="form-control form-control-lg form-control${action == '' ? '-solid' : ''}"
-                                    name="fullname" placeholder="Fullname" ${action == '' ? 'readonly' : ''} value="${trainee.getFullname()}"/>
-                                <input type="hidden" name="id" value="${trainee.getUserId()}"/>
-                                <input type="hidden" name="classId" value="${trainee.getClassId()}"/>
+                                <input type="text" class="form-control form-control-lg form-control-solid"
+                                    name="fullname" placeholder="Fullname" readonly value="${trainee.getFullname()}" />
+                                <input type="hidden" name="id" value="${trainee.getUserId()}" />
+                                <input type="hidden" name="classId" value="${trainee.getClassId()}" />
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">Email</label>
                                 <!--begin::Input-->
-                                <input type="text" class="form-control form-control-lg form-control${action == '' ? '-solid' : ''}" name="email"
-                                    placeholder="Email" ${action == '' ? 'readonly' : ''} value="${trainee.getEmail()}" />
+                                <input type="text" class="form-control form-control-lg form-control-solid" name="email"
+                                    placeholder="Email" readonly value="${trainee.getEmail()}" />
                                 <!--end::Input-->
                             </div>
                             <!--end::Col-->
@@ -43,8 +43,8 @@
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">Mobile</label>
-                                <input type="text" class="form-control form-control-lg form-control${action == '' ? '-solid' : ''}" name="mobile"
-                                    placeholder="Mobile" ${action == '' ? 'readonly' : ''} value="${trainee.getMobile()}" />
+                                <input type="text" class="form-control form-control-lg form-control-solid" name="mobile"
+                                    placeholder="Mobile" readonly value="${trainee.getMobile()}" />
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -75,8 +75,9 @@
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Datepicker-->
-                                    <input class="form-control form-control-solid ps-12" placeholder="Select a date"
-                                        name="due_date" ${action == '' ? 'readonly' : ''} value="${trainee.getDropoutDate()}"/>
+                                    <input class="form-control form-control${action == '' ? '-solid' : ''} ps-12"
+                                        placeholder="Select a date" name="due_date" ${action=='' ? 'readonly' : '' }
+                                        value="${trainee.getDropoutDate()}" />
                                     <!--end::Datepicker-->
                                 </div>
                                 <!--end::Input-->
@@ -87,8 +88,9 @@
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">Note</label>
-                            <textarea class="form-control form-control${action == '' ? '-solid' : ''}" rows="3" name="note"
-                                placeholder="Note" ${action == '' ? 'readonly' : ''}>${trainee.getNote()}</textarea>
+                            <textarea class="form-control form-control${action == '' ? '-solid' : ''}" rows="3"
+                                name="note" placeholder="Note" ${action=='' ? 'readonly' : ''
+                                }>${trainee.getNote()}</textarea>
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -98,23 +100,29 @@
                                 <!--begin::Checkboxes-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Checkbox-->
-                                    <label class="form-check form-check-custom form-check${action == '' ? '-solid' : ''} me-10">
+                                    <label
+                                        class="form-check form-check-custom form-check${action == '' ? '-solid' : ''} me-10">
                                         <input class="form-check-input h-20px w-20px" type="radio" name="status_id"
-                                            value="1" ${trainee.getStatusId() == 1 ? "checked" : ""} ${action == '' ? 'disabled' : ''} />
+                                            value="1" ${trainee.getStatusId()==1 ? "checked" : "" } ${action==''
+                                            ? 'disabled' : '' } />
                                         <span class="form-check-label fw-bold">Active</span>
                                     </label>
                                     <!--end::Checkbox-->
                                     <!--begin::Checkbox-->
-                                    <label class="form-check form-check-custom form-check${action == '' ? '-solid' : ''} me-10">
+                                    <label
+                                        class="form-check form-check-custom form-check${action == '' ? '-solid' : ''} me-10">
                                         <input class="form-check-input h-20px w-20px" type="radio" name="status_id"
-                                            value="0" ${trainee.getStatusId() == 0 ? "checked" : ""} ${action == '' ? 'disabled' : ''} />
+                                            value="0" ${trainee.getStatusId()==0 ? "checked" : "" } ${action==''
+                                            ? 'disabled' : '' } />
                                         <span class="form-check-label fw-bold">Inactive</span>
                                     </label>
                                     <!--end::Checkbox-->
                                     <!--begin::Checkbox-->
-                                    <label class="form-check form-check-custom form-check${action == '' ? '-solid' : ''}">
+                                    <label
+                                        class="form-check form-check-custom form-check${action == '' ? '-solid' : ''}">
                                         <input class="form-check-input h-20px w-20px" type="radio" name="status_id"
-                                            value="2" ${trainee.getStatusId() == 2 ? "checked" : ""} ${action == '' ? 'disabled' : ''} />
+                                            value="2" ${trainee.getStatusId()==2 ? "checked" : "" } ${action==''
+                                            ? 'disabled' : '' } />
                                         <span class="form-check-label fw-bold">Dropout</span>
                                     </label>
                                     <!--end::Checkbox-->
@@ -127,14 +135,15 @@
                         <!--begin::Actions-->
                         <div class="text-center">
                             <c:if test="${action == ''}">
-                                <a href="management/trainee/detail?action=update&id=${trainee.getUserId()}&classId=${trainee.getClassId()}" class="btn btn-primary me-3" data-bs-dismiss="modal">Edit Trainee</a>
+                                <a href="management/trainee/detail?action=update&id=${trainee.getUserId()}&classId=${trainee.getClassId()}"
+                                    class="btn btn-primary me-3" data-bs-dismiss="modal">Edit Trainee</a>
                             </c:if>
                             <c:if test="${action == 'update'}">
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
                             </c:if>
                         </div>
                         <!--end::Actions-->

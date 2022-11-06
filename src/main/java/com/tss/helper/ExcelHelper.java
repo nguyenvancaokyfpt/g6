@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -22,8 +24,10 @@ import com.tss.model.Excel.TeamImportModel;
 
 public class ExcelHelper {
 
-    public static List<Trainee> readEcxelFile(String path) {
+    public static HashMap<Set<Integer>, List<Trainee>> readEcxelFile(String path) {
+        HashMap<Set<Integer>, List<Trainee>> map = new HashMap<Set<Integer>, List<Trainee>>();
         List<Trainee> traineeList = new ArrayList<Trainee>();
+        Set<Integer> errorList = new TreeSet<Integer>();
         try {
             FileInputStream fis = new FileInputStream(path);
             Workbook workbook = null;
@@ -50,15 +54,27 @@ public class ExcelHelper {
                             case Cell.CELL_TYPE_STRING:
                                 switch (columnIndex) {
                                     case 0:
-                                        fullname = cell.getStringCellValue();
+                                        try {
+                                            fullname = cell.getStringCellValue();
+                                        } catch (Exception e) {
+                                            errorList.add(row.getRowNum() + 1);
+                                        }
                                         columnIndex++;
                                         break;
                                     case 1:
-                                        email = cell.getStringCellValue();
+                                        try {
+                                            email = cell.getStringCellValue();
+                                        } catch (Exception e) {
+                                            errorList.add(row.getRowNum() + 1);
+                                        }
                                         columnIndex++;
                                         break;
                                     case 2:
-                                        phone = cell.getStringCellValue();
+                                        try {
+                                            phone = cell.getStringCellValue();
+                                        } catch (Exception e) {
+                                            errorList.add(row.getRowNum() + 1);
+                                        }
                                         columnIndex++;
                                         break;
                                     default:
@@ -72,12 +88,17 @@ public class ExcelHelper {
                                 }
                         }
                     }
-                    Trainee c = new Trainee();
-                    c.setFullname(fullname);
-                    c.setEmail(email);
-                    c.setMobile(phone);
-                    c.setGrade(grade);
-                    traineeList.add(c);
+                    // error handling column
+                    if (fullname.equals("") || email.equals("") || phone.equals("")) {
+                        errorList.add(row.getRowNum() + 1);
+                    } else {
+                        Trainee c = new Trainee();
+                        c.setFullname(fullname);
+                        c.setEmail(email);
+                        c.setMobile(phone);
+                        c.setGrade(grade);
+                        traineeList.add(c);
+                    }
                 }
 
             }
@@ -87,7 +108,8 @@ public class ExcelHelper {
         }
         // remove header
         traineeList.remove(0);
-        return traineeList;
+        map.put(errorList, traineeList);
+        return map;
     }
 
     public static boolean exportUserForTeamImport(List<Trainee> userList, String path) {

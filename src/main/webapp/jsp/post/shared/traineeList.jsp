@@ -285,7 +285,7 @@
                                             <div class="stepper stepper-links d-flex flex-column"
                                                 id="kt_create_account_stepper">
                                                 <!--begin::Nav-->
-                                                <div class="stepper-nav py-5">
+                                                <div class="stepper-nav py-5" style="display: none;">
                                                     <!--begin::Step 1-->
                                                     <div class="stepper-item current" data-kt-stepper-element="nav">
                                                         <h3 class="stepper-title">Add Method</h3>

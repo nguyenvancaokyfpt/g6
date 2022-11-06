@@ -7,7 +7,10 @@ package com.tss.controller.management;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
@@ -169,11 +172,20 @@ public class TraineeListServlet extends HttpServlet {
             Classroom classroom = classService.findClassById(classId);
 
             List<Trainee> trainees = new ArrayList<>();
+            Set<Integer> errorRows = new HashSet<>();
             try {
-                trainees = ExcelHelper.readEcxelFile(appPath + fileUrls);
-                if (trainees.size() == 0) {
+                HashMap<Set<Integer>, List<Trainee>> map = ExcelHelper.readEcxelFile(appPath + fileUrls);
+                trainees = map.get(map.keySet().toArray()[0]);
+                errorRows = map.keySet().iterator().next();
+                if (trainees.size() == 0 && errorRows.size() == 0) {
                     ResponseHelper.sendResponse(response,
                             new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, "File is empty"));
+                    return;
+                }
+                if (errorRows.size() > 0) {
+                    String error = "Row " + errorRows.toString() + " is invalid";
+                    ResponseHelper.sendResponse(response,
+                            new ResponseMessage(HttpStatusCodeConstants.BAD_REQUEST, error));
                     return;
                 }
             } catch (Exception e) {
