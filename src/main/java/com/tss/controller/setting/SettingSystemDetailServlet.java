@@ -75,9 +75,11 @@ public class SettingSystemDetailServlet extends HttpServlet {
                 int status_id = Integer.parseInt(request.getParameter("status"));
                 String description = request.getParameter("description");
                 dao.updateSetting(connection, id, type_id, title, value, display_order, status_id, description);
+                
                 setting = dao.findById(connection, id);
                 request.setAttribute("settingdetail", setting);
-                request.getRequestDispatcher("/jsp/post/shared/settingdetail.jsp").forward(request, response);
+                request.setAttribute("successMessage", "Edit setting successfully");
+                request.getRequestDispatcher("/jsp/post/shared/editsetting.jsp").forward(request, response);
                 break;
             default:
                 request.getRequestDispatcher("/jsp/post/shared/settingdetail.jsp").forward(request, response);

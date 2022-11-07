@@ -18,6 +18,7 @@
                         <div class="my-5">
                             <form action="/attendance/detail">
                                 <input type="hidden" name="action" value="edit">
+                                <h3 style="color: green">${message}</h3>
                                 <table class="table table-sm table-striped">
                                     <thead>
                                         <tr class="text-gray-900 fw-bold border-1 border-white">

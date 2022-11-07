@@ -16,7 +16,7 @@
                                 <input type="hidden" name="action" value="get">
                                 <div class="d-flex justify-content-end me-3">
                                     <!--begin::Filter-->
-                                    <select name="class_id" class="form-select form-select">
+                                    <select name="class_id" class="form-select form-select" hidden="true">
                                         <c:forEach items="${myClass}" var="d">
                                             <c:choose>
                                                 <c:when test="${class_id == d.getClassId()}">
@@ -46,8 +46,7 @@
                     <!--end::Heading-->
                     <!--begin::Block-->
                     <div class="my-5">
-
-                        <div class="pb-10">
+                        <div class="pb-10">                        
                             <c:choose>
                                 <c:when test="${!scheduleList.isEmpty()}">
                                     <table class="table table-sm">
@@ -97,12 +96,10 @@
                                     </table>                                 
                                 </c:when>    
                                 <c:otherwise>
-                                    <p style="text-align: center">Choose a class that has a schedule</p>
+                                    <p style="text-align: center">No schedule for today</p>
                                 </c:otherwise>
                             </c:choose>
                         </div>
-
-
                     </div>
                     <!--end::Block-->
                     <!--end::Section-->

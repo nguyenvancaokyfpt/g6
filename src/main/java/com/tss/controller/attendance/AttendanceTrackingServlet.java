@@ -6,6 +6,7 @@ package com.tss.controller.attendance;
 
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.constants.SessionConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.AttendanceDaoImpl;
 import com.tss.helper.ResponseHelper;
@@ -40,7 +41,7 @@ public class AttendanceTrackingServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -52,6 +53,8 @@ public class AttendanceTrackingServlet extends HttpServlet {
         request.setAttribute("scheduleList", ScheduleList);
         List<AnhPTClassUser> UserList = new ArrayList<>();
         List<Classroom> myClass = new ArrayList<>();
+        int class_id = 0;
+        int totalSchedule = 0;
         RoleConstants role = (RoleConstants) request.getAttribute("ROLE_CONSTANTS");
         User user = (User) request.getAttribute("user");
         ClassServiceImpl classService = new ClassServiceImpl();
@@ -78,17 +81,17 @@ public class AttendanceTrackingServlet extends HttpServlet {
         }
         switch (action) {
             case "get":
-                int class_id = Integer.parseInt(request.getParameter("class_id"));
-                int totalSchedule = 0;
+                Integer.parseInt(request.getParameter("class_id"));
+                totalSchedule = 0;
                 ScheduleList = dao.findAllSchedule(connection, class_id);
                 UserList = dao.findAllClassUser(connection, class_id);
                 for (AnhPTClassUser cUser : UserList) {
-                    totalSchedule = dao.countTotalSchedule(connection, class_id,cUser.getUser_id());
+                    totalSchedule = dao.countTotalSchedule(connection, class_id, cUser.getUser_id());
                     int absent = dao.countAbsent(connection, class_id, cUser.getUser_id());
-                    double absentPercent = (double)absent/totalSchedule*100;
-                    cUser.setAbsent((int)absentPercent);
+                    double absentPercent = (double) absent / totalSchedule * 100;
+                    cUser.setAbsent((int) absentPercent);
                 }
-                AttendanceList = dao.findAllAttendance(connection,class_id);
+                AttendanceList = dao.findAllAttendance(connection, class_id);
                 request.setAttribute("attendanceList", AttendanceList);
                 request.setAttribute("scheduleList", ScheduleList);
                 request.setAttribute("userList", UserList);
@@ -96,7 +99,29 @@ public class AttendanceTrackingServlet extends HttpServlet {
                 request.setAttribute("totalSchedule", totalSchedule);
                 break;
             default:
-                break;
+                int globalClassId = -1;
+                try {
+                globalClassId = (int) request.getSession().getAttribute(SessionConstants.GLOBAL_CLASS_ID);
+            } catch (Exception e) {
+                globalClassId = -1;
+            }
+            class_id = globalClassId;
+            totalSchedule = 0;
+            ScheduleList = dao.findAllSchedule(connection, class_id);
+            UserList = dao.findAllClassUser(connection, class_id);
+            for (AnhPTClassUser cUser : UserList) {
+                totalSchedule = dao.countTotalSchedule(connection, class_id, cUser.getUser_id());
+                int absent = dao.countAbsent(connection, class_id, cUser.getUser_id());
+                double absentPercent = (double) absent / totalSchedule * 100;
+                cUser.setAbsent((int) absentPercent);
+            }
+            AttendanceList = dao.findAllAttendance(connection, class_id);
+            request.setAttribute("attendanceList", AttendanceList);
+            request.setAttribute("scheduleList", ScheduleList);
+            request.setAttribute("userList", UserList);
+            request.setAttribute("class_id", class_id);
+            request.setAttribute("totalSchedule", totalSchedule);
+            break;
         }
         request.setAttribute("jspPath", "shared/attendanceTracking.jsp");
 
@@ -113,7 +138,7 @@ public class AttendanceTrackingServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -131,7 +156,7 @@ public class AttendanceTrackingServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
