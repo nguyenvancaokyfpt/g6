@@ -10,6 +10,7 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.SubjectDao;
 import com.tss.model.Subject;
+import com.tss.model.system.Role;
 
 public class SubjectDaoImpl implements SubjectDao {
 
@@ -294,8 +295,12 @@ public class SubjectDaoImpl implements SubjectDao {
         ResultSet resultSet = null;
         List<Subject> subjectList = new ArrayList<Subject>();
         if (connection != null) {
-            String sql = "select * from subject where manager_id = ?";
-            Object[] params = { managerId };
+            String sql = "select * from subject where 1 = 1";
+            if(!checkAdmin(connection, managerId)) {
+                System.out.println("not admin");
+                sql += " AND manager_id = " + managerId;
+            }
+            Object[] params = {};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -317,6 +322,33 @@ public class SubjectDaoImpl implements SubjectDao {
             }
         }
         return subjectList;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        SubjectDaoImpl s = new SubjectDaoImpl();
+        // System.out.println(s.findAllOfManager(BaseDao.getConnection(), 70).size());
+    }
+    public boolean checkAdmin(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Role role = new Role();
+        if (connection != null) {
+            String sql = "SELECT s.setting_id,s.setting_title FROM `user_role` u inner JOIN setting s on u.setting_id = s.setting_id  where u.user_id = ?";
+            Object[] params = { id };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    role.setId(resultSet.getInt("setting_id"));
+                    role.setTitle(resultSet.getString("setting_title"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+            
+        }
+        return role.getId() == 21;
     }
 
 }

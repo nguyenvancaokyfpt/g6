@@ -12,13 +12,29 @@ function showItem() {
     e.style.setProperty("display", "none", "important");
   });
 }
+function hideItem() {
+  var show = document.getElementsByClassName("itemHidden");
+  var hide = document.getElementsByClassName("itemShow");
+  var inline = document.getElementsByClassName("itemHiddenInline");
+  hide.forEach((e) => {
+    e.style.setProperty("display", "block", "important");
+  });
+  inline.forEach((e) => {
+    e.style.setProperty("display", "none", "important");
+  });
+  show.forEach((e) => {
+    e.style.setProperty("display", "none", "important");
+  });
+}
 function showToast() {
-  var type = document.getElementById("toastStatus").value;
-  if (type == "1") {
-    toastr.success("Update Successfully");
-  } else if (type == "2") {
-    toastr.success("Added Successfully");
-  }
+  try {
+    var type = document.getElementById("toastStatus").value;
+    if (type == "1") {
+      toastr.success("Update Successfully");
+    } else if (type == "2") {
+      toastr.success("Added Successfully");
+    }
+  } catch (e) {}
 }
 
 toastr.options = {

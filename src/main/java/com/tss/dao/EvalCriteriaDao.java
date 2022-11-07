@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.tss.model.EvalCriteria;
+import com.tss.model.User;
 
 public interface EvalCriteriaDao {
 
@@ -31,4 +32,6 @@ public interface EvalCriteriaDao {
     int getNewId(Connection connection) throws SQLException;
 
     int changeStatus(Connection connection, int id, int status) throws SQLException;
+
+    boolean checkAdmin(Connection connection, int id) throws SQLException;
 }

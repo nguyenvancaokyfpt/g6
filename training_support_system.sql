@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2022 at 05:20 AM
+-- Generation Time: Nov 07, 2022 at 09:08 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -43,7 +43,7 @@ CREATE TABLE `assignment` (
 --
 
 INSERT INTO `assignment` (`ass_id`, `subject_id`, `title`, `ass_body`, `eval_weight`, `is_team_work`, `is_ongoing`, `status_id`) VALUES
-(1, 10, 'Documents & Iter1 Reports', 'Team to prepare & submit back below documents following attached templates:\n\n1. Updated SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n2. Updated SDs document  where the Records of change, Overview (part I) are filled\n3. Project Tracking: updated information in the sheets Project & Iter1\n4. Issue Report: with all the tasks/issues for the iter1 are filled, mapped to the Functions/Screens', 20, 0, 1, 1),
+(1, 10, 'Documents & Iter1 Reports', 'Team to prepare & submit back below documents following attached templates:\r\n\r\n1. Updated SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n2. Updated SDs document  where the Records of change, Overview (part I) are filled\r\n3. Project Tracking: updated information in the sheets Project & Iter1\r\n4. Issue Report: with all the tasks/issues for the iter1 are filled, mapped to the Functions/Screens', 20, 0, 1, 1),
 (2, 1, 'Practical Exam', 'All students must do the exam with mark > 0 to pass the subject.', 30, 0, 0, 1),
 (3, 2, 'Final Exam', 'All students must do the exam with mark > 4, then total > 5 to pass the subject.', 40, 0, 0, 1),
 (4, 8, 'Computer Project', 'Team will do project by teacher\'s require, work about data, probability and statistic', 15, 1, 1, 1),
@@ -285,20 +285,24 @@ CREATE TABLE `eval_criteria` (
 --
 
 INSERT INTO `eval_criteria` (`criteria_id`, `ass_id`, `milestone_id`, `criteria_name`, `is_team_eval`, `eval_weight`, `max_loc`, `status_id`, `description`) VALUES
-(1, 1, 1, 'Writing SRS,SDS,Tracking', 0, 55, 0, 1, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
-(2, 1, 1, 'Coding Fucntion', 1, 40, 300, 0, '-Code and show mockup all function in iter 1.'),
-(3, 5, 1, 'Lab 1', 0, 60, 100, 0, '- Correct result and clean code.'),
-(4, 6, 1, 'Writing SRS,SDS,Tracking', 1, 20, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n-Updated SDs document  where the Records of change, Overview (part I) are filled\n-Project Tracking: updated information in the sheets Project & Iter2'),
-(5, 1, 1, 'Team Work', 1, 10, 0, 1, '- Each Person Work in with other productively'),
-(6, 5, 1, 'Presentation', 1, 40, 0, 0, '-Fluent, understand the problem'),
-(7, 7, 1, 'Lab 2', 0, 80, 150, 0, '- Correct result and clean code.'),
-(8, 6, 1, 'Coding Fucntion', 0, 50, 450, 1, '-Code and show mockup all function in iter 2.'),
-(9, 8, 1, 'Clean Code', 0, 20, 75, 1, '-Easy to understand'),
-(10, 8, 1, 'Data', 1, 20, 50, 0, '-Groups of students are required to collect secondary data (topics may be suggested by instructor), form their own questions, and apply learned knowledge and methods of inferential statistics to analyze data and make conclusions about the populations.'),
-(11, 6, 1, 'Present product', 1, 30, 0, 0, '-Fluent, understand the problem'),
-(12, 6, 1, 'Creation of product', 0, 20, 0, 0, '-New idea to excute code'),
-(13, 1, 1, 'Present product', 1, 20, 0, 1, '-Fluent, understand the problem'),
-(14, 1, 1, 'test', 0, 88, 88, 1, 'test');
+(1, 1, NULL, 'Writing SRS,SDS,Tracking', 0, 55, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\r\n-Updated SDs document  where the Records of change, Overview (part I) are filled\r\n-Project Tracking: updated information in the sheets Project & Iter1\r\n'),
+(2, 1, NULL, 'Coding Fucntion', 1, 40, 300, 0, '-Code and show mockup all function in iter 1.'),
+(3, 5, NULL, 'Lab 1', 0, 60, 100, 0, '- Correct result and clean code.'),
+(4, 6, NULL, 'Writing SRS,SDS,Tracking', 1, 20, 0, 0, '- SRS where the Records of change, Overview (part I), and Functional Requirements for the iter1 are filled.\n-Updated SDs document  where the Records of change, Overview (part I) are filled\n-Project Tracking: updated information in the sheets Project & Iter2'),
+(5, 1, NULL, 'Team Work', 1, 10, 0, 1, '- Each Person Work in with other productively'),
+(6, 5, NULL, 'Presentation', 1, 40, 0, 0, '-Fluent, understand the problem'),
+(7, 7, NULL, 'Lab 2', 0, 80, 150, 0, '- Correct result and clean code.'),
+(8, 6, NULL, 'Coding Fucntion', 0, 50, 450, 1, '-Code and show mockup all function in iter 2.'),
+(9, 8, NULL, 'Clean Code', 1, 20, 50, 1, '-Easy to understand'),
+(10, 8, NULL, 'Data', 1, 20, 50, 1, '-Groups of students are required to collect secondary data (topics may be suggested by instructor), form their own questions, and apply learned knowledge and methods of inferential statistics to analyze data and make conclusions about the populations.'),
+(11, 6, NULL, 'Present product', 1, 30, 0, 0, '-Fluent, understand the problem'),
+(12, 6, NULL, 'Creation of product', 0, 20, 0, 0, '-New idea to excute code'),
+(13, 1, NULL, 'Present product', 1, 20, 0, 1, '-Fluent, understand the problem'),
+(14, 1, NULL, 'Coding', 0, 88, 88, 1, 'test'),
+(15, 2, 1, 'test', 0, 11, -1, 1, ''),
+(16, 1, 1, 'test2', 0, 22, 22, 0, '22'),
+(17, 3, 1, 'test3', 1, 33, 33, 0, '333'),
+(18, 10, 1, 'test4', 1, 88, 88, 1, '8888');
 
 -- --------------------------------------------------------
 
@@ -572,12 +576,12 @@ INSERT INTO `permission` (`screen_id`, `setting_id`, `can_get`, `can_delete`, `c
 (14, 24, 1, 1, 1, 1),
 (14, 25, 1, 0, 0, 0),
 (16, 21, 1, 1, 1, 1),
-(16, 22, 0, 0, 0, 0),
+(16, 22, 1, 1, 1, 1),
 (16, 23, 1, 1, 1, 1),
 (16, 24, 1, 1, 1, 1),
 (16, 25, 0, 0, 0, 0),
 (17, 21, 1, 1, 1, 1),
-(17, 22, 0, 0, 0, 0),
+(17, 22, 1, 1, 1, 1),
 (17, 23, 1, 1, 1, 1),
 (17, 24, 1, 1, 1, 1),
 (17, 25, 0, 0, 0, 0),
@@ -861,16 +865,16 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`, `manager_id`, `expert_id`, `status_id`, `body`, `img_src`) VALUES
-(1, 'PRO192', 'Object-Oriented Programming', 2, 3, 1, '                                While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n\r\n                            ', 'assets/media/books/8.png'),
-(2, 'MAD101', 'Discrete mathematics', 2, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.', 'assets/media/books/1.png'),
+(1, 'PRO192', 'Object-Oriented Programming', 70, 3, 1, '                                While it may not be obvious to everyone, there are a number of reasons creating random paragraphs can be useful. A few examples of how some people use this generator are listed in the following paragraphs.\r\n\r\n                            ', 'assets/media/books/8.png'),
+(2, 'MAD101', 'Discrete mathematics', 70, 3, 1, 'A random paragraph can also be an excellent way for a writer to tackle writers\' block. Writing block can often happen due to being stuck with a current project that the writer is trying to complete. By inserting a completely random paragraph from which to begin, it can take down some of the issues that may have been causing the writers\' block in the first place.', 'assets/media/books/1.png'),
 (3, 'MAE101', 'Mathematics for Engineering', 3, 2, 1, 'Another productive way to use this tool to begin a daily writing routine. One way is to generate a random paragraph with the intention to try to rewrite it while still keeping the original meaning. The purpose here is to just get the writing started so that when the writer goes onto their day\'s writing projects, words are already flowing from their fingers.', 'assets/media/books/2.png'),
 (4, 'PRF192', 'Programming Fundamentals', 3, 2, 1, '                                Another writing challenge can be to take the individual sentences in the random paragraph and incorporate a single sentence from that into a new paragraph to create a short story. Unlike the random sentence generator, the sentences from the random paragraph will have some connection to one another so it will be a bit different. You also won\'t know exactly how many sentences will appear in the random paragraph.\r\n                            ', 'assets/media/books/3.png'),
 (5, 'CEA201', 'Computer Organization and Architecture', 2, 3, 1, 'It\'s not only writers who can benefit from this free online tool. If you\'re a programmer who\'s working on a project where blocks of text are needed, this tool can be a great way to get that. It\'s a good way to test your programming and that the tool being created is working well.', 'assets/media/books/4.png'),
 (6, 'CSI104', 'Introduction to Computer Science', 3, 2, 1, 'Above are a few examples of how the random paragraph generator can be beneficial. The best way to see if this random paragraph picker will be useful for your intended purposes is to give it a try. Generate a number of paragraphs to see if they are beneficial to your current project.', 'assets/media/books/5.png'),
 (7, 'CSD201', 'Data Structures and Algorithms', 2, 3, 0, 'Yes. We\'re always interested in improving this generator and one of the best ways to do that is to add new and interesting paragraphs to the generator. If you\'d like to contribute some random paragraphs, please contact us.', 'assets/media/books/6.png'),
-(8, 'MAS291', 'Statistics and Probability', 3, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.', 'assets/media/books/7.png'),
-(9, 'PRJ301', 'Java Web Application Development', 3, 3, 1, 'day la subject thu 9 nhe!!!\r\n', 'assets/media/books/9.png'),
-(10, 'SWP391', 'Application development project', 2, 2, 1, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\r\n', 'assets/media/books/10.png');
+(8, 'MAS291', 'Statistics and Probability', 70, 3, 1, 'There are usually about 200 words in a paragraph, but this can vary widely. Most paragraphs focus on a single idea that\'s expressed with an introductory sentence, then followed by two or more supporting sentences about the idea.', 'assets/media/books/7.png'),
+(9, 'PRJ301', 'Java Web Application Development', 70, 3, 1, 'day la subject thu 9 nhe!!!\r\n', 'assets/media/books/9.png'),
+(10, 'SWP391', 'Application development project', 70, 2, 1, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\r\n', 'assets/media/books/10.png');
 
 -- --------------------------------------------------------
 
@@ -1039,15 +1043,15 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
-(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '0964800139', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, '1', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
+(2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '0964800139', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, 'This is my team Leader', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
 (3, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', '0862229529', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
-(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', '0334351838', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
+(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', '0334351838', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 0, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
 (21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', '0327404366', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (22, 'Nguyễn Văn E', 'nguyenvane', 'nguyenvane@gmail.com', '0973067834', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', '0865174588', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', '0865174588', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, '', '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (24, 'Nguyễn Văn G', 'nguyenvang', 'nguyenvang@gmail.com', '0347166479', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (25, 'Nguyễn Văn H', 'nguyenvanh', 'nguyenvanh@gmail.com', '0335085366', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
-(27, 'Nguyễn Văn J', 'nguyenvanj', 'nguyenvanj@gmail.com', '0334459268', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
+(27, 'Nguyễn Văn J', 'nguyenvanj', 'nguyenvanj@gmail.com', '0334459268', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 0, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (29, 'Nguyễn Văn L', 'nguyenvanl', 'nguyenvanl@gmail.com', '0329150477', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (32, 'Nguyễn Văn O', 'nguyenvano', 'nguyenvano@gmail.com', NULL, 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (52, 'Nguyễn Văn Cao Kỳ', 'nguyenvancaokylop9d219182', 'nguyenvancaokylop9d@gmail.com', '0392522679', 'jASEmNcGgZ9CKzTI8kOl+0n9btRI/zoGI6l36l2vat4=', 'https://lh3.googleusercontent.com/a-/ACNPEu9q2T3gl19_aTrOHklFQ1cwHfliIOnJ99logazufA=s96-c', 1, NULL, '2022-09-27 14:16:30', '2022-09-27 14:16:30', '2022-09-27 14:16:30'),
@@ -1058,13 +1062,14 @@ INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `pass
 (57, 'Lai The Dat (K16_HL)', 'datlthe161533539845', 'datlthe161533@fpt.edu.vn', '0989999898', 'hzdd9lBgKW4RREwqpc0hVYVU5njSaQYT9GrPtjeIDm8=', 'https://cdn140.picsart.com/334733793098211.png', 1, 'ひろし', '2022-10-02 23:13:08', '2022-10-02 23:13:08', '2022-10-02 23:13:08'),
 (61, 'Nguyen Van A', 'nguyenvana60709', 'nguyenvana@gmail.com', NULL, 'ZVZxjSOI1VBSbjy3NVtke2lZIQ1euqg4aojP5gP0LgI=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 12:54:42', '2022-10-22 12:54:42', '2022-10-22 12:54:42'),
 (62, 'Nguyen Van B', 'nguyenvanb905405', 'nguyenvanb@gmail.com', NULL, '6fI2OlVjPGHlfn+H2xSsjhd0fnj1kzaKzBxRN9Kv47I=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 12:54:47', '2022-10-22 12:54:47', '2022-10-22 12:54:47'),
-(63, 'Nguyen Van K', 'nguyenvank582601', 'nguyenvank@gmail.com', NULL, 'WKtBmUdPGxGNA+EETpNA7Do8A8VWejkpgVESF+jWQRs=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 12:54:51', '2022-10-22 12:54:51', '2022-10-22 12:54:51'),
+(63, 'Nguyen Van K', 'nguyenvank582601', 'nguyenvank@gmail.com', '0123456789', 'WKtBmUdPGxGNA+EETpNA7Do8A8VWejkpgVESF+jWQRs=', 'assets/media/avatars/blank.png', 1, 'hello', '2022-10-22 12:54:51', '2022-10-22 12:54:51', '2022-10-22 12:54:51'),
 (64, 'Nguyen Van 1U', 'nguyenvan1871803', 'nguyenvan1@gmail.com', '0977657817', '48OMMGNX60gb1aoHjaPdNou9NKlcncxuVFr8GBXTSv8=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (65, 'Nguyen Van 2', 'nguyenvan2909785', 'nguyenvan2@gmail.com', '0977657818', '/4u7oCpNadzd33qU5rLg1muaOIct5cJ5NLhwrY2DUi4=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (66, 'Nguyen Van 3', 'nguyenvan3226504', 'nguyenvan3@gmail.com', '0977657819', 'WoXG/ZKIvH8syq7CKsI5dZzKYuOSusCPNYb+WvyrqBM=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (67, 'Nguyen Van 4U', 'nguyenvan4577677', 'nguyenvan4@gmail.com', '0977657820', 'G/GK9PGLlncrnezh+L0PRoIN8u4/qolZSGLK+frOd4M=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
 (68, 'Nguyen Van 5', 'nguyenvan565687', 'nguyenvan5@gmail.com', '0977657821', '+ls/MoG2papAhf9T3CNRnvY49C8EVFSSZePJx93u/zo=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-22 13:32:18', '2022-10-22 13:32:18', '2022-10-22 13:32:18'),
-(69, 'LaiTheDat', 'datlt21298075', 'datlt212@gmail.com', NULL, '//epPTlvXYIcvv13vKsupOphPPpOln8BCEAoWjWTV24=', 'assets/media/avatars/blank.png', 1, NULL, '2022-10-27 03:26:24', '2022-10-27 03:26:24', '2022-10-27 03:26:24');
+(69, 'LaiTheDat', 'datlt21298075', 'datlt212@gmail.com', '0123456789', '//epPTlvXYIcvv13vKsupOphPPpOln8BCEAoWjWTV24=', 'assets/media/avatars/blank.png', 1, '', '2022-10-27 03:26:24', '2022-10-27 03:26:24', '2022-10-27 03:26:24'),
+(70, 'Hirosi', 'laithedat787456', 'laithedat@gmail.com', '0123456789', '//epPTlvXYIcvv13vKsupOphPPpOln8BCEAoWjWTV24=', 'assets/media/avatars/blank.png', 1, '', '2022-11-05 03:13:14', '2022-11-05 03:13:14', '2022-11-05 03:13:14');
 
 -- --------------------------------------------------------
 
@@ -1087,7 +1092,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (19, 26),
 (21, 26),
 (22, 24),
-(23, 24),
+(23, 26),
 (25, 26),
 (27, 25),
 (29, 24),
@@ -1100,13 +1105,14 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (57, 24),
 (61, 26),
 (62, 26),
-(63, 26),
+(63, 21),
 (64, 26),
 (65, 26),
 (66, 26),
 (67, 26),
 (68, 26),
-(69, 24);
+(69, 24),
+(70, 22);
 
 -- --------------------------------------------------------
 
@@ -1122,25 +1128,27 @@ CREATE TABLE `web_contact` (
   `email` varchar(255) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `message` varchar(2000) NOT NULL,
-  `response` varchar(2000) NOT NULL
+  `response` varchar(2000) NOT NULL,
+  `Date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status_id` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `web_contact`
 --
 
-INSERT INTO `web_contact` (`web_contact_id`, `category_id`, `supporter_id`, `full_name`, `email`, `mobile`, `message`, `response`) VALUES
-(4, 1, 2, 'Kate Wolfe', 'katewolfe@gmail.com', '0123456789', 'I cant imagine how the class will go, can you give me a brief introduction?', 'You can call or send email to us to hava more information.'),
-(5, 2, 23, 'Janie Hardy', 'janiehardy@gmail.com', '0123456789', 'Hello im Superman fight with me?', 'I dont know what you mean.'),
-(6, 3, 24, 'Garry Warner', 'garrywarner@gmail.com', '0123456789', 'Are there any foreign teachers to teach?', 'Not response'),
-(7, 4, 27, 'Juanita Lowe', 'juanitalowe@gmail.com', '0382861579', 'Can you introduce me some courses?', 'You should Study LAB211 with Tuan Sensei'),
-(8, 5, 21, 'Devin Walker', 'devinwalker@gmail.com', '0364433307', 'Im not very computer savvy, can I learn it?', 'Of course! We will help you'),
-(9, 6, 27, 'Maggie Hart', 'maggiehart@gmail.com', '0342311090', 'What do I need to prepare for this online class?', 'Not response'),
-(10, 7, 21, 'Emma Blair', 'emmablair@gmail.com', '0869135639', 'Are you allowed to speak up while studying?', 'You will contact with your supporter'),
-(11, 8, 27, 'Anita Riley', 'anitariley@gmail.com', '0353594774', 'If Im busy and cant attend an online class, can I retake it?', 'You can !'),
-(12, 10, 21, 'Sidney Vargas', 'sidneyvargas@gmail.com', '0366908179', 'I want to register, how do I do that?', 'Click to the link from home page'),
-(13, 9, 27, 'Bryan Sullivan', 'bryansullivan@gmail.com', '0385717227', 'Can I contact to the teacher of the course', 'Not response'),
-(14, 1, 21, 'Dat Lai', 'datlai@gmail.com', '0344828986', 'I think the course price is a bit expensive, can it be reduced?', 'No, we calculated the price of the course very carefully');
+INSERT INTO `web_contact` (`web_contact_id`, `category_id`, `supporter_id`, `full_name`, `email`, `mobile`, `message`, `response`, `Date`, `status_id`) VALUES
+(4, 1, 2, 'Kate Wolfe', 'katewolfe@gmail.com', '0123456789', 'I cant imagine how the class will go, can you give me a brief introduction?', 'You can call or send email to us to hava more information.', '2022-11-04 21:03:46', 1),
+(5, 2, 23, 'Janie Hardy', 'janiehardy@gmail.com', '0123456789', 'Hello im Superman fight with me?', 'I dont know what you mean.', '2022-11-04 21:03:46', 1),
+(6, 3, 24, 'Garry Warner', 'garrywarner@gmail.com', '0123456789', 'Are there any foreign teachers to teach?', 'Not response', '2022-11-04 21:03:46', 1),
+(7, 4, 27, 'Juanita Lowe', 'juanitalowe@gmail.com', '0382861579', 'Can you introduce me some courses?', 'You should Study LAB211 with Tuan Sensei', '2022-11-04 21:03:46', 1),
+(8, 5, 21, 'Devin Walker', 'devinwalker@gmail.com', '0364433307', 'Im not very computer savvy, can I learn it?', 'Of course! We will help you', '2022-11-04 21:03:46', 1),
+(9, 6, 27, 'Maggie Hart', 'maggiehart@gmail.com', '0342311090', 'What do I need to prepare for this online class?', 'Not response', '2022-11-04 21:03:46', 1),
+(10, 7, 21, 'Emma Blair', 'emmablair@gmail.com', '0869135639', 'Are you allowed to speak up while studying?', 'You will contact with your supporter', '2022-11-04 21:03:46', 1),
+(11, 8, 27, 'Anita Riley', 'anitariley@gmail.com', '0353594774', 'If Im busy and cant attend an online class, can I retake it?', 'You can !', '2022-11-04 21:03:46', 1),
+(12, 10, 21, 'Sidney Vargas', 'sidneyvargas@gmail.com', '0366908179', 'I want to register, how do I do that?', 'Click to the link from home page', '2022-11-04 21:03:46', 1),
+(13, 9, 27, 'Bryan Sullivan', 'bryansullivan@gmail.com', '0385717227', 'Can I contact to the teacher of the course', 'Not response', '2022-11-04 21:03:46', 1),
+(14, 1, 21, 'Dat Lai', 'datlai@gmail.com', '0344828986', 'I think the course price is a bit expensive, can it be reduced?', 'No, we calculated the price of the course very carefully', '2022-11-04 21:03:46', 1);
 
 --
 -- Indexes for dumped tables
@@ -1407,7 +1415,8 @@ ALTER TABLE `user_role`
 --
 ALTER TABLE `web_contact`
   ADD PRIMARY KEY (`web_contact_id`),
-  ADD KEY `supporter_id` (`supporter_id`);
+  ADD KEY `supporter_id` (`supporter_id`),
+  ADD KEY `Status` (`status_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1447,7 +1456,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT for table `eval_criteria`
 --
 ALTER TABLE `eval_criteria`
-  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `issue`
@@ -1555,7 +1564,7 @@ ALTER TABLE `update_history`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `web_contact`
@@ -1778,6 +1787,7 @@ ALTER TABLE `user_role`
 -- Constraints for table `web_contact`
 --
 ALTER TABLE `web_contact`
+  ADD CONSTRAINT `Status` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
   ADD CONSTRAINT `web_contact_ibfk_1` FOREIGN KEY (`supporter_id`) REFERENCES `user` (`user_id`);
 COMMIT;
 

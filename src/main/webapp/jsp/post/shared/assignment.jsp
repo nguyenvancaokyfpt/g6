@@ -2,6 +2,7 @@
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
+        <input type="text" class="d-none" id="toastStatus" value="${requestScope.toastStatus}">
         <div id="kt_content_container" class="container">
             <!--begin::Card-->
             <div class="card">

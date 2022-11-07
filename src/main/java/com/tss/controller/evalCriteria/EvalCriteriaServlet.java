@@ -172,7 +172,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         List<Assignment> as = assignService.findBySubId(id);
         String jsonOutput;
         if (as.size() == 0 || as == null) {
-            jsonOutput = "";
+            jsonOutput = "false";
         } else {
             jsonOutput = JSON.toJSONString(as);
         }

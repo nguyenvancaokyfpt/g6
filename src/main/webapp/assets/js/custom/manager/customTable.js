@@ -279,6 +279,13 @@ const getSub = () => {
       return response.json();
     })
     .then((data) => {
+
+      if(data == false){
+        document.getElementById(
+          "assSelect"
+        ).innerHTML = `<option value="-1"> All Assignments</option>`;
+        return;
+      }
       let assSelect = document.getElementById("assSelect");
       let content = `<option value="-1"> All Assignments</option>`;
       // let content = `<option value="">--- Select Assignment ---</option>`;

@@ -14,6 +14,8 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.EvalCriteriaDao;
 import com.tss.model.EvalCriteria;
+import com.tss.model.User;
+import com.tss.model.system.Role;
 
 /**
  *
@@ -131,13 +133,16 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
     }
 
     @Override
-    public int countAll(Connection connection, int userId) throws SQLException {
+    public int countAll(Connection connection,int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id WHERE s.manager_id = ?";
-            Object[] params = { userId };
+            String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id WHERE 1=1";
+            if(!checkAdmin(connection, userId)) {
+                sql += " AND s.manager_id = " + userId;
+            }
+            Object[] params = {};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -154,14 +159,17 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 
     @Override
     public List<EvalCriteria> findAll(Connection connection, int start, int length, String search,
-            String columnName, String orderDir, int subjectFilter, int assignFilter, int statusFilter, int userId)
+            String columnName, String orderDir, int subjectFilter, int assignFilter, int statusFilter,int userId)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<EvalCriteria> evalList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT e.*,a.title,s.subject_name FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
-            sql += " WHERE s.manager_id = ? and e.criteria_name LIKE ? ";
+            sql += " WHERE e.criteria_name LIKE ? ";
+            if(!checkAdmin(connection, userId)) {
+                sql += " AND s.manager_id = " + userId;
+            }
             if (subjectFilter != -1) {
                 sql += " AND s.subject_id = " + subjectFilter;
             }
@@ -173,7 +181,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
             }
 
             sql += " ORDER BY " + columnName + " " + orderDir + " LIMIT ?, ?";
-            Object[] params = { userId, "%" + search + "%", start, length };
+            Object[] params = {"%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -201,13 +209,16 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 
     @Override
     public int countAll(Connection connection, String search, int subjectFilter, int assignFilter, int statusFilter,
-            int userId) throws SQLException {
+           int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
-            sql += " WHERE s.manager_id = ? and e.criteria_name LIKE ? ";
+            sql += " WHERE e.criteria_name LIKE ? ";
+            if(!checkAdmin(connection, userId)) {
+                sql += " AND s.manager_id = " + userId;
+            }
             if (subjectFilter != -1) {
                 sql += " AND s.subject_id = " + subjectFilter;
             }
@@ -218,7 +229,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
                 sql += " AND e.status_id = " + statusFilter;
             }
 
-            Object[] params = { userId, "%" + search + "%" };
+            Object[] params = { "%" + search + "%" };
 
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
@@ -278,5 +289,29 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
             count = BaseDao.execute(connection, preparedStatement, sql, params);
         }
         return count;
+    }
+
+    @Override
+    public boolean checkAdmin(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Role role = new Role();
+        if (connection != null) {
+            String sql = "SELECT s.setting_id,s.setting_title FROM `user_role` u inner JOIN setting s on u.setting_id = s.setting_id  where u.user_id = ?";
+            Object[] params = { id };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    role.setId(resultSet.getInt("setting_id"));
+                    role.setTitle(resultSet.getString("setting_title"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+            
+        }
+        return role.getId() == 21;
     }
 }
