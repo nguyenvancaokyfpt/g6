@@ -19,6 +19,8 @@
 			<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 			<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 			<!--end::Global Stylesheets Bundle-->
+			<!-- --Jquery Toast Plugin CSS-- -->
+			<link rel="stylesheet" href="assets/css/jquery.toast.min.css">
 		</head>
 		<!--end::Head-->
 		<!--begin::Body-->
@@ -85,7 +87,8 @@
 								</div>
 								<!--end::Input group-->
 								<!--begin::Input group-->
-								<div id="captcha-form" class="fv-row row mb-10" ${captcha_required ? '' : 'style="display: none;"'}>
+								<div id="captcha-form" class="fv-row row mb-10" ${captcha_required ? ''
+									: 'style="display: none;"' }>
 									<!--begin::Col-->
 									<div class="col-xl-6 text-center justify-content-center align-self-center">
 										<img id="captcha" src="data:image/png;base64,${captchaImage}" alt="captcha" />
@@ -155,6 +158,7 @@
 			<script src="assets/plugins/global/plugins.bundle.js"></script>
 			<script src="assets/js/scripts.bundle.js"></script>
 			<script src="assets/js/axios.min.js"></script>
+			<script src="assets/js/jquery.toast.min.js"></script>
 			<!--end::Global Javascript Bundle-->
 			<!--begin::Page Custom Javascript(used by this page)-->
 			<script src="assets/js/custom/authentication/sign-in/general.js"></script>
@@ -186,15 +190,15 @@
 							axios.post('${googleClientSecret.getRedirect_uris()}', {
 								credential: response.credential
 							}).then(function (response) {
-                                // get redirect param from url
-                                const urlParams = new URLSearchParams(window.location.search);
-                                const redirect = urlParams.get('redirect');
-                                if (redirect) {
-                                    window.location.href = redirect;
-                                } else {
-                                // Redirect to dashboard
-                                window.location.href = '/dashboard';
-                                }
+								// get redirect param from url
+								const urlParams = new URLSearchParams(window.location.search);
+								const redirect = urlParams.get('redirect');
+								if (redirect) {
+									window.location.href = redirect;
+								} else {
+									// Redirect to dashboard
+									window.location.href = '/dashboard';
+								}
 								// hide loading
 								Swal.close();
 							}).catch(function (error) {

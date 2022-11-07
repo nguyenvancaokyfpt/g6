@@ -19,6 +19,8 @@
 			<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 			<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 			<!--end::Global Stylesheets Bundle-->
+			<!-- --Jquery Toast Plugin CSS-- -->
+			<link rel="stylesheet" href="assets/css/jquery.toast.min.css">
 		</head>
 		<!--end::Head-->
 		<!--begin::Body-->
@@ -193,6 +195,7 @@
 			<script src="assets/plugins/global/plugins.bundle.js"></script>
 			<script src="assets/js/scripts.bundle.js"></script>
 			<script src="assets/js/axios.min.js"></script>
+			<script src="assets/js/jquery.toast.min.js"></script>
 			<!--end::Global Javascript Bundle-->
 			<!--begin::Page Custom Javascript(used by this page)-->
 			<script src="assets/js/custom/authentication/sign-up/general.js"></script>
