@@ -183,8 +183,7 @@ var KTUsersList = (function () {
                   Actions
                 </button>
                   <ul class="dropdown-menu" aria-labelledby="action${data}">
-                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=get&evalId=${data}">View</a></li>
-                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=update&evalId=${data}">Edit</a></li>
+                    <li><a class="dropdown-item text-center" href="/evalCriteria/evalCriteriaDetails?action=get&evalId=${data}">View/Edit</a></li>
                     <li>
                     <!-- Button trigger modal -->
                     <a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#model${data}">
@@ -215,7 +214,11 @@ var KTUsersList = (function () {
               },
             },
           ],
-        })),
+        })),document
+        .querySelector('[data-kt-eval-table-filter="search"]')
+        .addEventListener("keyup", function (t) {
+          e.search(t.target.value).draw();
+        }),
         (() => {
           $("#subSelect").on("change", function () {
             setTimeout(() => {

@@ -118,9 +118,9 @@ public class EvalCriteriaServlet extends HttpServlet {
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
                 numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
-                statusFilter = jsonObject.getJSONArray("status").getInteger(0);        
-                assignFilter = jsonObject.getJSONArray("assId").getInteger(0);               
-                subjectFilter = jsonObject.getJSONArray("subjectId").getInteger(0);               
+                statusFilter = jsonObject.getJSONArray("status").getInteger(0);
+                assignFilter = jsonObject.getJSONArray("assId").getInteger(0);
+                subjectFilter = jsonObject.getJSONArray("subjectId").getInteger(0);
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 for (int i = 0; i < numberofcolumn; i++) {
@@ -137,11 +137,11 @@ public class EvalCriteriaServlet extends HttpServlet {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        User u = (User)request.getAttribute("user");
+        User u = (User) request.getAttribute("user");
         List<EvalCriteria> evalList = evalService.findAll(start, length, search, columns, orderColumn,
-                orderDir, subjectFilter, assignFilter, statusFilter,u.getUserId());
+                orderDir, subjectFilter, assignFilter, statusFilter, u.getUserId());
         int recordsTotal = evalService.countAll(u.getUserId());
-        int recordsFiltered = evalService.countAll(search, subjectFilter, assignFilter, statusFilter,u.getUserId());
+        int recordsFiltered = evalService.countAll(search, subjectFilter, assignFilter, statusFilter, u.getUserId());
 
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, evalList));
@@ -160,9 +160,8 @@ public class EvalCriteriaServlet extends HttpServlet {
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.EVALCRITERIA_LIST));
-        // request.setAttribute("assigns", assignService.findAll(0,
-        // assignService.countAll(), "", "", "", "", ""));
-        request.setAttribute("subjects", subService.findAll(0, subService.countAll(), ""));
+        User u = (User) request.getAttribute("user");
+        request.setAttribute("subjects", new SubjectServiceImpl().findAllOfManager(u.getUserId()));
 
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
@@ -192,8 +191,8 @@ public class EvalCriteriaServlet extends HttpServlet {
         int is_team = Integer.parseInt(request.getParameter("criteria_team"));
         int weight = Integer.parseInt(request.getParameter("criteria_weight"));
         int loc = Integer.parseInt(request.getParameter("criteria_loc"));
-        int status = 1;
-        Object prams[] = { id, ass_id, mile_id, name, is_team, weight, loc, status, des };
+        int status = Integer.parseInt(request.getParameter("criteria_status"));
+        Object prams[] = {id, ass_id, mile_id, name, is_team, weight, loc, status, des};
         evalService.add(prams);
         response.sendRedirect("evalCriteriaList?toastStatus=2");
     }

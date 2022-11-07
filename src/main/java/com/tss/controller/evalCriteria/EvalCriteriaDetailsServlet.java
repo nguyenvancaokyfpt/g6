@@ -86,7 +86,8 @@ public class EvalCriteriaDetailsServlet extends HttpServlet {
         request.setAttribute("eval", eval);
         request.setAttribute("assign", ass);
         request.setAttribute("sub", sub);
-        request.setAttribute("assigns", assignService.findAll(0, assignService.countAll(), "", "", "", "", ""));
+        User u = (User) request.getAttribute("user");
+        request.setAttribute("subjects", new SubjectServiceImpl().findAllOfManager(u.getUserId()));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
