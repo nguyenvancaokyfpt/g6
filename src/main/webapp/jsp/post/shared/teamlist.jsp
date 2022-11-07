@@ -1,44 +1,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="../../../assets/css/teamlist.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-<div class="post d-flex flex-column-fluid" id="kt_post">
-    <!--begin::Container-->
-    <div id="kt_content_container" class="container-fluid">
-        <!--begin::Card-->
-        <div class="card">
-            <div class="p-5 teamFilter">
-                <div class="row">
-                    <div class="col-4">
-                        <select id="selectedMile" style="margin-left:20x;" class="form-select"
+    <link href="../../../assets/css/teamlist.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-fluid">
+            <!--begin::Card-->
+            <div class="card">
+                <div class="p-5 teamFilter">
+                    <div class="row">
+                        <div class="col-4">
+                            <select id="selectedMile" style="margin-left:20x;" class="form-select"
                                 onchange="getClass()">
-                            <c:choose>
-                                <c:when test="${requestScope.miles.size() == 0}">
-                                    <option value="">Empty Milestone</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:forEach items="${requestScope.miles}" var="m">
-                                        <option value="${m.milestoneId}">${m.title} - ${m.classCode}</option>
-                                    </c:forEach>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
-                    </div>
-<!--                    <div class="col-4">
+                                <c:choose>
+                                    <c:when test="${requestScope.miles.size() == 0}">
+                                        <option value="">Empty Milestone</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${requestScope.miles}" var="m">
+                                            <option value="${m.milestoneId}" ${globalClass==m.classId ? "selected" : ""
+                                                }>${m.title} - ${m.classCode}</option>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
+                        <!--                    <div class="col-4">
                         <select class="form-select">
                             <option>All Member Statuses</option>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
                     </div>-->
+                    </div>
                 </div>
-            </div>
 
-            <div id="teamBody" style="padding-bottom: 50px;">
+                <div id="teamBody" style="padding-bottom: 50px;">
 
-            </div>
+                </div>
 
-            <!-- Example model popup -->
-            <!-- <a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#model1">Deactivate </a>
+                <!-- Example model popup -->
+                <!-- <a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#model1">Deactivate </a>
             <div class="modal fade" id="model1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -56,6 +57,6 @@
                   </div>
                 </div>
               </div> -->
+            </div>
         </div>
     </div>
-</div>
