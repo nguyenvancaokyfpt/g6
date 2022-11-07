@@ -12,6 +12,7 @@ import com.tss.helper.EncryptHelper;
 import com.tss.helper.PasswordHelper;
 import com.tss.model.Trainee;
 import com.tss.model.User;
+import com.tss.model.system.Role;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.UserService;
 
@@ -462,8 +463,53 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
-    public static void main(String[] args) throws SQLException {
+    @Override
+    public java.util.List<Role> getRoles() {
+        Connection connection = null;
+        List<Role> roleList = null;
+        try {
+            connection = BaseDao.getConnection();
+            roleList = userDao.GetUserRole(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return roleList;
+    }
+
+    public static void main(String[] args) {
         UserServiceImpl t = new UserServiceImpl();
-        System.out.println(t.GetWaitingList(2).size());
+        System.out.println(t.getSupporter().size());
+    }
+
+    @Override
+    public boolean UpdateRole(int userId, int roleId) {
+        Connection connection = null;
+        boolean result = false;
+        try {
+            connection = BaseDao.getConnection();
+            result = userDao.UpdateRole(connection, userId, roleId) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return result;
+    }
+
+    @Override
+    public java.util.List<User> getSupporter() {
+        Connection connection = null;
+        List<User> userList = null;
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.getSupporter(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
     }
 }

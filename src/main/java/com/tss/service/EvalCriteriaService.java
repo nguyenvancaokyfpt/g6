@@ -19,12 +19,12 @@ public interface EvalCriteriaService {
 
     boolean modify(EvalCriteria eval);
 
-    int countAll();
+    int countAll(int userId);
 
     List<EvalCriteria> findAll(int start, int length, String search, java.util.List<DataTablesColumns> columns,
-            int orderColumn, String orderDir, String subjectFilter, String assignFilter, String statusFilter);
+            int orderColumn, String orderDir, int subjectFilter, int assignFilter, int statusFilter,int userId);
 
-    int countAll(String search, String subjectFilter, String assignFilter, String statusFilter);
+    int countAll(String search, int subjectFilter, int assignFilter, int statusFilter,int userId);
 
     public int getNewId();
 

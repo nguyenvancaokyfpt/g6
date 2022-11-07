@@ -159,14 +159,19 @@ public class WebContactDaoImpl implements WebContactDao {
     }
 
     @Override
-    public java.util.List<WebContact> findAll(Connection connection, int start, int length, String search)
+    public java.util.List<WebContact> findAll(Connection connection, int start, int length, String search,
+            String orderBy, String orderDir, int supporter_id)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<WebContact> webList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT * FROM web_contact WHERE full_name LIKE ? OR email LIKE ? ORDER BY category_id DESC LIMIT ?, ?";
-            Object[] params = { "%" + search + "%", "%" + search + "%", start, length };
+            String sql = "SELECT w.*,u.full_name as supporter_name FROM `web_contact` w inner join user u on w.supporter_id = u.user_id WHERE (w.full_name LIKE ? OR w.email LIKE ? OR w.mobile LIKE ?)";
+            if (supporter_id != -1) {
+                sql += " AND w.supporter_id = " + supporter_id;
+            }
+            sql += " ORDER BY " + orderBy + " " + orderDir + " LIMIT ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -178,6 +183,10 @@ public class WebContactDaoImpl implements WebContactDao {
                     web.setMobile(resultSet.getString("mobile"));
                     web.setMessage(resultSet.getString("message"));
                     web.setResponse(resultSet.getString("response"));
+                    web.setDate(resultSet.getTimestamp("date"));
+                    web.setStatus(resultSet.getInt("status_id"));
+                    web.setSuporter(resultSet.getString("supporter_name"));
+                    web.setId(resultSet.getInt("web_contact_id"));
                     webList.add(web);
                 }
             } catch (SQLException e) {
@@ -212,13 +221,16 @@ public class WebContactDaoImpl implements WebContactDao {
     }
 
     @Override
-    public int countAll(Connection connection, String search) throws SQLException {
+    public int countAll(Connection connection, String search,int supFilter) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
-            String sql = "SELECT COUNT(1) AS count FROM web_contact WHERE full_name LIKE ? OR email LIKE ?";
-            Object[] params = { "%" + search + "%", "%" + search + "%" };
+            String sql = "SELECT COUNT(1) AS count FROM web_contact WHERE (full_name LIKE ? OR email LIKE ? OR mobile LIKE ?)";
+            if (supFilter != -1) {
+                sql += " AND supporter_id = " + supFilter;
+            }
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%" };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {

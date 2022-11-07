@@ -34,11 +34,11 @@ public interface WebContactDao {
 
     int count(Connection connection, String fullName, String email) throws SQLException;
 
-    java.util.List<WebContact> findAll(Connection connection, int start, int length, String search) throws SQLException;
+    java.util.List<WebContact> findAll(Connection connection, int start, int length, String search,String orderBy,String orderDir,int supporter_id) throws SQLException;
 
     int countAll(Connection connection) throws SQLException;
 
-    int countAll(Connection connection, String search) throws SQLException;
+    int countAll(Connection connection, String search,int supFilter) throws SQLException;
 
     int reply(Connection connection, int id, String reply) throws SQLException;
 }

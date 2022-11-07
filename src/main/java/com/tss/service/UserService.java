@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tss.model.Trainee;
 import com.tss.model.User;
+import com.tss.model.system.Role;
 import com.tss.model.util.DataTablesColumns;
 
 public interface UserService {
@@ -68,4 +69,10 @@ public interface UserService {
         void updateUser(int userId, String fullname, String mobile);
 
         List<Trainee> GetWaitingList(int classId);
+
+        List<Role> getRoles();
+
+        boolean UpdateRole(int userId, int roleId);
+
+        List<User> getSupporter();
 }

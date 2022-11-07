@@ -91,12 +91,12 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
     }
 
     @Override
-    public int countAll() {
+    public int countAll(int userId) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = evalDao.countAll(connection);
+            count = evalDao.countAll(connection,userId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -106,8 +106,8 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
     }
 
     @Override
-    public List<EvalCriteria> findAll(int start, int length, String search, List<DataTablesColumns> columns,
-            int orderColumn, String orderDir, String subjectFilter, String assignFilter, String statusFilter) {
+    public List<EvalCriteria> findAll(int start, int length, String search, java.util.List<DataTablesColumns> columns,
+    int orderColumn, String orderDir, int subjectFilter, int assignFilter, int statusFilter,int userId) {
         Connection connection = null;
         List<EvalCriteria> evalList = null;
 
@@ -127,7 +127,7 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
         try {
             connection = BaseDao.getConnection();
             evalList = evalDao.findAll(connection, start, length, search, columnName,
-                    orderDir, subjectFilter, assignFilter, statusFilter);
+                    orderDir, subjectFilter, assignFilter, statusFilter,userId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -137,12 +137,12 @@ public class EvalCriteriaServiceImpl implements EvalCriteriaService {
     }
 
     @Override
-    public int countAll(String search, String subjectFilter, String assignFilter, String statusFilter) {
+    public int countAll(String search, int subjectFilter, int assignFilter, int statusFilter,int userId) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = evalDao.countAll(connection, search, subjectFilter, assignFilter, statusFilter);
+            count = evalDao.countAll(connection, search, subjectFilter, assignFilter, statusFilter,userId);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -44,12 +44,12 @@ public class WebContactServiceImpl implements WebContactService {
     }
 
     @Override
-    public List<WebContact> findAll(int start, int length, String search) {
+    public List<WebContact> findAll(int start, int length, String search, String orderBy,String orderDir,int supporter_id) {
         Connection connection = null;
         List<WebContact> webList = null;
         try {
             connection = BaseDao.getConnection();
-            webList = webDao.findAll(connection, start, length, search);
+            webList = webDao.findAll(connection, start, length, search, orderBy, orderDir, supporter_id);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -131,18 +131,23 @@ public class WebContactServiceImpl implements WebContactService {
     }
 
     @Override
-    public int countAll(String search) {
+    public int countAll(String search,int supFilter) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = webDao.countAll(connection, search);
+            count = webDao.countAll(connection, search,supFilter);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
         return count;
+    }
+
+    public static void main(String[] args) {
+        WebContactService webService = new WebContactServiceImpl();
+        System.out.println(webService.countAll("",2));
     }
 
     @Override
