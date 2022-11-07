@@ -12,7 +12,7 @@
                         <!--begin::Toolbar-->
 
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <form action="/schedule/attendance">
+                            <form action="/schedule/attendance" hidden="true">
                                 <input type="hidden" name="action" value="get">
                                 <div class="d-flex justify-content-end me-3">
                                     <!--begin::Filter-->
@@ -53,8 +53,8 @@
                                 <c:when test="${!scheduleList.isEmpty()}">
                                     <table class="table table-sm">
                                         <thead>
-                                            <tr class="text-gray-600 fw-bold ">
-                                                <th class="">Slot</th>
+                                            <tr class="text-gray-600 fw-bold border-2 border-gray-400">
+                                                <th class="" style="padding-left: 3px;">Slot</th>
                                                 <th class="">Training date</th>
                                                 <th class="">Topic</th>
                                                 <th class="">Time</th>
@@ -71,9 +71,9 @@
                                                 <tr class="border-2 border-gray-300">
                                                     <td style="padding-left: 3px;">${i}</td>
                                                     <c:set var = "i" value = "${i+1}"/>
-                                                    <td><span class="badge badge-danger fw-bold fs-6">${sl.training_date}</span></td>
+                                                    <td><span class="">${sl.training_date}</span></td>
                                                     <td>${sl.title}</td>
-                                                    <td><span class="badge badge-success fw-bold fs-6">${sl.from_time} - ${sl.to_time}</span></td>
+                                                    <td><span class="">${sl.from_time} - ${sl.to_time}</span></td>
                                                     <td>${sl.room}</td>
 
                                                     <c:forEach items="${attendanceList}" var="al">

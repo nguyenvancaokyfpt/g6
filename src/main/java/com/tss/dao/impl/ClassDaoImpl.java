@@ -56,7 +56,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status, class_user where class.status_id = status.status_id and class.class_id = class_user.class_id and class_user.user_id = ?;";
-            Object[] params = { userId };
+            Object[] params = {userId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -87,7 +87,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status where class.status_id = status.status_id and trainer_id = ?;";
-            Object[] params = { userId };
+            Object[] params = {userId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -145,13 +145,13 @@ public class ClassDaoImpl implements ClassDao {
 
     @Override
     public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term,
-            String status, String order, String dir) throws SQLException {
+            String status, String order, String dir,String subject) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassAnhPT> classList = new ArrayList<>();
         if (connection != null) {
             String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
-                    + "class.description,a.full_name,b.full_name,setting_title,status.status_title\n"
+                    + "class.description,a.full_name t,b.full_name s,setting_title,status.status_title,subject.subject_code\n"
                     + "from class\n"
                     + "inner join user_role aa on aa.user_id = class.trainer_id\n"
                     + "inner join user_role bb on bb.user_id = class.combo_id\n"
@@ -159,29 +159,92 @@ public class ClassDaoImpl implements ClassDao {
                     + "inner join user b on b.user_id = bb.user_id\n"
                     + "inner join status on class.status_id = status.status_id\n"
                     + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "inner join subject on class.subject = subject.subject_id\n"
                     + "where (class.class_code like ?) \n"
                     + "and setting_title like ?\n"
                     + "and status.status_title like ?\n"
+                    + "and subject_code like ?\n"
                     + "order by " + order + " " + dir + " limit ?,5;";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, "%" + searchword + "%");
                 preparedStatement.setString(2, "%" + term + "%");
                 preparedStatement.setString(3, "" + status + "%");
-                preparedStatement.setInt(4, offset);
+                preparedStatement.setString(4, "%" + subject + "%");
+                preparedStatement.setInt(5, offset);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    classList.add(new ClassAnhPT(resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getInt(3),
-                            resultSet.getInt(4),
-                            resultSet.getInt(5),
-                            resultSet.getInt(6),
-                            resultSet.getString(7),
-                            resultSet.getString(10),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(11)));
+                    ClassAnhPT classnew = new ClassAnhPT();
+                    classnew.setClass_id(resultSet.getInt("class_id"));
+                    classnew.setClass_code(resultSet.getString("class_code"));
+                    classnew.setCombo_id(resultSet.getInt("combo_id"));
+                    classnew.setTrainer_id(resultSet.getInt("trainer_id"));
+                    classnew.setTerm_id(resultSet.getInt("term_id"));
+                    classnew.setStatus_id(resultSet.getInt("status_id"));
+                    classnew.setDescription(resultSet.getString("description"));
+                    classnew.setTrainerString(resultSet.getString("t"));
+                    classnew.setSupporterString(resultSet.getString("s"));
+                    classnew.setTermString(resultSet.getString("setting_title"));
+                    classnew.setStatusString(resultSet.getString("status_title"));
+                    classnew.setSubjectString(resultSet.getString("subject_code"));
+                    classList.add(classnew);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classList;
+    }
+
+    @Override
+    public List<ClassAnhPT> listSearchFilter2(Connection connection, int offset, String searchword, String term,
+            String status, String order, String dir, int trainer,String subject) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ClassAnhPT> classList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
+                    + "class.description,a.full_name t,b.full_name s,setting_title,status.status_title,subject.subject_code\n"
+                    + "from class\n"
+                    + "inner join user_role aa on aa.user_id = class.trainer_id\n"
+                    + "inner join user_role bb on bb.user_id = class.combo_id\n"
+                    + "inner join user a on a.user_id = aa.user_id\n"
+                    + "inner join user b on b.user_id = bb.user_id\n"
+                    + "inner join status on class.status_id = status.status_id\n"
+                    + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "inner join subject on class.subject = subject.subject_id\n"
+                    + "where (class.class_code like ?) \n"
+                    + "and setting_title like ?\n"
+                    + "and status.status_title like ?\n"
+                    + "and trainer_id like ?\n"
+                    + "and subject_code like ?\n"
+                    + "order by " + order + " " + dir + " limit ?,5;";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + searchword + "%");
+                preparedStatement.setString(2, "%" + term + "%");
+                preparedStatement.setString(3, "" + status + "%");
+                preparedStatement.setInt(4, trainer);
+                preparedStatement.setString(5, "%" + subject + "%");
+                preparedStatement.setInt(6, offset);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    ClassAnhPT classnew = new ClassAnhPT();
+                    classnew.setClass_id(resultSet.getInt("class_id"));
+                    classnew.setClass_code(resultSet.getString("class_code"));
+                    classnew.setCombo_id(resultSet.getInt("combo_id"));
+                    classnew.setTrainer_id(resultSet.getInt("trainer_id"));
+                    classnew.setTerm_id(resultSet.getInt("term_id"));
+                    classnew.setStatus_id(resultSet.getInt("status_id"));
+                    classnew.setDescription(resultSet.getString("description"));
+                    classnew.setTrainerString(resultSet.getString("t"));
+                    classnew.setSupporterString(resultSet.getString("s"));
+                    classnew.setTermString(resultSet.getString("setting_title"));
+                    classnew.setStatusString(resultSet.getString("status_title"));
+                    classnew.setSubjectString(resultSet.getString("subject_code"));
+                    classList.add(classnew);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -237,7 +300,52 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public int countSearchFilter(Connection connection, String searchword, String term, String status)
+    public ClassAnhPT findById2(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ClassAnhPT> classList = new ArrayList<>();
+        ClassAnhPT classDetail = new ClassAnhPT();
+        if (connection != null) {
+            String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
+                    + "class.description,a.full_name,b.full_name,setting_title,status.status_title, subject\n"
+                    + "from class\n"
+                    + "inner join user_role aa on aa.user_id = class.trainer_id\n"
+                    + "inner join user_role bb on bb.user_id = class.combo_id\n"
+                    + "inner join user a on a.user_id = aa.user_id\n"
+                    + "inner join user b on b.user_id = bb.user_id\n"
+                    + "inner join status on class.status_id = status.status_id\n"
+                    + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "where class_id = ?;";
+
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    classDetail.setClass_id(resultSet.getInt(1));
+                    classDetail.setClass_code(resultSet.getString(2));
+                    classDetail.setCombo_id(resultSet.getInt(3));
+                    classDetail.setTrainer_id(resultSet.getInt(4));
+                    classDetail.setTerm_id(resultSet.getInt(5));
+                    classDetail.setStatus_id(resultSet.getInt(6));
+                    classDetail.setDescription(resultSet.getString(7));
+                    classDetail.setTrainerString(resultSet.getString(8));
+                    classDetail.setSupporterString(resultSet.getString(9));
+                    classDetail.setTermString(resultSet.getString(10));
+                    classDetail.setStatusString(resultSet.getString(11));
+                    classDetail.setSubject_id(resultSet.getInt(12));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return classDetail;
+    }
+
+    @Override
+    public int countSearchFilter(Connection connection, String searchword, String term, String status, String subject)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -250,14 +358,57 @@ public class ClassDaoImpl implements ClassDao {
                     + "inner join user b on b.user_id = bb.user_id\n"
                     + "inner join status on class.status_id = status.status_id\n"
                     + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "inner join subject on class.subject = subject.subject_id\n"
                     + "where (class.class_code like ?) \n"
                     + "and setting_title like ?\n"
-                    + "and status.status_title like ?;";
+                    + "and status.status_title like ?\n"
+                    + "and subject_code like ?";
             try {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, "%" + searchword + "%");
                 preparedStatement.setString(2, "%" + term + "%");
                 preparedStatement.setString(3, "" + status + "%");
+                preparedStatement.setString(4, "" + subject + "%");
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    totalSetting = resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return totalSetting;
+    }
+
+    @Override
+    public int countSearchFilter2(Connection connection, String searchword, String term, String status, int trainer,String subject)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int totalSetting = 0;
+        if (connection != null) {
+            String sql = "select count(*) from class\n"
+                    + "inner join user_role aa on aa.user_id = class.trainer_id\n"
+                    + "inner join user_role bb on bb.user_id = class.combo_id\n"
+                    + "inner join user a on a.user_id = aa.user_id\n"
+                    + "inner join user b on b.user_id = bb.user_id\n"
+                    + "inner join status on class.status_id = status.status_id\n"
+                    + "inner join setting on class.term_id = setting.setting_id\n"
+                    + "inner join subject on class.subject = subject.subject_id\n"
+                    + "where (class.class_code like ?) \n"
+                    + "and setting_title like ?\n"
+                    + "and trainer_id like ?\n"
+                    + "and status.status_title like ?\n"
+                    + "and subject_code like ?";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + searchword + "%");
+                preparedStatement.setString(2, "%" + term + "%");
+                preparedStatement.setString(4, "" + status + "%");
+                preparedStatement.setString(5, "" + subject + "%");
+                preparedStatement.setInt(3, trainer);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     totalSetting = resultSet.getInt(1);
@@ -297,6 +448,32 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
+    public void add2(Connection connection, String code, int supporter_id, int trainer_id, int term_id, int status_id,
+            String description, int subject_id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            String sql = "INSERT INTO class(class_code,combo_id,trainer_id,term_id,status_id,description,subject) VALUES (?,?,?,?,?,?,?);";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, code);
+                preparedStatement.setInt(2, supporter_id);
+                preparedStatement.setInt(3, trainer_id);
+                preparedStatement.setInt(4, term_id);
+                preparedStatement.setInt(5, status_id);
+                preparedStatement.setString(6, description);
+                preparedStatement.setInt(7, subject_id);
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
     public void edit(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id,
             int status_id, String description) throws SQLException {
         PreparedStatement preparedStatement = null;
@@ -312,6 +489,33 @@ public class ClassDaoImpl implements ClassDao {
                 preparedStatement.setInt(5, status_id);
                 preparedStatement.setString(6, description);
                 preparedStatement.setInt(7, class_id);
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+    }
+
+    @Override
+    public void edit2(Connection connection, int class_id, String code, int supporter_id, int trainer_id, int term_id,
+            int status_id, String description, int subject_id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            String sql = "UPDATE class SET class_code = ?, combo_id = ?,trainer_id = ?,term_id = ?,status_id = ?,description = ?,subject = ? WHERE class_id = ?;";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, code);
+                preparedStatement.setInt(2, supporter_id);
+                preparedStatement.setInt(3, trainer_id);
+                preparedStatement.setInt(4, term_id);
+                preparedStatement.setInt(5, status_id);
+                preparedStatement.setString(6, description);
+                preparedStatement.setInt(8, class_id);
+                preparedStatement.setInt(7, subject_id);
                 preparedStatement.executeUpdate();
 
             } catch (SQLException e) {
@@ -375,7 +579,7 @@ public class ClassDaoImpl implements ClassDao {
         boolean flag = false;
         if (connection != null) {
             String sql = "insert into class_user (class_id,user_id,grade) values (?,?,?);";
-            Object[] params = { classId, user.getUserId(), grade };
+            Object[] params = {classId, user.getUserId(), grade};
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
@@ -396,7 +600,7 @@ public class ClassDaoImpl implements ClassDao {
         Classroom classroom = null;
         if (connection != null) {
             String sql = "select * from class where class_id = ?;";
-            Object[] params = { classId };
+            Object[] params = {classId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -423,10 +627,10 @@ public class ClassDaoImpl implements ClassDao {
         ResultSet resultSet = null;
         List<ClassEntity> classEntitys = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    class_id, class_code\n" +
-                    "FROM\n" +
-                    "    class";
+            String sql = "SELECT \n"
+                    + "    class_id, class_code\n"
+                    + "FROM\n"
+                    + "    class";
             // Search and Paging
             Object[] params = {};
             try {

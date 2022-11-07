@@ -6,6 +6,7 @@ package com.tss.controller.schedule;
 
 import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
+import com.tss.constants.SessionConstants;
 import com.tss.dao.BaseDao;
 import com.tss.dao.impl.AttendanceDaoImpl;
 import com.tss.helper.ResponseHelper;
@@ -40,7 +41,7 @@ public class ScheduleAttendanceServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -99,6 +100,27 @@ public class ScheduleAttendanceServlet extends HttpServlet {
                 request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
                 break;
             default:
+                int globalClassId = -1;
+                try {
+                    globalClassId = (int) request.getSession().getAttribute(SessionConstants.GLOBAL_CLASS_ID);
+                } catch (Exception e) {
+                    globalClassId = -1;
+                }
+                class_id = globalClassId;
+                ScheduleList = dao.findAllSchedule(connection, class_id);
+                user_id = user.getUserId();
+                totalSchedule = dao.countTotalSchedule(connection, class_id, user_id);
+                absent = dao.countAbsent(connection, class_id, user_id);
+                absentSofar = 0;
+                absentPercent = (double) absent / totalSchedule * 100;
+                absentSofar = (int) absentPercent;
+                AttendanceList = dao.findAttendanceByUser(connection, class_id, user_id);
+                request.setAttribute("scheduleList", ScheduleList);
+                request.setAttribute("attendanceList", AttendanceList);
+                request.setAttribute("class_id", class_id);
+                request.setAttribute("absentSofar", absentSofar);
+                request.setAttribute("absent", absent);
+                request.setAttribute("totalSchedule", totalSchedule);
                 request.setAttribute("jspPath", "shared/attendanceSchedule.jsp");
                 request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                         ScreenConstants.USER_DASHBOARD,
@@ -115,7 +137,7 @@ public class ScheduleAttendanceServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -133,7 +155,7 @@ public class ScheduleAttendanceServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

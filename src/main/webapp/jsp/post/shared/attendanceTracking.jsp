@@ -30,7 +30,7 @@
                         <!--begin::Toolbar-->
 
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <form action="attendance/tracking">
+                            <form action="attendance/tracking" hidden="true">
                                 <input type="hidden" name="action" value="get">
                                 <div class="d-flex justify-content-end me-3">
                                     <!--begin::Filter-->

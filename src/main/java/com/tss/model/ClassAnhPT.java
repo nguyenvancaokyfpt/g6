@@ -16,11 +16,13 @@ public class ClassAnhPT {
     private int trainer_id;
     private int term_id;
     private int status_id;
+    private int subject_id;
     private String description;
     private String termString;
     private String trainerString;
     private String supporterString;
     private String statusString;
+    private String subjectString;
 
     public ClassAnhPT() {
     }
@@ -38,6 +40,22 @@ public class ClassAnhPT {
         this.trainerString = trainerString;
         this.supporterString = supporterString;
         this.statusString = statusString;
+    }
+
+    public ClassAnhPT(int class_id, String class_code, int combo_id, int trainer_id, int term_id, int status_id, int subject_id, String description, String termString, String trainerString, String supporterString, String statusString, String subjectString) {
+        this.class_id = class_id;
+        this.class_code = class_code;
+        this.combo_id = combo_id;
+        this.trainer_id = trainer_id;
+        this.term_id = term_id;
+        this.status_id = status_id;
+        this.subject_id = subject_id;
+        this.description = description;
+        this.termString = termString;
+        this.trainerString = trainerString;
+        this.supporterString = supporterString;
+        this.statusString = statusString;
+        this.subjectString = subjectString;
     }
 
     public ClassAnhPT(int trainer_id, String trainerString) {
@@ -131,6 +149,22 @@ public class ClassAnhPT {
 
     public void setSupporterString(String supporterString) {
         this.supporterString = supporterString;
+    }
+
+    public int getSubject_id() {
+        return subject_id;
+    }
+
+    public void setSubject_id(int subject_id) {
+        this.subject_id = subject_id;
+    }
+
+    public String getSubjectString() {
+        return subjectString;
+    }
+
+    public void setSubjectString(String subjectString) {
+        this.subjectString = subjectString;
     }
 
     @Override

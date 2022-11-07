@@ -52,6 +52,41 @@ public class AttendanceDaoImpl {
         }
         return attendanceList;
     }
+    
+    public List<Attendance> findTodayAttendance(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Attendance> attendanceList = new ArrayList<>();
+        if (connection != null) {
+            String sql = "select class.class_code, user.full_name,user.user_id, DATE_FORMAT(schedule.training_date, \"%d/%m/%Y\") as training_date,schedule.slot_id,schedule.schedule_id,status.status_title, attendance.comment \n"
+                    + "from attendance \n"
+                    + "inner join class on class.class_id = attendance.class_id\n"
+                    + "inner join user on user.user_id = attendance.trainer_id\n"
+                    + "inner join schedule on schedule.schedule_id = attendance.schedule_id\n"
+                    + "inner join status on status.status_id = attendance.status_id where schedule.training_date = CURDATE()";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Attendance attendance = new Attendance();
+                    attendance.setClass_code(resultSet.getString("class_code"));
+                    attendance.setFull_name(resultSet.getString("full_name"));
+                    attendance.setTraining_date(resultSet.getString("training_date"));
+                    attendance.setSlot_id(resultSet.getInt("slot_id"));
+                    attendance.setSchedule_id(resultSet.getInt("schedule_id"));
+                    attendance.setTrainer_id(resultSet.getInt("user_id"));
+                    attendance.setStatus(resultSet.getString("status_title"));
+                    attendance.setComment(resultSet.getString("comment"));
+                    attendanceList.add(attendance);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return attendanceList;
+    }
 
     public List<Attendance> findAttendanceByUser(Connection connection, int class_id, int user_id) throws SQLException {
         PreparedStatement preparedStatement = null;
@@ -90,7 +125,7 @@ public class AttendanceDaoImpl {
         }
         return attendanceList;
     }
-    
+
     public List<Attendance> findAttendanceBySchedule(Connection connection, int schedule_id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -161,6 +196,40 @@ public class AttendanceDaoImpl {
         return scheduleList;
     }
 
+    public List<AnhPTSchedule> findTodaySchedule(Connection connection, int trainer_id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<AnhPTSchedule> scheduleList = new ArrayList<AnhPTSchedule>();
+        if (connection != null) {
+            String sql = "select schedule_id,schedule.class_id,slot_id,title,DATE_FORMAT(schedule.training_date,\"%d/%m/%Y\") \n"
+                    + "as training_date,TIME_FORMAT(from_time,\"%h:%i\") as from_time,TIME_FORMAT(to_time, \"%h:%i\") as to_time,room, class.trainer_id\n"
+                    + "from schedule inner join class on class.class_id = schedule.class_id \n"
+                    + "where training_date = CURDATE() and class.trainer_id = ?;";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, trainer_id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    AnhPTSchedule schedule = new AnhPTSchedule();
+                    schedule.setSchedule_id(resultSet.getInt("schedule_id"));
+                    schedule.setClass_id(resultSet.getInt("class_id"));
+                    schedule.setSlot_id(resultSet.getInt("slot_id"));
+                    schedule.setTitle(resultSet.getString("title"));
+                    schedule.setTraining_date(resultSet.getString("training_date"));
+                    schedule.setFrom_time(resultSet.getString("from_time"));
+                    schedule.setTo_time(resultSet.getString("to_time"));
+                    schedule.setRoom(resultSet.getString("room"));
+                    scheduleList.add(schedule);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return scheduleList;
+    }
+
     public List<AnhPTClassUser> findAllClassUser(Connection connection, int class_id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -201,11 +270,11 @@ public class AttendanceDaoImpl {
         }
         return userList;
     }
-    
+
     public int countTotalSchedule(Connection connection, int class_id, int trainer_id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        int a=0;
+        int a = 0;
         if (connection != null) {
             String sql = "select count(*) from attendance where class_id = ? and trainer_id = ?";
             try {
@@ -224,11 +293,12 @@ public class AttendanceDaoImpl {
         }
         return a;
     }
+
     public int countAbsent(Connection connection, int class_id, int trainer_id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<AnhPTClassUser> userList = new ArrayList<>();
-        int a=0;
+        int a = 0;
         if (connection != null) {
             String sql = "select count(*) from attendance where class_id = ? and trainer_id = ? and status_id = 4";
             try {
@@ -237,7 +307,7 @@ public class AttendanceDaoImpl {
                 preparedStatement.setInt(2, trainer_id);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    a=resultSet.getInt(1);
+                    a = resultSet.getInt(1);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -299,7 +369,7 @@ public class AttendanceDaoImpl {
         int b = dao.countAbsent(connection, 1, 19);
         System.out.println(a);
         System.out.println(b);
-        double c = ((double)b/a)*100;
+        double c = ((double) b / a) * 100;
         System.out.println(c);
     }
 }
