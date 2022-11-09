@@ -359,10 +359,14 @@
                                                 <a href="/class/list?id=${sl.class_id}&action=update" title="Edit"><i class='fas fa-edit' style='font-size:24px'></i></a>
                                                     <c:choose>
                                                         <c:when test="${sl.statusString=='Active'}">
-                                                        <a href="/class/list?id=${sl.class_id}&page=${i}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&trainer=${trainer}&subject=${subject}&action=delete" title="Deactivate"><i class='fas fa-times-circle' style='font-size:24px'></i></a>
+                                                        <a href="/class/list?id=${sl.class_id}&page=${page}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&trainer=${trainer}&subject=${subject}&action=delete" title="Deactivate" onclick="return confirm('You want to deactivate this class?');">
+                                                            <i class='fas fa-times-circle' style='font-size:24px'></i>
+                                                        </a>
                                                         </c:when>    
                                                         <c:otherwise>
-                                                        <a href="/class/list?id=${sl.class_id}&page=${i}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&trainer=${trainer}&subject=${subject}&action=delete" title="Activate"><i class='fas fa-check-square' style='font-size:24px'></i></a>
+                                                        <a href="/class/list?id=${sl.class_id}&page=${page}&searchword=${searchword}&term=${term}&status_id=${sl.status_id}&order=${order}&dir=${dir}&trainer=${trainer}&subject=${subject}&action=delete" title="Activate" onclick="return confirm('You want to activate this class?');">
+                                                            <i class='fas fa-check-square' style='font-size:24px'></i>
+                                                        </a>
                                                         </c:otherwise>
                                                     </c:choose>
                                             </td>

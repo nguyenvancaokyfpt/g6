@@ -12,11 +12,11 @@
                         <!--begin::Toolbar-->
 
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <form action="attendance/detail">
+                            <form action="attendance/detail"hidden="true">
                                 <input type="hidden" name="action" value="get">
                                 <div class="d-flex justify-content-end me-3">
                                     <!--begin::Filter-->
-                                    <select name="class_id" class="form-select form-select" hidden="true">
+                                    <select name="class_id" class="form-select form-select">
                                         <c:forEach items="${myClass}" var="d">
                                             <c:choose>
                                                 <c:when test="${class_id == d.getClassId()}">

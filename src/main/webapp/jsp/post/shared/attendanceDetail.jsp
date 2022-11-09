@@ -38,16 +38,16 @@
                                             <td class="fw-bolder text-dark fs-6">${ul.class_code}</td>
                                             <td class="fw-bolder text-dark fs-6">${ul.full_name}</td>
                                             <td class="form-label fw-bolder text-dark fs-6">
-                                                <input type="radio" name="user_status[${ul.user_id}]" value="3" class="form-check-input" checked="true"> Present
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="13" class="form-check-input" checked="true"> Present
                                             </td>
                                             <td class="form-label fw-bolder text-dark fs-6">
-                                                <input type="radio" name="user_status[${ul.user_id}]" value="4" class="form-check-input"> Absent
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="14" class="form-check-input"> Absent
                                             </td>
                                             <td class="form-label fw-bolder text-dark fs-6">
-                                                <input type="radio" name="user_status[${ul.user_id}]" value="5" class="form-check-input"> Late
+                                                <input type="radio" name="user_status[${ul.user_id}]" value="15" class="form-check-input"> Late
                                             </td>
                                             <td>
-                                                <input type="text" name="user_comment[${ul.user_id}]" placeholder="Enter comment" class="form-control">
+                                                <input type="text" name="user_comment[${ul.user_id}]" placeholder="Enter comment" class="form-control" maxlength="30">
                                             </td>
                                             <td class="float-lg-start">
                                                 <object data="${ul.avatarUrl}" type="image/png" style="width:105px;height:110px;">

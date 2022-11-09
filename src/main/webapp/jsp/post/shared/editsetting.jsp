@@ -123,11 +123,11 @@
                                     <input type="hidden" name="action" value="update">
 
                                     <div class="modal-body py-10 px-lg-17">
-                                        <h3 style="color: green">${successMessage}</h3><br>
+                                        <h3 style="color: green">${successMessage}</h3>
                                         <label class="form-label fw-bolder text-dark fs-6">Type</label>
                                         <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
-                                            <select class="form-select fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="type_id" required="true">
-                                                <option data-select2-id="select2-data-12-dqg1"></option>
+                                            <select class="form-select form-select-solid fw-bolder select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" aria-hidden="true" name="type_id" disabled="true">
+                                                <option data-select2-id="select2-data-12-dqg1"></option> 
                                                 <c:forEach items="${typelist}" var="tl">
                                                     <c:choose>
                                                         <c:when test="${settingType==tl.id}">
@@ -139,10 +139,17 @@
                                                     </c:choose>
                                                 </c:forEach>                                                                    
                                             </select>
+                                            <c:forEach items="${typelist}" var="tl">
+                                                <c:choose>
+                                                    <c:when test="${settingType==tl.id}">
+                                                        <input type="hidden" name="type_id" value="${tl.id}">
+                                                    </c:when>    
+                                                </c:choose>
+                                            </c:forEach>    
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                         <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
-                                            <label class="form-label fw-bolder text-dark fs-6">Title</label>
-                                            <input class="form-control form-control-lg" type="text"  name="title" required="true" value="<%=sd.getTitle()%>">
+                                            <label class="form-label fw-bolder text-dark fs-6"><span class="required">Title</span></label>
+                                            <input class="form-control form-control-lg" type="text"  name="title" required="true" value="<%=sd.getTitle()%>" maxlength="30">
                                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                         <div class="row mb-5">
                                             <!--begin::Col-->
@@ -151,7 +158,7 @@
                                                 <label class="fs-5 fw-bold mb-2">Value</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-lg" type="text"  name="value" autocomplete="off" value="<%=sd.getValue()%>">
+                                                <input class="form-control form-control-lg" type="text"  name="value" autocomplete="off" value="<%=sd.getValue()%>" maxlength="10">
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                             <!--end::Col-->
@@ -161,7 +168,7 @@
                                                 <label class="fs-5 fw-bold mb-2">Display Order</label>
                                                 <!--end::Label-->
                                                 <!--end::Input-->
-                                                <input class="form-control form-control-lg" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplayOrder()%>">
+                                                <input class="form-control form-control-lg" type="text"  name="display_order" autocomplete="off" value="<%=sd.getDisplayOrder()%>" maxlength="10">
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>

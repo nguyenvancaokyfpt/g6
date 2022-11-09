@@ -143,7 +143,7 @@
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input class="form-control form-control-solid"
-                                                    placeholder="Enter setting title" name="title" required="true">
+                                                    placeholder="Enter setting title" name="title" required="true" maxlength="30">
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
@@ -157,7 +157,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="text" class="form-control form-control-solid"
-                                                        placeholder="Enter setting value" name="value">
+                                                        placeholder="Enter setting value" name="value" maxlength="10">
                                                     <!--end::Input-->
                                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                                 </div>
@@ -168,7 +168,7 @@
                                                     <!--end::Label-->
                                                     <!--end::Input-->
                                                     <input type="text" class="form-control form-control-solid"
-                                                        placeholder="Enter display order" name="display_order">
+                                                        placeholder="Enter display order" name="display_order" maxlength="10">
                                                     <!--end::Input-->
                                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                                 </div>
@@ -195,7 +195,7 @@
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <textarea class="form-control form-control-solid"
-                                                    placeholder="Enter description" name="description"></textarea>
+                                                    placeholder="Enter description" name="description" maxlength="200"></textarea>
                                                 <!--end::Input-->
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>

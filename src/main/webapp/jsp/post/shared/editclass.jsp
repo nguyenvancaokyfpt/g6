@@ -35,8 +35,8 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input class="form-control form-control-solid"
-                                   placeholder="Enter setting title" name="class_code" required="true"
-                                   value="<%=sd.getClass_code()%>">
+                                   placeholder="Enter class code" name="class_code" required="true"
+                                   value="<%=sd.getClass_code()%>" maxlength="10">
                             <!--end::Input-->
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
@@ -199,7 +199,7 @@
                             <!--begin::Input-->
                             <textarea class="form-control form-control-solid"
                                       placeholder="Enter description"
-                                      name="description"><%=sd.getDescription()%></textarea>
+                                      name="description" maxlength="200"><%=sd.getDescription()%></textarea>
                             <!--end::Input-->
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
