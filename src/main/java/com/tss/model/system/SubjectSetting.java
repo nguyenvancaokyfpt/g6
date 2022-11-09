@@ -11,12 +11,13 @@ public class SubjectSetting {
     private String description;
     private int subjectId;
     private String subjectName;
+    private String typeTitle;
 
     public SubjectSetting() {
     }
 
     public SubjectSetting(int settingId, int typeId, String title, int value, String displayOrder, int statusId,
-            String description, int subjectId, String subjectName) {
+            String description, int subjectId, String subjectName, String typeTitle) {
         this.settingId = settingId;
         this.typeId = typeId;
         this.title = title;
@@ -26,6 +27,7 @@ public class SubjectSetting {
         this.description = description;
         this.subjectId = subjectId;
         this.subjectName = subjectName;
+        this.typeTitle = typeTitle;
     }
 
     public int getSettingId() {
@@ -98,6 +100,14 @@ public class SubjectSetting {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public String getTypeTitle() {
+        return typeTitle;
+    }
+
+    public void setTypeTitle(String typeTitle) {
+        this.typeTitle = typeTitle;
     }
 
 }

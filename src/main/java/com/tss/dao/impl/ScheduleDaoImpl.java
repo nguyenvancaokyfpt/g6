@@ -21,8 +21,8 @@ import java.util.List;
 public class ScheduleDaoImpl implements ScheduleDao {
 
     @Override
-    public List<Schedule> getScheduleList(Connection connection, String begin,
-            String end, String search, String classFilter)
+    public List<Schedule> getScheduleList(Connection connection, int begin,
+            int length, String search, String classFilter)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -30,19 +30,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
         if (connection != null) {
             String sql = "select s.*, c.class_code from schedule s join class c\n"
                     + "on s.class_id = c.class_id\n"
-                    + "where (title like ? or room like ? or training_date like ? or c.class_code like ?)\n"
-                    + "and (training_date between ? and ?)\n"
-                    + "order by training_date asc, slot_id asc";
-            if (!classFilter.equals("")) {
-                sql = "select s.*, c.class_code from schedule s join class c\n"
-                        + "on s.class_id = c.class_id\n"
-                        + "where (title like ? or room like ? or training_date like ? or c.class_code like ?)\n"
-                        + "and (training_date between ? and ?)\n"
-                        + "and s.class_id = " + classFilter + "\n"
-                        + "order by training_date asc, slot_id asc";
-            }
-            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + search + "%",
-                    begin, end };
+                    + "where (room like ? or training_date like ? or c.class_code like ?)\n"
+                    + "and s.class_id like ?\n"
+                    + "order by training_date asc, slot_id asc\n"
+                    + "limit ?, ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%",
+                    classFilter.equals("") ? "%%" : classFilter, begin, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement,
                         resultSet, sql, params);
@@ -51,7 +44,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
                     schedule.setScheduleId(resultSet.getInt("schedule_id"));
                     schedule.setClassId(resultSet.getInt("class_id"));
                     schedule.setSlot(resultSet.getInt("slot_id"));
-                    schedule.setTitle(resultSet.getString("title"));
                     schedule.setTrainingDate(resultSet.getDate("training_date"));
                     schedule.setFrom(resultSet.getTime("from_time"));
                     schedule.setTo(resultSet.getTime("to_time"));
@@ -69,16 +61,44 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
 
     @Override
+    public int getScheduleCount(Connection connection, String search, String classFilter)
+            throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        if (connection != null) {
+            String sql = "select count(*) as count from schedule s join class c\n"
+                    + "on s.class_id = c.class_id\n"
+                    + "where (room like ? or training_date like ? or c.class_code like ?)\n"
+                    + "and s.class_id like ?";
+            Object[] params = { "%" + search + "%", "%" + search + "%", "%" + search + "%",
+                    classFilter.equals("") ? "%%" : classFilter };
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement,
+                        resultSet, sql, params);
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return count;
+    }
+
+    @Override
     public int update(Connection connection, Schedule schedule) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int execute = 0;
         if (connection != null) {
-            String sql = "update schedule set class_id = ?, slot_id = ?, title = ?,\n"
+            String sql = "update schedule set class_id = ?, slot_id = ?,\n"
                     + "training_date = ?, from_time = ?, to_time = ?, room = ?\n"
                     + "where schedule_id = ?";
             Object[] params = { schedule.getClassId(), schedule.getSlot(),
-                    schedule.getTitle(), schedule.getTrainingDate(), schedule.getFrom(),
+                    schedule.getTrainingDate(), schedule.getFrom(),
                     schedule.getTo(), schedule.getRoom(), schedule.getScheduleId() };
             try {
                 execute = BaseDao.execute(connection, preparedStatement, sql, params);
@@ -97,11 +117,11 @@ public class ScheduleDaoImpl implements ScheduleDao {
         ResultSet resultSet = null;
         int execute = 0;
         if (connection != null) {
-            String sql = "insert into schedule(class_id, slot_id, title, training_date,\n"
+            String sql = "insert into schedule(class_id, slot_id, training_date,\n"
                     + "from_time, to_time, room)\n"
-                    + "values(?, ?, ?, ?, ?, ?, ?)";
+                    + "values(?, ?, ?, ?, ?, ?)";
             Object[] params = { schedule.getClassId(), schedule.getSlot(),
-                    schedule.getTitle(), schedule.getTrainingDate(), schedule.getFrom(),
+                    schedule.getTrainingDate(), schedule.getFrom(),
                     schedule.getTo(), schedule.getRoom() };
             try {
                 execute = BaseDao.execute(connection, preparedStatement, sql, params);
@@ -130,7 +150,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
                     schedule.setScheduleId(resultSet.getInt("schedule_id"));
                     schedule.setClassId(resultSet.getInt("class_id"));
                     schedule.setSlot(resultSet.getInt("slot_id"));
-                    schedule.setTitle(resultSet.getString("title"));
                     schedule.setTrainingDate(resultSet.getDate("training_date"));
                     schedule.setFrom(resultSet.getTime("from_time"));
                     schedule.setTo(resultSet.getTime("to_time"));

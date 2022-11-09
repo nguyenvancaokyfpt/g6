@@ -111,7 +111,7 @@ public class WebContactServlet extends HttpServlet {
         }
         List<WebContact> users = webContactService.findAll(start, length, search, orderBy, orderDir, supFilter);
         int recordsTotal = webContactService.countAll();
-        int recordsFiltered = webContactService.countAll(search,supFilter);
+        int recordsFiltered = webContactService.countAll(search, supFilter);
         // response
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, users));
     }
@@ -157,9 +157,10 @@ public class WebContactServlet extends HttpServlet {
 
     private void reply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/webcontact.jsp");
-        int categoryId = Integer.parseInt(request.getParameter("webcontactid"));
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         String reply = request.getParameter("reply");
-        webContactService.reply(categoryId, reply);
+        boolean x = webContactService.reply(categoryId, reply);
+        request.getSession().setAttribute("toast", x);
         response.sendRedirect("/webcontact/list");
     }
 

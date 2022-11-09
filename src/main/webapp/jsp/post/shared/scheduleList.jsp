@@ -4,6 +4,87 @@
     a:hover {
         cursor: pointer !important;
     }
+
+    /* The snackbar - position it at the bottom and in the middle of the screen */
+    #successToast {
+        visibility: hidden;
+        /* Hidden by default. Visible on click */
+        background-color: #50cd89;
+        /* Black background color */
+        width: max-content;
+        color: #fff;
+        /* White text color */
+        text-align: center;
+        /* Centered text */
+        padding: 16px;
+        /* Padding */
+        position: fixed;
+        /* Sit on top of the screen */
+        right: 40px;
+        /* Center the snackbar */
+        bottom: 70px;
+        /* 30px from the bottom */
+        border-radius: 0.475rem;
+    }
+
+    /* Show the snackbar when clicking on a button (class added with JavaScript) */
+    #successToast.show {
+        visibility: visible;
+        /* Show the snackbar */
+        /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 3s;
+        animation: fadein 0.5s, fadeout 0.5s 3s;
+    }
+
+    /* Animations to fade the snackbar in and out */
+    @-webkit-keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+
+        to {
+            bottom: 70px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+
+        to {
+            bottom: 70px;
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes fadeout {
+        from {
+            bottom: 70px;
+            opacity: 1;
+        }
+
+        to {
+            bottom: 0;
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            bottom: 70px;
+            opacity: 1;
+        }
+
+        to {
+            bottom: 0;
+            opacity: 0;
+        }
+    }
 </style>
 <!--begin::Post-->
 <c:set var="now" value="<%= new java.util.Date()%>" />
@@ -16,86 +97,6 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <div style="margin: 0 100px 25px 0; display: flex">
-                        <div style="margin-right: 5px">
-                            Year: <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                          data-placeholder="Select year" data-hide-search="true" id="year"
-                                          onchange="list(getYear(), getWeek(), getClassFilter(), getSearch())">
-                                <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
-                                <option value="${year-1}" ${requestScope.year == (year-1) ? 'selected':''}>${year-1}</option>
-                                <option value="${year}" ${requestScope.year == year ? 'selected':''}>${year}</option>
-                                <option value="${year+1}" ${requestScope.year == (year+1) ? 'selected':''}>${year+1}</option>
-                            </select>
-                        </div>
-                        <div>
-                            Week: <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                          data-placeholder="Select year" data-hide-search="true" id="week" 
-                                          onchange="list(getYear(), getWeek(), getClassFilter(), getSearch())">
-                                <c:forEach items="${requestScope.listWeek}" var="w">
-                                    <option ${requestScope.current == w ? 'selected' : ''}>${w}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                    <!--begin::Filter-->
-                    <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
-                            data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                        <!--begin::Svg Icon | path: icons/duotone/Text/Filter.svg-->
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24" />
-                                    <path
-                                        d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z"
-                                        fill="#000000" />
-                                </g>
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->Filter
-                    </button>
-                    <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                        <!--begin::Header-->
-                        <div class="px-7 py-5">
-                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Separator-->
-                        <div class="separator border-gray-200"></div>
-                        <!--end::Separator-->
-                        <!--begin::Content-->
-                        <div class="px-7 py-5" data-kt-user-table-filter="form">
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <label class="form-label fs-6 fw-bold">Class:</label>
-                                <select class="selectFilter form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                        data-placeholder="Select option" data-allow-clear="true" data-hide-search="true"
-                                        id="classFilter">
-                                    <option value="" ${requestScope.classFilter == '' ? 'selected' : '' }></option>
-                                    <c:forEach items="${requestScope.classes}" var="cl">
-                                        <option value="${cl.classId}" ${requestScope.classFilter == cl.classId ? 'selected' : '' }>${cl.classCode}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
-                            <div class="d-flex justify-content-end">
-                                <button type="reset"
-                                        class="btn btn-white btn-active-light-primary fw-bold me-2 px-6"
-                                        >
-                                    Reset</button>
-                                <button type="submit" class="btn btn-primary fw-bold px-6"
-                                        >
-                                    Apply</button>
-                            </div>
-                            <!--end::Actions-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Menu 1-->
-                    <!--end::Filter-->
-
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
                         <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
@@ -115,11 +116,10 @@
                         </span>
                         <!--end::Svg Icon-->
                         <input type="text" data-kt-user-table-filter="search"
-                               class="form-control form-control-solid w-250px ps-14"
-                               placeholder="Search date(yyyy-MM-dd), class, title" style="margin-right: 10px;" id="search"
-                               value="${requestScope.searchRg}" />
-                        <button type="button" class="btn btn-primary mb-3" style="margin-top: 10px;" 
-                                onclick="list(getYear(), getWeek(), getClassFilter(), getSearch())">
+                               class="form-control form-control-solid w-350px ps-14"
+                               placeholder="Search date(dd/MM/yyyy) / class" style="margin-right: 10px;"
+                               id="search" value="${requestScope.searchRg}" />
+                        <button class="btn btn-primary mb-3 mt-3" onclick="list(1)">
                             Search
                         </button>
                     </div>
@@ -167,9 +167,10 @@
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                             <th></th>
                             <th></th>
-                            <th class="min-w-175px">Slot</th>
+                            <th class="min-w-75px">Slot</th>
+                            <th class="min-w-125px">From</th>
+                            <th class="min-w-125px">To</th>
                             <th class="min-w-125px">Class</th>
-                            <th class="min-w-125px">Title</th>
                             <th class="min-w-125px">Training Date</th>
                             <th class="min-w-125px">Room</th>
                             <th class="min-w-125px">Status</th>
@@ -180,26 +181,23 @@
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
-                    <tbody class="text-gray-600 fw-bold">
+                    <tbody class="text-gray-700 fw-bold">
                         <!--begin::Table row-->
                         <c:forEach items="${requestScope.scheduleList}" var="s">
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td class="d-flex align-items-center">
-                                    <!--begin::User details-->
-                                    <div class="d-flex flex-column">
-                                        <p href="" class="text-gray-800 mb-1">${s.slot}</p>
-                                        <span>(${s.from} - ${s.to})</span>
-                                    </div>
-                                </td>
+                                <td>${s.slot}</td>
+                                <td>${s.from}</td>
+                                <td>${s.to}</td>
                                 <td>
                                     <c:forEach items="${requestScope.classes}" var="cl">
                                         ${cl.classId == s.classId ? cl.classCode : ''}
                                     </c:forEach>
                                 </td>
-                                <td>${s.title}</td>
-                                <td>${s.trainingDate}</td>
+                                <td>
+                                    <fmt:formatDate value="${s.trainingDate}" pattern="dd/MM/yyyy" />
+                                </td>
                                 <td>${s.room}</td>
                                 <fmt:formatDate var="time" value="${now}" pattern="HH:mm:ss" />
                                 <fmt:formatDate var="day" value="${now}" pattern="yyyy-MM-dd" />
@@ -217,7 +215,8 @@
                                 </td>
                                 <!--begin::Action=-->
                                 <td>
-                                    <form action="/schedule/list?action=get&scheduleId=${s.scheduleId}" method="post">
+                                    <form action="/schedule/list?action=get&scheduleId=${s.scheduleId}"
+                                          method="post">
                                         <button type="submit" class="btn btn-secondary">
                                             Details
                                         </button>
@@ -254,7 +253,21 @@
                     </tbody>
                     <!--end::Table body-->
                 </table>
-                ${requestScope.notice}
+                <ul style="float: right" class="pagination me-6">
+                    <li class="page-item previous ${requestScope.curPage == 1 ? 'disabled' : ''}">
+                        <button onclick="list(${requestScope.curPage - 1})" class="page-link"><i
+                                class="previous"></i></button>
+                    </li>
+                    <c:forEach items="${requestScope.pages}" var="p">
+                        <li class="page-item ${requestScope.curPage == p ? 'active' : ''}">
+                            <button onclick="list(${p})" class="page-link">${p}</button>
+                        </li>
+                    </c:forEach>
+                    <li class="page-item next ${requestScope.curPage == requestScope.endPage ? 'disabled' : ''}"">
+                        <button onclick=" list(${requestScope.curPage + 1})" class="page-link"><i
+                                class="next"></i></button>
+                    </li>
+                </ul>
                 <!--end::Table-->
             </div>
             <!--end::Card body-->
@@ -265,39 +278,27 @@
 </div>
 <!--end::Post-->
 
-<form hidden id="formList" action="/schedule/list" method="post">
-    <input name="action" value="list" />
-    <input name="year" value="" id="yearInp" />
-    <input name="week" value="" id="weekInp" />
-    <input name="searchRg" value="" id="searchInp" />
-    <input name="classFilter" value="" id="classInp" />
-</form>
-
+<div id="successToast">
+    <i style="color: #fff; font-size: 23px" class="fa fa-check me-4"></i>
+    <span style="font-size: 16px">Successfully !!!</span>
+</div>
 
 <script type="text/javascript">
-
-    function getYear() {
-        return document.getElementById('year').value;
+    function list(x) {
+        window.location.href = "/schedule/list?search=" + document.getElementById('search').value
+                + "&curPage=" + x;
     }
 
-    function getWeek() {
-        return document.getElementById('week').value;
-    }
+    <c:if test="${sessionScope.toast == true}">
+    var x = document.getElementById("successToast");
 
-    function getSearch() {
-        return document.getElementById('search').value;
-    }
+    // Add the "show" class to DIV
+    x.className = "show";
 
-    function getClassFilter() {
-        return document.getElementById('classFilter').value;
-    }
-
-    function list(year, week, classFilter, searchRg) {
-        document.getElementById('yearInp').value = year;
-        document.getElementById('weekInp').value = week;
-        document.getElementById('classInp').value = classFilter;
-        document.getElementById('searchInp').value = searchRg;
-        document.getElementById('formList').submit();
-    }
-
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
+    </c:if>
+    <c:remove scope="session" var="toast"/>
 </script>

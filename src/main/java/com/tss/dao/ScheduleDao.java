@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface ScheduleDao {
 
-    List<Schedule> getScheduleList(Connection connection, String begin, String end,
+    List<Schedule> getScheduleList(Connection connection, int begin, int length,
             String search, String classFilter)
             throws SQLException;
+
+    int getScheduleCount(Connection connection, String search, String classFilter) throws SQLException;
 
     int update(Connection connection, Schedule schedule) throws SQLException;
 

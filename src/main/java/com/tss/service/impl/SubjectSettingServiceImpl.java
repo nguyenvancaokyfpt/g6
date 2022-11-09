@@ -4,52 +4,22 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.tss.dao.BaseDao;
+import com.tss.dao.SettingDao;
 import com.tss.dao.SubjectSettingDao;
+import com.tss.dao.impl.SettingDaoImpl;
 import com.tss.dao.impl.SubjectSettingDaoImpl;
+import com.tss.model.system.Setting;
 import com.tss.model.system.SubjectSetting;
 import com.tss.service.SubjectSettingService;
 
 public class SubjectSettingServiceImpl implements SubjectSettingService {
 
     private SubjectSettingDao subjectSettingDao;
+    private SettingDao settingDao;
 
     public SubjectSettingServiceImpl() {
         subjectSettingDao = new SubjectSettingDaoImpl();
-    }
-
-    @Override
-    public List<SubjectSetting> getSubjectSettingList(int start, int length,
-            String search, String subjectFilter, String displayOrderFilter,
-            String statusFilter, String sort) {
-        Connection connection = null;
-        List<SubjectSetting> list = null;
-        try {
-            connection = BaseDao.getConnection();
-            list = subjectSettingDao.getSubjectSettingList(connection, start, length,
-                    search, subjectFilter, displayOrderFilter, statusFilter, sort);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return list;
-    }
-
-    @Override
-    public int countAll(String search, String subjectFilter,
-            String displayOrderFilter, String statusFilter) {
-        Connection connection = null;
-        int count = 0;
-        try {
-            connection = BaseDao.getConnection();
-            count = subjectSettingDao.countAll(connection, search, subjectFilter,
-                    displayOrderFilter, statusFilter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return count;
+        settingDao = new SettingDaoImpl();
     }
 
     @Override
@@ -131,6 +101,53 @@ public class SubjectSettingServiceImpl implements SubjectSettingService {
             BaseDao.closeResource(connection, null, null);
         }
         return subjectSetting;
+    }
+
+    @Override
+    public List<SubjectSetting> getSubjectSettingList(int start, int length, String search, String subjectFilter,
+            String typeFilter, String statusFilter) {
+        Connection connection = null;
+        List<SubjectSetting> subjectSettingList = null;
+        try {
+            connection = BaseDao.getConnection();
+            subjectSettingList = subjectSettingDao.getSubjectSettingList(connection, start, length, search,
+                    subjectFilter, typeFilter, statusFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return subjectSettingList;
+    }
+
+    @Override
+    public int countAll(String search, String subjectFilter, String typeFilter, String statusFilter) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = subjectSettingDao.countAll(connection, search, subjectFilter, typeFilter, statusFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Setting> getSettings() {
+        Connection connection = null;
+        List<Setting> settings = null;
+        try {
+            connection = BaseDao.getConnection();
+            settings = settingDao.List(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return settings;
     }
 
 }

@@ -1,15 +1,131 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <style type="text/css">
+        a:hover {
+            cursor: pointer !important;
+        }
+
+        /* The snackbar - position it at the bottom and in the middle of the screen */
+        #successToast {
+            visibility: hidden;
+            /* Hidden by default. Visible on click */
+            background-color: #50cd89;
+            /* Black background color */
+            width: max-content;
+            color: #fff;
+            /* White text color */
+            text-align: center;
+            /* Centered text */
+            padding: 16px;
+            /* Padding */
+            position: fixed;
+            /* Sit on top of the screen */
+            right: 40px;
+            /* Center the snackbar */
+            bottom: 70px;
+            /* 30px from the bottom */
+            border-radius: 0.475rem;
+        }
+
+        /* Show the snackbar when clicking on a button (class added with JavaScript) */
+        #successToast.show {
+            visibility: visible;
+            /* Show the snackbar */
+            /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+        However, delay the fade out process for 2.5 seconds */
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 3s;
+            animation: fadein 0.5s, fadeout 0.5s 3s;
+        }
+
+        /* Animations to fade the snackbar in and out */
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 70px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 70px;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 70px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 70px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+
     <!--begin::Post-->
-    <div class="post d-flex flex-column-fluid" id="kt_post">
+    <div class="post text-dark" id="kt_post" style="width: 96%; margin: 0 auto">
         <!--begin::Container-->
-        <input type="text" class="d-none" id="toastStatus" value="${requestScope.toastStatus}">
-        <div id="kt_content_container" class="container">
+        <div id="kt_content_container" class="">
             <!--begin::Card-->
             <div class="card">
                 <!--begin::Card header-->
                 <div class="card-header border-0 pt-6">
                     <!--begin::Card title-->
                     <div class="card-title">
+                        <!--begin::Filter-->
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <div class="mb-10 me-3">
+                                <label class="form-label fs-6 fw-bold">Subject:</label>
+                                <select class="selectFilter form-select form-select-solid fw-bolder"
+                                    data-kt-select2="true" data-placeholder="Select subject" data-allow-clear="true"
+                                    data-hide-search="true" id="subjectFilter">
+                                    <option value=""></option>
+                                    <c:forEach items="${requestScope.subjectList}" var="s">
+                                        <option value="${s.subjectId}" ${requestScope.subjectFilter==s.subjectId
+                                            ? 'selected' : '' }>${s.subjectName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="mb-10 me-3">
+                                <label class="form-label fs-6 fw-bold">Status:</label>
+                                <select class="selectFilter form-select form-select-solid fw-bolder"
+                                    data-kt-select2="true" data-placeholder="Select status" data-allow-clear="true"
+                                    data-hide-search="true" id="statusFilter">
+                                    <option value="" ${requestScope.statusFilter=='' ? 'selected' : '' }></option>
+                                    <option value="1" ${requestScope.statusFilter=='1' ? 'selected' : '' }>Active
+                                    </option>
+                                    <option value="0" ${requestScope.statusFilter=='0' ? 'selected' : '' }>Inactive
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--end::Menu 1-->
+                        <!--end::Filter-->
+
                         <!--begin::Search-->
                         <div class="d-flex align-items-center position-relative my-1">
                             <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
@@ -29,15 +145,10 @@
                             </span>
                             <!--end::Svg Icon-->
                             <input type="text" data-kt-user-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Search assignment"
-                                style="margin-right: 5px;" id="search" value="${requestScope.searchRg}" />
-                            <button type="button" class="btn btn-primary mb-3" style="margin-top: 10px;" onclick="
-                                        list(getSearchRg(),
-                                                getSubjectFilter(),
-                                                getTeamworkFilter(),
-                                                getOngoingFilter(),
-                                                getStatusFilter(), '1')
-                                ">
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search"
+                                style="margin-right: 10px;" id="searchRg" value="${requestScope.searchRg}" />
+                            <button type="button" class="btn btn-primary mb-3" style="margin-top: 10px;"
+                                onclick="list(1)">
                                 Search
                             </button>
                         </div>
@@ -48,116 +159,8 @@
                     <div class="card-toolbar">
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <!--begin::Filter-->
-                            <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
-                                data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                <!--begin::Svg Icon | path: icons/duotone/Text/Filter.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <path
-                                                d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z"
-                                                fill="#000000" />
-                                        </g>
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->Filter
-                            </button>
-                            <!--begin::Menu 1-->
-                            <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                                <!--begin::Header-->
-                                <div class="px-7 py-5">
-                                    <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Separator-->
-                                <div class="separator border-gray-200"></div>
-                                <!--end::Separator-->
-                                <!--begin::Content-->
-                                <div class="px-7 py-5" data-kt-user-table-filter="form">
-                                    <!--begin::Input group-->
-                                    <div class="mb-10">
-                                        <label class="form-label fs-6 fw-bold">Subject:</label>
-                                        <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="subject">
-                                            <option ${requestScope.subjectFilter=='' ? 'selected' : '' }></option>
-                                            <c:forEach items="${requestScope.subjectList}" var="s">
-                                                <option value="${s.subjectId}" ${requestScope.subjectFilter==s.subjectId
-                                                    ? 'selected' : '' }>
-                                                    ${s.subjectName}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="mb-10">
-                                        <label class="form-label fs-6 fw-bold">Teamwork:</label>
-                                        <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="teamwork">
-                                            <option ${requestScope.isteamworkFilter=='' ? 'selected' : '' }></option>
-                                            <option value="1" ${requestScope.isteamworkFilter=='1' ? 'selected' : '' }>
-                                                Teamwork</option>
-                                            <option value="0" ${requestScope.isteamworkFilter=='0' ? 'selected' : '' }>
-                                                Personal</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-10">
-                                        <label class="form-label fs-6 fw-bold">Ongoing:</label>
-                                        <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="ongoing">
-                                            <option></option>
-                                            <option value="1" ${requestScope.isongoingFilter=='1' ? 'selected' : '' }>
-                                                Ongoing</option>
-                                            <option value="0" ${requestScope.isongoingFilter=='0' ? 'selected' : '' }>
-                                                Final</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-10">
-                                        <label class="form-label fs-6 fw-bold">Status:</label>
-                                        <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-hide-search="true" id="status">
-                                            <option ${requestScope.statusFilter=='' ? 'selected' : '' }></option>
-                                            <option value="1" ${requestScope.statusFilter=='1' ? 'selected' : '' }>
-                                                Active</option>
-                                            <option value="0" ${requestScope.statusFilter=='0' ? 'selected' : '' }>
-                                                Inactive</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Actions-->
-                                    <div class="d-flex justify-content-end">
-                                        <button type="reset"
-                                            class="btn btn-white btn-active-light-primary fw-bold me-2 px-6"
-                                            data-kt-menu-dismiss="true"
-                                            onclick="list(getSearchRg(), '', '', '', '', '${requestScope.currentPage}')">
-                                            Reset
-                                        </button>
-                                        <button type="submit" class="btn btn-primary fw-bold px-6"
-                                            data-kt-menu-dismiss="true" onclick="
-                                                    list(getSearchRg(),
-                                                            getSubjectFilter(),
-                                                            getTeamworkFilter(),
-                                                            getOngoingFilter(),
-                                                            getStatusFilter(), '1')
-                                            ">
-                                            Apply
-                                        </button>
-                                    </div>
-                                    <!--end::Actions-->
-                                </div>
-                                <!--end::Content-->
-                            </div>
-                            <!--end::Menu 1-->
-                            <!--end::Filter-->
-
                             <!--begin::Add user-->
-                            <form action="/assignment/list?action=get" method="post">
-                                <input type="text" name="assignId" class="d-none" value="-1">
+                            <form action="/subject/list?action=get&subjectId=-1" method="post">
                                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#kt_modal_add_user">
                                     <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
@@ -194,63 +197,70 @@
                                 <th></th>
                                 <th></th>
                                 <th class="min-w-125px">Assignment</th>
-                                <th class="min-w-125px">Eval weight</th>
-                                <th class="min-w-125px">Is teamwork</th>
-                                <th class="min-w-125px">Is Ongoing</th>
-                                <th class="min-w-125px">Status Action</th>
-                                <th class="min-w-100px">Details</th>
+                                <th class="min-w-125px">Subject Name</th>
+                                <th class="min-w-125px">Evaluate Weight(%)</th>
+                                <th class="min-w-125px">Is Teamwork?</th>
+                                <th class="min-w-125px">Is Ongoing?</th>
+                                <th class="min-w-125px">Status</th>
+                                <th class="min-w-75px">Actions</th>
                             </tr>
                             <!--end::Table row-->
                         </thead>
                         <!--end::Table head-->
                         <!--begin::Table body-->
-                        <tbody class="text-gray-600 fw-bold">
+                        <tbody class="text-gray-700 fw-bold">
                             <!--begin::Table row-->
                             <c:forEach items="${requestScope.assList}" var="a">
                                 <tr>
                                     <td></td>
                                     <td></td>
-                                    <!--begin::User=-->
-                                    <td class="d-flex align-items-center">
-                                        <!--begin::User details-->
-                                        <div class="d-flex flex-column">
-                                            <a href=""
-                                                class="text-gray-800 text-hover-primary mb-1">${a.subjectName}</a>
-                                            <span>${a.title}</span>
-                                        </div>
+                                    <td><a onclick="details(${a.assId})"><b class="text-gray-600">${a.title}</b></a>
                                     </td>
-                                    <td>${a.evalWeight}% total Course</td>
-                                    <td>
-                                        ${a.isTeamwork == 1 ? 'Teamwork':'Personal'}
-                                    </td>
-                                    <td>${a.isOngoing == 1 ? 'Ongoing points': 'Final points'}</td>
-                                    <td>
-                                        <c:if test="${a.statusId==1}">
-                                            <button
-                                                onclick="loaddata('${a.assId}', '${a.title}', '${a.subjectName}', 'inactivate')"
-                                                type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                Inactivate
-                                            </button>
-                                        </c:if>
-                                        <c:if test="${a.statusId!=1}">
-                                            <button
-                                                onclick="loaddata('${a.assId}', '${a.title}', '${a.subjectName}', 'activate')"
-                                                type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                Activate
-                                            </button>
-                                        </c:if>
-                                    </td>
+                                    <td><b class="text-gray-600">${a.subjectName}</b></td>
+                                    <td>${a.evalWeight}</td>
+                                    <td>${a.isTeamwork == 1 ? 'True' : 'False'}</td>
                                     <!--begin::Action=-->
+                                    <td>${a.isOngoing == 1 ? 'True' : 'False'}</td>
                                     <td>
-                                        <form action="/assignment/list?action=get" method="post">
-                                            <input name="assignId" type="text" class="d-none" value="${a.assId}">
-                                            <button type="submit" class="btn btn-secondary">
-                                                Details
+                                        <c:if test="${a.statusId == 1}">
+                                            <div class="btn btn-success">Active</div>
+                                        </c:if>
+                                        <c:if test="${a.statusId == 0}">
+                                            <div class="btn btn-danger">Inactive</div>
+                                        </c:if>
+                                    </td>
+                                    <td style="width: 75px">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Actions
                                             </button>
-                                        </form>
-
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <c:if test="${a.statusId==1}">
+                                                    <li>
+                                                        <button
+                                                            onclick="changeStatus('${a.assId}', '${a.title}', '${a.subjectName}', 'deactivate')"
+                                                            type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal">
+                                                            Deactivate
+                                                        </button>
+                                                    </li>
+                                                </c:if>
+                                                <c:if test="${a.statusId == 0}">
+                                                    <li>
+                                                        <button
+                                                            onclick="changeStatus('${a.assId}', '${a.title}', '${a.subjectName}', 'activate')"
+                                                            type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal">
+                                                            Activate
+                                                        </button>
+                                                    </li>
+                                                </c:if>
+                                                <li><a class="dropdown-item" onclick="details(${a.assId})">Details</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                     <!--end::Action=-->
                                 </tr>
@@ -259,27 +269,22 @@
                         </tbody>
                         <!--end::Table body-->
                     </table>
-                    ${requestScope.notice}
                     <!--end::Table-->
-                    <div>
-                        <nav aria-label="...">
-                            <ul class="pagination pagination-lg">
-                                <c:forEach items="${requestScope.pages}" var="p">
-                                    <li class="page-item ${requestScope.currentPage == p ? 'active' : ''}">
-                                        <button class="page-link" onclick="
-                                                    list(getSearchRg(),
-                                                            getSubjectFilter(),
-                                                            getTeamworkFilter(),
-                                                            getOngoingFilter(),
-                                                            getStatusFilter(), '${p}')
-                                            ">
-                                            ${p}
-                                        </button>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </nav>
-                    </div>
+                    <ul style="float: right" class="pagination me-6">
+                        <li class="page-item previous ${requestScope.curPage == 1 ? 'disabled' : ''}">
+                            <button onclick="list(${requestScope.curPage - 1})" class="page-link"><i
+                                    class="previous"></i></button>
+                        </li>
+                        <c:forEach items="${requestScope.pages}" var="p">
+                            <li class="page-item ${requestScope.curPage == p ? 'active' : ''}">
+                                <button onclick="list(${p})" class="page-link">${p}</button>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item next ${requestScope.curPage == requestScope.endPage ? 'disabled' : ''}"">
+                        <button onclick=" list(${requestScope.curPage + 1})" class="page-link"><i
+                                class="next"></i></button>
+                        </li>
+                    </ul>
                 </div>
                 <!--end::Card body-->
             </div>
@@ -289,19 +294,17 @@
     </div>
     <!--end::Post-->
 
-    <form id="formList" action="/assignment/list" method="post">
-        <input name="action" value="list" hidden />
-        <input name="searchRg" value="" id="searchInp" hidden />
-        <input name="subjectFilter" value="" id="subjectInp" hidden />
-        <input name="isteamworkFilter" value="" id="teamworkInp" hidden />
-        <input name="isgoingFilter" value="" id="ongoingInp" hidden />
-        <input name="statusFilter" value="" id="statusInp" hidden />
-        <input name="pageNo" value="" id="pageNo" hidden />
+
+    <!--form search filter paging status-->
+    <form hidden id="form1" action="/assignment/list?action=list" method="post">
+        <input id="subjectId" name="subjectFilter" />
+        <input id="status" name="statusFilter" />
+        <input id="search" name="searchRg" />
+        <input id="curPage" name="curPage" />
     </form>
 
-    <form id="formChangeStatus" action="/assignment/list" method="post">
-        <input name="action" value="changeStatus" hidden />
-        <input name="assId" value="" id="assIdInp" hidden />
+    <form id="form2" hidden action="" method="post">
+        <input name="assignId" id="assId" type="text" class="d-none" value="${a.assId}">
     </form>
 
     <!-- Modal status -->
@@ -309,14 +312,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Assignment</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Subject</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="content_modal">
 
                 </div>
                 <div class="modal-footer">
-                    <button id="btn_cf" onclick="cf()" type="button" class="btn btn-primary">Confirm</button>
+                    <button onclick="document.getElementById('form2').submit();" id="btn_cf" type="submit"
+                        class="btn btn-primary">Confirm</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -324,40 +328,45 @@
     </div>
 
 
+    <div id="successToast">
+        <i style="color: #fff; font-size: 23px" class="fa fa-check me-4"></i>
+        <span style="font-size: 16px">Successfully !!!</span>
+    </div>
+
+
+
     <script type="text/javascript">
-        function getSearchRg() {
-            return document.getElementById('search').value;
-        }
-        function getSubjectFilter() {
-            return document.getElementById('subject').value;
-        }
-        function getTeamworkFilter() {
-            return document.getElementById('teamwork').value;
-        }
-        function getOngoingFilter() {
-            return document.getElementById('ongoing').value;
-        }
-        function getStatusFilter() {
-            return document.getElementById('status').value;
+        function list(page) {
+            document.getElementById('subjectId').value = document.getElementById('subjectFilter').value;
+            document.getElementById('status').value = document.getElementById('statusFilter').value;
+            document.getElementById('search').value = document.getElementById('searchRg').value;
+            document.getElementById('curPage').value = page;
+            document.getElementById('form1').submit();
         }
 
-        function list(search, subjectFilter, isOngoingFilter, isTeamworkFilter, statusFilter, pageNo) {
-            document.getElementById('searchInp').value = search;
-            document.getElementById('subjectInp').value = subjectFilter;
-            document.getElementById('teamworkInp').value = isTeamworkFilter;
-            document.getElementById('ongoingInp').value = isOngoingFilter;
-            document.getElementById('statusInp').value = statusFilter;
-            document.getElementById('pageNo').value = pageNo;
-            document.getElementById('formList').submit();
+        function changeStatus(assId, title, subjectName, action) {
+            document.getElementById('content_modal').innerHTML =
+                'Do you want to ' + action + " assignment " + title + " of " + subjectName + "?";
+            document.getElementById('assId').value = assId;
+            document.getElementById('form2').action = '/assignment/list?action=changeStatus';
         }
 
-        function loaddata(assId, title, subjectName, action) {
-            document.getElementById('content_modal').innerHTML = "Do you want to <b>"
-                + action + "</b> assignment <b>" + title + "</b> of <b>" + subjectName + "</b>";
-            document.getElementById('assIdInp').value = assId;
+        function details(assId) {
+            document.getElementById('assId').value = assId;
+            document.getElementById('form2').action = '/assignment/list?action=get';
+            document.getElementById('form2').submit();
         }
 
-        function cf() {
-            document.getElementById('formChangeStatus').submit();
-        }
+    <c:if test="${sessionScope.toast == true}">
+    var x = document.getElementById("successToast");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
+    </c:if>
+    <c:remove scope="session" var="toast"/>
     </script>

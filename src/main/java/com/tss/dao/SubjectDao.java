@@ -13,25 +13,24 @@ public interface SubjectDao {
 
         int add(Connection connection, Subject subject) throws SQLException;
 
-        int inactive(Connection connection, int subjectId) throws SQLException;
+        int changeStatus(Connection connection, int subjectId) throws SQLException;
 
-        int active(Connection connection, int subjectId) throws SQLException;
-
-        int modify(Connection connection, Subject subject) throws SQLException;
+        int update(Connection connection, Subject subject) throws SQLException;
 
         Subject findById(Connection connection, int subjectId) throws SQLException;
 
         List<Subject> findAll(Connection connection, int start, int length, String search) throws SQLException;
 
-        List<Subject> findAll(Connection connection, int start, int length, String search, String filterStatus)
-                        throws SQLException;
+        List<Subject> list(Connection connection, int start, int length,
+                        String search, String managerFilter, String expertFilter,
+                        String statusFilter) throws SQLException;
 
         List<Subject> findAllOfManager(Connection connection, int managerId) throws SQLException;
+        List<Subject> subjectByManager(Connection connection, int managerId) throws SQLException;
 
         int countAll(Connection connection) throws SQLException;
 
-        int countAll(Connection connection, String search) throws SQLException;
-
-        int countAll(Connection connection, String search, String filterStatus) throws SQLException;
+        int countAll(Connection connection, String search, String managerFilter,
+                        String expertFilter, String statusFilter) throws SQLException;
 
 }

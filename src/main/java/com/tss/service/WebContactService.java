@@ -15,7 +15,7 @@ import com.tss.model.WebContact;
 public interface WebContactService {
     List<WebContact> List(String fullName, String email, int currentPageNo, int PageSize);
 
-    List<WebContact> findAll(int start, int length, String search, String orderBy,String orderDir,int supporter_id);
+    List<WebContact> findAll(int start, int length, String search, String orderBy, String orderDir, int supporter_id);
 
     WebContact findById(int catId);
 
@@ -35,7 +35,7 @@ public interface WebContactService {
 
     int countAll();
 
-    int countAll(String search,int supFilter);
+    int countAll(String search, int supFilter);
 
-    int reply(int id, String reply);
+    boolean reply(int id, String reply);
 }

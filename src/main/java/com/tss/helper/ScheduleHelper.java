@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -174,7 +175,20 @@ public class ScheduleHelper {
         return rs;
     }
 
+    public static String formatDateSql(String x) {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        sdf1.setLenient(false);
+        sdf1.setLenient(false);
+        Date d = new Date();
+        try {
+            d = sdf1.parse(x);
+        } catch (Exception e) {
+        }
+        return sdf2.format(d);
+    }
+
     public static void main(String[] args) {
-        System.out.println(convertStringToDate("11, Sep 2022"));
+        System.out.println(formatDateSql("11-09-2022"));
     }
 }

@@ -65,11 +65,8 @@ public class SubjectServiceImpl implements SubjectService {
         boolean flag = false;
         try {
             connection = BaseDao.getConnection();
-            if (subjectDao.findById(connection, id).getStatusId() == 1) {
-                subjectDao.inactive(connection, id);
-                flag = true;
-            } else {
-                subjectDao.active(connection, id);
+            int updateRows = subjectDao.changeStatus(connection, id);
+            if (updateRows > 0) {
                 flag = true;
             }
         } catch (Exception e) {
@@ -81,12 +78,12 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public boolean modify(Subject subject) {
+    public boolean update(Subject subject) {
         Connection connection = null;
         boolean flag = false;
         try {
             connection = BaseDao.getConnection();
-            if (subjectDao.modify(connection, subject) > 0) {
+            if (subjectDao.update(connection, subject) > 0) {
                 flag = true;
             }
         } catch (Exception e) {
@@ -128,21 +125,6 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findAll(int start, int length, String string, String filterStatus) {
-        Connection connection = null;
-        List<Subject> subjectList = null;
-        try {
-            connection = BaseDao.getConnection();
-            subjectList = subjectDao.findAll(connection, start, length, string, filterStatus);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return subjectList;
-    }
-
-    @Override
     public int countAll() {
         Connection connection = null;
         int count = 0;
@@ -158,27 +140,13 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public int countAll(String search) {
+    public int countAll(String search, String managerFilter,
+            String expertFilter, String statusFilter) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = subjectDao.countAll(connection, search);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BaseDao.closeResource(connection, null, null);
-        }
-        return count;
-    }
-
-    @Override
-    public int countAll(String search, String filterStatus) {
-        Connection connection = null;
-        int count = 0;
-        try {
-            connection = BaseDao.getConnection();
-            count = subjectDao.countAll(connection, search, filterStatus);
+            count = subjectDao.countAll(connection, search, managerFilter, expertFilter, statusFilter);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -198,7 +166,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findAllOfManager(int managerId){
+    public List<Subject> findAllOfManager(int managerId) {
         Connection connection = null;
         List<Subject> subjectList = null;
         try {
@@ -210,13 +178,30 @@ public class SubjectServiceImpl implements SubjectService {
             BaseDao.closeResource(connection, null, null);
         }
         return subjectList;
-    }  
+    }
 
     public static void main(String[] args) {
         SubjectService subjectService = new SubjectServiceImpl();
         List<Subject> subjectList = subjectService.findAllOfManager(70);
         System.out.println(subjectList.size());
-        
+
+    }
+
+    @Override
+    public List<Subject> list(int start, int length,
+            String search, String managerFilter, String expertFilter,
+            String statusFilter) {
+        Connection connection = null;
+        List<Subject> subjectList = new ArrayList<>();
+        try {
+            connection = BaseDao.getConnection();
+            subjectList = subjectDao.list(connection, start, length, search, managerFilter, expertFilter, statusFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return subjectList;
     }
 
 }

@@ -17,19 +17,34 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> getScheduleList(String begin, String end, String search,
+    public List<Schedule> getScheduleList(int begin, int length, String search,
             String classFilter) {
         Connection connection = null;
         List<Schedule> scheduleList = null;
         try {
             connection = BaseDao.getConnection();
-            scheduleList = scheduleDao.getScheduleList(connection, begin, end, search, classFilter);
+            scheduleList = scheduleDao.getScheduleList(connection, begin, length, search, classFilter);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
         return scheduleList;
+    }
+
+    @Override
+    public int getScheduleCount(String search, String classFilter) {
+        Connection connection = null;
+        int count = 0;
+        try {
+            connection = BaseDao.getConnection();
+            count = scheduleDao.getScheduleCount(connection, search, classFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return count;
     }
 
     @Override
