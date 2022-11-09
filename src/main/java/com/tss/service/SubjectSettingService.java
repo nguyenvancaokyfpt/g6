@@ -1,5 +1,6 @@
 package com.tss.service;
 
+import com.tss.model.system.Setting;
 import java.util.List;
 
 import com.tss.model.system.SubjectSetting;
@@ -7,9 +8,9 @@ import com.tss.model.system.SubjectSetting;
 public interface SubjectSettingService {
 
     List<SubjectSetting> getSubjectSettingList(int start, int length, String search,
-            String subjectFilter, String displayOrderFilter, String statusFilter, String sort);
+            String subjectFilter, String typeFilter, String statusFilter);
 
-    int countAll(String search, String subjectFilter, String displayOrderFilter, String statusFilter);
+    int countAll(String search, String subjectFilter, String typeFilter, String statusFilter);
 
     int countAll();
 
@@ -21,4 +22,5 @@ public interface SubjectSettingService {
 
     SubjectSetting findById(int id);
 
+    List<Setting> getSettings();
 }

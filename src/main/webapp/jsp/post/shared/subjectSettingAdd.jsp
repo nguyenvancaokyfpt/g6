@@ -1,86 +1,137 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<style>
-    .card-header{
-        align-items: center !important;
-    }
-</style>
-<!--begin::Basic info-->
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<!--begin::Container-->
 <div id="kt_content_container" class="container">
-    <div style="margin-bottom: 10px">
-        <button class="btn btn-primary" onclick="history.back()">
-            Go back
-        </button>
-    </div>
-    <div class="card mb-5 mb-xl-10">
-        <!--begin::Card header-->
-        <div class="card-header border-0">
-            <!--begin::Card title-->
-            <div class="m-0">
-                <h3 class="fw-bolder m-0">Add Subject Setting</h3>
-            </div>
-            <!--end::Card title-->
-        </div>
-        <!--begin::Card header-->
+    <!--begin::Layout-->
+    <div class="d-flex flex-column flex-lg-row">
         <!--begin::Content-->
-        <div id="kt_account_profile_details" class="collapse show">
-            <!--begin::Form-->
-            <form id="kt_account_profile_details_form" class="form" action="/subject/setting" method="post">
+        <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
+            <!--begin::Card-->
+            <div class="card">
                 <!--begin::Card body-->
-                <input hidden name="action" value="create"/>
-                <div class="card-body border-top p-9">
-                    <h4>Setting Subject: </h4>
-                    <select required name="subjectId" class="form-select form-select-solid" aria-label="Select example">
-                        <c:forEach items="${requestScope.subjectList}" var="s">
-                            <option value="${s.subjectId}"
-                                    ${ss.subjectId == s.subjectId ? 'selected' : ''}>
-                                ${s.subjectName}
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <br>
-                    <h4>Setting Title: </h4>
-                    <input required name="title" type="text" class="form-control" placeholder="Setting Title"/>
-                    <br>
-                    <h4>Setting Value: </h4>
-                    <input required name="value" type="number" class="form-control" placeholder="Setting Value"/>
-                    <br>
-                    <h4>Setting Order: </h4>
-                    <select required name="displayOrder" class="form-select form-select-solid" aria-label="Select example">
-                        <option value="Simple" selected>Simple</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Complex">Complex</option>
-                    </select>
-                    <br>
-                    <div>
-                        <div class="form-check form-check-inline">
-                            <input name="statusId" class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
-                            <label class="form-check-label" for="inlineRadio1">Active</label>
+                <div class="card-body p-12">
+                    <!--begin::Form-->
+                    <form action="/subject/setting?action=create" id="kt_invoice_form" method="post">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column align-items-start flex-xxl-row">
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-center flex-equal fw-row text-nowrap order-1 order-xxl-2 me-4"
+                                 data-bs-toggle="tooltip">
+                                <span class="fs-2x fw-bolder text-gray-800">Add Subject Setting</span>
+                            </div>
+                            <!--end::Input group-->
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input name="statusId" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
-                            <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                        <!--end::Top-->
+                        <!--begin::Separator-->
+                        <div class="separator separator-dashed my-10"></div>
+                        <!--end::Separator-->
+                        <!--begin::Wrapper-->
+                        <div class="mb-0">
+                            <!--begin::Row-->
+                            <div class="row gx-10 mb-5">
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 mb-3">Setting
+                                            Title</label>
+                                        <input minlength="5" name="title" required type="text"
+                                               class="form-control form-control-solid"
+                                               placeholder="Setting title" />
+                                    </div>
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 mb-3">Setting
+                                            value</label>
+                                        <input name="value" value="${ss.value}" required type="number" min="1"
+                                               class="form-control form-control-solid"
+                                               placeholder="Setting value" />
+                                    </div>
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 mb-3">Subject
+                                            Name</label>
+                                        <select required class="form-select form-select-solid fw-bolder"
+                                                data-kt-select2="true" data-placeholder="Select subject"
+                                                data-hide-search="true" name="subjectId">
+                                            <c:forEach items="${requestScope.subjectList}" var="s">
+                                                <option value="${s.subjectId}" }>${s.subjectName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 mb-3">Type</label>
+                                        <select required class="form-select form-select-solid fw-bolder"
+                                                data-kt-select2="true" data-placeholder="Select type"
+                                                data-hide-search="true" name="typeId">
+                                            <c:forEach items="${requestScope.subjectTypes}" var="st">
+                                                <c:if test="${st.typeId == 4 and st.description != 'hidden'}">
+                                                    <option value="${st.id}">${st.title}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 mb-3">Display
+                                            Order</label>
+                                        <select required class="form-select form-select-solid fw-bolder"
+                                                data-kt-select2="true" data-placeholder="Select order"
+                                                data-hide-search="true" name="displayOrder">
+                                            <option value="Simple">Simple</option>
+                                            <option value="Normal">Normal</option>
+                                            <option value="Complex">Complex</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-5">
+                                        <label
+                                            class="required form-label fs-6 fw-bolder text-gray-700 me-5 pb-5">Status</label>
+                                        <br>
+                                        <input class="form-check-input me-1" checked type="radio" value="1"
+                                               name="statusId" id="flexRadioDefault1" />
+                                        <label class="form-check-label me-4" for="flexRadioDefault1">
+                                            <h6>Active</h6>
+                                        </label>
+                                        <input class="form-check-input me-1" type="radio" value="0"
+                                               name="statusId" id="flexRadioDefault2" />
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            <h6>Inactive</h6>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                            <!--begin::Notes-->
+                            <div class="mb-0">
+                                <label
+                                    class="required form-label fs-6 fw-bolder text-gray-700">Description</label>
+                                <textarea minlength="20" name="description" required
+                                          class="form-control form-control-solid" rows="5"
+                                          placeholder="Body description of subject">
+
+                                </textarea>
+                            </div>
+                            <!--end::Notes-->
                         </div>
-                    </div>
-                    <br>
-                    <h4>Setting Description: </h4>
-                    <div class="form-outline">
-                        <textarea name="description" required class="form-control" id="textAreaExample2" rows="8">
-                            
-                        </textarea>
-                    </div>
+                        <div style="margin: 20px 0 -20px 0;"
+                             class="card-footer d-flex justify-content-end py-6 px-9">
+                            <button type="submit" class="btn btn-primary me-5"
+                                    id="kt_account_profile_details_submit">Submit</button>
+                            <button type="button" class="btn btn-secondary me-2"
+                                    onclick="history.back()">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <!--end::Card body-->
-                <!--begin::Actions-->
-                <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Add Setting</button>
-                    <button type="button" class="btn btn-white btn-active-light-primary me-2" onclick="history.back()">Cancel</button>
-                </div>
-                <!--end::Actions-->
-            </form>
-            <!--end::Form-->
+            </div>
         </div>
-        <!--end::Content-->
     </div>
-    <!--end::Basic info-->
 </div>

@@ -9,13 +9,12 @@ public class Subject {
     private int expertId;
     private int statusId;
     private String body;
-    private String imgSrc;
 
     public Subject() {
     }
 
     public Subject(int subjectId, String subjectCode, String subjectName, int managerId, int expertId, int statusId,
-            String body, String imgSrc) {
+            String body) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
@@ -23,7 +22,6 @@ public class Subject {
         this.expertId = expertId;
         this.statusId = statusId;
         this.body = body;
-        this.imgSrc = imgSrc;
     }
 
     public int getSubjectId() {
@@ -80,14 +78,6 @@ public class Subject {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public String getImgSrc() {
-        return imgSrc;
-    }
-
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
     }
 
 }

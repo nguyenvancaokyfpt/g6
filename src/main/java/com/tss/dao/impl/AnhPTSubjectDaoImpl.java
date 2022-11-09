@@ -36,7 +36,6 @@ public class AnhPTSubjectDaoImpl {
                     subject.setExpertId(resultSet.getInt("expert_id"));
                     subject.setStatusId(resultSet.getInt("status_id"));
                     subject.setBody(resultSet.getString("body"));
-                    subject.setImgSrc(resultSet.getString("img_src"));
                     subjectList.add(subject);
                 }
             } catch (Exception e) {

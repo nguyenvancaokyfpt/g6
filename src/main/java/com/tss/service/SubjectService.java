@@ -12,19 +12,21 @@ public interface SubjectService {
 
     boolean changeStatus(int id);
 
-    boolean modify(Subject subject);
+    boolean update(Subject subject);
 
     Subject findById(int id);
 
     List<Subject> findAll(int start, int length, String search);
 
-    List<Subject> findAll(int start, int length, String search, String filterStatus);
+    List<Subject> list(int start, int length,
+                        String search, String managerFilter, String expertFilter,
+                        String statusFilter);
 
     int countAll();
 
-    int countAll(String search);
 
-    int countAll(String search, String filterStatus);
+    int countAll(String search, String managerFilter,
+                        String expertFilter, String statusFilter);
 
     List<Integer> pages(int totalRecords, int pageSize);
     

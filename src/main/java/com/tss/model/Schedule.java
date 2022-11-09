@@ -9,7 +9,6 @@ import java.time.LocalDate;
 public class Schedule {
 
     private int scheduleId, classId, slot;
-    private String title;
     private Date trainingDate;
     private Time from, to;
     private String room, classCode;
@@ -29,11 +28,11 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(int scheduleId, int classId, int slot, String title, Date trainingDate, Time from, Time to, String room, String classCode) {
+    public Schedule(int scheduleId, int classId, int slot, Date trainingDate, Time from, Time to, String room,
+            String classCode) {
         this.scheduleId = scheduleId;
         this.classId = classId;
         this.slot = slot;
-        this.title = title;
         this.trainingDate = trainingDate;
         this.from = from;
         this.to = to;
@@ -63,14 +62,6 @@ public class Schedule {
 
     public void setSlot(int slot) {
         this.slot = slot;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public Date getTrainingDate() {

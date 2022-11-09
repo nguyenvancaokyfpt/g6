@@ -63,6 +63,8 @@ public class AssignmentManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/assignment.jsp");
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.ASSIGNNMENT_LIST));
         List<Assignment> list = assignmentService.findAll(0, 5, "",
                 "", "", "", "");
         request.setAttribute("assList", list);
@@ -73,7 +75,8 @@ public class AssignmentManagementServlet extends HttpServlet {
             totalPages.add(i);
         }
         request.setAttribute("pages", totalPages);
-        request.setAttribute("currentPage", 1);
+        request.setAttribute("curPage", 1);
+        request.setAttribute("endPage", pages);
         request.setAttribute("subjectList", subjectService.List(0, Integer.MAX_VALUE));
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "Assignment/custom.js"));
@@ -93,26 +96,17 @@ public class AssignmentManagementServlet extends HttpServlet {
         request.setAttribute("searchRg", searchRg);
         String subjectFilter = request.getParameter("subjectFilter");
         request.setAttribute("subjectFilter", subjectFilter);
-        String isTeamworkFilter = request.getParameter("isteamworkFilter");
-        request.setAttribute("isteamworkFilter", isTeamworkFilter);
-        String isOngoingFilter = request.getParameter("isgoingFilter");
-        request.setAttribute("isongoingFilter", isOngoingFilter);
+        String isTeamworkFilter = "";
+        String isOngoingFilter = "";
         String statusFilter = request.getParameter("statusFilter");
         request.setAttribute("statusFilter", statusFilter);
-        int pageNo = 1;
-        if (!request.getParameter("pageNo").equals("")) {
-            pageNo = Integer.parseInt(request.getParameter("pageNo"));
-        }
-        request.setAttribute("currentPage", pageNo);
-        int page = 0;
-        if (pageNo == 1) {
-            page = 0;
-        } else {
-            page = (pageNo - 1) * 5;
-        }
-        List<Assignment> list = assignmentService.findAll(page, 5, searchRg,
+        int curPage = Integer.parseInt(request.getParameter("curPage"));
+        request.setAttribute("curPage", curPage);
+
+        List<Assignment> list = assignmentService.findAll((curPage - 1) * 5, 5, searchRg,
                 subjectFilter, isTeamworkFilter, isOngoingFilter, statusFilter);
         request.setAttribute("assList", list);
+
         List<Integer> totalPages = new ArrayList<>();
         int totalRecord = assignmentService.countAll(searchRg,
                 subjectFilter, isTeamworkFilter, isOngoingFilter, statusFilter);
@@ -121,6 +115,7 @@ public class AssignmentManagementServlet extends HttpServlet {
             totalPages.add(i);
         }
         request.setAttribute("pages", totalPages);
+        request.setAttribute("endPage", pages);
         request.setAttribute("subjectList", subjectService.List(0, Integer.MAX_VALUE));
         if (list.isEmpty()) {
             request.setAttribute("notice", "There no result as you expected!!!");
@@ -165,8 +160,9 @@ public class AssignmentManagementServlet extends HttpServlet {
     }
 
     private void changeStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int assId = Integer.parseInt(request.getParameter("assId"));
-        assignmentService.changeStatus(assId);
+        int assId = Integer.parseInt(request.getParameter("assignId"));
+        boolean x = assignmentService.changeStatus(assId);
+        request.getSession().setAttribute("toast", x);
         response.sendRedirect("/assignment/list");
     }
 

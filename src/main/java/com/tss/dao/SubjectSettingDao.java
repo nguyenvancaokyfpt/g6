@@ -9,12 +9,12 @@ import com.tss.model.system.SubjectSetting;
 public interface SubjectSettingDao {
 
         List<SubjectSetting> getSubjectSettingList(Connection connection, int start, int length,
-                        String search, String subjectFilter, String displayOrderFilter,
-                        String statusFilter, String sort)
+                        String search, String subjectFilter, String typeFilter, String statusFilter)
                         throws SQLException;
 
-        int countAll(Connection connection, String search, String subjectFilter,
-                        String displayOrderFilter, String statusFilter) throws SQLException;
+        int countAll(Connection connection,
+                        String search, String subjectFilter, String typeFilter, String statusFilter)
+                        throws SQLException;
 
         int countAll(Connection connection) throws SQLException;
 
