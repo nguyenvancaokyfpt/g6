@@ -154,13 +154,13 @@ public class MilestoneServiceImpl implements MilestoneService {
     }
 
     @Override
-    public java.util.List<Milestone> findAllBySupporter(int supID) {
+    public java.util.List<Milestone> findAllBySupporter(int supID,int classID) {
         Connection connection = null;
         List<Milestone> milestoneList = null;
         try {
             connection = BaseDao.getConnection();
 
-            milestoneList = mileStoneDao.findAllBySupporter(connection, supID);
+            milestoneList = mileStoneDao.findAllBySupporter(connection, supID,classID);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

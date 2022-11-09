@@ -109,9 +109,10 @@ public class TeamDetailServlet extends HttpServlet {
         String topicCode = request.getParameter("team_topicCode");
         String description = request.getParameter("team_description");
         int statusId = Integer.parseInt(request.getParameter("team_status"));
+        String mile = request.getParameter("team_mile");
         Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
         teamService.UpdateTeam(t);
-        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId + "&toast=1");
+        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId + "&mileId=" + mile  + "&toast=1");
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -132,8 +133,10 @@ public class TeamDetailServlet extends HttpServlet {
             response.sendRedirect("list");
             return;
         }
-
+        
         Team team = teamService.FindTeamById(teamid, classID);
+        request.setAttribute("going", request.getParameter("going"));
+        request.setAttribute("mile", request.getParameter("mileId"));
         request.setAttribute("team", team);
         request.setAttribute("toast", request.getParameter("toast"));
         //END
@@ -149,15 +152,14 @@ public class TeamDetailServlet extends HttpServlet {
 
     private void GetWaitingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int classID = Integer.parseInt(request.getParameter("classId"));
-        List<Trainee> waiting = userService.GetWaitingList(classID);
+        int mileID = Integer.parseInt(request.getParameter("mileId"));
+        List<Trainee> waiting = teamService.GetWaitingList(classID,mileID);
         ResponseHelper.sendResponse(response, waiting);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) {
-        int traineeId = Integer.parseInt(request.getParameter("traineeId"));
-        int classId = Integer.parseInt(request.getParameter("classId"));
         int teamId = Integer.parseInt(request.getParameter("teamId"));
-        teamService.RemoveFromTeam(traineeId, classId, teamId);
+        teamService.RemoveAllMember(teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -189,7 +191,7 @@ public class TeamDetailServlet extends HttpServlet {
         }
         ClassEntity myClass = classService.findByID(classId);
         request.setAttribute("myClass", myClass);
-        System.out.println(myClass);
+        request.setAttribute("mile", request.getParameter("mileId"));
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -199,9 +201,11 @@ public class TeamDetailServlet extends HttpServlet {
         String topicName = request.getParameter("team_topicName");
         String topicCode = request.getParameter("team_topicCode");
         String description = request.getParameter("team_description");
-        int statusId = Integer.parseInt(request.getParameter("team_status"));
+        int statusId = Integer.parseInt(request.getParameter("team_status"));      
+        int mileId = Integer.parseInt(request.getParameter("team_mile"));
         Team t = new Team(0, null, projectCode, topicCode, topicName, statusId, description, null);
         t.setClassId(classId);
+        t.setMilestoneId(mileId);
         teamService.AddTeam(t);
         ResponseHelper.sendResponse(response, teamService.GetNewTeamId() - 1);
     }

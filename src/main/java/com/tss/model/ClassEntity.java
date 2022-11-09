@@ -26,6 +26,17 @@ public class ClassEntity {
     private List<Team> listTeam;
     private List<Trainee> listTrainee;
     private List<Trainee> listWaiting;
+    private Milestone mile;
+
+    public Milestone getMile() {
+        return mile;
+    }
+
+    public void setMile(Milestone mile) {
+        this.mile = mile;
+    }
+    
+    
 
     public ClassEntity() {
         listTeam = new ArrayList<>();     

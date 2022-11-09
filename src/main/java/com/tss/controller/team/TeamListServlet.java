@@ -73,6 +73,12 @@ public class TeamListServlet extends HttpServlet {
                 case "update2":
                     update2(request, response);
                     break;
+                case "getWaiting":
+                    getWaiting(request, response);
+                    break;
+                case "addToTeam": {
+                    addToTeam(request, response);
+                }
                 default:
                     break;
             }
@@ -91,7 +97,9 @@ public class TeamListServlet extends HttpServlet {
                 ScreenConstants.TEAM_LIST));
         // BEGIN
         User u = (User) request.getAttribute("user");
-        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
+        int classId = (int) request.getAttribute("globalClass");
+        System.out.println(classId);
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId(), classId);
         request.setAttribute("miles", miles);
         // END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
@@ -108,10 +116,11 @@ public class TeamListServlet extends HttpServlet {
         int mileID = Integer.parseInt(request.getParameter("mileId"));
         Milestone mile = mileService.findById(mileID);
         ClassEntity myClass = classService.findByID(mile.getClassId());
+        myClass.setMile(mile);
         List<Trainee> trainees = userService.findAllByClassId(0, userService.countAllByClassId(myClass.getId()), "",
                 null, -1, "asc", "", myClass.getId());
         myClass.setListTrainee(trainees);
-        List<Team> teams = teamService.FindByClassID(myClass.getId());
+        List<Team> teams = teamService.FindByClassID(myClass.getId(), mileID);
         myClass.setListTeam(teams);
 
         ResponseHelper.sendResponse(response, myClass);
@@ -140,12 +149,12 @@ public class TeamListServlet extends HttpServlet {
 
     private void create(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void changestatus(HttpServletRequest request, HttpServletResponse response) {
@@ -157,5 +166,18 @@ public class TeamListServlet extends HttpServlet {
     private void remove(HttpServletRequest request, HttpServletResponse response) {
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         teamService.RemoveTeam(teamId);
+    }
+
+    private void getWaiting(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int milestoneId = Integer.parseInt(request.getParameter("mileId"));
+        List<Trainee> trains = teamService.GetWaitingList(classId, milestoneId);
+        ResponseHelper.sendResponse(response, trains);
+    }
+
+    private void addToTeam(HttpServletRequest request, HttpServletResponse response) {
+        int userId = Integer.parseInt(request.getParameter("traineeId"));
+        int teamId = Integer.parseInt(request.getParameter("teamId"));
+        teamService.AddToTeam(userId, teamId);
     }
 }

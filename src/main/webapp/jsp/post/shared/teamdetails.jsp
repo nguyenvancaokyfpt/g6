@@ -5,6 +5,7 @@
             height: 64px;
         }
     </style>
+    <input type="text" class="d-none" id="going" value="${requestScope.going}">
     <input type="text" class="d-none" id="toastStatus" value="${requestScope.toast}">
     <!--begin::Content-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -20,7 +21,7 @@
                 </div>
                 <!--end::Card header-->
                 <!--begin::Form-->
-                <form method="get" action="team/detail" class="form">
+                <form id="myForm" method="get" action="team/detail" class="form">
                     <input type="text" class="d-none" name="action" value="update">
                     <!--begin::Card body-->
                     <div class="card-body p-9">
@@ -40,7 +41,10 @@
                                 <!-- store ID to submit -->
                                 <input id="classId" type="text" class="d-none" name="team_class"
                                     value="${requestScope.team.getClassId()}" />
-                                <input id="teamId" type="text" name="team_id" class="d-none" value="${requestScope.team.id}">
+                                <input id="mileId" type="text" class="d-none" name="team_mile"
+                                    value="${requestScope.mile}" />
+                                <input id="teamId" type="text" name="team_id" class="d-none"
+                                    value="${requestScope.team.id}">
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -174,10 +178,11 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer d-flex justify-content-center py-6 px-9">
-                        <button id="btnShow" type="button" class="btn btn-secondary itemShow" >
+                        <button id="btnShow" type="button" class="btn btn-secondary itemShow">
                             Edit team </button>
                         <button type="button" id="btnHide" class="btn btn-secondary itemHidden">Cancel</button>
-                        <button type="submit" class="btn btn-primary mx-5 itemHidden" onclick="saveAll()">Update</button>
+                        <button type="button" class="btn btn-primary mx-5 itemHidden"
+                            onclick="saveAll()">Update</button>
                     </div>
                     <!--end::Card footer-->
                 </form>

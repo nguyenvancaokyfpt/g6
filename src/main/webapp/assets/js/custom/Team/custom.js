@@ -49,6 +49,23 @@ const changeTeam = (traineeId, classId) => {
   });
 };
 
+const AddToTeam = (traineeId) => {
+  teamId = document.getElementById(`selectAdd${traineeId}`).value;
+  fetch(
+    window.location.origin + `/team/list?action=addToTeam&traineeId=${traineeId}&teamId=${teamId}`,
+    { method: "POST" }
+  ).then((response) => {
+    if (response.status === 200) {
+      getClass();
+      toastr.success("Added Successfully!");
+    }else{
+      toastr.error("Added Fail!");
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
 const RemoveFromTeam = (traineeId, classId,teamId) => {
   fetch(
     window.location.origin + `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
@@ -91,6 +108,10 @@ const removeTeam = (teamId) => {
       console.log(error);
     });
 };
+
+const alertStatus = () => {
+  toastr.error("This milestone is on going or closed!");
+}
 
 const getClass = () => {
   let selectedMile = document.getElementById("selectedMile").value;
@@ -139,10 +160,11 @@ const getClass = () => {
                         }</div>
                         <div class="col-3">
                           <div class="btn-group dropend">
-                              <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                              <button type="button" ${data.mile.statusId != 1 ? `onclick="alertStatus()"`:``} class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                                   aria-expanded="false"  style="padding: 0 10px;">
                                   <i class="fa fa-ellipsis-v"></i>
                               </button>
+                              ${data.mile.statusId == 1 ? `
                               <ul class="dropdown-menu">
                                   <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelLeader${
                                     trainee.userId
@@ -154,6 +176,7 @@ const getClass = () => {
                                     trainee.userId
                                   }">Remove from group</a></li>
                               </ul>
+                              `:``}
                               <div class="modal fade" id="modelChange${
                                 trainee.userId
                               }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
@@ -180,7 +203,7 @@ const getClass = () => {
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Change</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${team.id})">Change</a>
                                     </div>
                                   </div>
                                 </div>
@@ -249,17 +272,24 @@ const getClass = () => {
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${
-                          team.id
-                        }&classId=${data.id}">View/Edit</a></li>
-                        <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelRemoveTeam${
-                          team.id
-                        }">Remove Group</a></li>
-                        <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatusTeam${
-                          team.id
-                        }">${
-                          team.status_id ? "Deactive" : "Active"
-                        }</a></li>
+                        ${data.mile.statusId == 1 ? `
+                          <li><a class="dropdown-item" href="/team/detail?action=get&teamId=${
+                            team.id
+                          }&classId=${data.id}&mileId=${data.mile.milestoneId}">View/Edit</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelRemoveTeam${
+                            team.id
+                          }">Remove Group</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatusTeam${
+                            team.id
+                          }">${
+                            team.status_id ? "Deactive" : "Active"
+                          }</a></li>
+                        `:`
+                          <li class="text-center"><a class="dropdown-item" href="/team/detail?action=get&teamId=${
+                            team.id
+                          }&classId=${data.id}&mileId=${data.mile.milestoneId}&going=1">View</a></li>
+                        `}
+                        
                     </ul>
                     <div class="modal fade" id="modelRemoveTeam${
                       team.id
@@ -332,16 +362,18 @@ const getClass = () => {
               <div class="col-4">${trainee.email.toUpperCase()}</div>
               <div class="col-1"></div>
               <div class="col-3">
-                <div class="btn-group dropend">
-                  <button type="button" class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                <div class="btn-group dropend"> 
+                  <button type="button" ${data.mile.statusId != 1 ? `onclick="alertStatus()"`:``} class="after-none btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                       aria-expanded="false"  style="padding: 0 10px;">
                       <i class="fa fa-ellipsis-v"></i>
                   </button>
-                  <ul class="dropdown-menu">
-                      <li><a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#modelAdd${
-                        trainee.userId
-                      }">Add to group</a></li>
-                  </ul>
+                  ${data.mile.statusId == 1 ? `
+                    <ul class="dropdown-menu">
+                        <li><a type="button" class="dropdown-item text-center" data-bs-toggle="modal" data-bs-target="#modelAdd${
+                          trainee.userId
+                        }">Add to group</a></li>
+                    </ul>
+                  `:``}
                   <div class="modal fade" id="modelAdd${
                     trainee.userId
                   }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
@@ -367,7 +399,7 @@ const getClass = () => {
                         </div>
                         <div div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Add</a>
+                          <a class="btn btn-primary" data-bs-dismiss="modal" onclick="AddToTeam(${trainee.userId})">Add</a>
                         </div>
                       </div>
                     </div>
@@ -412,11 +444,21 @@ const getClass = () => {
       $("#teamBody").html(
         `
         <div class="memberItem" style="padding-left: 20px;">
-              <div class="row">
+              <div class="d-flex justify-content-between">
+              ${data.mile.statusId == 1 ? `
                 <p class="create_notification">This milestone has groups already. 
                   <a class="btn-create">Reset Groups</a> 
-                  <a class="btn-create" href="team/detail?action=create&classId=${data.id}">Add New Group</a> 
                 </p>
+                <div style="padding-right: 50px;">
+                  <a class="btn btn-secondary" href="team/detail?action=create&classId=${data.id}&mileId=${data.mile.milestoneId}">Add New Team</a> 
+                </div>
+              `:`
+              <p class="create_notification">This milestone has groups already. 
+              </p>
+              <div style="padding-right: 50px;">
+              </div>
+              `}
+                
               </div>
         </div>
         <div class="container-fluid">

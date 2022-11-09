@@ -1,6 +1,12 @@
 let teamMember;
 let waitingList;
+let baseTeam = [];
 function showItem() {
+  if ($("#going").val() == "1") {
+    toastr.error("This milestone is on going or closed!");
+    return;
+  }
+  editMember();
   var hide = document.getElementsByClassName("itemHidden");
   var show = document.getElementsByClassName("itemShow");
   var inline = document.getElementsByClassName("itemHiddenInline");
@@ -51,7 +57,6 @@ $(document).ready(function () {
   showToast();
   $("#btnShow").click(() => {
     showItem();
-    editMember();
   });
   $("#btnHide").click(() => {
     hideItem();
@@ -60,7 +65,8 @@ $(document).ready(function () {
 
   let classId = document.getElementById("classId").value;
   let teamId = document.getElementById("teamId").value;
-  getWaitingList(classId);
+  let mileId = document.getElementById("mileId").value;
+  getWaitingList(classId, mileId);
   getTeamMember(classId, teamId);
 });
 
@@ -112,6 +118,10 @@ const getTeamMember = (classId, teamId) => {
     })
     .then((data) => {
       teamMember = data;
+      teamMember.map((t) => {
+        baseTeam.push(t);
+      });
+      console.log(baseTeam);
       render();
     })
     .catch((error) => {
@@ -119,10 +129,10 @@ const getTeamMember = (classId, teamId) => {
     });
 };
 
-const getWaitingList = (classId) => {
+const getWaitingList = (classId, mileId) => {
   fetch(
     window.location.origin +
-      `/team/detail?action=getWaiting&classId=${classId}`,
+      `/team/detail?action=getWaiting&classId=${classId}&mileId=${mileId}`,
     { method: "GET" }
   )
     .then((response) => {
@@ -198,7 +208,6 @@ const RemoveTeam = (id) => {
 const AddTeam = (id) => {
   let userId = $("#selectAdd").val();
   if (userId == null) return;
-  console.log("test");
   waitingList.forEach((t, index) => {
     if (t.userId == userId) {
       teamMember.push(t);
@@ -210,41 +219,54 @@ const AddTeam = (id) => {
   showItem();
 };
 
-const changeTeam = (traineeId, classId,teamId) => {
+const AddToTeam = (traineeId, teamId) => {
   fetch(
-    window.location.origin + `/team/list?action=update2&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    window.location.origin +
+      `/team/list?action=addToTeam&traineeId=${traineeId}&teamId=${teamId}`,
     { method: "POST" }
-  ).then((response) => {
-    if (response.status === 200) {
- 
-    }else{
-      toastr.error("Team Updated Fail!");
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  )
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-const RemoveFromTeam = (traineeId, classId,teamId) => {
+const changeTeam = (traineeId, classId, teamId) => {
   fetch(
-    window.location.origin + `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    window.location.origin +
+      `/team/list?action=update2&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    { method: "POST" }
+  )
+    .then((response) => {
+      if (response.status === 200) {
+      } else {
+        toastr.error("Team Updated Fail!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const RemoveFromTeam = (teamId) => {
+  fetch(
+    window.location.origin + `/team/detail?action=delete&teamId=${teamId}`,
     { method: "GET" }
-  ).then((response) => {
-    if (response.status === 200) {
-  
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        teamMember.forEach((t) => {
+          AddToTeam(t.userId, teamId);
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const saveAll = () => {
-  let classId = document.getElementById("classId").value;
   let teamId = document.getElementById("teamId").value;
-  teamMember.forEach((t) => {
-    changeTeam(t.userId, classId,teamId);
-  });
-  waitingList.forEach((t) => {
-    RemoveFromTeam(t.userId, classId,teamId);
-  });
+  RemoveFromTeam(teamId);
+  document.getElementById("myForm").submit();
 };

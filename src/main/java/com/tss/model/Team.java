@@ -24,6 +24,17 @@ public class Team {
     private int status_id;
     private String description;
     private List<Trainee> listTrainee;
+    private int milestoneId;
+
+    public int getMilestoneId() {
+        return milestoneId;
+    }
+
+    public void setMilestoneId(int milestoneId) {
+        this.milestoneId = milestoneId;
+    }
+    
+    
 
     public int getClassId() {
         return classId;

@@ -24,14 +24,14 @@ import com.tss.model.Trainee;
 public class TeamDaoImpl implements TeamDao {
 
     @Override
-    public List<Team> FindByClassID(Connection connection, int classID) {
+    public List<Team> FindByClassID(Connection connection, int classID, int milestone_id) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Team> teams = new ArrayList<>();
         if (connection != null) {
             try {
-                String sql = "SELECT t.* ,c.class_code FROM `team` t inner join class c on t.class_id = c.class_id where t.class_id = ?";
-                Object[] params = { classID };
+                String sql = "SELECT t.* ,c.class_code FROM `team` t inner join class c on t.class_id = c.class_id where t.class_id = ? and t.milestone_id = ?";
+                Object[] params = { classID, milestone_id };
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
                     Team team = new Team();
@@ -48,8 +48,8 @@ public class TeamDaoImpl implements TeamDao {
 
                 // find trainee
                 for (Team team : teams) {
-                    sql = "SELECT u.*,class_id,dropout_date,is_leader FROM class_user c inner JOIN user u on c.user_id = u.user_id where c.class_id = ? and c.team_id = ?";
-                    params = new Object[] { classID, team.getId() };
+                    sql = "SELECT u.*,c.class_id,tm.is_leader FROM `team` t inner join team_member tm on t.team_id = tm.team_id inner join user u on tm.user_id = u.user_id INNER JOIN class c on c.class_id = t.class_id WHERE t.team_id = ?;";
+                    params = new Object[] { team.getId() };
                     resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                     while (resultSet.next()) {
                         Trainee user = new Trainee();
@@ -64,7 +64,6 @@ public class TeamDaoImpl implements TeamDao {
                         user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
                         user.setLastActive(resultSet.getTimestamp("last_active"));
                         user.setClassId(resultSet.getInt("class_id"));
-                        user.setDropoutDate(resultSet.getDate("dropout_date"));
                         user.setIsLeader(resultSet.getBoolean("is_leader"));
                         team.getListTrainee().add(user);
                     }
@@ -106,11 +105,14 @@ public class TeamDaoImpl implements TeamDao {
         if (connection != null) {
             try {
                 Object[] params = { teamId };
-                // update team,leader of trainee to null
+                // update team,leader of trainee in class_user to null
                 String sql = "UPDATE `class_user` SET `team_id` = NULL,`is_leader` =0 WHERE `team_id` = ?";
                 BaseDao.execute(connection, preparedStatement, sql, params);
                 // update submit of trainee to null
                 sql = "UPDATE `submit` SET `team_id` = NULL WHERE `team_id` = ?";
+                BaseDao.execute(connection, preparedStatement, sql, params);
+                // delete team_Member
+                sql = "DELETE FROM `team_member` WHERE `team_id` = ?";
                 BaseDao.execute(connection, preparedStatement, sql, params);
                 // Delete team
                 sql = "DELETE FROM `team` WHERE `team_id` = ?";
@@ -147,8 +149,7 @@ public class TeamDaoImpl implements TeamDao {
                 }
 
                 if (team != null) {
-                    sql = "SELECT u.*,class_id,dropout_date FROM class_user c inner JOIN user u on c.user_id = u.user_id where c.team_id = ? and c.class_id = ?";
-                    params = new Object[] { teamId, class_id };
+                    sql = "SELECT u.* FROM `team_member` c inner JOIN user u on c.user_id = u.user_id where c.team_id = ?";
                     resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                     while (resultSet.next()) {
                         Trainee user = new Trainee();
@@ -162,8 +163,6 @@ public class TeamDaoImpl implements TeamDao {
                         user.setCreatedAt(resultSet.getTimestamp("created_at"));
                         user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
                         user.setLastActive(resultSet.getTimestamp("last_active"));
-                        user.setClassId(resultSet.getInt("class_id"));
-                        user.setDropoutDate(resultSet.getDate("dropout_date"));
                         team.getListTrainee().add(user);
                     }
                 }
@@ -198,14 +197,14 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public int ChangeTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException {
+    public int ChangeTeam(Connection connection, int traineeId, int oldTeam, int newTeam) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int result = 0;
         if (connection != null) {
             try {
-                String sql = "UPDATE `class_user` SET `team_id` = ?,`is_leader` =0 WHERE `user_id` = ? and `class_id` = ?";
-                Object[] params = { teamId, traineeId, classId };
+                String sql = "UPDATE `team_member` SET `team_id` = ?,`is_leader` =0 WHERE `user_id` = ? and `team_Id` = ?";
+                Object[] params = { newTeam, traineeId, oldTeam };
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -264,9 +263,9 @@ public class TeamDaoImpl implements TeamDao {
         int result = 0;
         if (connection != null) {
             try {
-                String sql = "INSERT INTO `team`(`team_id`, `class_id`, `description`, `topic_code`, `topic_name`, `project_code`, `status_id`) VALUES (?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO `team`(`team_id`, `class_id`, `description`, `topic_code`, `topic_name`, `project_code`, `status_id`,milestone_id) VALUES (?,?,?,?,?,?,?,?)";
                 Object[] params = { team.getId(), team.getClassId(), team.getDescription(), team.getTopic_code(),
-                        team.getTopic_name(), team.getProject_code(), team.getStatus_id() };
+                        team.getTopic_name(), team.getProject_code(), team.getStatus_id(), team.getMilestoneId() };
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -318,8 +317,8 @@ public class TeamDaoImpl implements TeamDao {
         int result = 0;
         if (connection != null) {
             try {
-                String sql = "UPDATE `class_user` SET `team_id` = null ,`is_leader`= 0 WHERE `user_id` = ? and `class_id` = ? and `team_id` = ?";
-                Object[] params = { traineeId, classId, teamId };
+                String sql = "DELETE FROM `team_member` WHERE `user_id` = ? and `team_id` = ?";
+                Object[] params = { traineeId, teamId };
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -337,11 +336,11 @@ public class TeamDaoImpl implements TeamDao {
         int result = 0;
         if (connection != null) {
             try {
-                Object[] params = { classId, teamId };
-                String sql = "UPDATE `class_user` SET `is_leader`= 0 WHERE  `class_id` = ? and `team_id` = ?";
+                Object[] params = { teamId };
+                String sql = "UPDATE `team_member` SET `is_leader`= 0 WHERE `team_id` = ?";
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
-                sql = "UPDATE `class_user` SET `is_leader`= 1 WHERE `user_id` = ? and `class_id` = ? and `team_id` = ?";
-                params = new Object[] { traineeId, classId, teamId };
+                sql = "UPDATE `team_member` SET `is_leader` = 1 WHERE `user_id` = ? and `team_id` = ?";
+                params = new Object[] { traineeId, teamId };
                 result = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -578,5 +577,87 @@ public class TeamDaoImpl implements TeamDao {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
         }
+    }
+
+    @Override
+    public List<Trainee> GetWaitingList(Connection connection, int classID, int milestone_id) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Trainee> traineeList = new ArrayList<>();
+        if (connection != null) {
+            try {
+                String sql = "SELECT us.* FROM `class_user` cu INNER JOIN user us ON cu.user_id = us.user_id WHERE cu.class_id = ? AND cu.user_id NOT IN ( SELECT u.user_id FROM `team` t inner join team_member tm on t.team_id = tm.team_id inner join user u on tm.user_id = u.user_id INNER JOIN class c on c.class_id = t.class_id WHERE c.class_id = ? and t.milestone_id = ? )";
+                Object[] params = { classID, classID, milestone_id };
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    Trainee user = new Trainee();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullname(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setMobile(resultSet.getString("mobile") == null ? "" : resultSet.getString("mobile"));
+                    user.setAvatarUrl(resultSet.getString("avatar_url"));
+                    user.setStatusId(resultSet.getInt("status_id"));
+                    user.setNote(resultSet.getString("note") == null ? "" : resultSet.getString("note"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+                    user.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                    user.setLastActive(resultSet.getTimestamp("last_active"));
+                    traineeList.add(user);
+                }
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return traineeList;
+    }
+
+    public static void main(String[] args) {
+        TeamDaoImpl teamDao = new TeamDaoImpl();
+        Connection connection = BaseDao.getConnection();
+        try {
+            System.out.println(teamDao.FindTeamById(connection, 1, 1).getListTrainee().size());
+            ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int AddToTeam(Connection connection, int traineeId, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                String sql = "INSERT INTO `team_member`(`team_id`, `user_id`, `is_leader`, `is_active`) VALUES (?,?,?,?)";
+                Object[] params = { teamId, traineeId, 0, 1 };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int RemoveAllMember(Connection connection, int teamId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        if (connection != null) {
+            try {
+                String sql = "DELETE FROM `team_member` WHERE `team_id` = ?";
+                Object[] params = { teamId };
+                result = BaseDao.execute(connection, preparedStatement, sql, params);
+            } catch (SQLException e) {
+                DebugHelper.print(e);
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+        }
+        return result;
     }
 }

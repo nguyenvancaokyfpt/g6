@@ -34,14 +34,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> FindByClassID(int classID) {
+    public List<Team> FindByClassID(int classID, int milestone_id) {
         Connection connection = null;
         List<Team> teams = null;
         try {
             connection = BaseDao.getConnection();
-            teams = teamDao.FindByClassID(connection, classID);
+            teams = teamDao.FindByClassID(connection, classID,milestone_id);
         } catch (Exception e) {
-            System.out.println("Sevice");
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
@@ -243,16 +242,15 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void removeStudentLinkToTeam(int classId) {
-        List<Team> teamList = FindByClassID(classId);
-        List<Team> teamList2 = FindByClassUser(classId);
-        for (Team team : teamList) {
-            setNullTeamId(team.getId());
-        }
-        DebugHelper.print(teamList2);
-        for (Team team : teamList2) {
-            DeleteTeam(team.getId());
-        }
-
+        // List<Team> teamList = FindByClassID(classId);
+        // List<Team> teamList2 = FindByClassUser(classId);
+        // for (Team team : teamList) {
+        //     setNullTeamId(team.getId());
+        // }
+        // DebugHelper.print(teamList2);
+        // for (Team team : teamList2) {
+        //     DeleteTeam(team.getId());
+        // }
     }
 
     @Override
@@ -477,5 +475,48 @@ public class TeamServiceImpl implements TeamService {
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
+    }
+
+    @Override
+    public List<Trainee> GetWaitingList(int classID, int milestone_id) {
+        Connection connection = null;
+        List<Trainee> traineeList = null;
+        try {
+            connection = BaseDao.getConnection();
+            traineeList = teamDao.GetWaitingList(connection, classID, milestone_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return traineeList;
+    }
+
+    @Override
+    public int AddToTeam(int traineeId, int teamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            return teamDao.AddToTeam(connection, traineeId, teamId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean RemoveAllMember(int teamId) {
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            return teamDao.RemoveAllMember(connection, teamId) >0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return false;
     }
 }

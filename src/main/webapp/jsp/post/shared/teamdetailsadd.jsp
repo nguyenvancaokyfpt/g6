@@ -37,6 +37,8 @@
                             <div class="col-xl-3 fv-row">
                                 <input type="text" class="form-control form-control-solid " placeholder="Type Name"
                                     value="${requestScope.myClass.getClassCode()}" required disabled />
+                                <input id="mileId" type="text" class="d-none" name="team_mile"
+                                    value="${requestScope.mile}" />
                                 <input type="text" id="team_class" class="d-none" value="${requestScope.myClass.id}"
                                     name="team_class">
                             </div>
@@ -50,8 +52,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_project" name="team_project"
-                                    placeholder="Type Project Code" value="" required />
+                                <input type="text" class="form-control form-control-solid " id="team_project"
+                                    name="team_project" placeholder="Type Project Code" value="" required />
                             </div>
                             <!--end::Col-->
                         </div>
@@ -67,8 +69,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_topicName" name="team_topicName"
-                                    placeholder="Type Topic Name" value="" required />
+                                <input type="text" class="form-control form-control-solid " id="team_topicName"
+                                    name="team_topicName" placeholder="Type Topic Name" value="" required />
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -80,8 +82,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_topicCode" name="team_topicCode"
-                                    placeholder="Type Topic Code" value="" required />
+                                <input type="text" class="form-control form-control-solid " id="team_topicCode"
+                                    name="team_topicCode" placeholder="Type Topic Code" value="" required />
                             </div>
                             <!--end::Col-->
                         </div>
@@ -111,7 +113,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-8 fv-row">
-                                <textarea name="team_description" id="team_description" class="form-control form-control-solid h-200px "
+                                <textarea name="team_description" id="team_description"
+                                    class="form-control form-control-solid h-200px "
                                     placeholder="Type something for description....."></textarea>
                             </div>
                             <!--begin::Col-->

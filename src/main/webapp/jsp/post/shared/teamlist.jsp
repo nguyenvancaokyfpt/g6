@@ -17,8 +17,21 @@
                                     </c:when>
                                     <c:otherwise>
                                         <c:forEach items="${requestScope.miles}" var="m">
-                                            <option value="${m.milestoneId}" ${globalClass==m.classId ? "selected" : ""
-                                                }>${m.title} - ${m.classCode}</option>
+                                            <option value="${m.milestoneId}">${m.title} - ${m.classCode} 
+                                                <c:choose>
+                                                    <c:when test="${m.statusId == 1}">
+                                                        (Open)
+                                                    </c:when>    
+                                                    <c:when test="${m.statusId == 2}">
+                                                        (On-going)
+                                                    </c:when>   
+                                                    <c:when test="${m.statusId == 3}">
+                                                        (Closed)
+                                                    </c:when>   
+                                                    <c:otherwise>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </option>
                                         </c:forEach>
                                     </c:otherwise>
                                 </c:choose>

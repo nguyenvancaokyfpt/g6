@@ -75,7 +75,7 @@ public class IssueListServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.ISSUE_LIST));
         User u = (User) request.getAttribute("user");
-        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId(),-1);
         request.setAttribute("miles", miles);
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
@@ -145,8 +145,8 @@ public class IssueListServlet extends HttpServlet {
 
     private void getTeam(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int classId = Integer.parseInt(request.getParameter("classId"));
-        List<Team> teams = teamService.FindByClassID(classId);
-        ResponseHelper.sendResponse(response, teams);
+//        List<Team> teams = teamService.FindByClassID(classId);
+//        ResponseHelper.sendResponse(response, teams);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
