@@ -54,7 +54,7 @@ public class AttendanceDetailServlet extends HttpServlet {
         int class_id = 0;
         String class_idString;
         String schedule_idString;
-        String message = "Successfully take attendance";
+        String message = "";
 
         List<Classroom> myClass = new ArrayList<>();
         RoleConstants role = (RoleConstants) request.getAttribute("ROLE_CONSTANTS");
@@ -96,6 +96,8 @@ public class AttendanceDetailServlet extends HttpServlet {
                     double absentPercent = (double) absent / totalSchedule * 100;
                     classUser.setAbsent((int) absentPercent);
                 }
+                message = "Successfully take attendance";
+                request.setAttribute("message", message);
                 change(request, response);
                 break;
             case "edit":
@@ -112,6 +114,8 @@ public class AttendanceDetailServlet extends HttpServlet {
                     double absentPercent = (double) absent / totalSchedule * 100;
                     classUser.setAbsent((int) absentPercent);
                 }
+                message = "Successfully take attendance";
+                request.setAttribute("message", message);
                 change(request, response);
                 break;
             case "take":
@@ -216,13 +220,12 @@ public class AttendanceDetailServlet extends HttpServlet {
         Connection connection = BaseDao.getConnection();
         AttendanceDaoImpl dao = new AttendanceDaoImpl();
         List<AnhPTClassUser> UserList = new ArrayList<>();
-        List<AnhPTSchedule> ScheduleList = new ArrayList<>();
+        //List<AnhPTSchedule> ScheduleList = new ArrayList<>();
         List<Attendance> AttendanceList = new ArrayList<>();
 
-        int class_id = 0;
+        //int class_id = 0;
         String class_idString;
         String schedule_idString;
-        String message = "Successfully take attendance";
 
         class_idString = request.getParameter("class_id");
         UserList = dao.findAllClassUser(connection, Integer.parseInt(class_idString));
@@ -233,7 +236,6 @@ public class AttendanceDetailServlet extends HttpServlet {
         request.setAttribute("schedule_id", schedule_id);
         request.setAttribute("userList", UserList);
         request.setAttribute("attendanceList", AttendanceList);
-        request.setAttribute("message", message);
         request.setAttribute("jspPath", "shared/attendanceDetailEdit.jsp");
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,

@@ -371,10 +371,14 @@
                                                                             <a href="/setting/system/detail?id=${sl.id}&action=edit" title="View and Edit"><i class='fas fa-edit' style='font-size:24px'></i></a>
                                                                             <c:choose>
                                                                             <c:when test="${sl.statusString=='Active'}">
-                                                                                <a href="/setting/system?page=${page}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}&id=${sl.id}&status_id=${sl.statusId}&action=status" title="Deactivate"><i class='fas fa-times-circle' style='font-size:24px'></i></a>
+                                                                                <a href="/setting/system?page=${page}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}&id=${sl.id}&status_id=${sl.statusId}&action=status" title="Deactivate" onclick="return confirm('You want to deactivate this setting?');">
+                                                                                    <i class='fas fa-times-circle' style='font-size:24px'></i>
+                                                                                </a>
                                                                                 </c:when>    
                                                                                 <c:otherwise>
-                                                                                <a href="/setting/system?page=${page}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}&id=${sl.id}&status_id=${sl.statusId}&action=status" title="Activate"><i class='fas fa-check-square' style='font-size:24px'></i></a>
+                                                                                <a href="/setting/system?page=${page}&order=${order}&searchword=${searchword}&dir=${dir}&type=${type}&status=${status}&id=${sl.id}&status_id=${sl.statusId}&action=status" title="Activate" onclick="return confirm('You want to activate this setting?');">
+                                                                                    <i class='fas fa-check-square' style='font-size:24px'></i>
+                                                                                </a>
                                                                                 </c:otherwise>
                                                                             </c:choose>
                                                                             

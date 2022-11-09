@@ -8,7 +8,7 @@
             <div class="card-header cursor-pointer">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h3 class="fw-bolder m-0">Add Setting</h3>
+                    <h3 class="fw-bolder m-0">Add Class</h3>
                 </div>
                 <!--end::Card title-->
                 <!--begin::Action-->
@@ -28,8 +28,8 @@
                             <label class="required fs-5 fw-bold mb-2">Class Code</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input class="form-control form-control-solid" placeholder="Enter setting title"
-                                   name="class_code" required="true">
+                            <input class="form-control form-control-solid" placeholder="Enter class code"
+                                   name="class_code" required="true" maxlength="10">
                             <!--end::Input-->
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
@@ -64,7 +64,7 @@
                                 <!--end::Label-->
                                 <!--begin::Select-->
                                 <select class="form-select form-select-solid fw-bolder select2-hidden-accessible"
-                                        data-kt-select2="true" data-placeholder="Select term" aria-hidden="true"
+                                        data-kt-select2="true" data-placeholder="Select subject" aria-hidden="true"
                                         name="subject_id" required="true">
                                     <option data-select2-id="select2-data-12-dqg1"></option>
                                     <c:forEach items="${subjectList}" var="tl">
@@ -138,7 +138,7 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <textarea class="form-control form-control-solid" placeholder="Enter description"
-                                      name="description"></textarea>
+                                      name="description" maxlength="200"></textarea>
                             <!--end::Input-->
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
