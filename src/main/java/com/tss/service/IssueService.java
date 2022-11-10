@@ -14,11 +14,11 @@ import com.tss.model.Issue;
  */
 public interface IssueService {
     List<Issue> findAll(int start, int length, String search, String columnName, String orderDir
-    , int classFilter, int teamFilter, int assignFilter, int statusFilter);
+    , int classFilter, int teamFilter, int assignFilter, int statusFilter,int supId,int mileFilter);
 
     int countAll(int classFilter, int teamFilter);
 
-    int countFilter(String search, int classFilter, int teamFilter, int assignFilter, int statusFilter);
+    int countFilter(String search, int classFilter, int teamFilter, int assignFilter, int statusFilter, int supId, int mileFilter);
 
     int addIssue(Issue issue);
 }

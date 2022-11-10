@@ -28,13 +28,13 @@ public class InsueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> findAll(int start, int length, String search, String columnName, String orderDir
-    , int classFilter, int teamFilter, int assignFilter, int statusFilter) {
+    , int classFilter, int teamFilter, int assignFilter, int statusFilter,int supId,int mileFilter) {
         Connection connection = null;
         List<Issue> issues = null;
         try {
             connection = BaseDao.getConnection();
             issues = issueDao.findAll(connection, start, length, search, columnName,
-                    orderDir, classFilter, teamFilter, assignFilter, statusFilter);
+                    orderDir, classFilter, teamFilter, assignFilter, statusFilter,supId,mileFilter);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -65,12 +65,14 @@ public class InsueServiceImpl implements IssueService {
     }
 
     @Override
-    public int countFilter(String search,int classFilter, int teamFilter, int assignFilter, int statusFilter) {
+    public int countFilter(String search,int classFilter, int teamFilter, int assignFilter,
+            int statusFilter, int supId, int mileFilter) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = issueDao.countFilter(connection,search, classFilter, teamFilter, assignFilter, statusFilter);
+            count = issueDao.countFilter(connection,search, classFilter, teamFilter,
+                    assignFilter, statusFilter,supId, mileFilter);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

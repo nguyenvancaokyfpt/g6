@@ -37,8 +37,9 @@
                         <select id="iterMilestone" class="form-select form-select-solid fw-bolder"
                             data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true"
                             data-kt-issue-table-filter="milestone" data-hide-search="true">
+                            <option value="-1">All Issues</option>
                             <c:forEach items="${requestScope.miles}" var="m">
-                                <option value="${m.classId}">${m.title}</option>
+                                <option value="${m.milestoneId}">${m.title} - ${m.classCode}</option>
                             </c:forEach>
                         </select>
                     </div>

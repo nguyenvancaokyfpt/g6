@@ -136,7 +136,8 @@ public class TeamDetailServlet extends HttpServlet {
         
         Team team = teamService.FindTeamById(teamid, classID);
         request.setAttribute("going", request.getParameter("going"));
-        request.setAttribute("mile", request.getParameter("mileId"));
+        Milestone m = mileService.findById(Integer.parseInt(request.getParameter("mileId")));
+        request.setAttribute("mile",m );
         request.setAttribute("team", team);
         request.setAttribute("toast", request.getParameter("toast"));
         //END
@@ -191,7 +192,8 @@ public class TeamDetailServlet extends HttpServlet {
         }
         ClassEntity myClass = classService.findByID(classId);
         request.setAttribute("myClass", myClass);
-        request.setAttribute("mile", request.getParameter("mileId"));
+        Milestone m = mileService.findById(Integer.parseInt(request.getParameter("mileId")));
+        request.setAttribute("mile",m );
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 

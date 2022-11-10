@@ -98,7 +98,6 @@ public class TeamListServlet extends HttpServlet {
         // BEGIN
         User u = (User) request.getAttribute("user");
         int classId = (int) request.getAttribute("globalClass");
-        System.out.println(classId);
         List<Milestone> miles = mileService.findAllBySupporter(u.getUserId(), classId);
         request.setAttribute("miles", miles);
         // END

@@ -30,8 +30,8 @@ public class TeamDaoImpl implements TeamDao {
         List<Team> teams = new ArrayList<>();
         if (connection != null) {
             try {
-                String sql = "SELECT t.* ,c.class_code FROM `team` t inner join class c on t.class_id = c.class_id where t.class_id = ? and t.milestone_id = ?";
-                Object[] params = { classID, milestone_id };
+                String sql = "SELECT t.* ,c.class_code FROM `team` t inner join class c on t.class_id = c.class_id where t.milestone_id = ?";
+                Object[] params = {milestone_id };
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
                     Team team = new Team();
@@ -616,7 +616,7 @@ public class TeamDaoImpl implements TeamDao {
         TeamDaoImpl teamDao = new TeamDaoImpl();
         Connection connection = BaseDao.getConnection();
         try {
-            System.out.println(teamDao.FindTeamById(connection, 1, 1).getListTrainee().size());
+            System.out.println(teamDao.FindByClassID(connection, 1, 99).size());
             ;
         } catch (Exception e) {
             e.printStackTrace();

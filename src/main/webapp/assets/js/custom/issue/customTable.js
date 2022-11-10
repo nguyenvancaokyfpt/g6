@@ -72,9 +72,11 @@ var KTUsersList = (function () {
           },
           columns: [
             { data: "issueId" },
+            { data: "team"},
             { data: "title" },
             { data: "milestone" },
             { data: "assignee" },
+            { data: "type"},
             { data: "status" },
             { data: "isClose" },
             { data: "issueId" },
@@ -90,6 +92,14 @@ var KTUsersList = (function () {
             },
             {
               targets: 1,
+              title: "Team Code",
+              className: "text-center",
+              render: function (data) {
+                return data.project_code;
+              },
+            },
+            {
+              targets: 2,
               title: "Title",
               className: "text-center",
               render: function (data) {
@@ -97,7 +107,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 2,
+              targets: 3,
               title: "Milestone",
               className: "text-center",
               render: function (data) {
@@ -105,7 +115,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 3,
+              targets: 4,
               title: "Assignee",
               className: "text-center",
               render: function (data) {
@@ -113,7 +123,15 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 4,
+              targets: 5,
+              title: "Type",
+              className: "text-center",
+              render: function (data) {
+                return data == 1 ? "Issue" : "Task";
+              },
+            },
+            {
+              targets: 6,
               title: "Status",
               className: "text-center",
               render: function (data) {
@@ -121,7 +139,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 5,
+              targets: 7,
               title: "IsClose",
               className: "text-center",
               render: function (data) {
@@ -129,7 +147,7 @@ var KTUsersList = (function () {
               },
             },
             {
-              targets: 6,
+              targets: 8,
               title: "Actions",
               orderable: false,
               className: "text-center",
@@ -183,24 +201,21 @@ KTUtil.onDOMContentLoaded(function () {
 
 let team = [];
 const getTeam = (e) => {
-  let classId = document.getElementById("iterMilestone").value;
+  let mileId = document.getElementById("iterMilestone").value;
   fetch(
-    window.location.origin + `/issue/list?action=getTeam&classId=${classId}`,
+    window.location.origin + `/issue/list?action=getTeam&mileId=${mileId}`,
     { method: "POST" }
   )
     .then((response) => response.json())
     .then((data) => {
       team = data;
       var teamSelect = document.getElementById("iterTeam");
-      teamSelect.innerHTML = "";
+      teamSelect.innerHTML = `<option value="-1">All Group</option>`;
       data.forEach((element, index) => {
         teamSelect.innerHTML += `<option value="${element.id}">Group ${
           index + 1
         }</option>`;
       });
-      if (data.length == 0) {
-        teamSelect.innerHTML += `<option value="-1">Empty Group</option>`;
-      }
       getAssignee();
       if (e != null) e.draw();
     });
