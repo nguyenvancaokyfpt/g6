@@ -31,50 +31,58 @@ const changeStatus = (teamId, statusId) => {
     });
 };
 
-
 const changeTeam = (traineeId, classId) => {
   teamId = document.getElementById(`selectAdd${traineeId}`).value;
   fetch(
-    window.location.origin + `/team/list?action=update&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    window.location.origin +
+      `/team/list?action=update&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
     { method: "POST" }
-  ).then((response) => {
-    if (response.status === 200) {
-      getClass();
-      toastr.success("Team Updated Successfully!");
-    }else{
-      toastr.error("Team Updated Fail!");
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        getClass();
+        toastr.success("Team Updated Successfully!");
+      } else {
+        toastr.error("Team Updated Fail!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-const RemoveFromTeam = (traineeId, classId,teamId) => {
+const RemoveFromTeam = (traineeId, classId, teamId) => {
   fetch(
-    window.location.origin + `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    window.location.origin +
+      `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
     { method: "GET" }
-  ).then((response) => {
-    if (response.status === 200) {
-      getClass();
-      toastr.success("Remove Successfully!");
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        getClass();
+        toastr.success("Remove Successfully!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-const SetLeader = (traineeId, classId,teamId) => {
+const SetLeader = (traineeId, classId, teamId) => {
   fetch(
-    window.location.origin + `/team/list?action=leader&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+    window.location.origin +
+      `/team/list?action=leader&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
     { method: "POST" }
-  ).then((response) => {
-    if (response.status === 200) {
-      getClass();
-      toastr.success("Set leader Successfully!");
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        getClass();
+        toastr.success("Set leader Successfully!");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const removeTeam = (teamId) => {
@@ -113,13 +121,17 @@ const getClass = () => {
       console.log(data);
 
       if (listTeams.length == 0) {
-        $("#teamBody").html(`
+        $("#teamBody").html(
+          `
           <div class="memberItem" style="padding-left: 20px;">
               <div class="row">
-                <p class="create_notification">Trainees have not been grouped. <a class="btn-create">Create Groups</a> </p>
+                <p class="create_notification">Trainees have not been grouped. <a href="/team/new?id=` +
+            document.getElementById("selectedMile").value +
+            `" class="btn-create">Create Groups</a> </p>
               </div>
           </div>
-        `);
+        `
+        );
         return;
       }
 
@@ -132,7 +144,11 @@ const getClass = () => {
                 <div class="memberItem text-left">
                     <div class="row">
                         <div class="col-1">${trainee.userId}</div>
-                        <div class="col-3">${trainee.fullname} ${trainee.isLeader == 1 ? `<i class="fa fa-star text-warning"></i>` :""}</div>
+                        <div class="col-3">${trainee.fullname} ${
+            trainee.isLeader == 1
+              ? `<i class="fa fa-star text-warning"></i>`
+              : ""
+          }</div>
                         <div class="col-4">${trainee.email.toUpperCase()}</div>
                         <div class="col-1">${
                           trainee.statusId == 1 ? "Active" : "Inactive"
@@ -170,17 +186,19 @@ const getClass = () => {
                                       <option selected disabled>Select the group</option>
                                       ${data.listTeam
                                         .map((team, indexx) => {
-                                          if(index == indexx) return "";
-                                          return `<option value="${team.id}">Group ${
-                                            indexx + 1
-                                          }</option>`;
+                                          if (index == indexx) return "";
+                                          return `<option value="${
+                                            team.id
+                                          }">Group ${indexx + 1}</option>`;
                                         })
                                         .join("")}
                                     </select>
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Change</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${
+                                        trainee.userId
+                                      },${data.id})">Change</a>
                                     </div>
                                   </div>
                                 </div>
@@ -199,7 +217,9 @@ const getClass = () => {
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="RemoveFromTeam(${trainee.userId},${data.id},${team.id})">Remove</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="RemoveFromTeam(${
+                                        trainee.userId
+                                      },${data.id},${team.id})">Remove</a>
                                     </div>
                                   </div>
                                 </div>
@@ -218,7 +238,9 @@ const getClass = () => {
                                     </div>
                                     <div div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="SetLeader(${trainee.userId},${data.id},${team.id})">Submit</a>
+                                      <a class="btn btn-primary" data-bs-dismiss="modal" onclick="SetLeader(${
+                                        trainee.userId
+                                      },${data.id},${team.id})">Submit</a>
                                     </div>
                                   </div>
                                 </div>
@@ -257,9 +279,7 @@ const getClass = () => {
                         }">Remove Group</a></li>
                         <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatusTeam${
                           team.id
-                        }">${
-                          team.status_id ? "Deactive" : "Active"
-                        }</a></li>
+                        }">${team.status_id ? "Deactive" : "Active"}</a></li>
                     </ul>
                     <div class="modal fade" id="modelRemoveTeam${
                       team.id
@@ -275,7 +295,9 @@ const getClass = () => {
                           </div>
                           <div div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="removeTeam(${team.id})">Remove</a>
+                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="removeTeam(${
+                              team.id
+                            })">Remove</a>
                           </div>
                         </div>
                       </div>
@@ -290,11 +312,17 @@ const getClass = () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            Are you sure you want to ${team.status_id ? "Deactive" : "Active"} this group?
+                            Are you sure you want to ${
+                              team.status_id ? "Deactive" : "Active"
+                            } this group?
                           </div>
                           <div div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeStatus(${team.id },${team.status_id})">${team.status_id ? "Deactive" : "Active"}</a>
+                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeStatus(${
+                              team.id
+                            },${team.status_id})">${
+          team.status_id ? "Deactive" : "Active"
+        }</a>
                           </div>
                         </div>
                       </div>
@@ -367,7 +395,9 @@ const getClass = () => {
                         </div>
                         <div div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${trainee.userId},${data.id})">Add</a>
+                          <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeTeam(${
+                            trainee.userId
+                          },${data.id})">Add</a>
                         </div>
                       </div>
                     </div>
@@ -487,5 +517,3 @@ $(document).ready(function () {
   };
   getClass();
 });
-
-

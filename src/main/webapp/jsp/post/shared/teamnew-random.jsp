@@ -90,7 +90,7 @@
                                                 <option></option>
                                                 <option value="0">Team default</option>
                                                 <c:forEach items="${listMilestone}" var="d">
-                                                    <option value="${d.getMilestoneId()}">${d.getTitle()}
+                                                    <option selected value="${d.getMilestoneId()}">${d.getTitle()}
                                                     </option>
                                                 </c:forEach>
                                             </select>
@@ -179,7 +179,8 @@
                 <!--end::Heading-->
                 <!--begin::Controls-->
                 <div class="d-flex my-2">
-                    <a href="#" data-kt-users-modal-action="reset-team" class='btn btn-primary btn-sm fw-bolder'>Reset Team</a>
+                    <a href="#" data-kt-users-modal-action="reset-team" class='btn btn-primary btn-sm fw-bolder'>Reset
+                        Team</a>
                 </div>
                 <!--end::Controls-->
             </div>

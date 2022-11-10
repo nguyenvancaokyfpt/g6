@@ -770,26 +770,28 @@ public class TeamNewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "upload";
+        int milestoneId = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id"))
+                : 100;
         switch (action) {
             case ActionConstants.GET:
                 getFile(request, response);
                 break;
             case "random":
-                randomTeam(request, response, action);
+                randomTeam(request, response, action, milestoneId);
                 break;
             case "reuse":
-                reuseTeam(request, response, action);
+                reuseTeam(request, response, action, milestoneId);
                 break;
             case "clone":
-                cloneTeam(request, response, action);
+                cloneTeam(request, response, action, milestoneId);
                 break;
             default:
-                view(request, response, action);
+                view(request, response, action, milestoneId);
                 break;
         }
     }
 
-    private void view(HttpServletRequest request, HttpServletResponse response, String action)
+    private void view(HttpServletRequest request, HttpServletResponse response, String action, int milestoneId)
             throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/teamnew.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
@@ -799,6 +801,7 @@ public class TeamNewServlet extends HttpServlet {
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_NEW));
         request.setAttribute("nav_action", action);
+        request.setAttribute("milestoneId", milestoneId);
         Classroom classroom = new Classroom();
         List<Milestone> listMilestone = new ArrayList<Milestone>();
 
@@ -831,7 +834,7 @@ public class TeamNewServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    private void randomTeam(HttpServletRequest request, HttpServletResponse response, String action)
+    private void randomTeam(HttpServletRequest request, HttpServletResponse response, String action, int milestoneId)
             throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/teamnew-random.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
@@ -841,6 +844,7 @@ public class TeamNewServlet extends HttpServlet {
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_NEW));
         request.setAttribute("nav_action", action);
+        request.setAttribute("milestoneId", milestoneId);
         Classroom classroom = new Classroom();
         List<Milestone> listMilestone = new ArrayList<Milestone>();
 
@@ -873,7 +877,7 @@ public class TeamNewServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    private void reuseTeam(HttpServletRequest request, HttpServletResponse response, String action)
+    private void reuseTeam(HttpServletRequest request, HttpServletResponse response, String action, int milestoneId)
             throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/teamnew-reuse.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
@@ -883,6 +887,7 @@ public class TeamNewServlet extends HttpServlet {
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_NEW));
         request.setAttribute("nav_action", action);
+        request.setAttribute("milestoneId", milestoneId);
         Classroom classroom = new Classroom();
         List<Milestone> listMilestone = new ArrayList<Milestone>();
 
@@ -915,7 +920,7 @@ public class TeamNewServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
-    private void cloneTeam(HttpServletRequest request, HttpServletResponse response, String action)
+    private void cloneTeam(HttpServletRequest request, HttpServletResponse response, String action, int milestoneId)
             throws ServletException, IOException {
         request.setAttribute("jspPath", "shared/teamnew-clone.jsp");
         request.setAttribute("customJs", ResponseHelper.customJs(
@@ -925,6 +930,7 @@ public class TeamNewServlet extends HttpServlet {
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_NEW));
         request.setAttribute("nav_action", action);
+        request.setAttribute("milestoneId", milestoneId);
         Classroom classroom = new Classroom();
         List<Milestone> listMilestone = new ArrayList<Milestone>();
 
