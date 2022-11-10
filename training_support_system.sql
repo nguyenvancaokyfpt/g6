@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2022 at 04:25 PM
+-- Generation Time: Nov 10, 2022 at 04:39 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -332,6 +332,42 @@ CREATE TABLE `issue` (
   `gitlab_url` varchar(500) NOT NULL,
   `is_closed` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `issue`
+--
+
+INSERT INTO `issue` (`issue_id`, `team_id`, `author_id`, `title`, `type_id`, `status_id`, `extra_labels`, `description`, `linked_id`, `gitlab_url`, `is_closed`) VALUES
+(1, 1, 3, 'Home Page', 1, 3, '#None', '#None', 1, 'https://gitlab.com/fu-kiennt-fall22/se1627-net_swp391/g6', 0),
+(2, 1, 3, 'Demo Dashboard', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(3, 1, 3, 'User Login', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(4, 1, 29, 'Password Reset', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(5, 1, 29, 'User Register', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(6, 1, 29, 'User Profile', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(7, 1, 61, 'Password Change', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(8, 1, 61, 'Setting List', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(9, 1, 61, 'Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(10, 1, 61, 'User List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(11, 11, 62, 'User Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(12, 11, 62, 'Subject List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(13, 11, 62, 'Subject Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(14, 11, 63, 'Web Contact List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(15, 11, 63, 'Web Contact Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(16, 11, 63, 'System Permissions', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(17, 2, 19, 'User Authorization', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(18, 2, 19, 'Subject Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(19, 2, 19, 'Subject Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(20, 2, 32, 'Assignment List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(21, 2, 32, 'Assignment Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(22, 2, 32, 'Eval Criteria List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(23, 2, 52, 'Eval Criteria Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(24, 2, 52, 'Class List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(25, 2, 52, 'Class Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(26, 3, 29, 'Class Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(27, 3, 29, 'Class Setting Details', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(28, 3, 29, 'Milestone List', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(29, 3, 61, 'New Milestone', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(30, 3, 32, 'Milestone Details', 1, 4, '#none', '#none', 1, 'github.com', 0);
 
 -- --------------------------------------------------------
 
@@ -932,9 +968,10 @@ INSERT INTO `team` (`team_id`, `class_id`, `milestone_id`, `project_code`, `topi
 (3, 2, 99, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
 (4, 2, 99, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system'),
 (6, 2, 99, 'HPO', 'HP212', 'Happy Programing', 1, 'Program for student '),
-(8, 1, 2, 'TEST4', 'TEST4', 'TEST4', 1, 'TEST4'),
 (9, 3, 100, 'TEST44', 'TEST44', 'TEST44', 0, 'TEST44'),
-(10, 3, 100, 'TEST3', 'TEST3', 'TEST3', 1, 'TEST3');
+(10, 3, 100, 'TEST3', 'TEST3', 'TEST3', 1, 'TEST3'),
+(11, 1, 1, 'PRJ', 'PRJ', 'PRJ', 1, 'PRJ'),
+(12, 3, 100, 'TEST5', 'TEST5', 'TEST5', 1, 'TEST5');
 
 -- --------------------------------------------------------
 
@@ -969,29 +1006,24 @@ CREATE TABLE `team_member` (
 
 INSERT INTO `team_member` (`team_id`, `user_id`, `is_leader`, `is_active`) VALUES
 (1, 3, 0, 1),
-(1, 29, 0, 1),
+(1, 29, 1, 1),
 (1, 61, 0, 1),
 (2, 19, 0, 1),
 (2, 32, 0, 1),
-(2, 52, 0, 1),
 (2, 65, 0, 1),
+(2, 66, 0, 1),
 (3, 29, 0, 1),
 (3, 53, 0, 1),
 (3, 61, 0, 1),
 (3, 63, 0, 1),
 (4, 62, 0, 1),
 (4, 64, 0, 1),
-(8, 3, 0, 1),
-(8, 25, 0, 1),
-(8, 29, 0, 1),
-(8, 56, 0, 1),
 (9, 19, 0, 1),
-(9, 64, 0, 1),
-(9, 66, 0, 1),
-(10, 3, 0, 1),
-(10, 62, 0, 1),
-(10, 63, 0, 1),
-(10, 65, 0, 1);
+(9, 62, 0, 1),
+(11, 62, 1, 1),
+(11, 63, 0, 1),
+(12, 3, 0, 1),
+(12, 65, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1112,7 +1144,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (57, 24),
 (61, 26),
 (62, 26),
-(63, 21),
+(63, 22),
 (64, 26),
 (65, 26),
 (66, 26),
@@ -1549,7 +1581,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
