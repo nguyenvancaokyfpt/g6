@@ -18,10 +18,12 @@ const editMember = () => {
   });
 };
 
-const getWaitingList = (classId) => {
+const getWaitingList = () => {
+  let mileId = document.getElementById("mileId").value;
+  let classId = document.getElementById("team_class").value;
   fetch(
     window.location.origin +
-      `/team/detail?action=getWaiting&classId=${classId}`,
+      `/team/detail?action=getWaiting&classId=${classId}&mileId=${mileId}`,
     { method: "GET" }
   )
     .then((response) => {
@@ -29,7 +31,6 @@ const getWaitingList = (classId) => {
     })
     .then((data) => {
       waitingList = data;
-      console.log(waitingList);
       render();
     })
     .catch((error) => {
@@ -158,6 +159,7 @@ const newTeam = () => {
   let team_status = document.getElementsByName("team_status")[0].checked
     ? 1
     : 0;
+  let team_mile = document.getElementById("mileId").value;
   if (team_project == "" || team_topicName == "" || team_topicCode == "") {
     toastr.error("Please fill all information!");
     return;
@@ -165,7 +167,7 @@ const newTeam = () => {
   // call api
   fetch(
     window.location.origin +
-      `/team/detail?action=doAdd&team_class=${team_class}&team_project=${team_project}&team_topicName=${team_topicName}&team_topicCode=${team_topicCode}&team_description=${team_description}&team_status=${team_status}`,
+      `/team/detail?action=doAdd&team_class=${team_class}&team_project=${team_project}&team_topicName=${team_topicName}&team_topicCode=${team_topicCode}&team_description=${team_description}&team_status=${team_status}&team_mile=${team_mile}`,
     { method: "GET" }
   )
     .then((response) => {
@@ -182,10 +184,19 @@ const newTeam = () => {
       console.log(error);
     });
 };
-
+const AddToTeam = (traineeId, teamId) => {
+  fetch(
+    window.location.origin +
+      `/team/list?action=addToTeam&traineeId=${traineeId}&teamId=${teamId}`,
+    { method: "POST" }
+  )
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+    });
+};
 const saveAll = (teamId) => {
-  let classId = document.getElementById("team_class").value;
   teamMember.forEach((t) => {
-    changeTeam(t.userId, classId, teamId);
+    AddToTeam(t.userId, teamId);
   });
 };

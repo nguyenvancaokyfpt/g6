@@ -17,9 +17,13 @@ import com.tss.model.Trainee;
  */
 public interface TeamDao {
 
-    List<Team> FindByClassID(Connection connection, int classID);
+    List<Team> FindByClassID(Connection connection, int classID, int milestone_id);
+
+    List<Trainee> GetWaitingList(Connection connection, int classID, int milestone_id);
 
     int changeStatus(Connection connection, int id, int status) throws SQLException;
+
+    int AddToTeam(Connection connection,int traineeId, int teamId) throws SQLException;
 
     int RemoveTeam(Connection connection, int teamId) throws SQLException;
 
@@ -40,6 +44,7 @@ public interface TeamDao {
     void setNullTeamId(Connection connection, int teamId);
 
     int RemoveFromTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+    int RemoveAllMember(Connection connection, int teamId) throws SQLException;
 
     int SetLeader(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 

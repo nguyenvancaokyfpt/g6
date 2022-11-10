@@ -75,7 +75,8 @@ public class IssueListServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.ISSUE_LIST));
         User u = (User) request.getAttribute("user");
-        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
+        int classId = (int) request.getAttribute("globalClass");
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId(), classId);
         request.setAttribute("miles", miles);
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
@@ -95,18 +96,18 @@ public class IssueListServlet extends HttpServlet {
         int orderColumn = 1;
         String orderDir = "asc";
         String orderBy = "issue_id";
-        int classFilter = -1;
+        int classFilter = (int) request.getAttribute("globalClass");   
+        int mileFilter = -1;
         int teamFilter = -1;
         int assignFilter = -1;
         int statusFilter = -1;
-        List<DataTablesColumns> columns = new ArrayList<DataTablesColumns>();
         try {
             if (jsonObject != null) {
                 start = jsonObject.getJSONArray("start").getInteger(0);
                 length = jsonObject.getJSONArray("length").getInteger(0);
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
-                classFilter = jsonObject.getJSONArray("classId").getInteger(0);
+                mileFilter = jsonObject.getJSONArray("classId").getInteger(0);
                 teamFilter = jsonObject.getJSONArray("teamId").getInteger(0);
                 assignFilter = jsonObject.getJSONArray("assigneeId").getInteger(0);
                 statusFilter = jsonObject.getJSONArray("status").getInteger(0);
@@ -117,10 +118,11 @@ public class IssueListServlet extends HttpServlet {
         } catch (NullPointerException e) {
             System.out.println(e);
         }
+        User u = (User) request.getAttribute("user");
         List<Issue> list = issueService.findAll(start, length, search, orderBy, orderDir, classFilter, teamFilter,
-                assignFilter, statusFilter);
-        int recordsTotal = issueService.countAll(classFilter, teamFilter);
-        int recordsFiltered = issueService.countFilter(search, classFilter, teamFilter, assignFilter, statusFilter);
+                assignFilter, statusFilter,u.getUserId(),mileFilter);
+        int recordsTotal = issueService.countAll(classFilter, u.getUserId());
+        int recordsFiltered = issueService.countFilter(search, classFilter, teamFilter, assignFilter, statusFilter,u.getUserId(),mileFilter);
         ResponseHelper.sendResponse(response, new DataTablesMessage(draw, recordsTotal, recordsFiltered, list));
     }
 
@@ -144,8 +146,8 @@ public class IssueListServlet extends HttpServlet {
     }
 
     private void getTeam(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int classId = Integer.parseInt(request.getParameter("classId"));
-        List<Team> teams = teamService.FindByClassID(classId);
+        int mileId = Integer.parseInt(request.getParameter("mileId"));
+        List<Team> teams = teamService.FindByClassID(mileId,mileId);
         ResponseHelper.sendResponse(response, teams);
     }
 

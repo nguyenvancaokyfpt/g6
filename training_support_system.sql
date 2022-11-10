@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2022 at 04:46 PM
+-- Generation Time: Nov 10, 2022 at 04:39 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -217,35 +217,44 @@ CREATE TABLE `class_user` (
 --
 
 INSERT INTO `class_user` (`class_id`, `user_id`, `team_id`, `is_leader`, `status_id`, `grade`, `note`, `dropout_date`) VALUES
-(1, 3, 1, 0, 2, 0, NULL, '2022-10-13'),
-(1, 25, 5, 0, 1, 8.2, 'a', '2022-10-20'),
-(1, 29, 1, 0, 1, 0, NULL, NULL),
+(1, 3, NULL, 0, 2, 0, NULL, '2022-10-13'),
+(1, 25, NULL, 0, 1, 8.2, 'a', '2022-10-20'),
+(1, 29, NULL, 0, 1, 0, NULL, NULL),
 (1, 56, NULL, 0, 1, 8.5, 'a', NULL),
-(1, 61, 1, 0, 1, 0, NULL, NULL),
-(1, 62, 5, 1, 1, 0, NULL, NULL),
-(1, 63, 1, 0, 1, 0, NULL, NULL),
+(1, 61, NULL, 0, 1, 0, NULL, NULL),
+(1, 62, NULL, 0, 1, 0, NULL, NULL),
+(1, 63, NULL, 0, 1, 0, NULL, NULL),
 (2, 3, NULL, 0, 2, 0, NULL, '2022-10-13'),
-(2, 19, 2, 0, 1, 9.1, '1', NULL),
-(2, 29, 3, 0, 1, 0, NULL, NULL),
-(2, 32, 2, 1, 1, 0, NULL, NULL),
+(2, 19, NULL, 0, 1, 9.1, '1', NULL),
+(2, 29, NULL, 0, 1, 0, NULL, NULL),
+(2, 32, NULL, 0, 1, 0, NULL, NULL),
 (2, 52, NULL, 0, 1, 0, NULL, NULL),
-(2, 53, 3, 0, 1, 0, NULL, NULL),
-(2, 61, 3, 0, 1, 0, NULL, NULL),
-(2, 62, 4, 1, 1, 0, NULL, NULL),
-(2, 63, 3, 0, 1, 0, NULL, NULL),
-(2, 64, 4, 0, 1, 0, NULL, NULL),
-(2, 65, 2, 0, 1, 0, NULL, NULL),
+(2, 53, NULL, 0, 1, 0, NULL, NULL),
+(2, 61, NULL, 0, 1, 0, NULL, NULL),
+(2, 62, NULL, 0, 1, 0, NULL, NULL),
+(2, 63, NULL, 0, 1, 0, NULL, NULL),
+(2, 64, NULL, 0, 1, 0, NULL, NULL),
+(2, 65, NULL, 0, 1, 0, NULL, NULL),
 (2, 66, NULL, 0, 1, 0, NULL, NULL),
 (2, 67, NULL, 0, 1, 0, NULL, NULL),
-(2, 68, 2, 0, 1, 0, NULL, NULL),
+(2, 68, NULL, 0, 1, 0, NULL, NULL),
+(3, 3, NULL, 0, 1, 0, NULL, NULL),
+(3, 19, NULL, 0, 1, 0, NULL, NULL),
+(3, 62, NULL, 0, 1, 0, NULL, NULL),
+(3, 63, NULL, 0, 1, 0, NULL, NULL),
+(3, 64, NULL, 0, 1, 0, NULL, NULL),
+(3, 65, NULL, 0, 1, 0, NULL, NULL),
+(3, 66, NULL, 0, 1, 0, NULL, NULL),
+(3, 67, NULL, 0, 1, 0, NULL, NULL),
+(3, 68, NULL, 0, 1, 0, NULL, NULL),
 (7, 64, NULL, 0, 2, 8.1, NULL, NULL),
 (7, 65, NULL, 0, 1, 8.2, NULL, NULL),
 (7, 66, NULL, 0, 1, 8.3, NULL, NULL),
 (7, 67, NULL, 0, 1, 8.4, NULL, NULL),
 (7, 68, NULL, 0, 1, 8.5, NULL, NULL),
-(11, 55, 1, 0, 1, 10, '1', NULL),
-(11, 56, 1, 0, 1, 9, 'a', NULL),
-(11, 57, 1, 0, 2, 9.5, 'a', NULL);
+(11, 55, NULL, 0, 1, 10, '1', NULL),
+(11, 56, NULL, 0, 1, 9, 'a', NULL),
+(11, 57, NULL, 0, 2, 9.5, 'a', NULL);
 
 -- --------------------------------------------------------
 
@@ -329,36 +338,36 @@ CREATE TABLE `issue` (
 --
 
 INSERT INTO `issue` (`issue_id`, `team_id`, `author_id`, `title`, `type_id`, `status_id`, `extra_labels`, `description`, `linked_id`, `gitlab_url`, `is_closed`) VALUES
-(1, 1, 29, 'Home Page', 1, 3, '#None', '#None', 1, 'https://gitlab.com/fu-kiennt-fall22/se1627-net_swp391/g6', 0),
-(2, 1, 29, 'Demo Dashboard', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(3, 1, 29, 'User Login', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(1, 1, 3, 'Home Page', 1, 3, '#None', '#None', 1, 'https://gitlab.com/fu-kiennt-fall22/se1627-net_swp391/g6', 0),
+(2, 1, 3, 'Demo Dashboard', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(3, 1, 3, 'User Login', 1, 4, '#none', '#none', 1, 'github.com', 0),
 (4, 1, 29, 'Password Reset', 1, 4, '#none', '#none', 1, 'github.com', 0),
 (5, 1, 29, 'User Register', 1, 5, '#none', '#none', 1, 'github.com', 1),
-(6, 1, 3, 'User Profile', 1, 4, '#none', '#none', 1, 'github.com', 0),
-(7, 1, 3, 'Password Change', 1, 4, '#none', '#none', 1, 'github.com', 0),
-(8, 1, 3, 'Setting List', 1, 5, '#none', '#none', 1, 'github.com', 1),
-(9, 1, 3, 'Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(10, 1, 3, 'User List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(11, 5, 25, 'User Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(12, 5, 25, 'Subject List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(13, 5, 25, 'Subject Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(14, 5, 25, 'Web Contact List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(15, 5, 25, 'Web Contact Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(16, 5, 62, 'System Permissions', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(17, 5, 62, 'User Authorization', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(18, 5, 62, 'Subject Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(19, 5, 62, 'Subject Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(20, 5, 62, 'Assignment List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(21, 1, 3, 'Assignment Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(22, 1, 3, 'Eval Criteria List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(23, 1, 3, 'Eval Criteria Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(24, 1, 3, 'Class List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(25, 1, 3, 'Class Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(26, 2, 32, 'Class Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(27, 2, 52, 'Class Setting Details', 1, 5, '#none', '#none', 1, 'github.com', 1),
-(28, 2, 32, 'Milestone List', 1, 4, '#none', '#none', 1, 'github.com', 0),
-(29, 2, 32, 'New Milestone', 1, 5, '#none', '#none', 1, 'github.com', 1),
-(30, 2, 32, 'Milestone Details', 1, 4, '#none', '#none', 1, 'github.com', 0);
+(6, 1, 29, 'User Profile', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(7, 1, 61, 'Password Change', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(8, 1, 61, 'Setting List', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(9, 1, 61, 'Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(10, 1, 61, 'User List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(11, 11, 62, 'User Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(12, 11, 62, 'Subject List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(13, 11, 62, 'Subject Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(14, 11, 63, 'Web Contact List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(15, 11, 63, 'Web Contact Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(16, 11, 63, 'System Permissions', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(17, 2, 19, 'User Authorization', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(18, 2, 19, 'Subject Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(19, 2, 19, 'Subject Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(20, 2, 32, 'Assignment List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(21, 2, 32, 'Assignment Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(22, 2, 32, 'Eval Criteria List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(23, 2, 52, 'Eval Criteria Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(24, 2, 52, 'Class List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(25, 2, 52, 'Class Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(26, 3, 29, 'Class Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(27, 3, 29, 'Class Setting Details', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(28, 3, 29, 'Milestone List', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(29, 3, 61, 'New Milestone', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(30, 3, 32, 'Milestone Details', 1, 4, '#none', '#none', 1, 'github.com', 0);
 
 -- --------------------------------------------------------
 
@@ -443,7 +452,8 @@ CREATE TABLE `milestone` (
 --
 
 INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
-(1, 10, 1, '2022-09-12', '2022-09-24', 'Iter 1', 'Iter1 report', 'Iter1 report', 1),
+(1, 10, 1, '2022-09-12', '2022-09-24', 'Iter 1', 'Iter1 report', 'Iter1 report', 2),
+(2, 10, 1, '2022-09-12', '2022-11-06', 'Iter 2', 'Iter 2', 'Iter 2', 1),
 (99, 1, 2, '2022-10-22', '2022-11-06', 'Iter 2', 'Iter2 report', 'Iter2 report', 1),
 (100, 6, 3, '2022-11-06', '2022-11-20', 'Iter 3', 'Iter3 report', 'Iter3 report', 1),
 (101, 3, 8, '2022-11-10', '2022-11-11', 'Test 1', 'asss', 'asss', 1);
@@ -966,6 +976,7 @@ INSERT INTO `submit` (`submit_id`, `milestone_id`, `class_id`, `team_id`, `submi
 CREATE TABLE `team` (
   `team_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
   `project_code` varchar(255) NOT NULL,
   `topic_code` varchar(255) NOT NULL,
   `topic_name` varchar(255) NOT NULL,
@@ -977,13 +988,16 @@ CREATE TABLE `team` (
 -- Dumping data for table `team`
 --
 
-INSERT INTO `team` (`team_id`, `class_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
-(1, 1, 'SWP', 'SWP211', 'SWP', 1, 'Test'),
-(2, 2, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
-(3, 2, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
-(4, 2, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system'),
-(5, 1, 'TEST2', 'test', 'test', 1, ''),
-(6, 2, 'HPO', 'HP212', 'Happy Programing', 1, 'Program for student ');
+INSERT INTO `team` (`team_id`, `class_id`, `milestone_id`, `project_code`, `topic_code`, `topic_name`, `status_id`, `description`) VALUES
+(1, 1, 1, 'SWP', 'SWP211', 'SWP', 1, 'Test'),
+(2, 2, 99, 'TTS', 'OL', 'Online learning', 1, 'School managers can create a plan for online or remote education considering the situation of your school.'),
+(3, 2, 99, 'MSO544', 'SO22', 'Motor Shopping Online', 1, 'Motor shopping online system'),
+(4, 2, 99, 'BT221', 'BO11', 'Booking Tour', 1, 'Booking tour online system'),
+(6, 2, 99, 'HPO', 'HP212', 'Happy Programing', 1, 'Program for student '),
+(9, 3, 100, 'TEST44', 'TEST44', 'TEST44', 0, 'TEST44'),
+(10, 3, 100, 'TEST3', 'TEST3', 'TEST3', 1, 'TEST3'),
+(11, 1, 1, 'PRJ', 'PRJ', 'PRJ', 1, 'PRJ'),
+(12, 3, 100, 'TEST5', 'TEST5', 'TEST5', 1, 'TEST5');
 
 -- --------------------------------------------------------
 
@@ -1011,6 +1025,31 @@ CREATE TABLE `team_member` (
   `is_leader` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team_member`
+--
+
+INSERT INTO `team_member` (`team_id`, `user_id`, `is_leader`, `is_active`) VALUES
+(1, 3, 0, 1),
+(1, 29, 1, 1),
+(1, 61, 0, 1),
+(2, 19, 0, 1),
+(2, 32, 0, 1),
+(2, 65, 0, 1),
+(2, 66, 0, 1),
+(3, 29, 0, 1),
+(3, 53, 0, 1),
+(3, 61, 0, 1),
+(3, 63, 0, 1),
+(4, 62, 0, 1),
+(4, 64, 0, 1),
+(9, 19, 0, 1),
+(9, 62, 0, 1),
+(11, 62, 1, 1),
+(11, 63, 0, 1),
+(12, 3, 0, 1),
+(12, 65, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1131,7 +1170,7 @@ INSERT INTO `user_role` (`user_id`, `setting_id`) VALUES
 (57, 24),
 (61, 26),
 (62, 26),
-(63, 21),
+(63, 22),
 (64, 26),
 (65, 26),
 (66, 26),
@@ -1386,7 +1425,8 @@ ALTER TABLE `submit`
 ALTER TABLE `team`
   ADD PRIMARY KEY (`team_id`),
   ADD KEY `status_id` (`status_id`),
-  ADD KEY `class_id` (`class_id`);
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `milestone` (`milestone_id`);
 
 --
 -- Indexes for table `team_eval`
@@ -1400,6 +1440,7 @@ ALTER TABLE `team_eval`
 -- Indexes for table `team_member`
 --
 ALTER TABLE `team_member`
+  ADD PRIMARY KEY (`team_id`,`user_id`),
   ADD KEY `team_id` (`team_id`),
   ADD KEY `user_id` (`user_id`);
 
@@ -1566,7 +1607,7 @@ ALTER TABLE `submit`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `team_eval`
@@ -1763,6 +1804,7 @@ ALTER TABLE `submit`
 -- Constraints for table `team`
 --
 ALTER TABLE `team`
+  ADD CONSTRAINT `milestone` FOREIGN KEY (`milestone_id`) REFERENCES `milestone` (`milestone_id`),
   ADD CONSTRAINT `team_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`);
 
 --

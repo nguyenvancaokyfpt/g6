@@ -17,6 +17,7 @@ import com.tss.dao.MilestoneDao;
 import com.tss.helper.DebugHelper;
 import com.tss.model.Assignment;
 import com.tss.model.Milestone;
+import com.tss.model.system.Role;
 
 /**
  *
@@ -31,27 +32,27 @@ public class MilestoneDaoImpl implements MilestoneDao {
         ResultSet resultSet = null;
         List<Milestone> milestoneList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    m.milestone_id AS mileStoneId,\n" +
-                    "    a.title AS assTitle,\n" +
-                    "    c.class_code AS classCode,\n" +
-                    "    from_date,\n" +
-                    "    to_date,\n" +
-                    "    m.title AS title,\n" +
-                    "    m.ass_body AS assBody,\n" +
-                    "    m.description AS description,\n" +
-                    "    m.status_id AS statusId\n" +
-                    "FROM\n" +
-                    "    milestone AS m\n" +
-                    "        LEFT JOIN\n" +
-                    "    assignment AS a ON m.ass_id = a.ass_id\n" +
-                    "        LEFT JOIN\n" +
-                    "    class AS c ON m.class_id = c.class_id\n" +
-                    "WHERE\n" +
-                    "    m.title LIKE ?\n" +
-                    "LIMIT ? , ?";
+            String sql = "SELECT \n"
+                    + "    m.milestone_id AS mileStoneId,\n"
+                    + "    a.title AS assTitle,\n"
+                    + "    c.class_code AS classCode,\n"
+                    + "    from_date,\n"
+                    + "    to_date,\n"
+                    + "    m.title AS title,\n"
+                    + "    m.ass_body AS assBody,\n"
+                    + "    m.description AS description,\n"
+                    + "    m.status_id AS statusId\n"
+                    + "FROM\n"
+                    + "    milestone AS m\n"
+                    + "        LEFT JOIN\n"
+                    + "    assignment AS a ON m.ass_id = a.ass_id\n"
+                    + "        LEFT JOIN\n"
+                    + "    class AS c ON m.class_id = c.class_id\n"
+                    + "WHERE\n"
+                    + "    m.title LIKE ?\n"
+                    + "LIMIT ? , ?";
             // Search and Paging
-            Object[] params = { "%" + title + "%", currentPageNo, PageSize };
+            Object[] params = {"%" + title + "%", currentPageNo, PageSize};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
 
@@ -107,9 +108,9 @@ public class MilestoneDaoImpl implements MilestoneDao {
         PreparedStatement preparedStatement = null;
         if (connection != null) {
             String sql = "INSERT INTO milestone(ass_id,class_id,from_date,to_date,title,ass_body,description,status_id) VALUES(?,?,?,?,?,?,?,?)";
-            Object[] params = { milestone.getAssId(), milestone.getClassId(), milestone.getFromDate(),
-                    milestone.getToDate(), milestone.getTitle(), milestone.getAssBody(), milestone.getDescription(),
-                    milestone.getStatusId() };
+            Object[] params = {milestone.getAssId(), milestone.getClassId(), milestone.getFromDate(),
+                milestone.getToDate(), milestone.getTitle(), milestone.getAssBody(), milestone.getDescription(),
+                milestone.getStatusId()};
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
@@ -130,28 +131,28 @@ public class MilestoneDaoImpl implements MilestoneDao {
         ResultSet resultSet = null;
         Milestone milestone = new Milestone();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    m.milestone_id AS mileStoneId,\n" +
-                    "    m.ass_id as assId,\n" +
-                    "    m.class_id as classId,\n" +
-                    "    s.subject_code AS subject,\n" +
-                    "    a.subject_id as subjectId,\n" +
-                    "    c.class_code AS classCode,\n" +
-                    "    from_date,\n" +
-                    "    to_date,\n" +
-                    "    m.title AS title,\n" +
-                    "    m.ass_body AS assBody,\n" +
-                    "    m.description AS description,\n" +
-                    "    m.status_id AS statusId\n" +
-                    "FROM\n" +
-                    "    milestone AS m\n" +
-                    "        LEFT JOIN\n" +
-                    "    assignment AS a ON m.ass_id = a.ass_id\n" +
-                    "        LEFT JOIN\n" +
-                    "    subject s ON a.subject_id = s.subject_id\n" +
-                    "        LEFT JOIN\n" +
-                    "    class AS c ON m.class_id = c.class_id WHERE m.milestone_id = ?";
-            Object[] params = { mileStoneId };
+            String sql = "SELECT \n"
+                    + "    m.milestone_id AS mileStoneId,\n"
+                    + "    m.ass_id as assId,\n"
+                    + "    m.class_id as classId,\n"
+                    + "    s.subject_code AS subject,\n"
+                    + "    a.subject_id as subjectId,\n"
+                    + "    c.class_code AS classCode,\n"
+                    + "    from_date,\n"
+                    + "    to_date,\n"
+                    + "    m.title AS title,\n"
+                    + "    m.ass_body AS assBody,\n"
+                    + "    m.description AS description,\n"
+                    + "    m.status_id AS statusId\n"
+                    + "FROM\n"
+                    + "    milestone AS m\n"
+                    + "        LEFT JOIN\n"
+                    + "    assignment AS a ON m.ass_id = a.ass_id\n"
+                    + "        LEFT JOIN\n"
+                    + "    subject s ON a.subject_id = s.subject_id\n"
+                    + "        LEFT JOIN\n"
+                    + "    class AS c ON m.class_id = c.class_id WHERE m.milestone_id = ?";
+            Object[] params = {mileStoneId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -182,9 +183,9 @@ public class MilestoneDaoImpl implements MilestoneDao {
             String assBody, String description, int statusId) throws SQLException {
         PreparedStatement preparedStatement = null;
         if (connection != null) {
-            String sql = "UPDATE milestone SET class_id = ?, " +
-                    "from_date = ?, to_date = ?, title = ? , ass_body = ?, description = ?, status_id = ? WHERE milestone_id = ?";
-            Object[] params = { classId, fromDate, toDate, title, assBody, description, statusId, mileStoneId };
+            String sql = "UPDATE milestone SET class_id = ?, "
+                    + "from_date = ?, to_date = ?, title = ? , ass_body = ?, description = ?, status_id = ? WHERE milestone_id = ?";
+            Object[] params = {classId, fromDate, toDate, title, assBody, description, statusId, mileStoneId};
             try {
                 BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -200,7 +201,7 @@ public class MilestoneDaoImpl implements MilestoneDao {
         PreparedStatement preparedStatement = null;
         if (connection != null) {
             String sql = "UPDATE assignment SET subject_id = ? WHERE ass_id = ?";
-            Object[] params = { subjectId, assId };
+            Object[] params = {subjectId, assId};
             try {
                 BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -217,14 +218,14 @@ public class MilestoneDaoImpl implements MilestoneDao {
         ResultSet resultSet = null;
         List<Assignment> list = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT \n" +
-                    "    a.*, s.subject_name\n" +
-                    "FROM\n" +
-                    "    assignment a\n" +
-                    "        JOIN\n" +
-                    "    subject s ON a.subject_id = s.subject_id\n" +
-                    "LIMIT ? , ?";
-            Object[] params = { start, length };
+            String sql = "SELECT \n"
+                    + "    a.*, s.subject_name\n"
+                    + "FROM\n"
+                    + "    assignment a\n"
+                    + "        JOIN\n"
+                    + "    subject s ON a.subject_id = s.subject_id\n"
+                    + "LIMIT ? , ?";
+            Object[] params = {start, length};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -256,7 +257,7 @@ public class MilestoneDaoImpl implements MilestoneDao {
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM milestone WHERE title LIKE ?";
-            Object[] params = { "%" + search + "%" };
+            Object[] params = {"%" + search + "%"};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {
@@ -271,16 +272,29 @@ public class MilestoneDaoImpl implements MilestoneDao {
         return count;
     }
 
+    public static void main(String[] args) throws SQLException {
+        MilestoneDaoImpl milestoneDao = new MilestoneDaoImpl();
+        System.out.println(milestoneDao.findAllBySupporter(BaseDao.getConnection(), 2, 0).size());
+    }
+
     @Override
-    public java.util.List<Milestone> findAllBySupporter(Connection connection, int supID) throws SQLException {
+    public java.util.List<Milestone> findAllBySupporter(Connection connection, int supID, int classID) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Milestone> milestoneList = new ArrayList<>();
         if (connection != null) {
-            String sql = "SELECT m.*,c.class_code from milestone m " +
-                    "INNER JOIN class c on m.class_id = c.class_id WHERE c.trainer_id = ?;";
+            String sql = "SELECT m.*,c.class_code from milestone m "
+                    + "INNER JOIN class c on m.class_id = c.class_id WHERE 1 = 1";
+            if (classID == -1 || classID == 0) {
+                if (!checkAdmin(connection, supID)) {
+                    sql += " and c.trainer_id = " + supID;
+                }
+            }
+            if (classID != -1 && classID != 0) {
+                sql += " and c.class_id = " + classID;
+            }
             // Search and Paging
-            Object[] params = { supID };
+            Object[] params = {};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
 
@@ -307,6 +321,29 @@ public class MilestoneDaoImpl implements MilestoneDao {
         return milestoneList;
     }
 
+    public boolean checkAdmin(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Role role = new Role();
+        if (connection != null) {
+            String sql = "SELECT s.setting_id,s.setting_title FROM `user_role` u inner JOIN setting s on u.setting_id = s.setting_id  where u.user_id = ?";
+            Object[] params = {id};
+            try {
+                resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
+                while (resultSet.next()) {
+                    role.setId(resultSet.getInt("setting_id"));
+                    role.setTitle(resultSet.getString("setting_title"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                BaseDao.closeResource(null, preparedStatement, resultSet);
+            }
+
+        }
+        return role.getId() == 21;
+    }
+
     @Override
     public java.util.List<Milestone> findByClassId(Connection connection, int classroomId) throws SQLException {
         PreparedStatement preparedStatement = null;
@@ -314,7 +351,7 @@ public class MilestoneDaoImpl implements MilestoneDao {
         List<Milestone> milestoneList = new ArrayList<>();
         if (connection != null) {
             String sql = "SELECT * FROM milestone WHERE class_id = ?;";
-            Object[] params = { classroomId };
+            Object[] params = {classroomId};
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {

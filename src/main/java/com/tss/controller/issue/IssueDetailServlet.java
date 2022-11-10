@@ -60,7 +60,7 @@ public class IssueDetailServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.ISSUE_LIST));
         User u = (User) request.getAttribute("user");
-        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId());
+        List<Milestone> miles = mileService.findAllBySupporter(u.getUserId(),-1);
         request.setAttribute("miles", miles);
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }

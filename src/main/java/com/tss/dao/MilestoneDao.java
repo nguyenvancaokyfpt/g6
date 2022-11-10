@@ -37,7 +37,7 @@ public interface MilestoneDao {
         List<Assignment> findAll(Connection connection, int start, int length)
                         throws SQLException;
 
-        List<Milestone> findAllBySupporter(Connection connection, int supID)
+        List<Milestone> findAllBySupporter(Connection connection, int supID,int classID)
                         throws SQLException;
 
         java.util.List<Milestone> findByClassId(Connection connection, int classroomId)

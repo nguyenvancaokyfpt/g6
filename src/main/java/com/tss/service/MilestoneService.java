@@ -32,7 +32,7 @@ public interface MilestoneService {
 
     List<Assignment> findAll(int start, int length);
 
-    List<Milestone> findAllBySupporter(int supID);
+    List<Milestone> findAllBySupporter(int supID,int classID);
 
     java.util.List<Milestone> findByClassId(int classroomId);
 

@@ -15,7 +15,9 @@ import com.tss.model.Trainee;
  * @author Dat Lai
  */
 public interface TeamService {
-    List<Team> FindByClassID(int classID);
+    List<Team> FindByClassID(int classID, int milestone_id);
+
+    List<Trainee> GetWaitingList(int classID, int milestone_id);
 
     boolean changeStatus(int id, int status);
 
@@ -71,4 +73,7 @@ public interface TeamService {
 
     void resetTeam(int classId, int milestoneId);
 
+    int AddToTeam(int traineeId, int teamId) ;
+
+    boolean RemoveAllMember(int teamId);
 }

@@ -37,21 +37,23 @@
                             <div class="col-xl-3 fv-row">
                                 <input type="text" class="form-control form-control-solid " placeholder="Type Name"
                                     value="${requestScope.myClass.getClassCode()}" required disabled />
+                                <input id="mileId" type="text" class="d-none" name="team_mile"
+                                    value="${requestScope.mile.milestoneId}" />
                                 <input type="text" id="team_class" class="d-none" value="${requestScope.myClass.id}"
                                     name="team_class">
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Project Code
+                                <div class="fs-6 fw-bold mt-2 mb-3"> Milestone
                                     <span class=" text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_project" name="team_project"
-                                    placeholder="Type Project Code" value="" required />
+                                <input type="text" class="form-control form-control-solid " placeholder="Type Name"
+                                    value="${requestScope.mile.title}" required disabled />
                             </div>
                             <!--end::Col-->
                         </div>
@@ -67,8 +69,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_topicName" name="team_topicName"
-                                    placeholder="Type Topic Name" value="" required />
+                                <input type="text" class="form-control form-control-solid " id="team_topicName"
+                                    name="team_topicName" placeholder="Type Topic Name" value="" required />
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -80,8 +82,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid " id="team_topicCode" name="team_topicCode"
-                                    placeholder="Type Topic Code" value="" required />
+                                <input type="text" class="form-control form-control-solid " id="team_topicCode"
+                                    name="team_topicCode" placeholder="Type Topic Code" value="" required />
                             </div>
                             <!--end::Col-->
                         </div>
@@ -90,35 +92,17 @@
                         <div class="row mb-8 justify-content-center">
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3"> Team Member
+                                <div class="fs-6 fw-bold mt-2 mb-3">Project Code
                                     <span class=" text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                            <div class="col-xl-8 fv-row" id="teamMember">
-
+                            <div class="col-xl-3 fv-row">
+                                <input type="text" class="form-control form-control-solid " id="team_project"
+                                    name="team_project" placeholder="Type Project Code" value="" required />
                             </div>
                             <!--end::Col-->
-                        </div>
-                        <!--end::Row-->
-                        <!--begin::Row-->
-                        <div class="row mb-8 justify-content-center">
-                            <!--begin::Col-->
-                            <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Team Description</div>
-                            </div>
-                            <!--end::Col-->
-                            <!--begin::Col-->
-                            <div class="col-xl-8 fv-row">
-                                <textarea name="team_description" id="team_description" class="form-control form-control-solid h-200px "
-                                    placeholder="Type something for description....."></textarea>
-                            </div>
-                            <!--begin::Col-->
-                        </div>
-                        <!--end::Row-->
-                        <!--begin::Row-->
-                        <div class="row justify-content-center">
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3">Status
@@ -141,7 +125,38 @@
                                 </div>
                             </div>
                             <!--end::Col-->
-                            <div class="col-xl-5"></div>
+                        </div>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <div class="row mb-8 justify-content-center">
+                            <!--begin::Col-->
+                            <div class="col-xl-2">
+                                <div class="fs-6 fw-bold mt-2 mb-3"> Team Member
+                                    <span class=" text-danger">*</span>
+                                </div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-xl-8 fv-row" id="teamMember">
+
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <div class="row justify-content-center">
+                            <!--begin::Col-->
+                            <div class="col-xl-2">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Team Description</div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-xl-8 fv-row">
+                                <textarea name="team_description" id="team_description"
+                                    class="form-control form-control-solid h-200px "
+                                    placeholder="Type something for description....."></textarea>
+                            </div>
+                            <!--begin::Col-->
                         </div>
                         <!--end::Row-->
 
