@@ -73,14 +73,15 @@ $(document).ready(function () {
 
 let team = [];
 const getTeam = () => {
-  let classId = document.getElementById("iterMilestone").value;
+  let mileId = document.getElementById("iterMilestone").value;
   fetch(
-    window.location.origin + `/issue/list?action=getTeam&classId=${classId}`,
+    window.location.origin + `/issue/list?action=getTeam&mileId=${mileId}`,
     { method: "POST" }
   )
     .then((response) => response.json())
     .then((data) => {
       team = data;
+      console.log(data);
       var teamSelect = document.getElementById("iterTeam");
       teamSelect.innerHTML = "";
       data.forEach((element, index) => {

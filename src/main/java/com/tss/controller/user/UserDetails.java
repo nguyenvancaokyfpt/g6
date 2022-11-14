@@ -79,7 +79,7 @@ public class UserDetails extends HttpServlet {
         UserServiceImpl usi = new UserServiceImpl();
         User u = usi.findById(Integer.parseInt(request.getParameter("id")));
         List<Role> roles = usi.getRoles();
-        request.setAttribute("user", u);
+        request.setAttribute("myUser", u);
         request.setAttribute("roles", roles);
         request.setAttribute("customJs", ResponseHelper.customJs(
                 "apps/user-management/users/view/custom.js"));

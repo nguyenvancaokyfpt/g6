@@ -17,11 +17,12 @@
                     <!--begin::Card title-->
                     <div class="card-title fs-3 fw-bolder">User Details</div>
                     <!--end::Card title-->
+
                 </div>
                 <!--end::Card header-->
                 <!--begin::Form-->
-                <form method="get" action="user/detail" class="form">
-                    <input type="text" class="d-none" name="action" value="update">
+                <form method="post" action="/management/user/detail" class="form">
+                    <input type="text" class="d-none" name="action" value="create">
                     <!--begin::Card body-->
                     <div class="card-body p-9">
                         <!--begin::Row-->
@@ -29,38 +30,27 @@
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3"> Full Name
-                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                    <span class="text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid itemShow" disabled
-                                    value="${requestScope.myUser.fullname}" />
-                                <input id="userName" type="text" class="form-control itemHidden"
-                                    name="user_project" placeholder="Type User Name"
-                                    value="${requestScope.myUser.fullname}" required />
-                                <!-- store ID to submit -->
-                                <input id="userId" type="text" name="user_id" class="d-none"
-                                    value="${requestScope.myUser.userId}">
+                                <input name="user_name" placeholder="Type User Full Name" type="text" class="form-control" required/>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3">Role
-                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                    <span class="text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid itemShow" disabled
-                                    value="${requestScope.myUser.role.title}" />
-                                <select id="userRole" class="form-select itemHidden"
-                                    aria-label="Select example">
+                                <select name="user_role" class="form-select" aria-label="Select example">
                                     <c:forEach items="${requestScope.roles}" var="r">
-                                        <option value="${r.id}" <c:if test="${r.id == myUser.role.id}">selected</c:if>
-                                            >${r.title}</option>
+                                        <option value="${r.id}">${r.title}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -72,33 +62,27 @@
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3"> Email
-                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                    <span class="text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input id="userEmail" type="text" class="form-control itemHidden"
-                                    name="user_topicName" placeholder="Type Criterial Name"
-                                    value="${requestScope.myUser.email}" required />
-                                <input type="text" class="form-control form-control-solid itemShow" disabled
-                                    value="${requestScope.myUser.email}" />
+                                <input name="user_email" type="email" class="form-control" name="user_topicName"
+                                    placeholder="Type User Email" required />
+
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3">Mobile
-                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                    <span class="text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid itemShow" disabled
-                                    value="${requestScope.myUser.mobile}" />
-                                <input id="userMobile" type="text" class="form-control itemHidden"
-                                    name="user_topicCode" placeholder="Type mobile" value="${requestScope.myUser.mobile}"
-                                    required />
+                                <input name="user_mobile" placeholder="Type User Mobile" type="number" class="form-control" required/>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -112,11 +96,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-8 fv-row">
-                                <textarea id="userNote" name="user_description"
-                                    class="form-control h-200px itemHidden"
-                                    placeholder="Type something about myUser.....">${requestScope.myUser.note}</textarea>
-                                <textarea class="form-control form-control-solid h-200px itemShow"
-                                    disabled>${requestScope.myUser.note}</textarea>
+                                <textarea name="user_note" id="userNote" name="user_description" class="form-control h-200px"
+                                    placeholder="Type something about user....."></textarea>
                             </div>
                             <!--begin::Col-->
                         </div>
@@ -126,30 +107,23 @@
                             <!--begin::Col-->
                             <div class="col-xl-2">
                                 <div class="fs-6 fw-bold mt-2 mb-3">Status
-                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                    <span class="text-danger">*</span>
                                 </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3">
                                 <div class="d-flex fw-bold">
-                                    <div style="display: none;"
-                                        class="form-check form-check-custom me-9 itemHidden">
+                                    <div class="form-check form-check-custom me-9">
                                         <input id="userStatus" class="form-check-input" type="radio" value="1"
-                                            name="user_status" <c:if test="${requestScope.myUser.statusId ==1}">checked
-                                        </c:if> />
+                                            name="user_status" checked />
                                         <label class="form-check-label ms-3" for="email">Active</label>
                                     </div>
-                                    <div style="display: none;"
-                                        class="form-check form-check-custom itemHidden">
-                                        <input class="form-check-input" type="radio" value="0" name="user_status" <c:if
-                                            test="${requestScope.myUser.statusId ==0}">checked</c:if> />
+                                    <div class="form-check form-check-custom">
+                                        <input class="form-check-input" type="radio" value="0" name="user_status" />
                                         <label class="form-check-label ms-3" for="phone">Inactive</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-solid itemShow" disabled <c:if
-                                    test="${requestScope.myUser.statusId ==1}">value="Active"</c:if>
-                                <c:if test="${requestScope.myUser.statusId ==0}">value="Inactive"</c:if>/>
                             </div>
                             <!--end::Col-->
                             <div class="col-xl-5"></div>
@@ -160,11 +134,9 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer d-flex justify-content-center py-6 px-9">
-                        <button onclick="showItem()" id="btnShow" type="button" class="btn btn-secondary itemShow">
-                            Edit user </button>
-                        <button onclick="hideItem()" type="button" id="btnHide"
-                            class="btn btn-secondary itemHidden">Cancel</button>
-                        <button type="button" class="btn btn-primary mx-5 itemHidden" onclick="update()">Update</button>
+                        <button  type="reset" id="btnClear"
+                            class="btn btn-secondary">Clear</button>
+                        <button type="submit" class="btn btn-primary mx-5" >Add</button>
                     </div>
                     <!--end::Card footer-->
                 </form>

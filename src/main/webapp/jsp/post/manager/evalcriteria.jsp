@@ -36,8 +36,8 @@
                         <!-- begin::Input group-->
                         <div style="margin: 0 0 20px 20px;">
                             <label class="form-label fs-6 fw-bold">Subject</label>
-                            <select onchange="getSub()" id="subSelect" class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                data-placeholder="Select option" data-allow-clear="true"
+                            <select onchange="getSub()" id="subSelect" class="form-select form-select-solid fw-bolder"
+                                data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true"
                                 data-kt-eval-table-filter="subject" data-hide-search="true">
                                 <option value="-1">All Subjects</option>
                                 <c:forEach items="${requestScope.subjects}" var="s">
@@ -49,8 +49,8 @@
                         <!--begin::Input group-->
                         <div style="margin: 0 0 20px 20px;">
                             <label class="form-label fs-6 fw-bold">Assignment</label>
-                            <select id="assSelect" class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                data-placeholder="Select option" data-allow-clear="true"
+                            <select id="assSelect" class="form-select form-select-solid fw-bolder"
+                                data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true"
                                 data-kt-eval-table-filter="assign" data-hide-search="true">
                             </select>
                         </div>
@@ -58,8 +58,8 @@
                         <!--begin::Input group-->
                         <div style="margin: 0 0 20px 20px;">
                             <label class="form-label fs-6 fw-bold">Status</label>
-                            <select id="statusSelect" class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                data-placeholder="Select option" data-allow-clear="true"
+                            <select id="statusSelect" class="form-select form-select-solid fw-bolder"
+                                data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true"
                                 data-kt-eval-table-filter="status" data-hide-search="true">
                                 <option value="-1">All Status</option>
                                 <option value="1">Active</option>
@@ -70,30 +70,31 @@
                     </div>
                     <!--begin::Card title-->
                     <!--begin::Card toolbar-->
-                <div class="card-toolbar">
-                    <!--begin::Toolbar-->
-                    <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                        <!--begin::Add user-->
-                        <form action="/evalCriteria/evalCriteriaList?action=create" method="post">
-                            <button type="submit" class="btn btn-primary" onclick="addEval()">
-                                <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.5"
-                                              transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
-                                              x="4" y="11" width="16" height="2" rx="1" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->Add Eval Criteria
-                            </button>
-                        </form>
-                        <!--end::Add user-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                            <!--begin::Add user-->
+                            <form action="/evalCriteria/evalCriteriaList?action=create" method="post">
+                                <button type="submit" class="btn btn-primary" onclick="addEval()">
+                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" opacity="0.5"
+                                                transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
+                                                x="4" y="11" width="16" height="2" rx="1" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->Add Eval Criteria
+                                </button>
+                            </form>
+                            <!--end::Add user-->
+                        </div>
+                        <!--end::Toolbar-->
                     </div>
-                    <!--end::Toolbar-->
-                </div>
-                <!--end::Card toolbar-->
+                    <!--end::Card toolbar-->
 
                 </div>
                 <!--end::Card header-->

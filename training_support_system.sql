@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2022 at 04:39 PM
+-- Generation Time: Nov 14, 2022 at 11:29 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -338,14 +338,14 @@ CREATE TABLE `issue` (
 --
 
 INSERT INTO `issue` (`issue_id`, `team_id`, `author_id`, `title`, `type_id`, `status_id`, `extra_labels`, `description`, `linked_id`, `gitlab_url`, `is_closed`) VALUES
-(1, 1, 3, 'Home Page', 1, 3, '#None', '#None', 1, 'https://gitlab.com/fu-kiennt-fall22/se1627-net_swp391/g6', 0),
+(1, 1, 3, 'Home Page', 2, 3, '#None', '#None', 1, 'https://gitlab.com/fu-kiennt-fall22/se1627-net_swp391/g6', 0),
 (2, 1, 3, 'Demo Dashboard', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (3, 1, 3, 'User Login', 1, 4, '#none', '#none', 1, 'github.com', 0),
-(4, 1, 29, 'Password Reset', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(4, 1, 29, 'Password Reset', 2, 4, '#none', '#none', 1, 'github.com', 0),
 (5, 1, 29, 'User Register', 1, 5, '#none', '#none', 1, 'github.com', 1),
 (6, 1, 29, 'User Profile', 1, 4, '#none', '#none', 1, 'github.com', 0),
 (7, 1, 61, 'Password Change', 1, 4, '#none', '#none', 1, 'github.com', 0),
-(8, 1, 61, 'Setting List', 1, 5, '#none', '#none', 1, 'github.com', 1),
+(8, 1, 61, 'Setting List', 2, 5, '#none', '#none', 1, 'github.com', 1),
 (9, 1, 61, 'Setting Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (10, 1, 61, 'User List', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (11, 11, 62, 'User Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
@@ -360,14 +360,15 @@ INSERT INTO `issue` (`issue_id`, `team_id`, `author_id`, `title`, `type_id`, `st
 (20, 2, 32, 'Assignment List', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (21, 2, 32, 'Assignment Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (22, 2, 32, 'Eval Criteria List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(23, 2, 52, 'Eval Criteria Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(24, 2, 52, 'Class List', 1, 3, '#none', '#none', 1, 'github.com', 0),
-(25, 2, 52, 'Class Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(23, 2, 65, 'Eval Criteria Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(24, 2, 65, 'Class List', 1, 3, '#none', '#none', 1, 'github.com', 0),
+(25, 2, 65, 'Class Details', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (26, 3, 29, 'Class Setting List', 1, 3, '#none', '#none', 1, 'github.com', 0),
 (27, 3, 29, 'Class Setting Details', 1, 5, '#none', '#none', 1, 'github.com', 1),
 (28, 3, 29, 'Milestone List', 1, 4, '#none', '#none', 1, 'github.com', 0),
 (29, 3, 61, 'New Milestone', 1, 5, '#none', '#none', 1, 'github.com', 1),
-(30, 3, 32, 'Milestone Details', 1, 4, '#none', '#none', 1, 'github.com', 0);
+(30, 3, 63, 'Milestone Details', 1, 4, '#none', '#none', 1, 'github.com', 0),
+(31, 11, 63, 'Test1', 1, 4, '#none', 'test1', 1, 'test1  ', 0);
 
 -- --------------------------------------------------------
 
@@ -454,7 +455,7 @@ CREATE TABLE `milestone` (
 INSERT INTO `milestone` (`milestone_id`, `ass_id`, `class_id`, `from_date`, `to_date`, `title`, `ass_body`, `description`, `status_id`) VALUES
 (1, 10, 1, '2022-09-12', '2022-09-24', 'Iter 1', 'Iter1 report', 'Iter1 report', 2),
 (2, 10, 1, '2022-09-12', '2022-11-06', 'Iter 2', 'Iter 2', 'Iter 2', 1),
-(99, 1, 2, '2022-10-22', '2022-11-06', 'Iter 2', 'Iter2 report', 'Iter2 report', 1),
+(99, 1, 2, '2022-10-22', '2022-11-06', 'Iter 2', 'Iter2 report', 'Iter2 report', 3),
 (100, 6, 3, '2022-11-06', '2022-11-20', 'Iter 3', 'Iter3 report', 'Iter3 report', 1),
 (101, 3, 8, '2022-11-10', '2022-11-11', 'Test 1', 'asss', 'asss', 1);
 
@@ -1110,7 +1111,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `full_name`, `username`, `email`, `mobile`, `password`, `avatar_url`, `status_id`, `note`, `created_at`, `updated_at`, `last_active`) VALUES
 (2, 'Nguyễn Văn Cao Kỳ', 'admin', 'nguyenvancaoky@gmail.com', '0964800139', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'https://lh3.googleusercontent.com/a-/ACNPEu-_iMEWblgEPqPD5pVUWJ4AUSwTYWtq3jUm_Ae_ng=s96-c', 1, 'This is my team Leader', '2022-09-19 15:37:50', '2022-09-19 15:37:50', '2022-09-19 15:37:50'),
 (3, 'Nguyễn Văn C', 'nguyenvanc', 'nguyenvanc@gmail.com', '0862229529', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:03:01', '2022-09-23 08:03:01', '2022-09-23 08:03:01'),
-(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', '0334351838', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 0, NULL, '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
+(19, 'Nguyễn Văn B', 'student', 'student@gmail.com', '0334351838', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 0, 'b', '2022-09-23 15:02:48', '2022-09-23 15:02:48', '2022-09-23 15:02:48'),
 (21, 'Nguyễn Văn D', 'nguyenvand', 'nguyenvand@gmail.com', '0327404366', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (22, 'Nguyễn Văn E', 'nguyenvane', 'nguyenvane@gmail.com', '0973067834', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, NULL, '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),
 (23, 'Nguyễn Văn F', 'nguyenvanf', 'nguyenvanf@gmail.com', '0865174588', 'YVnt/W+9W3sONJCTAXruKSod26IgYyIJfNSLTFb7UGE=', 'assets/media/avatars/blank.png', 1, '', '2022-09-23 08:02:48', '2022-09-23 08:02:48', '2022-09-23 08:02:48'),

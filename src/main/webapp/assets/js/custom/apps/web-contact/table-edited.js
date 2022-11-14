@@ -94,10 +94,10 @@ var KTDatatablesServerSide = (function () {
             var Status;
             var classStatus;
             if (data == 1) {
-              Status = "Activate";
+              Status = "Active";
               classStatus = "btn-success";
             } else {
-              Status = "Deactivate";
+              Status = "Inactive";
               classStatus = "btn-danger";
             }
 

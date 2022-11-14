@@ -127,7 +127,7 @@ var KTUsersList = (function () {
               title: "Type",
               className: "text-center",
               render: function (data) {
-                return data == 1 ? "Issue" : "Task";
+                return data == 1 ? "Issue" : "Incident";
               },
             },
             {

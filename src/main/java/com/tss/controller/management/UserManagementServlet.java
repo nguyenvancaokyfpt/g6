@@ -18,6 +18,7 @@ import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
 import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
+import com.tss.model.system.Role;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.UserService;
 import com.tss.service.impl.UserServiceImpl;
@@ -95,14 +96,24 @@ public class UserManagementServlet extends HttpServlet {
             u.setStatusId(1);
         }
         boolean flag = userService.modify(u);
-        if(flag){
+        if (flag) {
             ResponseHelper.sendResponse(response, true);
-        }else{
+        } else {
             ResponseHelper.sendResponse(response, false);
         }
     }
 
-    private void create(HttpServletRequest request, HttpServletResponse response) {
+    private void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("jspPath", "shared/userAdd.jsp");
+        UserServiceImpl usi = new UserServiceImpl();
+        List<Role> roles = usi.getRoles();
+        request.setAttribute("roles", roles);
+        request.setAttribute("customJs", ResponseHelper.customJs());
+        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                ScreenConstants.USER_DASHBOARD,
+                ScreenConstants.USER_MANAGEMENT,
+                ScreenConstants.USER_DETAILS_MANAGEMENT));
+        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -128,8 +139,12 @@ public class UserManagementServlet extends HttpServlet {
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 roleFilter = jsonObject.getJSONArray("role").getString(0);
                 statusFilter = jsonObject.getJSONArray("status").getString(0);
-                if(roleFilter.equalsIgnoreCase("-1")) roleFilter = "";
-                if(statusFilter.equalsIgnoreCase("-1")) statusFilter = "";
+                if (roleFilter.equalsIgnoreCase("-1")) {
+                    roleFilter = "";
+                }
+                if (statusFilter.equalsIgnoreCase("-1")) {
+                    statusFilter = "";
+                }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -159,11 +174,6 @@ public class UserManagementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
 }

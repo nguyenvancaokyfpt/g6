@@ -27,10 +27,18 @@
                         <!--begin::Col-->
                         <div class="col-xl-3 fv-row">
                             <select name="issue_mile" onchange="getTeam()" id="iterMilestone" class="form-select">
+                                <% 
+                                    boolean flag = false;
+                                %>
                                 <c:forEach items="${requestScope.miles}" var="m">
-                                    <option value="${m.classId}">${m.title}</option>
+                                    <c:if test="${m.statusId == 2}">
+                                        <% 
+                                            flag = true;
+                                        %>
+                                        <option value="${m.milestoneId}">${m.title} - ${m.classCode}</option>
+                                    </c:if>
                                 </c:forEach>
-                                <c:if test="${requestScope.miles.size() == 0}"><option value="-1">Empty Milestone</option></c:if>
+                                    <c:if test="<%= !flag%>"><option value="-1">Empty Milestone</option></c:if>
                             </select>
                         </div>
                         <!--end::Col-->
