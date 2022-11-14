@@ -11,8 +11,9 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.HttpStatusCodeConstants;
+import com.tss.constants.RoleConstants;
 import com.tss.constants.ScreenConstants;
-import com.tss.helper.DTOHelper;
+import com.tss.helper.DebugHelper;
 import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.User;
@@ -20,7 +21,9 @@ import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.payload.ResponseMessage;
 import com.tss.model.system.Role;
 import com.tss.model.util.DataTablesColumns;
+import com.tss.service.RegisterService;
 import com.tss.service.UserService;
+import com.tss.service.impl.RegisterServiceImpl;
 import com.tss.service.impl.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
@@ -35,22 +38,25 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UserManagementServlet extends HttpServlet {
 
     private UserService userService;
+    private RegisterService registerService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
+        registerService = new RegisterServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
+            DebugHelper.print(action);
             switch (action) {
                 case ActionConstants.LIST:
                     list(request, response);
                     break;
                 case ActionConstants.CREATE:
-                    create(request, response);
+                    postCreate(request, response);
                     break;
                 case ActionConstants.UPDATE:
                     update(request, response);
@@ -67,7 +73,7 @@ public class UserManagementServlet extends HttpServlet {
                     break;
             }
         } catch (NullPointerException e) {
-            list(request, response);
+            postCreate(request, response);
         }
     }
 
@@ -108,7 +114,7 @@ public class UserManagementServlet extends HttpServlet {
         UserServiceImpl usi = new UserServiceImpl();
         List<Role> roles = usi.getRoles();
         request.setAttribute("roles", roles);
-        request.setAttribute("customJs", ResponseHelper.customJs());
+        request.setAttribute("customJs", ResponseHelper.customJs("apps/user-management/users/create.js"));
         request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.USER_MANAGEMENT,
@@ -160,14 +166,79 @@ public class UserManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            String action = request.getParameter("action");
+            switch (action) {
+                case ActionConstants.CREATE:
+                    create(request, response);
+                    break;
+                case ActionConstants.GET:
+                    request.setAttribute("jspPath", "shared/user.jsp");
+                    request.setAttribute("customJs", ResponseHelper.customJs(
+                            "apps/user-management/users/list/table-edited.js"));
+                    request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                            ScreenConstants.USER_DASHBOARD,
+                            ScreenConstants.USER_MANAGEMENT));
+                    request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+                    break;
+                default:
+                    request.setAttribute("jspPath", "shared/user.jsp");
+                    request.setAttribute("customJs", ResponseHelper.customJs(
+                            "apps/user-management/users/list/table-edited.js"));
+                    request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                            ScreenConstants.USER_DASHBOARD,
+                            ScreenConstants.USER_MANAGEMENT));
+                    request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+                    break;
+            }
+        } catch (NullPointerException e) {
+            request.setAttribute("jspPath", "shared/user.jsp");
+            request.setAttribute("customJs", ResponseHelper.customJs(
+                    "apps/user-management/users/list/table-edited.js"));
+            request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
+                    ScreenConstants.USER_DASHBOARD,
+                    ScreenConstants.USER_MANAGEMENT));
+            request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+        }
+    }
 
-        request.setAttribute("jspPath", "shared/user.jsp");
-        request.setAttribute("customJs", ResponseHelper.customJs(
-                "apps/user-management/users/list/table-edited.js"));
-        request.setAttribute("brecrumbs", ResponseHelper.brecrumbs(
-                ScreenConstants.USER_DASHBOARD,
-                ScreenConstants.USER_MANAGEMENT));
-        request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
+    private void postCreate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject jsonObject = RequestHelper.getJsonData(request);
+        User user = new User();
+        String fullname = "";
+        int roleId = 0;
+        String email = "";
+        String mobile = "";
+        String note = "";
+        int statusId = 0;
+        DebugHelper.print(jsonObject);
+        try {
+            fullname = jsonObject.getString("fullname");
+            roleId = jsonObject.getIntValue("roleId");
+            email = jsonObject.getString("email");
+            mobile = jsonObject.getString("mobile");
+            note = jsonObject.getString("note");
+            statusId = jsonObject.getIntValue("statusId");
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseHelper.sendResponse(response, new ResponseMessage(
+                    HttpStatusCodeConstants.BAD_REQUEST, "Bad Request"));
+            return;
+        }
+        user.setFullname(fullname);
+        user.setRole(RoleConstants.getRole(roleId));
+        user.setEmail(email);
+        user.setMobile(mobile);
+        user.setNote(note);
+        user.setStatusId(statusId);
+
+        if (registerService.registerUser(user)) {
+            ResponseHelper.sendResponse(response, new ResponseMessage(
+                    HttpStatusCodeConstants.OK, "OK"));
+        } else {
+            ResponseHelper.sendResponse(response, new ResponseMessage(
+                    HttpStatusCodeConstants.BAD_REQUEST, "Bad Request"));
+        }
     }
 
     @Override

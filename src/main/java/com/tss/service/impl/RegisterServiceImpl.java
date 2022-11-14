@@ -134,4 +134,46 @@ public class RegisterServiceImpl implements RegisterService {
         }
     }
 
+    @Override
+    public boolean registerUser(User user) {
+        Connection connection = null;
+        boolean flag = false;
+        // random username for user from email
+        user.setUsername(user.getEmail().substring(0, user.getEmail().indexOf("@")) + (int) (Math.random() * 1000000));
+        // random string
+        String randomString = PasswordHelper.generateRandomString(10);
+        // encrypt password
+        user.setPassword(PasswordHelper.generateSecurePassword(randomString));
+        user.setAvatarUrl("assets/media/avatars/blank.png");
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            flag = userDao.registerWithGoogle(connection, user);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        if (flag) {
+            // set default role for user
+            if (roleService.addRoleForUserByUserEmail(user.getEmail(),
+                    RoleConstants.getRoleById(user.getRole().getId()))) {
+                // send email to user
+                // EmailHelper emailHelper = new EmailHelper();
+                // emailHelper.sendPassword(user.getEmail(), randomString);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

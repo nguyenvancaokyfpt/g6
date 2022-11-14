@@ -58,18 +58,17 @@
                     <!--end::Search-->
                 </div>
                 <!--begin::Card title-->
-                 <!--begin::Card toolbar-->
-                 <div class="card-toolbar">
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                         <!--begin::Add user-->
-                        <form action="/management/user?action=create" method="post">
+                        <a href="/management/user?action=create" class="btn btn-primary">
                             <button type="submit" class="btn btn-primary">
                                 <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                 <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                        viewBox="0 0 24 24" version="1.1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
                                         <rect fill="#000000" opacity="0.5"
                                             transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
@@ -78,7 +77,7 @@
                                 </span>
                                 <!--end::Svg Icon-->Add New User
                             </button>
-                        </form>
+                        </a>
                         <!--end::Add user-->
                     </div>
                     <!--end::Toolbar-->

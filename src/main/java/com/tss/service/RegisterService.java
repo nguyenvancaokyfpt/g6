@@ -10,4 +10,6 @@ public interface RegisterService {
     boolean registerUserWithGoogle(User user);
 
     boolean registerTraineeFromFile(Trainee user, String classroom);
+
+    boolean registerUser(User user);
 }

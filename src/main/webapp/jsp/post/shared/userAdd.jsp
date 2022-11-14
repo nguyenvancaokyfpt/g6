@@ -21,7 +21,7 @@
                 </div>
                 <!--end::Card header-->
                 <!--begin::Form-->
-                <form method="post" action="/management/user/detail" class="form">
+                <form id="kt_create_user_form" class="form">
                     <input type="text" class="d-none" name="action" value="create">
                     <!--begin::Card body-->
                     <div class="card-body p-9">
@@ -36,7 +36,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input name="user_name" placeholder="Type User Full Name" type="text" class="form-control" required/>
+                                <input name="user_name" placeholder="Type User Full Name" type="text"
+                                    class="form-control" required />
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -82,7 +83,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input name="user_mobile" placeholder="Type User Mobile" type="number" class="form-control" required/>
+                                <input name="user_mobile" placeholder="Type User Mobile" type="number"
+                                    class="form-control" required />
                             </div>
                             <!--end::Col-->
                         </div>
@@ -96,7 +98,8 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-8 fv-row">
-                                <textarea name="user_note" id="userNote" name="user_description" class="form-control h-200px"
+                                <textarea name="user_note" id="userNote" name="user_description"
+                                    class="form-control h-200px"
                                     placeholder="Type something about user....."></textarea>
                             </div>
                             <!--begin::Col-->
@@ -134,9 +137,8 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer d-flex justify-content-center py-6 px-9">
-                        <button  type="reset" id="btnClear"
-                            class="btn btn-secondary">Clear</button>
-                        <button type="submit" class="btn btn-primary mx-5" >Add</button>
+                        <button type="reset" id="btnClear" class="btn btn-secondary">Clear</button>
+                        <button id="kt_create_user_submit" class="btn btn-primary mx-5">Add</button>
                     </div>
                     <!--end::Card footer-->
                 </form>

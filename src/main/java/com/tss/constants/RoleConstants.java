@@ -3,6 +3,8 @@ package com.tss.constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tss.model.system.Role;
+
 public enum RoleConstants {
         ROLE(1, "ROLE"),
 
@@ -34,6 +36,14 @@ public enum RoleConstants {
                         if (role.getId() == id) {
                                 return role;
                         }
+                }
+                return null;
+        }
+
+        public static Role getRole(int id) {
+                RoleConstants role = getRoleById(id);
+                if (role != null) {
+                        return new Role(role.getId(), role.getTitle());
                 }
                 return null;
         }
