@@ -311,7 +311,7 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public int RemoveFromTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException {
+    public int RemoveFromTeam(Connection connection, int traineeId, int teamId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int result = 0;

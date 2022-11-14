@@ -266,12 +266,12 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public boolean RemoveFromTeam(int traineeId, int classId, int teamId) {
+    public boolean RemoveFromTeam(int traineeId, int teamId) {
         Connection connection = null;
         boolean flag = false;
         try {
             connection = BaseDao.getConnection();
-            flag = teamDao.RemoveFromTeam(connection, traineeId, classId, teamId) == 1;
+            flag = teamDao.RemoveFromTeam(connection, traineeId,  teamId) == 1;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

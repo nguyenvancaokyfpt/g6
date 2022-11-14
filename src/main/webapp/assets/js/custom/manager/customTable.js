@@ -150,10 +150,10 @@ var KTUsersList = (function () {
                 var Status;
                 var classStatus;
                 if (data == 1) {
-                  Status = "Activate";
+                  Status = "Active";
                   classStatus = "btn-success";
                 } else {
-                  Status = "Deactivate";
+                  Status = "Inactive";
                   classStatus = "btn-danger";
                 }
 
@@ -176,7 +176,8 @@ var KTUsersList = (function () {
               orderable: false,
               className: "text-center",
               render: function (data, type, row) {
-                const actions = row.status == 1 ? "Deactivate" : "Active";
+                const actions = row.status == 1 ? "Deactivate" : "Activate";
+                const classStatus = row.status == 1 ? "btn-danger" : "btn-success";
                 return `
                 <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="action${data}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -205,7 +206,7 @@ var KTUsersList = (function () {
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="btn btn-primary" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&evalId=${data}&status=${row.status}">${actions}</a>
+                        <a class="btn ${classStatus}" href="/evalCriteria/evalCriteriaDetails?action=changeStatus&evalId=${data}&status=${row.status}">${actions}</a>
                       </div>
                     </div>
                   </div>

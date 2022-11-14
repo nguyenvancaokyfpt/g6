@@ -17,59 +17,60 @@ import com.tss.model.Trainee;
  */
 public interface TeamDao {
 
-    List<Team> FindByClassID(Connection connection, int classID, int milestone_id);
+        List<Team> FindByClassID(Connection connection, int classID, int milestone_id);
 
-    List<Trainee> GetWaitingList(Connection connection, int classID, int milestone_id);
+        List<Trainee> GetWaitingList(Connection connection, int classID, int milestone_id);
 
-    int changeStatus(Connection connection, int id, int status) throws SQLException;
+        int changeStatus(Connection connection, int id, int status) throws SQLException;
 
-    int AddToTeam(Connection connection,int traineeId, int teamId) throws SQLException;
+        int AddToTeam(Connection connection, int traineeId, int teamId) throws SQLException;
 
-    int RemoveTeam(Connection connection, int teamId) throws SQLException;
+        int RemoveTeam(Connection connection, int teamId) throws SQLException;
 
-    Team FindTeamById(Connection connection, int teamId, int class_id) throws SQLException;
+        Team FindTeamById(Connection connection, int teamId, int class_id) throws SQLException;
 
-    int UpdateTeam(Connection connection, Team team) throws SQLException;
+        int UpdateTeam(Connection connection, Team team) throws SQLException;
 
-    int ChangeTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+        int ChangeTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
-    int ChangeTeam2(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+        int ChangeTeam2(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
-    int GetMaxTeamId(Connection connection) throws SQLException;
+        int GetMaxTeamId(Connection connection) throws SQLException;
 
-    int AddTeam(Connection connection, Team team) throws SQLException;
+        int AddTeam(Connection connection, Team team) throws SQLException;
 
-    void resetTeam(Connection connection, int classId);
+        void resetTeam(Connection connection, int classId);
 
-    void setNullTeamId(Connection connection, int teamId);
+        void setNullTeamId(Connection connection, int teamId);
 
-    int RemoveFromTeam(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
-    int RemoveAllMember(Connection connection, int teamId) throws SQLException;
+        int RemoveFromTeam(Connection connection, int traineeId, int teamId) throws SQLException;
 
-    int SetLeader(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
+        int RemoveAllMember(Connection connection, int teamId) throws SQLException;
 
-    void DeleteTeam(Connection connection, int teamId) throws SQLException;
+        int SetLeader(Connection connection, int traineeId, int classId, int teamId) throws SQLException;
 
-    List<Team> FindByClassUser(Connection connection, int classId) throws SQLException;
+        void DeleteTeam(Connection connection, int teamId) throws SQLException;
 
-    void removeTeamMilestone(Connection connection, int classId, int milestoneId) throws SQLException;
+        List<Team> FindByClassUser(Connection connection, int classId) throws SQLException;
 
-    void insertTeamMember(Connection connection, int teamId, int traineeId, int isIsLeader, int status)
-            throws SQLException;
+        void removeTeamMilestone(Connection connection, int classId, int milestoneId) throws SQLException;
 
-    void setTeamMilestone(Connection connection, int classId, int milestoneId, Integer teamId) throws SQLException;
+        void insertTeamMember(Connection connection, int teamId, int traineeId, int isIsLeader, int status)
+                        throws SQLException;
 
-    List<Integer> getTeamIdByClassIdAndMilestoneId(Connection connection, int classId, int milestoneId)
-            throws SQLException;
+        void setTeamMilestone(Connection connection, int classId, int milestoneId, Integer teamId) throws SQLException;
 
-    List<Trainee> getTraineeByTeamId(Connection connection, Integer teamId) throws SQLException;
+        List<Integer> getTeamIdByClassIdAndMilestoneId(Connection connection, int classId, int milestoneId)
+                        throws SQLException;
 
-    int cloneTeam(Connection connection, Integer id, int newTeamId) throws SQLException;
+        List<Trainee> getTraineeByTeamId(Connection connection, Integer teamId) throws SQLException;
 
-    void cloneTeamMember(Connection connection, Integer oldTeamId, Integer newTeamId) throws SQLException;
+        int cloneTeam(Connection connection, Integer id, int newTeamId) throws SQLException;
 
-    boolean checkClassTeamMilestone(Connection connection, int classId, int newMilestoneId) throws SQLException;
+        void cloneTeamMember(Connection connection, Integer oldTeamId, Integer newTeamId) throws SQLException;
 
-    void resetTeam(Connection connection, int classId, int milestoneId) throws SQLException;
+        boolean checkClassTeamMilestone(Connection connection, int classId, int newMilestoneId) throws SQLException;
+
+        void resetTeam(Connection connection, int classId, int milestoneId) throws SQLException;
 
 }

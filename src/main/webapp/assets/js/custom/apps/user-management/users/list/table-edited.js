@@ -230,10 +230,10 @@ var KTUsersList = (function () {
                 var Status;
                 var classStatus;
                 if (data == 1) {
-                  Status = "Activate";
+                  Status = "Activive";
                   classStatus = "btn-success";
                 } else {
-                  Status = "Deactivate";
+                  Status = "Inactive";
                   classStatus = "btn-danger";
                 }
 
@@ -255,7 +255,7 @@ var KTUsersList = (function () {
               orderable: false,
               className: "text-center",
               render: function (data, type, row) {
-                const actions = row.statusId == 1 ? "Deactivate" : "Active";
+                const actions = row.statusId == 1 ? "Deactivate" : "Activate";
                 const actionClass =
                   row.statusId == 1 ? "btn-danger" : "btn-success";
                 return `

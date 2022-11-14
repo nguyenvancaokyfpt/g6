@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-4">
                             <select id="selectedMile" style="margin-left:20x;" class="form-select"
-                                onchange="getClass()">
+                                onchange="resetTeam()">
                                 <c:choose>
                                     <c:when test="${requestScope.miles.size() == 0}">
                                         <option value="">Empty Milestone</option>

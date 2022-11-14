@@ -74,7 +74,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-3 fv-row">
-                                <input type="text" class="form-control form-control-solid itemHidden"
+                                <input type="text" class="form-control itemHidden"
                                     name="team_topicName" placeholder="Type Criterial Name"
                                     value="${requestScope.team.topic_name}" required />
                                 <input type="text" class="form-control form-control-solid itemShow" disabled
@@ -92,7 +92,7 @@
                             <div class="col-xl-3 fv-row">
                                 <input type="text" class="form-control form-control-solid itemShow" disabled
                                     value="${requestScope.team.topic_code}" />
-                                <input type="text" class="form-control form-control-solid itemHidden"
+                                <input type="text" class="form-control itemHidden"
                                     name="team_topicCode" placeholder="Type Criterial Name"
                                     value="${requestScope.team.topic_code}" required />
                             </div>
@@ -112,7 +112,7 @@
                             <div class="col-xl-3 fv-row">
                                 <input type="text" class="form-control form-control-solid itemShow" disabled
                                     value="${requestScope.team.project_code}" />
-                                <input type="text" class="form-control form-control-solid itemHidden"
+                                <input type="text" class="form-control itemHidden"
                                     name="team_project" placeholder="Type Criterial Name"
                                     value="${requestScope.team.project_code}" required />
                             </div>
@@ -128,13 +128,13 @@
                             <div class="col-xl-3">
                                 <div class="d-flex fw-bold">
                                     <div style="display: none;"
-                                        class="form-check form-check-custom form-check-solid me-9 itemHidden">
+                                        class="form-check form-check-custom me-9 itemHidden">
                                         <input class="form-check-input" type="radio" value="1" name="team_status" <c:if
                                             test="${requestScope.team.status_id ==1}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="email">Active</label>
                                     </div>
                                     <div style="display: none;"
-                                        class="form-check form-check-custom form-check-solid itemHidden">
+                                        class="form-check form-check-custom itemHidden">
                                         <input class="form-check-input" type="radio" value="0" name="team_status" <c:if
                                             test="${requestScope.team.status_id ==0}">checked</c:if> />
                                         <label class="form-check-label ms-3" for="phone">Inactive</label>
@@ -178,7 +178,7 @@
                             <!--begin::Col-->
                             <div class="col-xl-8 fv-row">
                                 <textarea name="team_description"
-                                    class="form-control form-control-solid h-200px itemHidden"
+                                    class="form-control h-200px itemHidden"
                                     placeholder="Type something for description.....">${requestScope.team.description}</textarea>
                                 <textarea class="form-control form-control-solid h-200px itemShow"
                                     disabled>${requestScope.team.description}</textarea>

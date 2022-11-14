@@ -74,7 +74,7 @@ const AddToTeam = (traineeId) => {
 const RemoveFromTeam = (traineeId, classId, teamId) => {
   fetch(
     window.location.origin +
-      `/team/detail?action=delete&traineeId=${traineeId}&classId=${classId}&teamId=${teamId}`,
+      `/team/detail?action=delete&traineeId=${traineeId}&teamId=${teamId}`,
     { method: "GET" }
   )
     .then((response) => {
@@ -111,6 +111,7 @@ const removeTeam = (teamId) => {
   })
     .then((response) => {
       if (response.status === 200) {
+        listOpenteam = listOpenteam.filter((team) => team != `teamBtn${teamId}`);
         getClass();
         toastr.success("Team Deleted Successfully!");
       }
@@ -285,7 +286,9 @@ const getClass = () => {
                 <div class="accordion">
                 <div class="row align-items-center">
                   <div class="col-8" style="padding-right: 0;">
-                    <button type="button" class="accordion__button">
+                    <button id="teamBtn${
+                      team.id
+                    }" type="button" class="accordion__button">
                         Group ${index + 1} (${team.topic_name})
                     </button>
                   </div>
@@ -312,7 +315,7 @@ const getClass = () => {
                           }">Remove Group</a></li>
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modelStatusTeam${
                             team.id
-                          }">${team.status_id ? "Deactive" : "Active"}</a></li>
+                          }">${team.status_id ? "Deactivate" : "Activate"}</a></li>
                         `
                             : `
                           <li class="text-center"><a class="dropdown-item" href="/team/detail?action=get&teamId=${team.id}&classId=${data.id}&mileId=${data.mile.milestoneId}&going=1">View</a></li>
@@ -334,7 +337,7 @@ const getClass = () => {
                           </div>
                           <div div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="removeTeam(${
+                            <a class="btn btn-danger" data-bs-dismiss="modal" onclick="removeTeam(${
                               team.id
                             })">Remove</a>
                           </div>
@@ -352,15 +355,15 @@ const getClass = () => {
                           </div>
                           <div class="modal-body">
                             Are you sure you want to ${
-                              team.status_id ? "Deactive" : "Active"
+                              team.status_id ? "Deactivate" : "Activate"
                             } this group?
                           </div>
                           <div div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a class="btn btn-primary" data-bs-dismiss="modal" onclick="changeStatus(${
+                            <a class="btn ${ team.status_id == 0 ? "btn-success" : "btn-danger"}" data-bs-dismiss="modal" onclick="changeStatus(${
                               team.id
                             },${team.status_id})">${
-          team.status_id ? "Deactive" : "Active"
+          team.status_id ? "Deactivate" : "Activate"
         }</a>
                           </div>
                         </div>
@@ -459,7 +462,9 @@ const getClass = () => {
             <div class="accordion">
             <div>
               <div>
-                <button type="button" class="accordion__button Waiting"><span
+                <button id="waitingBtn${
+                  data.mile.milestoneId
+                }" type="button" class="accordion__button Waiting"><span
                             style="color: #cc6961;">Waiting List</span> (These trainees would work
                         personally)</button>
               </div>
@@ -526,6 +531,8 @@ const getClass = () => {
       document.getElementById("waitingsList").innerHTML = waitingContent;
       document.getElementById("groupsList").innerHTML = teamContent;
       dropdown();
+      AddAction();
+      ShowTeamOpen();
     })
     .catch((error) => {
       console.log(error);
@@ -576,3 +583,31 @@ $(document).ready(function () {
   };
   getClass();
 });
+
+let listOpenteam = [];
+const AddAction = () => {
+  document.getElementsByClassName("accordion__button").forEach((button) => {
+    button.addEventListener("click", function () {
+      AddRemoveOpenTeam(button.id);
+    });
+  });
+};
+const AddRemoveOpenTeam = (id) => {
+  let flag = listOpenteam.filter((team) => team == id).length;
+  if (flag == 0) {
+    listOpenteam.push(id);
+  } else {
+    listOpenteam = listOpenteam.filter((team) => team != id);
+  }
+};
+const ShowTeamOpen = () => {
+  listOpenteam.forEach((team) => {
+    document.getElementById(team).click();
+    AddRemoveOpenTeam(team);
+  });
+};
+
+const resetTeam = () => {
+  listOpenteam = [];
+  getClass();
+};

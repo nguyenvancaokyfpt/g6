@@ -45,7 +45,7 @@ public interface TeamService {
 
     void setNullTeamId(int teamId);
 
-    boolean RemoveFromTeam(int traineeId, int classId, int teamId);
+    boolean RemoveFromTeam(int traineeId,int teamId);
 
     boolean SetLeader(int traineeId, int classId, int teamId);
 

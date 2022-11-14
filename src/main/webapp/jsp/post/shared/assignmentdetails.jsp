@@ -20,7 +20,10 @@
                         <div class="row mb-8 justify-content-center">
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Name</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">
+                                    Assignment Name
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -34,7 +37,9 @@
                             </div>
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Subject</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Subject
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -56,7 +61,10 @@
                         <div class="row mb-8 justify-content-center">
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Team Eval</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Team Eval
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -82,7 +90,10 @@
                             <!--end::Col-->
                              <!--begin::Col-->
                              <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Weight</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Assignment Weight
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -100,7 +111,10 @@
                         <div class="row mb-8 justify-content-center">
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">On Going</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">On Going
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -129,7 +143,10 @@
                             <!--end::Row-->
                             <!--begin::Col-->
                             <div class="col-xl-2">
-                                <div class="fs-6 fw-bold mt-2 mb-3">Status</div>
+                                <div class="fs-6 fw-bold mt-2 mb-3">Status
+                                    <span class="itemHidden text-danger itemHiddenInline">*</span>
+
+                                </div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
