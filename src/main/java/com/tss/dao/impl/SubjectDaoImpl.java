@@ -52,8 +52,8 @@ public class SubjectDaoImpl implements SubjectDao {
         int updateRows = 0;
         if (connection != null) {
             String sql = "insert into subject(subject_code, subject_name, manager_id, expert_id, status_id, body) values(?,?,?,?,?,?)";
-            Object[] params = {subject.getSubjectCode(), subject.getSubjectName(), subject.getManagerId(),
-                subject.getExpertId(), subject.getStatusId(), subject.getBody()};
+            Object[] params = { subject.getSubjectCode(), subject.getSubjectName(), subject.getManagerId(),
+                    subject.getExpertId(), subject.getStatusId(), subject.getBody() };
             try {
                 updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
             } catch (SQLException e) {
@@ -285,7 +285,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     public static void main(String[] args) throws SQLException {
-        SubjectDaoImpl s = new SubjectDaoImpl();
+        // SubjectDaoImpl s = new SubjectDaoImpl();
         // System.out.println(s.findAllOfManager(BaseDao.getConnection(), 70).size());
     }
 

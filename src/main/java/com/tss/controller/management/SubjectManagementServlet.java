@@ -1,15 +1,13 @@
 package com.tss.controller.management;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
-import com.tss.helper.RequestHelper;
 import com.tss.helper.ResponseHelper;
 import com.tss.model.Subject;
-import com.tss.model.payload.DataTablesMessage;
 import com.tss.service.SubjectService;
 import com.tss.service.UserService;
 import com.tss.service.impl.SubjectServiceImpl;
@@ -19,7 +17,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *

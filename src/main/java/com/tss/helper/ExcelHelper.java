@@ -36,73 +36,75 @@ public class ExcelHelper {
             } else if (path.toLowerCase().endsWith("xls")) {
                 workbook = new HSSFWorkbook(fis);
             }
-            int numberOfSheets = workbook.getNumberOfSheets();
-            for (int i = 0; i < numberOfSheets; i++) {
-                Sheet sheet = workbook.getSheetAt(i);
-                Iterator<Row> rowIterator = sheet.iterator();
-                while (rowIterator.hasNext()) {
-                    String fullname = "";
-                    String email = "";
-                    String phone = "";
-                    Float grade = 0.0f;
-                    Row row = rowIterator.next();
-                    Iterator<Cell> cellIterator = row.cellIterator();
-                    int columnIndex = 0;
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        switch (cell.getCellType()) {
-                            case Cell.CELL_TYPE_STRING:
-                                switch (columnIndex) {
-                                    case 0:
-                                        try {
-                                            fullname = cell.getStringCellValue();
-                                        } catch (Exception e) {
-                                            errorList.add(row.getRowNum() + 1);
-                                        }
+            if (workbook != null) {
+                int numberOfSheets = workbook.getNumberOfSheets();
+                for (int i = 0; i < numberOfSheets; i++) {
+                    Sheet sheet = workbook.getSheetAt(i);
+                    Iterator<Row> rowIterator = sheet.iterator();
+                    while (rowIterator.hasNext()) {
+                        String fullname = "";
+                        String email = "";
+                        String phone = "";
+                        Float grade = 0.0f;
+                        Row row = rowIterator.next();
+                        Iterator<Cell> cellIterator = row.cellIterator();
+                        int columnIndex = 0;
+                        while (cellIterator.hasNext()) {
+                            Cell cell = cellIterator.next();
+                            switch (cell.getCellType()) {
+                                case Cell.CELL_TYPE_STRING:
+                                    switch (columnIndex) {
+                                        case 0:
+                                            try {
+                                                fullname = cell.getStringCellValue();
+                                            } catch (Exception e) {
+                                                errorList.add(row.getRowNum() + 1);
+                                            }
+                                            columnIndex++;
+                                            break;
+                                        case 1:
+                                            try {
+                                                email = cell.getStringCellValue();
+                                            } catch (Exception e) {
+                                                errorList.add(row.getRowNum() + 1);
+                                            }
+                                            columnIndex++;
+                                            break;
+                                        case 2:
+                                            try {
+                                                phone = cell.getStringCellValue();
+                                            } catch (Exception e) {
+                                                errorList.add(row.getRowNum() + 1);
+                                            }
+                                            columnIndex++;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                                case Cell.CELL_TYPE_NUMERIC:
+                                    if (columnIndex == 3) {
+                                        grade = (float) cell.getNumericCellValue();
                                         columnIndex++;
-                                        break;
-                                    case 1:
-                                        try {
-                                            email = cell.getStringCellValue();
-                                        } catch (Exception e) {
-                                            errorList.add(row.getRowNum() + 1);
-                                        }
-                                        columnIndex++;
-                                        break;
-                                    case 2:
-                                        try {
-                                            phone = cell.getStringCellValue();
-                                        } catch (Exception e) {
-                                            errorList.add(row.getRowNum() + 1);
-                                        }
-                                        columnIndex++;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            case Cell.CELL_TYPE_NUMERIC:
-                                if (columnIndex == 3) {
-                                    grade = (float) cell.getNumericCellValue();
-                                    columnIndex++;
-                                }
+                                    }
+                            }
+                        }
+                        // error handling column
+                        if (fullname.equals("") || email.equals("") || phone.equals("")) {
+                            errorList.add(row.getRowNum() + 1);
+                        } else {
+                            Trainee c = new Trainee();
+                            c.setFullname(fullname);
+                            c.setEmail(email);
+                            c.setMobile(phone);
+                            c.setGrade(grade);
+                            traineeList.add(c);
                         }
                     }
-                    // error handling column
-                    if (fullname.equals("") || email.equals("") || phone.equals("")) {
-                        errorList.add(row.getRowNum() + 1);
-                    } else {
-                        Trainee c = new Trainee();
-                        c.setFullname(fullname);
-                        c.setEmail(email);
-                        c.setMobile(phone);
-                        c.setGrade(grade);
-                        traineeList.add(c);
-                    }
-                }
 
+                }
+                fis.close();
             }
-            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

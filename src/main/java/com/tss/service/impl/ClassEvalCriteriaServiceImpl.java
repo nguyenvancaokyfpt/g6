@@ -4,21 +4,21 @@
  */
 package com.tss.service.impl;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.tss.dao.BaseDao;
 import com.tss.dao.ClassEvalCriteriaDao;
 import com.tss.dao.impl.ClassEvalCriteriaDaoImpl;
 import com.tss.model.ClassEvalCriteria;
-import com.tss.model.Milestone;
 import com.tss.service.ClassEvalCriteriaService;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
  * @author a
  */
-public class ClassEvalCriteriaServiceImpl implements ClassEvalCriteriaService{
+public class ClassEvalCriteriaServiceImpl implements ClassEvalCriteriaService {
     private ClassEvalCriteriaDao evalDao;
 
     public ClassEvalCriteriaServiceImpl() {
@@ -32,13 +32,14 @@ public class ClassEvalCriteriaServiceImpl implements ClassEvalCriteriaService{
         try {
             connection = BaseDao.getConnection();
 
-            evalCriterias = evalDao.findAll(connection ,currentPageNo, PageSize , search);
+            evalCriterias = evalDao.findAll(connection, currentPageNo, PageSize, search);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return evalCriterias;}
+        return evalCriterias;
+    }
 
     @Override
     public int countAll(String search) {
@@ -52,7 +53,8 @@ public class ClassEvalCriteriaServiceImpl implements ClassEvalCriteriaService{
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return count;}
+        return count;
+    }
 
     @Override
     public int countAll() {
@@ -66,6 +68,7 @@ public class ClassEvalCriteriaServiceImpl implements ClassEvalCriteriaService{
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
-        return count; }
-    
+        return count;
+    }
+
 }

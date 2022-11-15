@@ -1,10 +1,10 @@
 package com.tss.model;
 
-import com.tss.helper.ScheduleHelper;
-import com.tss.service.impl.ScheduleServiceImpl;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
+
+import com.tss.helper.ScheduleHelper;
+import com.tss.service.impl.ScheduleServiceImpl;
 
 public class Schedule {
 

@@ -56,7 +56,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status, class_user where class.status_id = status.status_id and class.class_id = class_user.class_id and class_user.user_id = ?;";
-            Object[] params = {userId};
+            Object[] params = { userId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -87,7 +87,7 @@ public class ClassDaoImpl implements ClassDao {
         List<Classroom> classrooms = new ArrayList<Classroom>();
         if (connection != null) {
             String sql = "select class.class_id, class.class_code, class.combo_id, class.trainer_id, class.term_id, class.status_id, status.status_title, class.description from class, status where class.status_id = status.status_id and trainer_id = ?;";
-            Object[] params = {userId};
+            Object[] params = { userId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -145,7 +145,7 @@ public class ClassDaoImpl implements ClassDao {
 
     @Override
     public List<ClassAnhPT> listSearchFilter(Connection connection, int offset, String searchword, String term,
-            String status, String order, String dir,String subject) throws SQLException {
+            String status, String order, String dir, String subject) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassAnhPT> classList = new ArrayList<>();
@@ -200,7 +200,7 @@ public class ClassDaoImpl implements ClassDao {
 
     @Override
     public List<ClassAnhPT> listSearchFilter2(Connection connection, int offset, String searchword, String term,
-            String status, String order, String dir, int trainer,String subject) throws SQLException {
+            String status, String order, String dir, int trainer, String subject) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<ClassAnhPT> classList = new ArrayList<>();
@@ -259,7 +259,7 @@ public class ClassDaoImpl implements ClassDao {
     public ClassAnhPT findById(Connection connection, int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<ClassAnhPT> classList = new ArrayList<>();
+        // List<ClassAnhPT> classList = new ArrayList<>();
         ClassAnhPT classDetail = new ClassAnhPT();
         if (connection != null) {
             String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
@@ -303,7 +303,7 @@ public class ClassDaoImpl implements ClassDao {
     public ClassAnhPT findById2(Connection connection, int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<ClassAnhPT> classList = new ArrayList<>();
+        // List<ClassAnhPT> classList = new ArrayList<>();
         ClassAnhPT classDetail = new ClassAnhPT();
         if (connection != null) {
             String sql = "select class_id,class_code,combo_id,trainer_id,term_id,class.status_id,\n"
@@ -383,7 +383,8 @@ public class ClassDaoImpl implements ClassDao {
     }
 
     @Override
-    public int countSearchFilter2(Connection connection, String searchword, String term, String status, int trainer,String subject)
+    public int countSearchFilter2(Connection connection, String searchword, String term, String status, int trainer,
+            String subject)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -576,14 +577,14 @@ public class ClassDaoImpl implements ClassDao {
     @Override
     public void grantTraineeToClass(Connection connection, User user, int classId, float grade) throws SQLException {
         PreparedStatement preparedStatement = null;
-        boolean flag = false;
+        // boolean flag = false;
         if (connection != null) {
             String sql = "insert into class_user (class_id,user_id,grade) values (?,?,?);";
-            Object[] params = {classId, user.getUserId(), grade};
+            Object[] params = { classId, user.getUserId(), grade };
             try {
                 int updateRows = BaseDao.execute(connection, preparedStatement, sql, params);
                 if (updateRows > 0) {
-                    flag = true;
+                    // flag = true;
                 }
             } catch (SQLException e) {
                 DebugHelper.print(e);
@@ -600,7 +601,7 @@ public class ClassDaoImpl implements ClassDao {
         Classroom classroom = null;
         if (connection != null) {
             String sql = "select * from class where class_id = ?;";
-            Object[] params = {classId};
+            Object[] params = { classId };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 if (resultSet.next()) {

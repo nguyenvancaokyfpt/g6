@@ -27,14 +27,14 @@ public class InsueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> findAll(int start, int length, String search, String columnName, String orderDir
-    , int classFilter, int teamFilter, int assignFilter, int statusFilter,int supId,int mileFilter) {
+    public List<Issue> findAll(int start, int length, String search, String columnName, String orderDir,
+            int classFilter, int teamFilter, int assignFilter, int statusFilter, int supId, int mileFilter) {
         Connection connection = null;
         List<Issue> issues = null;
         try {
             connection = BaseDao.getConnection();
             issues = issueDao.findAll(connection, start, length, search, columnName,
-                    orderDir, classFilter, teamFilter, assignFilter, statusFilter,supId,mileFilter);
+                    orderDir, classFilter, teamFilter, assignFilter, statusFilter, supId, mileFilter);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -44,8 +44,9 @@ public class InsueServiceImpl implements IssueService {
     }
 
     public static void main(String[] args) {
-        InsueServiceImpl issueService = new InsueServiceImpl();
-        // List<Issue> issues = issueService.findAll(0, 10, "", "issue_id", "asc", "", "", "", "");
+        // InsueServiceImpl issueService = new InsueServiceImpl();
+        // List<Issue> issues = issueService.findAll(0, 10, "", "issue_id", "asc", "",
+        // "", "", "");
     }
 
     @Override
@@ -65,14 +66,14 @@ public class InsueServiceImpl implements IssueService {
     }
 
     @Override
-    public int countFilter(String search,int classFilter, int teamFilter, int assignFilter,
+    public int countFilter(String search, int classFilter, int teamFilter, int assignFilter,
             int statusFilter, int supId, int mileFilter) {
         Connection connection = null;
         int count = 0;
         try {
             connection = BaseDao.getConnection();
-            count = issueDao.countFilter(connection,search, classFilter, teamFilter,
-                    assignFilter, statusFilter,supId, mileFilter);
+            count = issueDao.countFilter(connection, search, classFilter, teamFilter,
+                    assignFilter, statusFilter, supId, mileFilter);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

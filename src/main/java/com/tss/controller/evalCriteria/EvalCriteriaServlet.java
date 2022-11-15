@@ -23,7 +23,6 @@ import com.tss.model.payload.DataTablesMessage;
 import com.tss.model.util.DataTablesColumns;
 import com.tss.service.AssignmentService;
 import com.tss.service.EvalCriteriaService;
-import com.tss.service.SubjectService;
 import com.tss.service.impl.AssignmentServiceImpl;
 import com.tss.service.impl.EvalCriteriaServiceImpl;
 import com.tss.service.impl.SubjectServiceImpl;
@@ -41,12 +40,12 @@ public class EvalCriteriaServlet extends HttpServlet {
 
     private EvalCriteriaService evalService;
     private AssignmentService assignService;
-    private SubjectService subService;
+    // private SubjectService subService;
 
     public EvalCriteriaServlet() {
         evalService = new EvalCriteriaServiceImpl();
         assignService = new AssignmentServiceImpl();
-        subService = new SubjectServiceImpl();
+        // subService = new SubjectServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -192,7 +191,7 @@ public class EvalCriteriaServlet extends HttpServlet {
         int weight = Integer.parseInt(request.getParameter("criteria_weight"));
         int loc = Integer.parseInt(request.getParameter("criteria_loc"));
         int status = Integer.parseInt(request.getParameter("criteria_status"));
-        Object prams[] = {id, ass_id, mile_id, name, is_team, weight, loc, status, des};
+        Object prams[] = { id, ass_id, mile_id, name, is_team, weight, loc, status, des };
         evalService.add(prams);
         response.sendRedirect("evalCriteriaList?toastStatus=2");
     }

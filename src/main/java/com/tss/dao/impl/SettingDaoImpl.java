@@ -51,7 +51,7 @@ public class SettingDaoImpl implements SettingDao {
     public Setting findById(Connection connection, int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Setting> settingList = new ArrayList<>();
+        // List<Setting> settingList = new ArrayList<>();
         Setting settingDetail = new Setting();
         if (connection != null) {
             String sql = "SELECT a.setting_id, a.type_id, a.setting_title, a.setting_value, a.display_order, status_title, a.description, b.setting_title\n"
@@ -99,8 +99,8 @@ public class SettingDaoImpl implements SettingDao {
     public int modify(Connection connection, int id, Setting setting) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Setting> settingList = new ArrayList<>();
-        Setting settingDetail = new Setting();
+        // List<Setting> settingList = new ArrayList<>();
+        // Setting settingDetail = new Setting();
         if (connection != null) {
             String sql = "UPDATE setting\n"
                     + "SET type_id = ?, setting_title = ?,setting_value = ?,display_order = ?,status_id = ?,description = ?\n"

@@ -318,7 +318,7 @@ public class TraineeListServlet extends HttpServlet {
     }
 
     private void list2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int classId = 1;
+        // int classId = 1;
         String q = "";
         int page = 1;
         try {

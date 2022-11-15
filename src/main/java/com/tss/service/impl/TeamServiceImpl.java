@@ -39,7 +39,7 @@ public class TeamServiceImpl implements TeamService {
         List<Team> teams = null;
         try {
             connection = BaseDao.getConnection();
-            teams = teamDao.FindByClassID(connection, classID,milestone_id);
+            teams = teamDao.FindByClassID(connection, classID, milestone_id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -59,11 +59,6 @@ public class TeamServiceImpl implements TeamService {
             connection.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         } finally {
             BaseDao.closeResource(connection, null, null);
         }
@@ -245,11 +240,11 @@ public class TeamServiceImpl implements TeamService {
         // List<Team> teamList = FindByClassID(classId);
         // List<Team> teamList2 = FindByClassUser(classId);
         // for (Team team : teamList) {
-        //     setNullTeamId(team.getId());
+        // setNullTeamId(team.getId());
         // }
         // DebugHelper.print(teamList2);
         // for (Team team : teamList2) {
-        //     DeleteTeam(team.getId());
+        // DeleteTeam(team.getId());
         // }
     }
 
@@ -271,7 +266,7 @@ public class TeamServiceImpl implements TeamService {
         boolean flag = false;
         try {
             connection = BaseDao.getConnection();
-            flag = teamDao.RemoveFromTeam(connection, traineeId,  teamId) == 1;
+            flag = teamDao.RemoveFromTeam(connection, traineeId, teamId) == 1;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -511,7 +506,7 @@ public class TeamServiceImpl implements TeamService {
         Connection connection = null;
         try {
             connection = BaseDao.getConnection();
-            return teamDao.RemoveAllMember(connection, teamId) >0;
+            return teamDao.RemoveAllMember(connection, teamId) > 0;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

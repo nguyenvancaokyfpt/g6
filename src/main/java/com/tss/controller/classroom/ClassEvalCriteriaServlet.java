@@ -90,7 +90,7 @@ public class ClassEvalCriteriaServlet extends HttpServlet {
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        EvalCriteria eval = new EvalCriteria();
+        // EvalCriteria eval = new EvalCriteria();
         JSONObject jsonObject = RequestHelper.getJsonData(request);
         int id = evalService.getNewId();
         int ass_id = Integer.parseInt(jsonObject.getString("criteria_assign"));

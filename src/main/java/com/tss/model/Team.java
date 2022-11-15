@@ -33,8 +33,6 @@ public class Team {
     public void setMilestoneId(int milestoneId) {
         this.milestoneId = milestoneId;
     }
-    
-    
 
     public int getClassId() {
         return classId;

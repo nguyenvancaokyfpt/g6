@@ -18,7 +18,6 @@ import com.tss.model.ClassEntity;
 import com.tss.model.Milestone;
 import com.tss.model.Subject;
 import com.tss.model.payload.DataTablesMessage;
-import com.tss.service.AssignmentService;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
 import com.tss.service.SubjectService;
@@ -36,7 +35,7 @@ public class MilestoneServlet extends HttpServlet {
     private MilestoneService mileStoneService;
     private ClassService classService;
     private SubjectService subjectService;
-    private AssignmentService assignmentService;
+    // private AssignmentService assignmentService;
 
     @Override
     public void init() throws ServletException {
@@ -151,18 +150,18 @@ public class MilestoneServlet extends HttpServlet {
 
     private void list(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         JSONObject jsonObject = RequestHelper.getJsonData(request);
-        int start = 0;
-        int length = 10;
+        // int start = 0;
+        // int length = 10;
         String search = "";
         int draw = 1;
         if (jsonObject != null) {
-            start = jsonObject.getInteger("start");
-            length = jsonObject.getInteger("length");
+            // start = jsonObject.getInteger("start");
+            // length = jsonObject.getInteger("length");
             search = jsonObject.getString("search[value]");
             draw = jsonObject.getInteger("draw");
         } else {
-            start = Integer.parseInt(request.getParameter("start"));
-            length = Integer.parseInt(request.getParameter("length"));
+            // start = Integer.parseInt(request.getParameter("start"));
+            // length = Integer.parseInt(request.getParameter("length"));
             search = request.getParameter("search[value]");
             draw = Integer.parseInt(request.getParameter("draw"));
         }

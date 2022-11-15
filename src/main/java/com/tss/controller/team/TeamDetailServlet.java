@@ -4,7 +4,9 @@
  */
 package com.tss.controller.team;
 
-import com.google.api.client.googleapis.auth.clientlogin.ClientLogin;
+import java.io.IOException;
+import java.util.List;
+
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
@@ -14,22 +16,15 @@ import com.tss.model.Team;
 import com.tss.model.Trainee;
 import com.tss.service.ClassService;
 import com.tss.service.MilestoneService;
-import com.tss.service.SubjectService;
 import com.tss.service.TeamService;
-import com.tss.service.UserService;
 import com.tss.service.impl.ClassServiceImpl;
 import com.tss.service.impl.MilestoneServiceImpl;
-import com.tss.service.impl.SubjectServiceImpl;
 import com.tss.service.impl.TeamServiceImpl;
-import com.tss.service.impl.UserServiceImpl;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
@@ -40,15 +35,15 @@ public class TeamDetailServlet extends HttpServlet {
     private MilestoneService mileService;
     private ClassService classService;
     private TeamService teamService;
-    private UserService userService;
-    private SubjectService subjectService;
+    // private UserService userService;
+    // private SubjectService subjectService;
 
     public TeamDetailServlet() {
         mileService = new MilestoneServiceImpl();
         classService = new ClassServiceImpl();
         teamService = new TeamServiceImpl();
-        userService = new UserServiceImpl();
-        subjectService = new SubjectServiceImpl();
+        // userService = new UserServiceImpl();
+        // subjectService = new SubjectServiceImpl();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -112,7 +107,8 @@ public class TeamDetailServlet extends HttpServlet {
         String mile = request.getParameter("team_mile");
         Team t = new Team(teamId, null, projectCode, topicCode, topicName, statusId, description, null);
         teamService.UpdateTeam(t);
-        response.sendRedirect("detail?action=get&teamId=" + teamId + "&classId=" + classId + "&mileId=" + mile + "&toast=1");
+        response.sendRedirect(
+                "detail?action=get&teamId=" + teamId + "&classId=" + classId + "&mileId=" + mile + "&toast=1");
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -123,7 +119,7 @@ public class TeamDetailServlet extends HttpServlet {
                 ScreenConstants.USER_DASHBOARD,
                 ScreenConstants.TEAM_LIST,
                 ScreenConstants.TEAM_DETAIL));
-        //BEGIN'
+        // BEGIN'
         int teamid = 0;
         int classID = 0;
         try {
@@ -140,7 +136,7 @@ public class TeamDetailServlet extends HttpServlet {
         request.setAttribute("mile", m);
         request.setAttribute("team", team);
         request.setAttribute("toast", request.getParameter("toast"));
-        //END
+        // END
         request.getRequestDispatcher("/jsp/template.jsp").forward(request, response);
     }
 
@@ -161,7 +157,7 @@ public class TeamDetailServlet extends HttpServlet {
     private void remove(HttpServletRequest request, HttpServletResponse response) {
         int teamId = Integer.parseInt(request.getParameter("teamId"));
         int userId = Integer.parseInt(request.getParameter("traineeId"));
-        teamService.RemoveFromTeam(userId,teamId);
+        teamService.RemoveFromTeam(userId, teamId);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

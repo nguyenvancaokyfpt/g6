@@ -1,15 +1,16 @@
 package com.tss.dao.impl;
 
-import com.tss.dao.BaseDao;
-import com.tss.model.AnhPTClassUser;
-import com.tss.model.AnhPTSchedule;
-import com.tss.model.Attendance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tss.dao.BaseDao;
+import com.tss.model.AnhPTClassUser;
+import com.tss.model.AnhPTSchedule;
+import com.tss.model.Attendance;
 
 /**
  *
@@ -52,7 +53,7 @@ public class AttendanceDaoImpl {
         }
         return attendanceList;
     }
-    
+
     public List<Attendance> findTodayAttendance(Connection connection) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -297,7 +298,7 @@ public class AttendanceDaoImpl {
     public int countAbsent(Connection connection, int class_id, int trainer_id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<AnhPTClassUser> userList = new ArrayList<>();
+        // List<AnhPTClassUser> userList = new ArrayList<>();
         int a = 0;
         if (connection != null) {
             String sql = "select count(*) from attendance where class_id = ? and trainer_id = ? and status_id = 4";
@@ -318,7 +319,8 @@ public class AttendanceDaoImpl {
         return a;
     }
 
-    public void takeAttendance(Connection connection, int class_id, int trainer_id, int schedule_id, int status_id, String comment) throws SQLException {
+    public void takeAttendance(Connection connection, int class_id, int trainer_id, int schedule_id, int status_id,
+            String comment) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {
@@ -340,7 +342,8 @@ public class AttendanceDaoImpl {
         }
     }
 
-    public void changeAttendance(Connection connection, int class_id, int trainer_id, int schedule_id, int status_id, String comment) throws SQLException {
+    public void changeAttendance(Connection connection, int class_id, int trainer_id, int schedule_id, int status_id,
+            String comment) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         if (connection != null) {

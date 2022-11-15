@@ -128,7 +128,7 @@ public class UserManagementServlet extends HttpServlet {
         int length = 10;
         String search = "";
         int draw = 1;
-        int numberofcolumn = -1;
+        // int numberofcolumn = -1;
         int orderColumn = 1;
         String orderDir = "asc";
         String roleFilter = "";
@@ -140,7 +140,7 @@ public class UserManagementServlet extends HttpServlet {
                 length = jsonObject.getJSONArray("length").getInteger(0);
                 search = jsonObject.getJSONArray("search[value]").getString(0);
                 draw = jsonObject.getJSONArray("draw").getInteger(0);
-                numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
+                // numberofcolumn = jsonObject.getJSONArray("numberOfColumns").getInteger(0);
                 orderColumn = jsonObject.getJSONArray("order[0][column]").getInteger(0);
                 orderDir = jsonObject.getJSONArray("order[0][dir]").getString(0);
                 roleFilter = jsonObject.getJSONArray("role").getString(0);

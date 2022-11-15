@@ -14,7 +14,6 @@ import java.util.List;
 import com.tss.dao.BaseDao;
 import com.tss.dao.EvalCriteriaDao;
 import com.tss.model.EvalCriteria;
-import com.tss.model.User;
 import com.tss.model.system.Role;
 
 /**
@@ -133,13 +132,13 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
     }
 
     @Override
-    public int countAll(Connection connection,int userId) throws SQLException {
+    public int countAll(Connection connection, int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id WHERE 1=1";
-            if(!checkAdmin(connection, userId)) {
+            if (!checkAdmin(connection, userId)) {
                 sql += " AND s.manager_id = " + userId;
             }
             Object[] params = {};
@@ -159,7 +158,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 
     @Override
     public List<EvalCriteria> findAll(Connection connection, int start, int length, String search,
-            String columnName, String orderDir, int subjectFilter, int assignFilter, int statusFilter,int userId)
+            String columnName, String orderDir, int subjectFilter, int assignFilter, int statusFilter, int userId)
             throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -167,7 +166,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
         if (connection != null) {
             String sql = "SELECT e.*,a.title,s.subject_name FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
             sql += " WHERE e.criteria_name LIKE ? ";
-            if(!checkAdmin(connection, userId)) {
+            if (!checkAdmin(connection, userId)) {
                 sql += " AND s.manager_id = " + userId;
             }
             if (subjectFilter != -1) {
@@ -181,7 +180,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
             }
 
             sql += " ORDER BY " + columnName + " " + orderDir + " LIMIT ?, ?";
-            Object[] params = {"%" + search + "%", start, length };
+            Object[] params = { "%" + search + "%", start, length };
             try {
                 resultSet = BaseDao.execute(connection, preparedStatement, resultSet, sql, params);
                 while (resultSet.next()) {
@@ -209,14 +208,14 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
 
     @Override
     public int countAll(Connection connection, String search, int subjectFilter, int assignFilter, int statusFilter,
-           int userId) throws SQLException {
+            int userId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int count = 0;
         if (connection != null) {
             String sql = "SELECT COUNT(1) AS count FROM `eval_criteria` e inner join assignment a on e.ass_id = a.ass_id inner join subject s on s.subject_id = a.subject_id";
             sql += " WHERE e.criteria_name LIKE ? ";
-            if(!checkAdmin(connection, userId)) {
+            if (!checkAdmin(connection, userId)) {
                 sql += " AND s.manager_id = " + userId;
             }
             if (subjectFilter != -1) {
@@ -272,7 +271,8 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
         EvalCriteriaDaoImpl test = new EvalCriteriaDaoImpl();
         Connection connection = BaseDao.getConnection();
         // test find all with params
-        List<EvalCriteria> evalList = test.findAll(connection, 0, 10, "", "criteria_id", "ASC", -1, -1, -1, 70);
+        // List<EvalCriteria> evalList = test.findAll(connection, 0, 10, "",
+        // "criteria_id", "ASC", -1, -1, -1, 70);
         System.out.println(test.countAll(connection, "", -1, -1, -1, 70));
 
     }
@@ -310,7 +310,7 @@ public class EvalCriteriaDaoImpl implements EvalCriteriaDao {
             } finally {
                 BaseDao.closeResource(null, preparedStatement, resultSet);
             }
-            
+
         }
         return role.getId() == 21;
     }

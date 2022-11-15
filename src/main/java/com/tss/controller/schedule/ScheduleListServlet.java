@@ -1,5 +1,11 @@
 package com.tss.controller.schedule;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tss.constants.ActionConstants;
 import com.tss.constants.ScreenConstants;
 import com.tss.helper.ResponseHelper;
@@ -9,17 +15,11 @@ import com.tss.service.ClassService;
 import com.tss.service.ScheduleService;
 import com.tss.service.impl.ClassServiceImpl;
 import com.tss.service.impl.ScheduleServiceImpl;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ScheduleListServlet extends HttpServlet {
 

@@ -4,29 +4,30 @@
  */
 package com.tss.controller.schedule;
 
-import com.tss.constants.RoleConstants;
-import com.tss.constants.ScreenConstants;
-import com.tss.constants.SessionConstants;
-import com.tss.dao.BaseDao;
-import com.tss.dao.impl.AttendanceDaoImpl;
-import com.tss.helper.ResponseHelper;
-import com.tss.model.AnhPTClassUser;
-import com.tss.model.AnhPTSchedule;
-import com.tss.model.Attendance;
-import com.tss.model.Classroom;
-import com.tss.model.User;
-import com.tss.service.impl.ClassServiceImpl;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.tss.constants.RoleConstants;
+import com.tss.constants.ScreenConstants;
+import com.tss.constants.SessionConstants;
+import com.tss.dao.BaseDao;
+import com.tss.dao.impl.AttendanceDaoImpl;
+import com.tss.helper.ResponseHelper;
+import com.tss.model.AnhPTSchedule;
+import com.tss.model.Attendance;
+import com.tss.model.Classroom;
+import com.tss.model.User;
+import com.tss.service.impl.ClassServiceImpl;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -38,10 +39,10 @@ public class ScheduleAttendanceServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -50,7 +51,7 @@ public class ScheduleAttendanceServlet extends HttpServlet {
         List<Attendance> AttendanceList = new ArrayList<>();
         List<AnhPTSchedule> ScheduleList = new ArrayList<>();
         request.setAttribute("scheduleList", ScheduleList);
-        List<AnhPTClassUser> UserList = new ArrayList<>();
+        // List<AnhPTClassUser> UserList = new ArrayList<>();
         List<Classroom> myClass = new ArrayList<>();
         RoleConstants role = (RoleConstants) request.getAttribute("ROLE_CONSTANTS");
         User user = (User) request.getAttribute("user");
@@ -130,14 +131,15 @@ public class ScheduleAttendanceServlet extends HttpServlet {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -152,10 +154,10 @@ public class ScheduleAttendanceServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
